@@ -11,6 +11,8 @@ import CompanyPage from "@/components/CompanyPage.tsx";
 import QuestionPage from "@/components/QuestionPage.tsx";
 import Header from "./components/Header.tsx";
 import Footer from "./components/Footer.tsx";
+import ExamPrep from "./pages/ExamPrep.tsx";
+import TcsExam from "./pages/TcsExam.tsx";
 
 
 const queryClient = new QueryClient();
@@ -25,13 +27,15 @@ const App = () => (
         <Routes>
           
            {/* <Route path="/home" element={<Index />} /> */}
-          <Route path="/" element= {<Index1/>} /> 
+          {/* <Route path="/" element= {<Index1/>} />  */}
+          <Route path="/" element= {<TcsExam/>}/>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
           
           {/* my testing */}
            <Route path="/practice" element={<Practice />} />
           <Route path= "/uiComponents" element={<UiHome />} />
+          <Route path= "/examPrep" element={<ExamPrep />} />
          <Route path="/study" element={<HomePage />} />
           <Route path="/company/:companyId" element={<CompanyPage />} />
           <Route path="/company/:companyId/question/:questionId" element={<QuestionPage />} />

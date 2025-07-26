@@ -179,6 +179,7 @@ const Study: React.FC = () => {
               <div className="flex space-x-4">
                 <img src="https://logo.clearbit.com/google.com" alt="Google logo" className="w-12 h-12 rounded-full bg-white p-2" />
                 <img src="https://logo.clearbit.com/amazon.com" alt="Amazon logo" className="w-12 h-12 rounded-full bg-white p-2" />
+                <img src="public/images/tcs.jpg" alt="tcs logo" className="w-12 h-12 rounded-full bg-white p-2" />
                 <img src="https://logo.clearbit.com/microsoft.com" alt="Microsoft logo" className="w-12 h-12 rounded-full bg-white p-2" />
               </div>
             </div>
@@ -225,7 +226,7 @@ const Study: React.FC = () => {
                 }}
               >
                 <CardHeader className="text-center">
-                  <div className={`w-20 h-20 bg-gradient-to-br ${company.color} rounded-2xl flex items-center justify-center mx-auto mb-4 text-4xl group-hover:rotate-12 transition-transform duration-300`}>
+                  <div className={`w-20 h-20 bg-white  rounded-2xl flex items-center justify-center mx-auto mb-4 text-4xl group-hover:rotate-12 transition-transform duration-300`}>
                     <img src={company.logo} className='rounded-2xl' />
                   </div>
                   <CardTitle className="text-2xl text-white">{company.name}</CardTitle>

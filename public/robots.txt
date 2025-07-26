@@ -12,3 +12,41 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+//Study section page
+(components)
+1.CategoryCard
+2.MCQTest
+3.TestResult
+(data)
+4.questions.tsx
+(pages)
+5.ExamPrep
+
+//to fix 
+general apptitude icon mission and hover effect on test start from categorycard
+need change in line 164 for progress bar in MCQTest
+
+//future idea
+focus on engineering student
+idea 1.
+1.JSSC JE (Civil)
+2.GATE Civil Engineering
+3.GATE Mechanical Engineering
+4.RRB JE (ME/CE)
+5.SSC JE (CE)
+6.SSC JE (ME)
+7.ISRO Scientist/Engineer (Mechanical)
+8.RSMSSB JE
+9.DDA JE (Civil)
+reference site link:-https://www.practicemock.com/
+
+2.idea 
+level wise -> first 60 question easy (level 1) if he pass exam then
+move to level 2 then level 3
+
+3.idea
+details solution people can comment their after then i can pin the solution
+
+
+

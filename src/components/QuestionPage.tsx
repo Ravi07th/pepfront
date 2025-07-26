@@ -42,9 +42,15 @@ interface Solution {
 interface Question {
   id: string;
   title: string;
-  description: string;
+  description: string[];
   difficulty: 'Easy' | 'Medium' | 'Hard';
-  category: string;
+  category: string[];
+  input1: string;
+  input2: string;
+  explanation: string;
+  output1: string;
+  output2: string;
+  constraints: string;
   solutions?: {
     [languageId: string]: {
       [approachId: string]: Solution;
@@ -90,13 +96,13 @@ const QuestionPage: React.FC = () => {
 
   const getDifficultyColor = (difficulty: DifficultyType): string => {
     switch (difficulty) {
-      case 'Easy': 
+      case 'Easy':
         return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'Medium': 
+      case 'Medium':
         return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      case 'Hard': 
+      case 'Hard':
         return 'bg-red-500/20 text-red-400 border-red-500/30';
-      default: 
+      default:
         return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
     }
   };
@@ -144,232 +150,282 @@ const QuestionPage: React.FC = () => {
 
   return (
     <>
-    <ScrollToTop />
-    <div className="min-h-screen bg-black p-6">
-      <div className="container mx-auto max-w-7xl">
-        <div className="flex items-center justify-between mb-8">
-          <Button
-            variant="ghost"
-            onClick={handleBackClick}
-            className="text-gray-300 hover:text-white"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to {company.name}
-          </Button>
-        </div>
-
-        <div className="grid lg:grid-cols-1">
-          <div className="lg:col-span-1 mb-5 -py-5">
-            <Card className="bg-slate-800/50 border-slate-700 sticky top-6">
-              <CardHeader>
-                <div className="flex justify-between items-center">
-                  {/* company info */}
-                  <div className="flex items-center space-x-3">
-                    <div className={`w-12 h-12 bg-gradient-to-br ${company.color} rounded-xl flex items-center justify-center text-2xl`}>
-                      <img src={company.logo} />
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-400">{company.name}</div>
-                      <div className="text-white font-medium">Interview Question</div>
-                    </div>
-                  </div>
-                  {/* question info */}
-                  <div className="space-y-2 flex flex-col items-center">
-                    <CardTitle className="text-2xl text-white">{question.title}</CardTitle>
-                    <div className="flex items-center space-x-2">
-                      <Badge className={getDifficultyColor(question.difficulty)}>
-                        {question.difficulty}
-                      </Badge>
-                      <Badge variant="secondary" className="bg-slate-700 text-gray-300">
-                        {question.category}
-                      </Badge>
-                    </div>
-                  </div>
-                {/* select language */}
-                  <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-300">Programming Language</label>
-                  <Select value={selectedLanguage} onValueChange={handleLanguageChange}>
-                    <SelectTrigger className="bg-slate-900/50 border-slate-600 text-white">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {languages.map((lang: Language) => (
-                        <SelectItem key={lang.id} value={lang.id}>
-                          <div className="flex items-center space-x-2">
-                            <span>{lang.icon}</span>
-                            <span>{lang.name}</span>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                </div>
-              </CardHeader>
-            </Card>
+      <ScrollToTop />
+      <div className="min-h-screen bg-black p-6">
+        <div className="container mx-auto max-w-7xl">
+          <div className="flex items-center justify-between mb-8">
+            <Button
+              variant="ghost"
+              onClick={handleBackClick}
+              className="text-gray-300 hover:text-white"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to {company.name}
+            </Button>
           </div>
 
-          <div className="lg:col-span-3">
-            <Card className="bg-slate-800/50 border-slate-700">
-              <CardContent className="p-8">
-                <Tabs defaultValue="problem" className="space-y-6">
-                  <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="problem">Problem Description</TabsTrigger>
-                    <TabsTrigger value="solution">Solution</TabsTrigger>
-                  </TabsList>
-                  
-                  <TabsContent value="problem" className="space-y-6">
-                    <div className="space-y-4">
-                      <h2 className="text-2xl font-bold text-white">Problem Statement</h2>
-                      <pre className="text-gray-300 text-md leading-relaxed">
-                        {/* {question?.description} */}
-                        <div dangerouslySetInnerHTML={{ __html: question?.description }} />
-                      </pre>
-                    </div>
-
-                    <Separator className="bg-slate-600" />
-
-                    <div className="space-y-4">
-                      <h3 className="text-xl font-semibold text-white">Example</h3>
-                      <Card className="bg-slate-900/50 border-slate-600">
-                        <CardContent className="p-4">
-                          <div className="space-y-2 font-mono text-sm">
-                            <div className="text-gray-400">Input:</div>
-                            <div className="text-green-400">nums = [2,7,11,15], target = 9</div>
-                            <div className="text-gray-400">Output:</div>
-                            <div className="text-blue-400">[0,1]</div>
-                            <div className="text-gray-400 mt-4">Explanation:</div>
-                            <div className="text-gray-300">
-                              Because nums[0] + nums[1] == 9, we return [0, 1].
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </div>
-
-                    <div className="space-y-4">
-                      <h3 className="text-xl font-semibold text-white">Constraints</h3>
-                      <ul className="list-disc list-inside text-gray-300 space-y-1">
-                        <li>2 ≤ nums.length ≤ 10⁴</li>
-                        <li>-10⁹ ≤ nums[i] ≤ 10⁹</li>
-                        <li>-10⁹ ≤ target ≤ 10⁹</li>
-                        <li>Only one valid answer exists</li>
-                      </ul>
-                    </div>
-                  </TabsContent>
-
-                  <TabsContent value="solution" className="space-y-6">
-                    {/* Select Solution approach */}
-                    <div className=" flex justify-start items-center space-x-5 ">
-                      <label className="text-2xl font-bold text-blue-300">Solution Approach</label>
-                      <div className="grid grid-cols-5 gap-5">
-                        {approaches.map((approach: Approach) => (
-                          <Button
-                            key={approach.id}
-                            variant={selectedApproach === approach.id ? "default" : "outline"}
-                            className={`justify-start text-left h-auto py-2 px-4 ${
-                              selectedApproach === approach.id 
-                                ? "bg-slate-50 hover:bg-slate-200" 
-                                : "bg-slate-900/50 border-slate-600 hover:bg-slate-800"
-                            }`}
-                            onClick={() => handleApproachClick(approach.id)}
-                          >
-                            <div className="space-y-1">
-                              <div className={`font-medium ${approach.color}`}>
-                                {approach.name}
-                              </div>
-                              <div className="text-xs text-gray-400">
-                                {approach.description}
-                              </div>
-                            </div>
-                          </Button>
-                        ))}
+          <div className="grid lg:grid-cols-1">
+            <div className="lg:col-span-1 mb-5 -py-5">
+              <Card className="bg-slate-800/50 border-slate-700 sticky top-6">
+                <CardHeader>
+                  <div className="flex justify-between items-center">
+                    {/* company info */}
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-12 h-12 bg-gradient-to-br ${company.color} rounded-xl flex items-center justify-center text-2xl`}>
+                        <img src={company.logo} />
+                      </div>
+                      <div>
+                        <div className="text-sm text-gray-400">{company.name}</div>
+                        <div className="text-white font-medium">Interview Question</div>
                       </div>
                     </div>
-
-                    {currentSolution ? (
-                      <div className="space-y-6">
-                        <div className="flex items-center justify-between">
-                          <h2 className="text-2xl font-bold text-white">
-                            {approaches.find((a: Approach) => a.id === selectedApproach)?.name} Approach
-                          </h2>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={handleCopyClick}
-                            className="bg-slate-900/50 border-slate-600 text-slate-300 hover:bg-slate-800"
-                          >
-                            <Copy className="w-4 h-4 mr-2" />
-                            Copy Code
-                          </Button>
+                    {/* question info */}
+                    <div className="space-y-2 flex flex-col items-center">
+                      <CardTitle className="text-2xl text-white">{question.title}</CardTitle>
+                      <div className="flex items-center space-x-2">
+                        <Badge className={getDifficultyColor(question.difficulty)}>
+                          {question.difficulty}
+                        </Badge>
+                        {/* change */}
+                        <div className="flex flex-col gap-2">
+                          <div className="flex gap-2 flex-wrap ">
+                            {question.category.map((categ, idx) => (
+                              <Badge key={idx} variant="secondary" className="bg-slate-700 text-gray-300">
+                                {categ}
+                              </Badge>
+                            ))}
+                          </div>
                         </div>
 
-                        <Card className="bg-slate-900 border-slate-700">
-                          <CardHeader className="pb-2">
-                            <div className="flex items-center justify-between">
+                       
+                      </div>
+                    </div>
+                    {/* select language */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-300">Programming Language</label>
+                      <Select value={selectedLanguage} onValueChange={handleLanguageChange}>
+                        <SelectTrigger className="bg-slate-900/50 border-slate-600 text-white">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {languages.map((lang: Language) => (
+                            <SelectItem key={lang.id} value={lang.id}>
                               <div className="flex items-center space-x-2">
-                                <span className="text-sm text-gray-400">
-                                  {languages.find((l: Language) => l.id === selectedLanguage)?.icon}
-                                </span>
-                                <span className="text-sm font-medium text-gray-300">
-                                  {languages.find((l: Language) => l.id === selectedLanguage)?.name}
-                                </span>
+                                <span>{lang.icon}</span>
+                                <span>{lang.name}</span>
                               </div>
-                            </div>
-                          </CardHeader>
-                          <CardContent>
-                            <pre className="text-sm text-gray-100 overflow-x-auto">
-                              <code>{currentSolution.code}</code>
-                            </pre>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </CardHeader>
+              </Card>
+            </div>
+
+            <div className="lg:col-span-3">
+              <Card className="bg-slate-800/50 border-slate-700">
+                <CardContent className="p-8">
+                  <Tabs defaultValue="problem" className="space-y-6">
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="problem">Problem Description</TabsTrigger>
+                      <TabsTrigger value="solution">Solution</TabsTrigger>
+                    </TabsList>
+
+                    <TabsContent value="problem" className="space-y-6">
+                      <div className="space-y-4">
+                        <h2 className="text-2xl font-bold text-white">Problem Statement</h2>
+                        <pre className="text-gray-300 text-md whitespace-pre-wrap break-words overflow-x-auto p-2 rounded">
+                          <div dangerouslySetInnerHTML={{ __html: question?.description }} />
+                        </pre>
+
+                      </div>
+
+                      <Separator className="bg-slate-600" />
+
+                      <div className="space-y-4">
+                        <h3 className="text-xl font-semibold text-white">Example 1</h3>
+                        <Card className="bg-slate-900/50 border-slate-600">
+                          <CardContent className="p-4">
+                            <div className="text-blue-400 text-xl ">Input :</div>
+                            <pre className="text-gray-300 font-mono text-sm whitespace-pre-wrap break-words overflow-x-auto p-2 rounded">
+                          <div dangerouslySetInnerHTML={{ __html: question?.input1 }} />
+                        </pre>
+                        <div className="text-blue-400 text-xl ">Output :</div>
+                        <pre className="text-gray-300 font-mono text-sm whitespace-pre-wrap break-words overflow-x-auto p-2 rounded">
+                          <div dangerouslySetInnerHTML={{ __html: question?.output1 }} />
+                        </pre>
+                        <div className="text-blue-400 text-xl ">Explaination :</div>
+                        <pre className="text-gray-300 font-mono text-sm whitespace-pre-wrap break-words overflow-x-auto p-2 rounded">
+                          <div dangerouslySetInnerHTML={{ __html: question?.explanation }} />
+                        </pre>
+                            {/* <div className="space-y-2 font-mono text-sm">
+                              
+                              <div className="text-green-400">nums = [2,7,11,15], target = 9</div>
+                              <div className="text-gray-400">Output:</div>
+                              <div className="text-blue-400">[0,1]</div>
+                              <div className="text-gray-400 mt-4">Explanation:</div>
+                              <div className="text-gray-300">
+                                Because nums[0] + nums[1] == 9, we return [0, 1].
+                              </div>
+                            </div> */}
                           </CardContent>
                         </Card>
 
-                        <div className="space-y-4">
-                          <h3 className="text-xl font-semibold text-white">Explanation</h3>
-                          <Card className="bg-slate-800/30 border-slate-600">
-                            <CardContent className="p-6">
-                              <p className="text-gray-300 leading-relaxed">
-                                {currentSolution.explanation}
-                              </p>
+
+                        <h3 className="text-xl font-semibold text-white">Example 2</h3>
+                        <Card className="bg-slate-900/50 border-slate-600">
+                          <CardContent className="p-4">
+                            <div className="text-blue-400 text-xl ">Input :</div>
+                            <pre className="text-gray-300 font-mono text-sm whitespace-pre-wrap break-words overflow-x-auto p-2 rounded">
+                          <div dangerouslySetInnerHTML={{ __html: question?.input2 }} />
+                        </pre>
+                        <div className="text-blue-400 text-xl ">Output :</div>
+                        <pre className="text-gray-300 font-mono text-sm whitespace-pre-wrap break-words overflow-x-auto p-2 rounded">
+                          <div dangerouslySetInnerHTML={{ __html: question?.output2 }} />
+                        </pre>
+                            {/* <div className="space-y-2 font-mono text-sm">
+                              
+                              <div className="text-green-400">nums = [2,7,11,15], target = 9</div>
+                              <div className="text-gray-400">Output:</div>
+                              <div className="text-blue-400">[0,1]</div>
+                              <div className="text-gray-400 mt-4">Explanation:</div>
+                              <div className="text-gray-300">
+                                Because nums[0] + nums[1] == 9, we return [0, 1].
+                              </div>
+                            </div> */}
+                          </CardContent>
+                        </Card>
+                      </div>
+                      
+
+                      <h3 className="text-xl font-semibold text-white">Constraints</h3>
+                      <Card className="bg-slate-900/50 border-slate-600">
+                          <CardContent className="p-4">
+                            <div className="text-blue-400 text-xl ">Input :</div>
+                            <pre className="text-gray-300 font-mono text-sm whitespace-pre-wrap break-words overflow-x-auto p-2 rounded">
+                          <div dangerouslySetInnerHTML={{ __html: question?.input2 }} />
+                        </pre>
+                        <div className="text-blue-400 text-xl ">Output :</div>
+                        <pre className="text-gray-300 font-mono text-sm whitespace-pre-wrap break-words overflow-x-auto p-2 rounded">
+                          <div dangerouslySetInnerHTML={{ __html: question?.constraints }} />
+                        </pre>
+                          </CardContent>
+                        </Card>
+                    </TabsContent>
+
+                    <TabsContent value="solution" className="space-y-6">
+                      {/* Select Solution approach */}
+                      <div className=" flex justify-start items-center space-x-5 ">
+                        <label className="text-2xl font-bold text-blue-300">Solution Approach</label>
+                        <div className="grid grid-cols-5 gap-5">
+                          {approaches.map((approach: Approach) => (
+                            <Button
+                              key={approach.id}
+                              variant={selectedApproach === approach.id ? "default" : "outline"}
+                              className={`justify-start text-left h-auto py-2 px-4 ${selectedApproach === approach.id
+                                  ? "bg-slate-50 hover:bg-slate-200"
+                                  : "bg-slate-900/50 border-slate-600 hover:bg-slate-800"
+                                }`}
+                              onClick={() => handleApproachClick(approach.id)}
+                            >
+                              <div className="space-y-1">
+                                <div className={`font-medium ${approach.color}`}>
+                                  {approach.name}
+                                </div>
+                                <div className="text-xs text-gray-400">
+                                  {approach.description}
+                                </div>
+                              </div>
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {currentSolution ? (
+                        <div className="space-y-6">
+                          <div className="flex items-center justify-between">
+                            <h2 className="text-2xl font-bold text-white">
+                              {approaches.find((a: Approach) => a.id === selectedApproach)?.name} Approach
+                            </h2>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={handleCopyClick}
+                              className="bg-slate-900/50 border-slate-600 text-slate-300 hover:bg-slate-800"
+                            >
+                              <Copy className="w-4 h-4 mr-2" />
+                              Copy Code
+                            </Button>
+                          </div>
+
+                          <Card className="bg-slate-900 border-slate-700">
+                            <CardHeader className="pb-2">
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-2">
+                                  <span className="text-sm text-gray-400">
+                                    {languages.find((l: Language) => l.id === selectedLanguage)?.icon}
+                                  </span>
+                                  <span className="text-sm font-medium text-gray-300">
+                                    {languages.find((l: Language) => l.id === selectedLanguage)?.name}
+                                  </span>
+                                </div>
+                              </div>
+                            </CardHeader>
+                            <CardContent>
+                              <pre className="text-sm text-gray-100 overflow-x-auto">
+                                <code>{currentSolution.code}</code>
+                              </pre>
                             </CardContent>
                           </Card>
-                        </div>
 
-                        <div className="space-y-4">
-                          <h3 className="text-xl font-semibold text-white">Complexity Analysis</h3>
-                          <div className="grid md:grid-cols-2 gap-4">
+                          <div className="space-y-4">
+                            <h3 className="text-xl font-semibold text-white">Explanation</h3>
                             <Card className="bg-slate-800/30 border-slate-600">
                               <CardContent className="p-6">
-                                <div className="flex items-center space-x-3 mb-2">
-                                  {getComplexityIcon(currentSolution.timeComplexity)}
-                                  <h4 className="font-semibold text-white">Time Complexity</h4>
-                                </div>
-                                <p className="text-2xl font-bold text-blue-400 mb-2">
-                                  {currentSolution.timeComplexity}
-                                </p>
-                                <p className="text-sm text-gray-400">
-                                  Time taken relative to input size
-                                </p>
-                              </CardContent>
-                            </Card>
-                            <Card className="bg-slate-800/30 border-slate-600">
-                              <CardContent className="p-6">
-                                <div className="flex items-center space-x-3 mb-2">
-                                  <Zap className="w-5 h-5 text-purple-400" />
-                                  <h4 className="font-semibold text-white">Space Complexity</h4>
-                                </div>
-                                <p className="text-2xl font-bold text-purple-400 mb-2">
-                                  {currentSolution.spaceComplexity}
-                                </p>
-                                <p className="text-sm text-gray-400">
-                                  Extra memory used by algorithm
+                                <p className="text-gray-300 leading-relaxed">
+                                  {currentSolution.explanation}
                                 </p>
                               </CardContent>
                             </Card>
                           </div>
-                        </div>
 
-                        {/* <div className="space-y-4">
+                          <div className="space-y-4">
+                            <h3 className="text-xl font-semibold text-white">Complexity Analysis</h3>
+                            <div className="grid md:grid-cols-2 gap-4">
+                              <Card className="bg-slate-800/30 border-slate-600">
+                                <CardContent className="p-6">
+                                  <div className="flex items-center space-x-3 mb-2">
+                                    {getComplexityIcon(currentSolution.timeComplexity)}
+                                    <h4 className="font-semibold text-white">Time Complexity</h4>
+                                  </div>
+                                  <p className="text-2xl font-bold text-blue-400 mb-2">
+                                    {currentSolution.timeComplexity}
+                                  </p>
+                                  <p className="text-sm text-gray-400">
+                                    Time taken relative to input size
+                                  </p>
+                                </CardContent>
+                              </Card>
+                              <Card className="bg-slate-800/30 border-slate-600">
+                                <CardContent className="p-6">
+                                  <div className="flex items-center space-x-3 mb-2">
+                                    <Zap className="w-5 h-5 text-purple-400" />
+                                    <h4 className="font-semibold text-white">Space Complexity</h4>
+                                  </div>
+                                  <p className="text-2xl font-bold text-purple-400 mb-2">
+                                    {currentSolution.spaceComplexity}
+                                  </p>
+                                  <p className="text-sm text-gray-400">
+                                    Extra memory used by algorithm
+                                  </p>
+                                </CardContent>
+                              </Card>
+                            </div>
+                          </div>
+
+                          {/* <div className="space-y-4">
                           <h3 className="text-xl font-semibold text-white">Approach Comparison</h3>
                           <div className="overflow-x-auto">
                             <table className="w-full">
@@ -408,24 +464,24 @@ const QuestionPage: React.FC = () => {
                             </table>
                           </div>
                         </div> */}
-                      </div>
-                    ) : (
-                      <div className="text-center py-12">
-                        <AlertCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                        <h3 className="text-xl font-semibold text-white mb-2">Solution not available</h3>
-                        <p className="text-gray-400">
-                          The solution for {languages.find((l: Language) => l.id === selectedLanguage)?.name} in {approaches.find((a: Approach) => a.id === selectedApproach)?.name.toLowerCase()} approach is not available yet.
-                        </p>
-                      </div>
-                    )}
-                  </TabsContent>
-                </Tabs>
-              </CardContent>
-            </Card>
+                        </div>
+                      ) : (
+                        <div className="text-center py-12">
+                          <AlertCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                          <h3 className="text-xl font-semibold text-white mb-2">Solution not available</h3>
+                          <p className="text-gray-400">
+                            The solution for {languages.find((l: Language) => l.id === selectedLanguage)?.name} in {approaches.find((a: Approach) => a.id === selectedApproach)?.name.toLowerCase()} approach is not available yet.
+                          </p>
+                        </div>
+                      )}
+                    </TabsContent>
+                  </Tabs>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 };
