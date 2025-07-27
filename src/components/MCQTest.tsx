@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Clock, ChevronLeft, ChevronRight, Flag, CheckCircle, Maximize, Minimize } from "lucide-react";
-import { Question, questionBank, categories, getRandomQuestions } from "@/data/questions";
+import { Clock, ChevronLeft, ChevronRight, CheckCircle, Maximize, Minimize, BookOpen, ArrowLeft, ArrowRight, Lightbulb, Eye, HelpCircle } from "lucide-react";
+import { Question, questionBank, categories, getRandomQuestions } from "@/data/questions.ts";
 import { TestResults } from "./TestResults";
 
 interface MCQTestProps {
@@ -14,18 +14,30 @@ interface MCQTestProps {
 }
 
 export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
-  const [questions] = useState<Question[]>(() => getRandomQuestions(categoryId, 60));
+  const isPlacementTest = categoryId === 'placement-test';
+  const questionCount = isPlacementTest ? 90 : (mode === 'practice' ? 20 : 60);
+  const testDuration = isPlacementTest ? 7200 : 3600; // 120 minutes for placement test, 60 for others
+  
+  const [questions] = useState<Question[]>(() => getRandomQuestions(categoryId, questionCount));
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number>>({});
-  const [timeLeft, setTimeLeft] = useState(mode === 'test' ? 3600 : 0); // 60 minutes for test, no timer for practice
+  const [timeLeft, setTimeLeft] = useState(mode === 'test' ? testDuration : 0);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [flaggedQuestions, setFlaggedQuestions] = useState<Set<number>>(new Set());
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showExplanation, setShowExplanation] = useState<Record<number, boolean>>({});
+  const [showTopicDetails, setShowTopicDetails] = useState(mode === 'practice');
+  const [currentPage, setCurrentPage] = useState(0);
+  const [showHints, setShowHints] = useState<Record<number, boolean>>({});
+
+  const questionsPerPage = 5;
+  const totalPages = Math.ceil(questions.length / questionsPerPage);
+  const currentPageQuestions = questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage);
 
   const category = categories.find(c => c.id === categoryId);
   const currentQuestion = questions[currentQuestionIndex];
-  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+  const progress = mode === 'practice' ? 
+    ((currentPage + 1) / totalPages) * 100 : 
+    ((currentQuestionIndex + 1) / questions.length) * 100;
   const answered = Object.keys(selectedAnswers).length;
 
   useEffect(() => {
@@ -44,17 +56,17 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const handleAnswerSelect = (optionIndex: number) => {
+  const handleAnswerSelect = (questionIndex: number, optionIndex: number) => {
     setSelectedAnswers(prev => ({
       ...prev,
-      [currentQuestionIndex]: optionIndex
+      [questionIndex]: optionIndex
     }));
     
     // Show explanation for practice mode after selecting an answer
     if (mode === 'practice') {
       setShowExplanation(prev => ({
         ...prev,
-        [currentQuestionIndex]: true
+        [questionIndex]: true
       }));
     }
   };
@@ -75,19 +87,20 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
     setCurrentQuestionIndex(index);
   };
 
-  const toggleFlag = () => {
-    setFlaggedQuestions(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(currentQuestionIndex)) {
-        newSet.delete(currentQuestionIndex);
-      } else {
-        newSet.add(currentQuestionIndex);
-      }
-      return newSet;
-    });
+  const toggleHint = (questionIndex: number) => {
+    setShowHints(prev => ({
+      ...prev,
+      [questionIndex]: !prev[questionIndex]
+    }));
   };
 
   const handleSubmit = () => {
+    // Exit fullscreen when test is submitted
+    if (document.fullscreenElement) {
+      document.exitFullscreen().then(() => {
+        setIsFullscreen(false);
+      });
+    }
     setIsSubmitted(true);
   };
 
@@ -104,14 +117,86 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
   };
 
   const calculateScore = () => {
+    let score = 0;
     let correct = 0;
+    let wrong = 0;
+    
     questions.forEach((question, index) => {
-      if (selectedAnswers[index] === question.correctAnswer) {
-        correct++;
+      if (selectedAnswers[index] !== undefined) {
+        if (selectedAnswers[index] === question.correctAnswer) {
+          correct++;
+          score += isPlacementTest ? 2 : 1; // +2 for placement test, +1 for others
+        } else {
+          wrong++;
+          score -= isPlacementTest ? 1 : 0; // -1 for placement test, 0 for others
+        }
       }
     });
-    return correct;
+    
+    return { score, correct, wrong };
   };
+
+  // Topic Details Page for Practice Mode
+  if (showTopicDetails && mode === 'practice') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background to-background/50 flex items-center justify-center p-4">
+        <Card className="w-full max-w-2xl">
+          <CardHeader>
+            <div className="flex items-center gap-3">
+              <div className={`p-2 rounded-lg text-white`} style={{ backgroundColor: category?.color }}>
+                <BookOpen className="w-6 h-6" />
+              </div>
+              <div>
+                <CardTitle className="text-2xl">{category?.name}</CardTitle>
+                <p className="text-muted-foreground">{category?.description}</p>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="prose prose-sm max-w-none">
+              <h3 className="text-lg font-semibold mb-3">Topic Overview</h3>
+              <p className="text-muted-foreground mb-4">
+                This practice session will help you strengthen your understanding of {category?.name.toLowerCase()}. 
+                You'll encounter various types of questions designed to test your knowledge and problem-solving skills.
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                <div className="p-4 bg-muted/50 rounded-lg">
+                  <h4 className="font-medium mb-2">Practice Format</h4>
+                  <ul className="text-sm text-muted-foreground space-y-1">
+                    <li>• 5 questions per page</li>
+                    <li>• Navigate with Previous/Next buttons</li>
+                    <li>• Instant explanations available</li>
+                    <li>• No time limit - learn at your pace</li>
+                  </ul>
+                </div>
+                <div className="p-4 bg-muted/50 rounded-lg">
+                  <h4 className="font-medium mb-2">Study Tips</h4>
+                  <ul className="text-sm text-muted-foreground space-y-1">
+                    <li>• Read each question carefully</li>
+                    <li>• Think through your reasoning</li>
+                    <li>• Review explanations for better understanding</li>
+                    <li>• Practice regularly for improvement</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex justify-between items-center pt-4">
+              <Button onClick={onBack} variant="outline">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Categories
+              </Button>
+              <Button onClick={() => setShowTopicDetails(false)} className="bg-gradient-primary">
+                Start Practice
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   if (isSubmitted) {
     return (
@@ -119,17 +204,20 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
         category={category!}
         questions={questions}
         selectedAnswers={selectedAnswers}
-        score={calculateScore()}
+        score={calculateScore().correct}
         totalQuestions={questions.length}
-        timeSpent={3600 - timeLeft}
+        timeSpent={testDuration - timeLeft}
         onRetake={() => {
           setIsSubmitted(false);
           setCurrentQuestionIndex(0);
           setSelectedAnswers({});
-          setTimeLeft(3600);
-          setFlaggedQuestions(new Set());
+          setTimeLeft(testDuration);
+          setCurrentPage(0);
+          setShowTopicDetails(mode === 'practice');
+          setShowHints({});
         }}
         onBack={onBack}
+        placementScore={isPlacementTest ? calculateScore() : undefined}
       />
     );
   }
@@ -148,9 +236,10 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
   }
 
   return (
-    <div className="min-h-screen bg-background p-4">
-      {/* Header */}
-      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b border-border mb-6">
+    <div className="min-h-screen bg-background">
+      <div className="flex-1">
+        {/* Header */}
+        <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b border-border mb-6 p-4">
         <div className="max-w-6xl mx-auto py-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-4">
@@ -161,7 +250,7 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
               <h1 className="text-2xl font-bold">{category?.name}</h1>
             </div>
             <div className="flex items-center gap-4">
-              {mode === 'test' && (
+              {mode === 'test' && !isSubmitted && (
                 <>
                   <div className="flex items-center gap-2 text-lg font-mono">
                     <Clock className="w-5 h-5 text-destructive" />
@@ -179,164 +268,266 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
                   Practice Mode
                 </Badge>
               )}
-              <Button onClick={handleSubmit} variant="default" className="bg-gradient-primary">
-                Submit {mode === 'practice' ? 'Practice' : 'Test'}
-              </Button>
             </div>
           </div>
-          {/* change need */}
+          
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <span>Question {currentQuestionIndex + 1} of {questions.length}</span>
+            {mode === 'practice' ? (
+              <span>Page {currentPage + 1} of {totalPages}</span>
+            ) : (
+              <span>Question {currentQuestionIndex + 1} of {questions.length}</span>
+            )}
             <span>•</span>
             <span>{answered} answered</span>
-            <span>•</span>
-            <span>{flaggedQuestions.size} flagged</span>
           </div>
           
           <Progress value={progress} className="mt-2 h-2" />
         </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Question Navigation Sidebar */}
-        <div className="lg:col-span-1">
-          <Card className="sticky top-28">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg">Questions</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-5 lg:grid-cols-4 gap-2">
-                {questions.map((_, index) => (
-                  <Button
-                    key={index}
-                    variant={currentQuestionIndex === index ? "default" : "outline"}
-                    size="sm"
-                    className={`relative h-10 p-0 ${
-                      selectedAnswers[index] !== undefined
-                        ? "bg-success/10 border-success text-success-foreground"
-                        : ""
-                    } ${
-                      flaggedQuestions.has(index)
-                        ? "border-warning text-warning"
-                        : ""
-                    }`}
-                    onClick={() => handleQuestionNavigation(index)}
-                  >
-                    {index + 1}
-                    {selectedAnswers[index] !== undefined && (
-                      <CheckCircle className="w-3 h-3 absolute -top-1 -right-1 text-success" />
-                    )}
-                    {flaggedQuestions.has(index) && (
-                      <Flag className="w-3 h-3 absolute -top-1 -left-1 text-warning fill-current" />
-                    )}
-                  </Button>
-                ))}
-              </div>
-              
-              <div className="mt-4 space-y-2 text-xs">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-success rounded"></div>
-                  <span>Answered</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 border border-muted-foreground rounded"></div>
-                  <span>Not Answered</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Flag className="w-3 h-3 text-warning fill-current" />
-                  <span>Flagged</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </div>
 
-        {/* Main Question Area */}
-        <div className="lg:col-span-3">
-          <Card className="animate-slideInLeft">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline">Question {currentQuestionIndex + 1}</Badge>
-                  <Badge variant={currentQuestion.difficulty === 'easy' ? 'secondary' : 
-                                currentQuestion.difficulty === 'medium' ? 'default' : 'destructive'}>
-                    {currentQuestion.difficulty}
-                  </Badge>
-                </div>
+        <div className="max-w-6xl mx-auto p-4">
+          {mode === 'practice' ? (
+            // Practice Mode: 5 questions per page
+            <div className="space-y-6">
+              {/* Questions on current page */}
+              {currentPageQuestions.map((question, pageIndex) => {
+                const actualIndex = currentPage * questionsPerPage + pageIndex;
+                return (
+                  <Card key={question.id} className="animate-slideInLeft">
+                    <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Badge variant="outline">Question {actualIndex + 1} of {questions.length}</Badge>
+                          <Badge variant={question.difficulty === 'easy' ? 'secondary' : 
+                                        question.difficulty === 'medium' ? 'default' : 'destructive'}>
+                            {question.difficulty}
+                          </Badge>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => toggleHint(actualIndex)}
+                            className="text-blue-600 border-blue-200 hover:bg-blue-50"
+                          >
+                            <Lightbulb className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setShowExplanation(prev => ({ ...prev, [actualIndex]: !prev[actualIndex] }))}
+                            className="text-green-600 border-green-200 hover:bg-green-50"
+                          >
+                            <Eye className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                      <div className="text-lg leading-relaxed">
+                        {question.question}
+                      </div>
+                      
+                      <div className="space-y-3">
+                        {question.options.map((option, optionIndex) => (
+                          <Button
+                            key={optionIndex}
+                            variant={selectedAnswers[actualIndex] === optionIndex ? "default" : "outline"}
+                            className={`w-full justify-start text-left h-auto p-4 ${
+                              selectedAnswers[actualIndex] === optionIndex
+                                ? "bg-primary text-primary-foreground"
+                                : "hover:bg-muted"
+                            }`}
+                            onClick={() => handleAnswerSelect(actualIndex, optionIndex)}
+                          >
+                            <span className="font-semibold mr-3">{String.fromCharCode(65 + optionIndex)}.</span>
+                            <span className="flex-1">{option}</span>
+                          </Button>
+                        ))}
+                      </div>
+                      
+                      {/* Hint Feature */}
+                      {showHints[actualIndex] && (
+                        <Card className="bg-blue-50 border-l-4 border-l-blue-500 animate-fade-in">
+                          <CardContent className="p-4">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Lightbulb className="w-4 h-4 text-blue-600" />
+                              <span className="font-medium text-blue-800">Hint</span>
+                            </div>
+                            <p className="text-blue-700 text-sm">
+                              Think about the key concepts involved. Consider eliminating obviously wrong answers first, then analyze the remaining options carefully.
+                            </p>
+                          </CardContent>
+                        </Card>
+                      )}
+                      
+                      {/* Explanation for Practice Mode */}
+                      {showExplanation[actualIndex] && (
+                        <Card className="bg-muted/50 border-l-4 border-l-primary animate-fade-in">
+                          <CardContent className="p-4">
+                            <div className="space-y-3">
+                              <div className="flex items-center gap-2">
+                                <Badge variant={selectedAnswers[actualIndex] === question.correctAnswer ? "default" : "destructive"}>
+                                  {selectedAnswers[actualIndex] === question.correctAnswer ? "Correct!" : "Incorrect"}
+                                </Badge>
+                                <span className="text-sm text-muted-foreground">
+                                  Correct Answer: {String.fromCharCode(65 + question.correctAnswer)}
+                                </span>
+                              </div>
+                              <div className="text-sm leading-relaxed">
+                                <strong>Explanation:</strong> {question.explanation}
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      )}
+                    </CardContent>
+                  </Card>
+                );
+              })}
+
+              {/* Page Navigation - Moved to bottom */}
+              <div className="flex items-center justify-center gap-4 py-6">
                 <Button
+                  onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
+                  disabled={currentPage === 0}
                   variant="outline"
                   size="sm"
-                  onClick={toggleFlag}
-                  className={flaggedQuestions.has(currentQuestionIndex) ? "border-warning text-warning" : ""}
                 >
-                  <Flag className={`w-4 h-4 ${flaggedQuestions.has(currentQuestionIndex) ? "fill-current" : ""}`} />
+                  <ChevronLeft className="w-4 h-4" />
+                  Previous
+                </Button>
+                
+                <div className="flex items-center gap-2">
+                  {Array.from({ length: totalPages }, (_, i) => (
+                    <Button
+                      key={i}
+                      onClick={() => setCurrentPage(i)}
+                      variant={currentPage === i ? "default" : "outline"}
+                      size="sm"
+                      className="w-10 h-10"
+                    >
+                      {i + 1}
+                    </Button>
+                  ))}
+                </div>
+                
+                <Button
+                  onClick={() => setCurrentPage(Math.min(totalPages - 1, currentPage + 1))}
+                  disabled={currentPage === totalPages - 1}
+                  variant="outline"
+                  size="sm"
+                >
+                  Next
+                  <ChevronRight className="w-4 h-4" />
                 </Button>
               </div>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="text-lg leading-relaxed">
-                {currentQuestion.question}
-              </div>
-              
-              <div className="space-y-3">
-                {currentQuestion.options.map((option, index) => (
-                  <Button
-                    key={index}
-                    variant={selectedAnswers[currentQuestionIndex] === index ? "default" : "outline"}
-                    className={`w-full justify-start text-left h-auto p-4 ${
-                      selectedAnswers[currentQuestionIndex] === index
-                        ? "bg-primary text-primary-foreground"
-                        : "hover:bg-muted"
-                    }`}
-                    onClick={() => handleAnswerSelect(index)}
-                  >
-                    <span className="font-semibold mr-3">{String.fromCharCode(65 + index)}.</span>
-                    <span className="flex-1">{option}</span>
-                  </Button>
-                ))}
-              </div>
-              
-              {/* Explanation for Practice Mode */}
-              {mode === 'practice' && showExplanation[currentQuestionIndex] && selectedAnswers[currentQuestionIndex] !== undefined && (
-                <Card className="bg-muted/50 border-l-4 border-l-primary animate-fade-in">
-                  <CardContent className="p-4">
-                    <div className="space-y-3">
+            </div>
+          ) : (
+            // Test Mode: Original single question layout
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+              {/* Question Navigation Sidebar */}
+              <div className="lg:col-span-1">
+                <Card className="sticky top-28">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg">Questions</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-5 lg:grid-cols-4 gap-2">
+                      {questions.map((_, index) => (
+                        <Button
+                          key={index}
+                          variant={currentQuestionIndex === index ? "default" : "outline"}
+                          size="sm"
+                          className={`relative h-10 p-0 ${
+                            selectedAnswers[index] !== undefined
+                              ? "bg-success/10 border-success text-success-foreground"
+                              : ""
+                          }`}
+                          onClick={() => handleQuestionNavigation(index)}
+                        >
+                          {index + 1}
+                          {selectedAnswers[index] !== undefined && (
+                            <CheckCircle className="w-3 h-3 absolute -top-1 -right-1 text-success" />
+                          )}
+                        </Button>
+                      ))}
+                    </div>
+                    
+                    <div className="mt-4 space-y-2 text-xs">
                       <div className="flex items-center gap-2">
-                        <Badge variant={selectedAnswers[currentQuestionIndex] === currentQuestion.correctAnswer ? "default" : "destructive"}>
-                          {selectedAnswers[currentQuestionIndex] === currentQuestion.correctAnswer ? "Correct!" : "Incorrect"}
-                        </Badge>
-                        <span className="text-sm text-muted-foreground">
-                          Correct Answer: {String.fromCharCode(65 + currentQuestion.correctAnswer)}
-                        </span>
+                        <div className="w-3 h-3 bg-success rounded"></div>
+                        <span>Answered</span>
                       </div>
-                      <div className="text-sm leading-relaxed">
-                        <strong>Explanation:</strong> {currentQuestion.explanation}
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 border border-muted-foreground rounded"></div>
+                        <span>Not Answered</span>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
-              )}
-              
-              <div className="flex justify-between pt-4">
-                <Button
-                  variant="outline"
-                  onClick={handlePrevious}
-                  disabled={currentQuestionIndex === 0}
-                >
-                  <ChevronLeft className="w-4 h-4 mr-1" />
-                  Previous
-                </Button>
-                <Button
-                  onClick={handleNext}
-                  disabled={currentQuestionIndex === questions.length - 1}
-                  className="bg-gradient-primary"
-                >
-                  Next
-                  <ChevronRight className="w-4 h-4 ml-1" />
-                </Button>
               </div>
-            </CardContent>
-          </Card>
+
+              {/* Main Question Area */}
+              <div className="lg:col-span-3">
+                <Card className="animate-slideInLeft">
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline">Question {currentQuestionIndex + 1}</Badge>
+                        <Badge variant={currentQuestion.difficulty === 'easy' ? 'secondary' : 
+                                      currentQuestion.difficulty === 'medium' ? 'default' : 'destructive'}>
+                          {currentQuestion.difficulty}
+                        </Badge>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="text-lg leading-relaxed">
+                      {currentQuestion.question}
+                    </div>
+                    
+                    <div className="space-y-3">
+                      {currentQuestion.options.map((option, index) => (
+                        <Button
+                          key={index}
+                          variant={selectedAnswers[currentQuestionIndex] === index ? "default" : "outline"}
+                          className={`w-full justify-start text-left h-auto p-4 ${
+                            selectedAnswers[currentQuestionIndex] === index
+                              ? "bg-primary text-primary-foreground"
+                              : "hover:bg-muted"
+                          }`}
+                          onClick={() => handleAnswerSelect(currentQuestionIndex, index)}
+                        >
+                          <span className="font-semibold mr-3">{String.fromCharCode(65 + index)}.</span>
+                          <span className="flex-1">{option}</span>
+                        </Button>
+                      ))}
+                    </div>
+                    
+                    <div className="flex justify-between pt-4">
+                      <Button
+                        variant="outline"
+                        onClick={handlePrevious}
+                        disabled={currentQuestionIndex === 0}
+                      >
+                        <ChevronLeft className="w-4 h-4 mr-1" />
+                        Previous
+                      </Button>
+                      <Button
+                        onClick={handleNext}
+                        disabled={currentQuestionIndex === questions.length - 1}
+                        className="bg-gradient-primary"
+                      >
+                        Next
+                        <ChevronRight className="w-4 h-4 ml-1" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

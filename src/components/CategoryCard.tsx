@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Clock, BookOpen, Trophy } from "lucide-react";
-import { Category } from "@/data/questions";
+import { Category } from "@/data/questions.ts";
 
 interface CategoryCardProps {
   category: Category;
@@ -15,7 +15,7 @@ export const CategoryCard = ({ category, onStartTest }: CategoryCardProps) => {
       case 'primary':
         return 'border-primary/20 hover:border-primary/40 hover:shadow-glow';
       case 'secondary':
-        return 'border-green-300 hover:border-green/40';
+        return 'border-secondary/20 hover:border-secondary/40';
       case 'warning':
         return 'border-warning/20 hover:border-warning/40';
       case 'success':
@@ -39,16 +39,16 @@ export const CategoryCard = ({ category, onStartTest }: CategoryCardProps) => {
   };
 
   return (
-    <Card className={`group cursor-pointer transition-all duration-300 hover:scale-105 hover:bg-gray-190 bg-gradient-card ${getColorClasses(category.color)} animate-fadeIn`}>
+    
+    <Card className={`group cursor-pointer transition-all duration-300 hover:scale-105 bg-gradient-card ${getColorClasses(category.color)} animate-fadeIn`}> 
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div className="text-3xl mb-2 group-hover:animate-bounce-soft">
             {category.icon}
           </div>
-          {/* Number of questions */}
-          {/* <Badge variant={getBadgeVariant(category.color)} className="text-xs">
+          <Badge variant={getBadgeVariant(category.color)} className="text-xs">
             {category.totalQuestions} Questions
-          </Badge> */}
+          </Badge>
         </div>
         <CardTitle className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
           {category.name}
@@ -58,28 +58,24 @@ export const CategoryCard = ({ category, onStartTest }: CategoryCardProps) => {
         </CardDescription>
       </CardHeader>
       <CardContent className="pt-0">
-        <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4 ">
-          <div className="flex items-center gap-2 text-blue-500">
+        <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+          <div className="flex items-center gap-1">
             <Clock className="w-4 h-4" />
             <span>60 min</span>
           </div>
-          <div className="flex items-center text-green-500 gap-1">
+          <div className="flex items-center gap-1">
             <BookOpen className="w-4 h-4" />
             <span>MCQ</span>
           </div>
-          <div className="flex items-center text-red-500 gap-1">
+          <div className="flex items-center gap-1">
             <Trophy className="w-4 h-4" />
-            <span>Test </span>
-          </div>
-          <div className="flex items-center text-orange-500 gap-1">
-              <BookOpen className="w-4 h-4 mr-2" />
-              <span>Practice</span>
+            <span>Test</span>
           </div>
         </div>
         <div className="space-y-3">
           <Button 
             onClick={() => onStartTest(category.id, 'practice')}
-            className="w-full bg-gray-300 hover:bg-secondary/80 text-secondary-foreground transition-all duration-300"
+            className="w-full bg-secondary hover:bg-secondary/80 text-secondary-foreground transition-all duration-300"
             size="lg"
             variant="secondary"
           >
@@ -91,11 +87,12 @@ export const CategoryCard = ({ category, onStartTest }: CategoryCardProps) => {
             className="w-full bg-gradient-primary hover:shadow-medium transition-all duration-300"
             size="lg"
           >
-            <Trophy className="w-4 h-4 mr-2 " />
+            <Trophy className="w-4 h-4 mr-2" />
             Test Start
           </Button>
         </div>
       </CardContent>
     </Card>
+    
   );
 };

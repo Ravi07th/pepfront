@@ -52,9 +52,9 @@ const QuestionPanel: React.FC<QuestionPanelProps> = ({
   };
 
   return (
-    <div className="flex-1 flex">
+    <div className="flex-1  flex">
       {/* Question Navigation Sidebar */}
-      <div className="w-64 bg-white border-r border-gray-200 p-4">
+      <div className="w-64  bg-white border ml-20 border-gray-200 p-4">
         <h3 className="font-semibold text-gray-900 mb-4 flex items-center space-x-2">
           {getQuestionIcon()}
           <span>{subsectionName}</span>
@@ -70,7 +70,7 @@ const QuestionPanel: React.FC<QuestionPanelProps> = ({
               <button
                 key={index}
                 onClick={() => onQuestionChange(index)}
-                className={`aspect-square flex items-center justify-center text-sm font-medium rounded-lg transition-all ${
+                className={`aspect-square flex  items-center justify-center text-sm font-medium rounded-lg transition-all ${
                   isCurrent
                     ? 'bg-blue-600 text-white'
                     : isAnswered
@@ -187,7 +187,7 @@ const QuestionPanel: React.FC<QuestionPanelProps> = ({
               <div className="text-sm text-gray-500">
                 Progress: {currentQuestion + 1} / {totalQuestions}
               </div>
-              <div className="w-32 bg-gray-200 rounded-full h-2 mt-1">
+              <div className="w-80 bg-gray-200 rounded-full h-2 mt-1">
                 <div 
                   className="bg-blue-600 h-2 rounded-full transition-all duration-300"
                   style={{ width: `${((currentQuestion + 1) / totalQuestions) * 100}%` }}

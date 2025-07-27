@@ -123,7 +123,7 @@ const CompanyPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="relative overflow-hidden rounded-2xl bg-slate-800/50 border border-slate-700 mb-8">
+        <div className="relative overflow-hidden rounded-2xl bg-slate-800/50 border border-slate-700 mb-5">
           <div className={`absolute inset-0 bg-gradient-to-br ${company.color} opacity-10`} />
           <div className="relative p-8">
             <div className="flex items-center space-x-6">

@@ -24,8 +24,11 @@ Allow: /
 5.ExamPrep
 
 //to fix 
-general apptitude icon mission and hover effect on test start from categorycard
-need change in line 164 for progress bar in MCQTest
+tending card(tcs) and bakii dummy and crausel
+on clicking practice button having card including link and text https://prepinsta.com/tcs-syllabus/
+fix back problem in practice
+having 3 crard in section
+
 
 //future idea
 focus on engineering student

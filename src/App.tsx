@@ -13,15 +13,13 @@ import Header from "./components/Header.tsx";
 import Footer from "./components/Footer.tsx";
 import ExamPrep from "./pages/ExamPrep.tsx";
 import TcsExam from "./pages/TcsExam.tsx";
+import Contact from "./pages/Contact.tsx";
 
 
 const queryClient = new QueryClient();
 
 const App = () => (
-  // <QueryClientProvider client={queryClient}>
-  //   <TooltipProvider>
-  //     <Toaster />
-  //     <Sonner position="top-right" richColors />
+  
       <BrowserRouter>
       <Header/>
         <Routes>
@@ -34,6 +32,7 @@ const App = () => (
           
           {/* my testing */}
            <Route path="/practice" element={<Practice />} />
+           <Route path="/contact" element={<Contact />} />
           <Route path= "/uiComponents" element={<UiHome />} />
           <Route path= "/examPrep" element={<ExamPrep />} />
          <Route path="/study" element={<HomePage />} />

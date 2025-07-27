@@ -79,7 +79,7 @@ const Header = () => {
      { name: 'UI Material', href: '/uiComponents', icon: Palette },
      {name: 'Exam Prep', href:'/examPrep ',icon: Palette},
      { name: 'Study', href: '/study', icon: GraduationCap },
-     { name: 'About', href: '/about', icon: Info },
+     { name: 'Contact', href: '/contact', icon: Info },
    ];
 
   return (

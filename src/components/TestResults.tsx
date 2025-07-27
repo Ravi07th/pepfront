@@ -15,6 +15,7 @@ interface TestResultsProps {
   timeSpent: number;
   onRetake: () => void;
   onBack: () => void;
+  placementScore?: { score: number; correct: number; wrong: number };
 }
 
 export const TestResults = ({
@@ -25,7 +26,8 @@ export const TestResults = ({
   totalQuestions,
   timeSpent,
   onRetake,
-  onBack
+  onBack,
+  placementScore
 }: TestResultsProps) => {
   const percentage = Math.round((score / totalQuestions) * 100);
   const unanswered = totalQuestions - Object.keys(selectedAnswers).length;
@@ -79,37 +81,70 @@ export const TestResults = ({
             
             <Progress value={percentage} className="h-4" />
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-              <div className="space-y-2">
-                <div className="flex items-center justify-center text-success">
-                  <CheckCircle className="w-5 h-5 mr-1" />
-                  <span className="font-semibold">Correct</span>
+            {placementScore ? (
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-center text-primary">
+                    <Trophy className="w-5 h-5 mr-1" />
+                    <span className="font-semibold">Total Score</span>
+                  </div>
+                  <div className="text-2xl font-bold text-primary">{placementScore.score}</div>
                 </div>
-                <div className="text-2xl font-bold text-success">{score}</div>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-center text-success">
+                    <CheckCircle className="w-5 h-5 mr-1" />
+                    <span className="font-semibold">Correct (+2)</span>
+                  </div>
+                  <div className="text-2xl font-bold text-success">{placementScore.correct}</div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-center text-destructive">
+                    <XCircle className="w-5 h-5 mr-1" />
+                    <span className="font-semibold">Wrong (-1)</span>
+                  </div>
+                  <div className="text-2xl font-bold text-destructive">{placementScore.wrong}</div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-center text-primary">
+                    <Clock className="w-5 h-5 mr-1" />
+                    <span className="font-semibold">Time</span>
+                  </div>
+                  <div className="text-lg font-bold text-primary">{formatTime(timeSpent)}</div>
+                </div>
               </div>
-              <div className="space-y-2">
-                <div className="flex items-center justify-center text-destructive">
-                  <XCircle className="w-5 h-5 mr-1" />
-                  <span className="font-semibold">Incorrect</span>
+            ) : (
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-center text-success">
+                    <CheckCircle className="w-5 h-5 mr-1" />
+                    <span className="font-semibold">Correct</span>
+                  </div>
+                  <div className="text-2xl font-bold text-success">{score}</div>
                 </div>
-                <div className="text-2xl font-bold text-destructive">
-                  {Object.keys(selectedAnswers).length - score}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-center text-destructive">
+                    <XCircle className="w-5 h-5 mr-1" />
+                    <span className="font-semibold">Incorrect</span>
+                  </div>
+                  <div className="text-2xl font-bold text-destructive">
+                    {Object.keys(selectedAnswers).length - score}
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-center text-muted-foreground">
+                    <span className="font-semibold">Unanswered</span>
+                  </div>
+                  <div className="text-2xl font-bold text-muted-foreground">{unanswered}</div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-center text-primary">
+                    <Clock className="w-5 h-5 mr-1" />
+                    <span className="font-semibold">Time</span>
+                  </div>
+                  <div className="text-lg font-bold text-primary">{formatTime(timeSpent)}</div>
                 </div>
               </div>
-              <div className="space-y-2">
-                <div className="flex items-center justify-center text-muted-foreground">
-                  <span className="font-semibold">Unanswered</span>
-                </div>
-                <div className="text-2xl font-bold text-muted-foreground">{unanswered}</div>
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center justify-center text-primary">
-                  <Clock className="w-5 h-5 mr-1" />
-                  <span className="font-semibold">Time</span>
-                </div>
-                <div className="text-lg font-bold text-primary">{formatTime(timeSpent)}</div>
-              </div>
-            </div>
+            )}
           </CardContent>
         </Card>
 
