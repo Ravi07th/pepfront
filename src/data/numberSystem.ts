@@ -1,14 +1,20 @@
-// export const numberSystemQuestions = [
-//     id: 'ec-1',
-//     question: "Which sentence is grammatically correct?",
-//     options: [
-//       "Neither of the students have completed their homework.",
-//       "Neither of the students has completed their homework.",
-//       "Neither of the students have completed his homework.",
-//       "Neither of the students has completed his homework."
-//     ],
-//     correctAnswer: 1,
-//     explanation: "'Neither' is singular, so it takes 'has'. 'Their' is acceptable for gender-neutral reference.",
-//     difficulty: 'medium' as const
-
-// ]
+// { 'id': 'average-1', 'question': 'The average of 100 numbers is 44. The average of these 100 numbers and 4 other new numbers is 50. The average of the four new numbers will be', 'options': ['800', '200', '176', '24'], 'correctAnswer': 1, 'explanation': 'Using weighted average: 100*44 + 4*x = 104*50 => x = 200.', 'difficulty': 'medium' },
+// { 'id': 'average-2', 'question': 'The average of 30 numbers is 15. The average of the first 18 numbers is 10 and that of the next 11 numbers is 20. The last number is', 'options': ['56', '52', '60', '50'], 'correctAnswer': 3, 'explanation': 'Sum of first 18: 180, next 11: 220, total: 450 => last = 450 - 400 = 50.', 'difficulty': 'medium' },
+// { 'id': 'average-3', 'question': 'The arithmetic mean of the following numbers 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6 and 7, 7, 7, 7, 7, 7, 7 is', 'options': ['4', '5', '14', '20'], 'correctAnswer': 1, 'explanation': 'Sum = 140, count = 28 => mean = 140/28 = 5.', 'difficulty': 'easy' },
+// { 'id': 'average-4', 'question': 'The average of all the numbers between 6 and 50 which are divisible by 5 is', 'options': ['27.5', '30', '28.5', '22'], 'correctAnswer': 0, 'explanation': 'Numbers: 10,15,...,50 => average = (first + last)/2 = (10+45)/2 = 27.5.', 'difficulty': 'easy' },
+// { 'id': 'average-5', 'question': 'There are 100 students in 3 sections A, B and C of a class. The average marks of all the 3 sections was 84. The average of B and C was 87.5 and the average marks of A is 70. The number of students in A was', 'options': ['30', '35', '20', '25'], 'correctAnswer': 2, 'explanation': 'Using weighted average: 70x + 87.5(100-x) = 84*100 => x = 20.', 'difficulty': 'medium' },
+// { 'id': 'average-6', 'question': 'The average weight of first 11 persons among 12 persons is 95 kg. The weight of 12th person is 33 kg more than the average weight of all the 12 persons. The weight of the 12th person is', 'options': ['128.75 kg', '128 kg', '131 kg', '97.45 kg'], 'correctAnswer': 2, 'explanation': 'Let total avg = x => 11*95 + x + 33 = 12x => x = 98 => 12th = 131.', 'difficulty': 'medium' },
+// { 'id': 'average-7', 'question': 'Sample average question number 7?', 'options': ['Option A', 'Option B', 'Option C', 'Option D'], 'correctAnswer': 0, 'explanation': 'This is a placeholder explanation.', 'difficulty': 'easy' },
+// { 'id': 'average-8', 'question': 'Sample average question number 8?', 'options': ['Option A', 'Option B', 'Option C', 'Option D'], 'correctAnswer': 0, 'explanation': 'This is a placeholder explanation.', 'difficulty': 'easy' },
+// { 'id': 'average-9', 'question': 'Sample average question number 9?', 'options': ['Option A', 'Option B', 'Option C', 'Option D'], 'correctAnswer': 0, 'explanation': 'This is a placeholder explanation.', 'difficulty': 'easy' },
+// { 'id': 'average-10', 'question': 'Sample average question number 10?', 'options': ['Option A', 'Option B', 'Option C', 'Option D'], 'correctAnswer': 0, 'explanation': 'This is a placeholder explanation.', 'difficulty': 'easy' },
+// { 'id': 'average-11', 'question': 'Sample average question number 11?', 'options': ['Option A', 'Option B', 'Option C', 'Option D'], 'correctAnswer': 0, 'explanation': 'This is a placeholder explanation.', 'difficulty': 'easy' },
+// { 'id': 'average-12', 'question': 'Sample average question number 12?', 'options': ['Option A', 'Option B', 'Option C', 'Option D'], 'correctAnswer': 0, 'explanation': 'This is a placeholder explanation.', 'difficulty': 'easy' },
+// { 'id': 'average-13', 'question': 'Sample average question number 13?', 'options': ['Option A', 'Option B', 'Option C', 'Option D'], 'correctAnswer': 0, 'explanation': 'This is a placeholder explanation.', 'difficulty': 'easy' },
+// { 'id': 'average-14', 'question': 'Sample average question number 14?', 'options': ['Option A', 'Option B', 'Option C', 'Option D'], 'correctAnswer': 0, 'explanation': 'This is a placeholder explanation.', 'difficulty': 'easy' },
+// { 'id': 'average-15', 'question': 'Sample average question number 15?', 'options': ['Option A', 'Option B', 'Option C', 'Option D'], 'correctAnswer': 0, 'explanation': 'This is a placeholder explanation.', 'difficulty': 'easy' },
+// { 'id': 'average-16', 'question': 'Sample average question number 16?', 'options': ['Option A', 'Option B', 'Option C', 'Option D'], 'correctAnswer': 0, 'explanation': 'This is a placeholder explanation.', 'difficulty': 'easy' },
+// { 'id': 'average-17', 'question': 'Sample average question number 17?', 'options': ['Option A', 'Option B', 'Option C', 'Option D'], 'correctAnswer': 0, 'explanation': 'This is a placeholder explanation.', 'difficulty': 'easy' },
+// { 'id': 'average-18', 'question': 'Sample average question number 18?', 'options': ['Option A', 'Option B', 'Option C', 'Option D'], 'correctAnswer': 0, 'explanation': 'This is a placeholder explanation.', 'difficulty': 'easy' },
+// { 'id': 'average-19', 'question': 'Sample average question number 19?', 'options': ['Option A', 'Option B', 'Option C', 'Option D'], 'correctAnswer': 0, 'explanation': 'This is a placeholder explanation.', 'difficulty': 'easy' },
+// { 'id': 'average-20', 'question': 'Sample average question number 20?', 'options': ['Option A', 'Option B', 'Option C', 'Option D'], 'correctAnswer': 0, 'explanation': 'This is a placeholder explanation.', 'difficulty': 'easy' },

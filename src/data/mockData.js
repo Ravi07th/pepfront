@@ -11,7 +11,7 @@ export const companies = [
   {
     id: 'tcs',
     name: 'TCS',
-    logo: 'public/images/tcs.jpg',
+    logo: '/images/tcs.jpg',
     description: 'Technical interview questions from TCS',
     color: 'from-blue-400 to-blue-600',
     totalQuestions: 30
@@ -19,7 +19,7 @@ export const companies = [
   {
     id: 'wipro',
     name: 'WIPRO',
-    logo: 'public/images/wipro.jpg',
+    logo: '/images/wipro.jpg',
     description: 'Technical interview questions from WIPRO',
     color: 'from-purple-400 to-purple-600',
     totalQuestions: 30
@@ -27,7 +27,7 @@ export const companies = [
   {
     id: 'google',
     name: 'Google',
-    logo: 'public/images/google.jpg',
+    logo: '/images/google.jpg',
     description: 'Technical interview questions from Google',
     color: 'from-blue-400 to-blue-600',
     totalQuestions: 30
@@ -35,7 +35,7 @@ export const companies = [
   {
     id: 'cognizant',
     name: 'Cognizant',
-    logo: 'public/images/cognizant.png',
+    logo: '/images/cognizant.png',
     description: 'Technical interview questions from Cognizant',
     color: 'from-blue-400 to-blue-600',
     totalQuestions: 30
@@ -43,7 +43,7 @@ export const companies = [
   {
     id: 'infosys',
     name: 'Infosys',
-    logo: 'public/images/infosys.jpg',
+    logo: '/images/infosys.jpg',
     description: 'Technical interview questions from Infosys',
     color: 'from-blue-400 to-blue-600',
     totalQuestions: 30

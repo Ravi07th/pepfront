@@ -36,17 +36,18 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ answers, onReturnHome }) => {
 
   // Calculate section results
   const sectionResults = [
+    { name: 'Numerical Ability', ...calculateSectionScore('foundational', 'numerical') },
     { name: 'Verbal Ability', ...calculateSectionScore('foundational', 'verbal') },
     { name: 'Reasoning Ability', ...calculateSectionScore('foundational', 'reasoning') },
-    { name: 'Numerical Ability', ...calculateSectionScore('foundational', 'numerical') },
     { name: 'Advanced Quantitative', ...calculateSectionScore('advanced', 'adv-quant') },
-    { name: 'Advanced Reasoning', ...calculateSectionScore('advanced', 'adv-reasoning') },
-    { name: 'Advanced Coding', ...calculateSectionScore('advanced', 'coding') }
+    { name: 'Advanced Reasoning', ...calculateSectionScore('advanced', 'adv-reasoning') }
+    // Note: Coding section excluded from scoring as per requirements
   ];
   
   // Calculate overall score
   const totalCorrect = sectionResults.reduce((sum, section) => sum + section.correct, 0);
-  const overallScore = Math.round((totalCorrect / totalQuestions) * 100);
+  const totalQuestionsForScoring = 95; // Excluding 3 coding questions
+  const overallScore = Math.round((totalCorrect / totalQuestionsForScoring) * 100);
   const percentile = Math.min(99, Math.max(1, overallScore + Math.floor(Math.random() * 20) - 10)); // Simulated percentile
 
   const getScoreColor = (percentage: number) => {
@@ -214,7 +215,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ answers, onReturnHome }) => {
               onClick={() => setShowSolutions(false)}
               className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200"
             >
-              Back to Results
+              <span onClick={() => window.location.reload()}>Take Another Test</span>
             </button>
           </div>
           
@@ -237,6 +238,11 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ answers, onReturnHome }) => {
 
         {/* Overall Score Card */}
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
+          <div className="text-center mb-6">
+            <p className="text-sm text-amber-600 bg-amber-50 border border-amber-200 rounded-lg px-4 py-2 inline-block">
+              📝 Note: Advanced Coding section (3 questions) not included in scoring - Practice only
+            </p>
+          </div>
           <div className="grid md:grid-cols-4 gap-6">
             <div className="text-center">
               <div className="text-4xl font-bold text-blue-600 mb-2">{overallScore}%</div>
@@ -354,7 +360,10 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ answers, onReturnHome }) => {
             <Home className="h-5 w-5 inline mr-2" />
             Return to Home
           </button>
-          <button className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8 py-3 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg">
+          <button 
+            onClick={() => window.location.reload()}
+            className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8 py-3 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
+          >
             Take Another Test
           </button>
         </div>

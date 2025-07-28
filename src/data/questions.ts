@@ -2,7 +2,7 @@ import { generalAptitudeQuestions } from './generalAptitude';
 import { arithmeticAptitudeQuestions } from './arithmeticAptitudeQuestions';
 import { verbalReasoningQuestions } from './verbalReasoning';
 import { englishComprehensionQuestions } from './englishComprehension';
-
+import { numberSystemQuestions } from './numberSystemQuestions';
 export interface Question {
   id: string;
   question: string;
@@ -94,7 +94,16 @@ export const categories: Category[] = [
     icon: '🧩',
     color: 'warning',
     totalQuestions: 240
-  }
+  },
+  //My code
+  {
+    id: 'number-system',
+    name: 'Number System',
+    description: 'Test your overall aptitude skills including basic mathematics, logical reasoning, and general knowledge.',
+    icon: '🧠',
+    color: 'primary',
+    totalQuestions: 240
+  },
 ];
 
 // Utility function to randomly select questions from a category
@@ -102,6 +111,9 @@ export const getRandomQuestions = (categoryId: string, count: number = 60): Ques
   if (categoryId === 'placement-test') {
     // For placement test, get 30 questions from each of the three categories
     const generalQuestions = questionBank['general-aptitude'] || [];
+    //my code 
+    const numberQuestion = questionBank['number-system'] || [];
+
     const arithmeticQuestions = questionBank['arithmetic-aptitude'] || [];
     const verbalQuestions = questionBank['verbal-reasoning'] || [];
     
@@ -117,15 +129,27 @@ export const getRandomQuestions = (categoryId: string, count: number = 60): Ques
       [shuffledArithmetic[i], shuffledArithmetic[j]] = [shuffledArithmetic[j], shuffledArithmetic[i]];
     }
     
+   
+
+    
     const shuffledVerbal = [...verbalQuestions];
     for (let i = shuffledVerbal.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffledVerbal[i], shuffledVerbal[j]] = [shuffledVerbal[j], shuffledVerbal[i]];
     }
+    // My code
+     const shuffledNumber = [...numberQuestion];
+    for (let i = shuffledNumber.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledNumber[i], shuffledNumber[j]] = [shuffledNumber[j], shuffledNumber[i]];
+    }
+    
     
     // Combine and shuffle all selected questions
     const allQuestions = [
       ...shuffledGeneral.slice(0, 30),
+      //mycode
+      ...shuffledNumber.slice(0,30),
       ...shuffledArithmetic.slice(0, 30),
       ...shuffledVerbal.slice(0, 30)
     ];
@@ -157,6 +181,8 @@ export const getRandomQuestions = (categoryId: string, count: number = 60): Ques
 // Question bank mapping
 export const questionBank: Record<string, Question[]> = {
   'general-aptitude': generalAptitudeQuestions,
+  //My code
+  'number-aptitude': numberSystemQuestions,
   'arithmetic-aptitude': arithmeticAptitudeQuestions,
   'verbal-reasoning': verbalReasoningQuestions,
   'english-comprehension': englishComprehensionQuestions,
@@ -169,6 +195,8 @@ export const questionBank: Record<string, Question[]> = {
 
 export const questionsByCategory = {
   "General Aptitude": generalAptitudeQuestions,
+  //My code
+  "Number System": numberSystemQuestions,
   "Arithmetic Aptitude": arithmeticAptitudeQuestions,
   "Verbal and Reasoning": verbalReasoningQuestions,
   "English Comprehension": englishComprehensionQuestions

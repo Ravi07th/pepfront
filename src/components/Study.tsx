@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
-import { companies } from '../data/mockData';
+import { companies } from '../data/mockData.js';
 import { ArrowRight, Code, Target, Users, Zap } from 'lucide-react';
 import { practice } from '../data/questionData';
 

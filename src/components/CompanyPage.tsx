@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { companies, sampleQuestions, languages } from '../data/mockData';
+import { companies, sampleQuestions, languages } from '../data/mockData.js';
 import { ArrowLeft, Search, Filter, Clock, Code, Star } from 'lucide-react';
 import { ScrollToTop } from './ScrollToTop';
 
@@ -124,8 +124,7 @@ const CompanyPage: React.FC = () => {
         </div>
 
         <div className="relative overflow-hidden rounded-2xl bg-slate-800/50 border border-slate-700 mb-5">
-          <div className={`absolute inset-0 bg-gradient-to-br ${company.color} opacity-10`} />
-          <div className="relative p-8">
+              <div className="relative overflow-hidden rounded-2xl bg-slate-800/50 border border-slate-700 mb-8">
             <div className="flex items-center space-x-6">
               <div className={`w-24 h-24 bg-gradient-to-br ${company.color} rounded-3xl flex items-center justify-center text-5xl`}>
                 <img src={company.logo} className='rounded-xl'/>

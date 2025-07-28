@@ -23,11 +23,14 @@ Allow: /
 (pages)
 5.ExamPrep
 
+
+//insert data from questions.tsx into TestResult page then 
 //to fix 
 tending card(tcs) and bakii dummy and crausel
 on clicking practice button having card including link and text https://prepinsta.com/tcs-syllabus/
 fix back problem in practice
 having 3 crard in section
+ Submit buuton missing in MCQTest
 
 
 //future idea

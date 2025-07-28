@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, ChevronRight, CheckCircle, AlertCircle } from 'lucide-react';
+import { Clock, ChevronRight, CheckCircle, AlertCircle, Flag, SkipForward } from 'lucide-react';
 import Timer from './Timer';
 import QuestionPanel from './QuestionPanel';
-import SectionProgress from './SectionProgress';
 import ResultsPage from './ResultsPage';
 
 interface ExamInterfaceProps {
@@ -15,9 +14,9 @@ const EXAM_SECTIONS = [
     name: 'Foundational Section',
     totalTime: 75 * 60, // 75 minutes in seconds
     subsections: [
+      { id: 'numerical', name: 'Numerical Ability', questions: 21, timeLimit: 25 * 60 },
       { id: 'verbal', name: 'Verbal Ability', questions: 22, timeLimit: 25 * 60 },
-      { id: 'reasoning', name: 'Reasoning Ability', questions: 22, timeLimit: 25 * 60 },
-      { id: 'numerical', name: 'Numerical Ability', questions: 21, timeLimit: 25 * 60 }
+      { id: 'reasoning', name: 'Reasoning Ability', questions: 22, timeLimit: 25 * 60 }
     ]
   },
   {
@@ -38,8 +37,17 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({ onExamEnd }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<string, any>>({});
   const [sectionTimeLeft, setSectionTimeLeft] = useState(0);
+  const [markedForReview, setMarkedForReview] = useState<Record<string, boolean>>({});
   const [examCompleted, setExamCompleted] = useState(false);
   const [sectionSubmitted, setSectionSubmitted] = useState(false);
+
+  // Exit fullscreen when exam ends
+  const handleExamEnd = () => {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+    onExamEnd();
+  };
 
   const currentSectionData = EXAM_SECTIONS[currentSection];
   const currentSubsectionData = currentSectionData.subsections[currentSubsection];
@@ -58,6 +66,13 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({ onExamEnd }) => {
     setAnswers(prev => ({
       ...prev,
       [questionId]: answer
+    }));
+  };
+
+  const handleMarkForReview = (questionId: string) => {
+    setMarkedForReview(prev => ({
+      ...prev,
+      [questionId]: !prev[questionId]
     }));
   };
 
@@ -111,8 +126,23 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({ onExamEnd }) => {
     return (answeredQuestions / totalQuestions) * 100;
   };
 
+  const getQuestionStatus = (sectionId: string, subsectionId: string, questionIndex: number) => {
+    const questionId = `${sectionId}-${subsectionId}-${questionIndex}`;
+    const isAnswered = answers[questionId] !== undefined;
+    const isMarked = markedForReview[questionId];
+    const isCurrent = questionIndex === currentQuestion && 
+                     sectionId === currentSectionData.id && 
+                     subsectionId === currentSubsectionData.id;
+
+    if (isCurrent) return 'current';
+    if (isAnswered && isMarked) return 'answered-marked';
+    if (isAnswered) return 'answered';
+    if (isMarked) return 'marked';
+    return 'not-visited';
+  };
+
   if (examCompleted) {
-    return <ResultsPage answers={answers} onReturnHome={onExamEnd} />;
+    return <ResultsPage answers={answers} onReturnHome={handleExamEnd} />;
   }
 
   if (sectionSubmitted) {
@@ -139,56 +169,74 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({ onExamEnd }) => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-6">
-              <div>
-                <h1 className="text-lg font-semibold text-gray-900">
-                  {currentSectionData.name}
-                </h1>
-                <p className="text-sm text-gray-500">
-                  {currentSubsectionData.name}
-                </p>
-              </div>
-              <div className="hidden md:block">
-                <SectionProgress 
-                  sections={EXAM_SECTIONS}
-                  currentSection={currentSection}
-                  currentSubsection={currentSubsection}
-                />
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <Timer 
-                timeLeft={sectionTimeLeft}
-                onTimeUp={handleTimeUp}
-                warningThreshold={300} // 5 minutes
-              />
-              <button
-                onClick={handleSubmitSubsection}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-              >
-                Submit Section
-              </button>
+      <header className="bg-blue-600 text-white py-2 px-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="text-lg font-bold">TCS NQT Practice Test - IT</div>
+          <div className="flex items-center space-x-6">
+            <Timer 
+              timeLeft={sectionTimeLeft}
+              onTimeUp={handleTimeUp}
+              warningThreshold={300}
+            />
+            <div className="text-sm">
+              Time Left: {Math.floor(sectionTimeLeft / 60)}:{(sectionTimeLeft % 60).toString().padStart(2, '0')}
             </div>
           </div>
         </div>
       </header>
 
-      {/* Progress Bar */}
-      <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
-          <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
-            <span>Overall Progress</span>
-            <span>{Math.round(getTotalProgress())}% Complete</span>
+      {/* Section Navigation */}
+      <div className="bg-gray-200 border-b">
+        <div className="max-w-7xl mx-auto px-4 py-2">
+          <div className="flex items-center justify-between">
+            <div className="text-sm font-medium text-gray-700">
+              Sections
+            </div>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
-            <div 
-              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${getTotalProgress()}%` }}
-            ></div>
+          <div className="flex space-x-1 mt-2">
+            {EXAM_SECTIONS.map((section, sIndex) => 
+              section.subsections.map((subsection, ssIndex) => {
+                const isActive = sIndex === currentSection && ssIndex === currentSubsection;
+                const isPast = sIndex < currentSection || (sIndex === currentSection && ssIndex < currentSubsection);
+                
+                return (
+                  <div
+                    key={`${section.id}-${subsection.id}`}
+                    className={`px-3 py-1 text-xs font-medium rounded ${
+                      isActive
+                        ? 'bg-blue-600 text-white'
+                        : isPast
+                          ? 'bg-green-500 text-white'
+                          : 'bg-gray-300 text-gray-600'
+                    }`}
+                  >
+                    {subsection.name}
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Current Section Info */}
+      <div className="bg-white border-b px-4 py-2">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between">
+            <div className="text-lg font-semibold text-blue-600">
+              {currentSubsectionData.name}
+            </div>
+            <div className="flex items-center space-x-4">
+              <span className="text-sm text-gray-600">
+                Question No. {currentQuestion + 1}
+              </span>
+              <button
+                onClick={handleSubmitSubsection}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors"
+              >
+                Submit Section
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -204,15 +252,9 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({ onExamEnd }) => {
           onQuestionChange={setCurrentQuestion}
           onAnswerChange={handleAnswerChange}
           answers={answers}
-        />
-      </div>
-
-      {/* Mobile Progress */}
-      <div className="md:hidden bg-white border-t px-4 py-3">
-        <SectionProgress 
-          sections={EXAM_SECTIONS}
-          currentSection={currentSection}
-          currentSubsection={currentSubsection}
+          markedForReview={markedForReview}
+          onMarkForReview={handleMarkForReview}
+          getQuestionStatus={getQuestionStatus}
         />
       </div>
     </div>

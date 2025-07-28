@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Clock, BookOpen, Brain, Code, User } from 'lucide-react';
-import ExamInterface from '@/components/tcs_exam/ExamInterface';
+import ExamInterface from '../components/tcs_exam/ExamInterface';
+import ExamEntry from '../components/tcs_exam/ExamEntry';
 
 function TcsExam() {
   const [examStarted, setExamStarted] = useState(false);
+  const [showExamEntry, setShowExamEntry] = useState(false);
 
   const examStructure = [
     {
@@ -29,7 +31,14 @@ function TcsExam() {
   ];
 
   if (examStarted) {
-    return <ExamInterface onExamEnd={() => setExamStarted(false)} />;
+    return <ExamInterface onExamEnd={() => {
+      setExamStarted(false);
+      setShowExamEntry(false);
+    }} />;
+  }
+
+  if (showExamEntry) {
+    return <ExamEntry onStartExam={() => setExamStarted(true)} onBack={() => setShowExamEntry(false)} />;
   }
 
   return (
@@ -146,7 +155,7 @@ function TcsExam() {
               {/* Start Button */}
               <div className="text-center">
                 <button
-                  onClick={() => setExamStarted(true)}
+                  onClick={() => setShowExamEntry(true)}
                   className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
                 >
                   Start Mock Test

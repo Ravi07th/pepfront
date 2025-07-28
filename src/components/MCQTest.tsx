@@ -250,8 +250,12 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
               <h1 className="text-2xl font-bold">{category?.name}</h1>
             </div>
             <div className="flex items-center gap-4">
+              {/* Submit buuton missing */}
               {mode === 'test' && !isSubmitted && (
                 <>
+                 <Badge variant="secondary" className="text-lg px-4 py-2">
+                  Practice Mode
+                </Badge>
                   <div className="flex items-center gap-2 text-lg font-mono">
                     <Clock className="w-5 h-5 text-destructive" />
                     <span className={timeLeft < 300 ? "text-destructive animate-pulse" : "text-foreground"}>
