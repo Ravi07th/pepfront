@@ -31,22 +31,22 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ answers, onReturnHome }) => {
     return { correct, total: questions.length, attempted, percentage: questions.length > 0 ? Math.round((correct / questions.length) * 100) : 0 };
   };
 
-  const totalQuestions = 98;
+  const totalQuestions = 83;
   const answeredQuestions = Object.keys(answers).length;
 
   // Calculate section results
   const sectionResults = [
     { name: 'Verbal Ability', ...calculateSectionScore('foundational', 'verbal') },
     { name: 'Reasoning Ability', ...calculateSectionScore('foundational', 'reasoning') },
-    { name: 'Numerical Ability', ...calculateSectionScore('foundational', 'numerical') },
-    { name: 'Advanced Quantitative', ...calculateSectionScore('advanced', 'adv-quant') },
-    { name: 'Advanced Reasoning', ...calculateSectionScore('advanced', 'adv-reasoning') },
-    { name: 'Advanced Coding', ...calculateSectionScore('advanced', 'coding') }
+    // { name: 'Advanced Quantitative', ...calculateSectionScore('advanced', 'adv-quant') },
+    { name: 'Advanced Reasoning', ...calculateSectionScore('advanced', 'adv-reasoning') }
+    // Note: Coding section excluded from scoring as per requirements
   ];
   
   // Calculate overall score
   const totalCorrect = sectionResults.reduce((sum, section) => sum + section.correct, 0);
-  const overallScore = Math.round((totalCorrect / totalQuestions) * 100);
+  const totalQuestionsForScoring = 80; // Excluding 3 coding questions
+  const overallScore = Math.round((totalCorrect / totalQuestionsForScoring) * 100);
   const percentile = Math.min(99, Math.max(1, overallScore + Math.floor(Math.random() * 20) - 10)); // Simulated percentile
 
   const getScoreColor = (percentage: number) => {
@@ -70,7 +70,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ answers, onReturnHome }) => {
       ]},
       { id: 'advanced', name: 'Advanced Cognitive Skills', subsections: [
         { id: 'adv-quant', name: 'Advanced Quantitative' },
-        { id: 'adv-reasoning', name: 'Advanced Reasoning' },
+        // { id: 'adv-reasoning', name: 'Advanced Reasoning' },
         { id: 'coding', name: 'Advanced Coding' }
       ]}
     ];
@@ -210,15 +210,37 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ answers, onReturnHome }) => {
               <h1 className="text-3xl font-bold text-gray-900 mb-2">Detailed Solutions</h1>
               <p className="text-lg text-gray-600">Review your answers and learn from explanations</p>
             </div>
-            <button
+            {/* <button
               onClick={() => setShowSolutions(false)}
               className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200"
             >
-              Back to Results
-            </button>
-          </div>
-          
+              <span onClick={() => window.location.reload()}>Take Another Test</span>
+            </button> */}
+            <button
+            onClick={onReturnHome}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg mr-4"
+          >
+            <Home className="h-5 w-5 inline mr-2" />
+            Home
+          </button>
+            
+          </div>          
           {renderSolutionsView()}
+          <div className="text-center space-y-4">
+          <button
+            onClick={onReturnHome}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg mr-4"
+          >
+            <Home className="h-5 w-5 inline mr-2" />
+            Return to Home
+          </button>
+          <button 
+            onClick={() => window.location.reload()}
+            className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8 py-3 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
+          >
+            Take Another Test
+          </button>
+          </div>
         </div>
       </div>
     );
@@ -303,11 +325,11 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ answers, onReturnHome }) => {
             <ul className="space-y-3">
               <li className="flex items-center text-green-700">
                 <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-                Strong performance in Reasoning sections
+                Ability to solve aptitude & reasoning questions
               </li>
               <li className="flex items-center text-green-700">
                 <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-                Good time management across sections
+                Comfortable with learning new technologies.
               </li>
               <li className="flex items-center text-green-700">
                 <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
@@ -360,9 +382,9 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ answers, onReturnHome }) => {
         </div>
 
         {/* Footer Note */}
-        <div className="text-center mt-8 text-gray-500 text-sm">
+        {/* <div className="text-center mt-8 text-gray-500 text-sm">
           <p>Results are based on correct answers only. Actual TCS NQT scoring may include negative marking.</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
 import { 
   Menu,
+   BookOpen, Users, 
   X,
   Palette, 
   Code, 
   Copy, 
-  Star, 
-  Users, 
+  Star,  
   Download,
   ArrowRight,
   MousePointer,
@@ -20,7 +23,6 @@ import {
   Smartphone,
   Layers,
   Sparkles,
-  BookOpen,
   GraduationCap,
   Info,
   LogIn,
@@ -528,6 +530,82 @@ const Index1 = () => {
           </div>
         </div>
       </section>
+       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      
+      
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Hero Section */}
+        <div className="text-center mb-16">
+          <h1 className="text-5xl font-bold text-gray-900 mb-6">
+            Excel in Your <span className="text-blue-600">Placement Tests</span>
+          </h1>
+          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            Master coding interviews, aptitude tests, and technical assessments with our comprehensive placement preparation platform.
+          </p>
+          <div className="flex justify-center space-x-4">
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
+              Start Practice
+            </Button>
+            <Link to="/contact">
+              <Button size="lg" variant="outline">
+                Contact Us
+              </Button>
+            </Link>
+          </div>
+        </div>
+
+        {/* Features Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          <Card className="hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <BookOpen className="h-8 w-8 text-blue-600 mb-2" />
+              <CardTitle>Practice Tests</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>
+                Comprehensive mock tests covering all major placement topics
+              </CardDescription>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <Target className="h-8 w-8 text-green-600 mb-2" />
+              <CardTitle>Targeted Prep</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>
+                Company-specific preparation materials and strategies
+              </CardDescription>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <Users className="h-8 w-8 text-purple-600 mb-2" />
+              <CardTitle>Expert Guidance</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>
+                Get personalized guidance from industry experts
+              </CardDescription>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <Award className="h-8 w-8 text-orange-600 mb-2" />
+              <CardTitle>Success Track Record</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>
+                Join thousands of successful candidates who got placed
+              </CardDescription>
+            </CardContent>
+          </Card>
+        </div>
+      </main>
+    </div>
 
       {/* CTA Section */}
      

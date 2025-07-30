@@ -301,3 +301,379 @@ function Practice() {
   );
 }
 export default Practice;
+///contact us
+
+
+// import { Button } from "@/components/ui/button";
+// import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+// import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
+// import { Textarea } from "@/components/ui/textarea";
+// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+// import { Badge } from "@/components/ui/badge";
+// import { 
+//   Phone, 
+//   Mail, 
+//   MapPin, 
+//   Clock, 
+//   MessageCircle, 
+//   Users, 
+//   BookOpen,
+//   Target,
+//   CheckCircle
+// } from "lucide-react";
+// import Header from "@/components/Header";
+// import { useState } from "react";
+// import { toast } from "sonner";
+
+// const Contact = () => {
+//   const [formData, setFormData] = useState({
+//     name: '',
+//     email: '',
+//     phone: '',
+//     subject: '',
+//     category: '',
+//     message: ''
+//   });
+// const [result, setResult] = useState("");
+// const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+//     const { name, value } = e.target;
+//     setFormData(prev => ({
+//       ...prev,
+//       [name]: value,
+//     }));
+//   };
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   // Simulate form submission
+  //   toast.success("Thank you for your message! We'll get back to you within 24 hours.");
+  //   setFormData({ name: '', email: '', phone: '', subject: '', category: '', message: '' });
+  // };
+//  const handleSubmit = async (e: React.FormEvent) => {
+//      e.preventDefault();
+//      const emailData = new FormData(e.target as HTMLFormElement);
+//      emailData.append("access_key", "5aa6a02e-bc2e-4760-b0ea-8fcc7b295a7c");
+ 
+//      const response = await fetch("https://api.web3forms.com/submit", {
+//        method: "POST",
+//        body: emailData
+//      });
+ 
+//      const data = await response.json();
+ 
+//      if (data.success) {
+//        setResult("Form Submitted Successfully");
+//        setFormData({
+//          name: '',
+//          email: '',
+//          phone: '',
+//          subject: '',
+//          category: '',
+//          message: ''
+//        });
+//      } else {
+//        setResult(data.message);
+//      }
+ 
+//      setTimeout(() => {
+//        setResult("");
+//      }, 5000);
+//    }; 
+
+//   const handleInputChange = (field: string, value: string) => {
+//     setFormData(prev => ({ ...prev, [field]: value }));
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+//       <Header />
+      
+//       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+//         {/* Hero Section */}
+//         <div className="text-center mb-12">
+//           <h1 className="text-4xl font-bold text-gray-900 mb-4">
+//             Get in <span className="text-blue-600">Touch</span>
+//           </h1>
+//           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+//             Have questions about placement preparation? Need help with practice tests? 
+//             We're here to support your journey to success.
+//           </p>
+//         </div>
+
+//         <div className="grid lg:grid-cols-3 gap-8">
+//           {/* Contact Form */}
+//           <div className="lg:col-span-2">
+//             <Card className="shadow-lg">
+//               <CardHeader>
+//                 <CardTitle className="flex items-center">
+//                   <MessageCircle className="h-5 w-5 mr-2 text-blue-600" />
+//                   Send us a Message
+//                 </CardTitle>
+//                 <CardDescription>
+//                   Fill out the form below and we'll respond within 24 hours
+//                 </CardDescription>
+//               </CardHeader>
+//               <CardContent>
+//                 <form onSubmit={handleSubmit} className="space-y-6">
+//                   <div className="grid md:grid-cols-2 gap-4">
+//                     <div>
+//                       <Label htmlFor="name">Full Name *</Label>
+//                       <Input 
+//                         type="text"
+//                       id="name"
+//                       name="name"
+//                       value={formData.name}
+//                       onChange={handleChange}
+//                       required
+//                         placeholder="Your full name"
+              
+//                       />
+//                     </div>
+//                     <div>
+//                       <Label htmlFor="email">Email Address *</Label>
+//                       <Input 
+//                         type="email"
+//                       id="email"
+//                       name="email"
+//                       value={formData.email}
+//                       onChange={handleChange}
+                      
+//                         placeholder="your.email@example.com"
+//                         required
+//                       />
+//                     </div>
+//                   </div>
+
+//                   <div className="grid md:grid-cols-2 gap-4">
+//                     <div>
+//                       <Label htmlFor="phone">Phone Number</Label>
+//                       <Input 
+//                       type="phone"
+//                       id="phone"
+//                       name="phone"
+//                       value={formData.phone}
+//                       onChange={handleChange}
+//                       required             
+//                         placeholder="+1 (555) 123-4567"
+//                       />
+//                     </div>
+//                     <div>
+//                       <Label htmlFor="category">Inquiry Category *</Label>
+//                       <Select onValueChange={(value) => handleInputChange('category', value)} required>
+//                         <SelectTrigger>
+//                           <SelectValue placeholder="Select a category" />
+//                         </SelectTrigger>
+//                         <SelectContent>
+//                           <SelectItem value="practice-tests">Practice Tests</SelectItem>
+//                           <SelectItem value="placement-prep">Placement Preparation</SelectItem>
+//                           <SelectItem value="technical-support">Technical Support</SelectItem>
+//                           <SelectItem value="course-inquiry">Course Inquiry</SelectItem>
+//                           <SelectItem value="partnership">Partnership</SelectItem>
+//                           <SelectItem value="feedback">Feedback</SelectItem>
+//                           <SelectItem value="other">Other</SelectItem>
+//                         </SelectContent>
+//                       </Select>
+//                     </div>
+//                   </div>
+
+//                   <div>
+//                     <Label htmlFor="subject">Subject *</Label>
+//                     <Input 
+//                       id="subject"
+//                       value={formData.subject}
+//                       onChange={(e) => handleInputChange('subject', e.target.value)}
+//                       placeholder="Brief description of your inquiry"
+//                       required
+//                     />
+//                   </div>
+
+//                   <div>
+//                     <Label htmlFor="message">Message *</Label>
+//                     <Textarea 
+//                       id="message"
+//                       value={formData.message}
+//                       onChange={(e) => handleInputChange('message', e.target.value)}
+//                       placeholder="Please provide details about your inquiry..."
+//                       rows={6}
+//                       required
+//                     />
+//                   </div>
+
+//                   <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
+//                     Send Message
+//                   </Button>
+//                 </form>
+//               </CardContent>
+//             </Card>
+//           </div>
+
+//           {/* Contact Information */}
+//           <div className="space-y-6">
+//             {/* Contact Details */}
+//             <Card className="shadow-lg">
+//               <CardHeader>
+//                 <CardTitle className="text-lg">Contact Information</CardTitle>
+//               </CardHeader>
+//               <CardContent className="space-y-4">
+//                 <div className="flex items-start space-x-3">
+//                   <Phone className="h-5 w-5 text-blue-600 mt-1" />
+//                   <div>
+//                     <p className="font-medium">Phone Support</p>
+//                     <p className="text-sm text-gray-600">+1 (555) 123-4567</p>
+//                     <p className="text-xs text-gray-500">Mon-Fri, 9AM-6PM EST</p>
+//                   </div>
+//                 </div>
+
+//                 <div className="flex items-start space-x-3">
+//                   <Mail className="h-5 w-5 text-blue-600 mt-1" />
+//                   <div>
+//                     <p className="font-medium">Email Support</p>
+//                     <p className="text-sm text-gray-600">support@placementpro.com</p>
+//                     <p className="text-xs text-gray-500">24/7 response within 24hrs</p>
+//                   </div>
+//                 </div>
+
+//                 <div className="flex items-start space-x-3">
+//                   <MapPin className="h-5 w-5 text-blue-600 mt-1" />
+//                   <div>
+//                     <p className="font-medium">Office Address</p>
+//                     <p className="text-sm text-gray-600">
+//                       123 Education Street<br />
+//                       Learning District, LD 12345<br />
+//                       United States
+//                     </p>
+//                   </div>
+//                 </div>
+
+//                 <div className="flex items-start space-x-3">
+//                   <Clock className="h-5 w-5 text-blue-600 mt-1" />
+//                   <div>
+//                     <p className="font-medium">Business Hours</p>
+//                     <p className="text-sm text-gray-600">
+//                       Monday - Friday: 9:00 AM - 6:00 PM<br />
+//                       Saturday: 10:00 AM - 4:00 PM<br />
+//                       Sunday: Closed
+//                     </p>
+//                   </div>
+//                 </div>
+//               </CardContent>
+//             </Card>
+
+//             {/* Quick Help */}
+//             <Card className="shadow-lg">
+//               <CardHeader>
+//                 <CardTitle className="text-lg">Quick Help</CardTitle>
+//                 <CardDescription>Common topics our team can help with</CardDescription>
+//               </CardHeader>
+//               <CardContent>
+//                 <div className="space-y-3">
+//                   <div className="flex items-center space-x-2">
+//                     <CheckCircle className="h-4 w-4 text-green-600" />
+//                     <span className="text-sm">Practice test access issues</span>
+//                   </div>
+//                   <div className="flex items-center space-x-2">
+//                     <CheckCircle className="h-4 w-4 text-green-600" />
+//                     <span className="text-sm">Course recommendations</span>
+//                   </div>
+//                   <div className="flex items-center space-x-2">
+//                     <CheckCircle className="h-4 w-4 text-green-600" />
+//                     <span className="text-sm">Placement preparation strategies</span>
+//                   </div>
+//                   <div className="flex items-center space-x-2">
+//                     <CheckCircle className="h-4 w-4 text-green-600" />
+//                     <span className="text-sm">Technical interview guidance</span>
+//                   </div>
+//                   <div className="flex items-center space-x-2">
+//                     <CheckCircle className="h-4 w-4 text-green-600" />
+//                     <span className="text-sm">Account and billing support</span>
+//                   </div>
+//                 </div>
+//               </CardContent>
+//             </Card>
+
+//             {/* Success Stats */}
+//             <Card className="shadow-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
+//               <CardHeader>
+//                 <CardTitle className="text-lg text-white">Our Success</CardTitle>
+//               </CardHeader>
+//               <CardContent>
+//                 <div className="grid grid-cols-2 gap-4 text-center">
+//                   <div>
+//                     <div className="text-2xl font-bold">15,000+</div>
+//                     <div className="text-sm opacity-90">Students Placed</div>
+//                   </div>
+//                   <div>
+//                     <div className="text-2xl font-bold">500+</div>
+//                     <div className="text-sm opacity-90">Partner Companies</div>
+//                   </div>
+//                   <div>
+//                     <div className="text-2xl font-bold">95%</div>
+//                     <div className="text-sm opacity-90">Success Rate</div>
+//                   </div>
+//                   <div>
+//                     <div className="text-2xl font-bold">24/7</div>
+//                     <div className="text-sm opacity-90">Support</div>
+//                   </div>
+//                 </div>
+//               </CardContent>
+//             </Card>
+//           </div>
+//         </div>
+
+//         {/* Additional Support Options */}
+//         <div className="mt-12">
+//           <h2 className="text-2xl font-bold text-center mb-8">Other Ways to Reach Us</h2>
+//           <div className="grid md:grid-cols-3 gap-6">
+//             <Card className="text-center hover:shadow-lg transition-shadow">
+//               <CardHeader>
+//                 <Users className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+//                 <CardTitle>Live Chat Support</CardTitle>
+//               </CardHeader>
+//               <CardContent>
+//                 <p className="text-gray-600 mb-4">
+//                   Get instant help from our support team during business hours
+//                 </p>
+//                 <Badge variant="outline" className="text-green-600 border-green-600">
+//                   Available Now
+//                 </Badge>
+//               </CardContent>
+//             </Card>
+
+//             <Card className="text-center hover:shadow-lg transition-shadow">
+//               <CardHeader>
+//                 <BookOpen className="h-12 w-12 text-purple-600 mx-auto mb-4" />
+//                 <CardTitle>Knowledge Base</CardTitle>
+//               </CardHeader>
+//               <CardContent>
+//                 <p className="text-gray-600 mb-4">
+//                   Browse our comprehensive FAQ and help articles
+//                 </p>
+//                 <Button variant="outline" size="sm">
+//                   Browse Articles
+//                 </Button>
+//               </CardContent>
+//             </Card>
+
+//             <Card className="text-center hover:shadow-lg transition-shadow">
+//               <CardHeader>
+//                 <Target className="h-12 w-12 text-orange-600 mx-auto mb-4" />
+//                 <CardTitle>Schedule a Call</CardTitle>
+//               </CardHeader>
+//               <CardContent>
+//                 <p className="text-gray-600 mb-4">
+//                   Book a personalized consultation with our experts
+//                 </p>
+//                 <Button variant="outline" size="sm">
+//                   Book Now
+//                 </Button>
+//               </CardContent>
+//             </Card>
+//           </div>
+//         </div>
+//       </main>
+//     </div>
+//   );
+// };
+
+// export default Contact;
+

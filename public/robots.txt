@@ -23,11 +23,24 @@ Allow: /
 (pages)
 5.ExamPrep
 
+//flow
+tesQuestion->ExamInterface(time logic)->ExamEntry->ResultPage
+//insert data from questions.tsx into TestResult page then 
+
+
+
 //to fix 
+Scroll Problem in TcsPages
+in contact us mail is not going
+in ExamInterface need to add type mcq and for coding code
+time problem in examinterface
 tending card(tcs) and bakii dummy and crausel
 on clicking practice button having card including link and text https://prepinsta.com/tcs-syllabus/
 fix back problem in practice
 having 3 crard in section
+ Submit buuton missing in MCQTest
+In ResultRage need to add one feedbackForm
+in tcs page starting from reasion ability fix this need to from start 1
 
 
 //future idea

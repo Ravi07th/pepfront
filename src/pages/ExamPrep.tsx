@@ -8,12 +8,17 @@ import { Input } from "@/components/ui/input";
 import { CategoryCard } from "@/components/CategoryCard";
 import { MCQTest } from "@/components/MCQTest";
 import { categories } from "@/data/questions";
+import { companies } from "@/data/companyOverview";
+import CompanyExamPlatform from "@/components/company_overview_ui/CompanyExamPlatform";
+import OverView from "./OverView";
 
 const ExamPrep = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [testMode, setTestMode] = useState<'practice' | 'test'>('test');
   const [searchQuery, setSearchQuery] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  //overview
+  const [selectedCompanyId, setSelectedCompanyId] = useState('tcs');
 
   const handleStartTest = (categoryId: string, mode: 'practice' | 'test') => {
     setSelectedCategory(categoryId);
@@ -183,41 +188,83 @@ const ExamPrep = () => {
         </section>
       </div>
 
+      {/* companyOverview */}
+       <div className="min-h-screen">
+        <OverView />     
+    </div>
+
+
       {/* Features */}
-      <section className="py-16 bg-muted/30">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4">Why Choose Our Platform?</h2>
-            <p className="text-xl text-muted-foreground">Experience the best in online assessment</p>
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-4 mx-10 gap-5 py-5">
+  {/* Timed Tests - Blue Theme */}
+  <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-blue-200 group">
+    <CardHeader className="text-center pb-4">
+      <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-lg">
+        <Clock className="w-10 h-10" />
+      </div>
+      <CardTitle className="text-xl font-bold text-center mb-3 group-hover:text-blue-600 transition-colors">
+        Timed Tests
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="pt-0 px-6 pb-6">
+      <CardDescription className="text-center leading-relaxed text-gray-600">
+        Practice under real exam conditions with time tracking.
+      </CardDescription>
+    </CardContent>
+  </Card>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <FeatureCard icon={<Clock />} title="Timed Tests" description="Practice under real exam conditions with time tracking." />
-            <FeatureCard icon={<Brain />} title="Detailed Analysis" description="Get insights and explanations for every question." />
-            <FeatureCard icon={<Trophy />} title="Progress Tracking" description="Monitor your growth with clear performance metrics." />
-          </div>
-        </div>
-      </section>
+  {/* Comprehensive Syllabus - Green Theme */}
+  <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-green-200 group">
+    <CardHeader className="text-center pb-4">
+      <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-lg">
+        <BookOpen className="w-10 h-10" />
+      </div>
+      <CardTitle className="text-xl font-bold text-center mb-3 group-hover:text-green-600 transition-colors">
+        Comprehensive Syllabus
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="pt-0 px-6 pb-6">
+      <CardDescription className="text-center leading-relaxed text-gray-600">
+        Detailed curriculum covering all exam topics with structured learning paths
+      </CardDescription>
+    </CardContent>
+  </Card>
 
-      {/* Footer */}
-      <footer className="bg-card border-t border-border py-12">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <div className="flex justify-center items-center mb-4">
-            <GraduationCap className="w-8 h-8 mr-2 text-primary" />
-            <span className="text-2xl font-bold text-foreground">MCQ Test Platform</span>
-          </div>
-          <p className="text-muted-foreground mb-4">
-            Empowering students with comprehensive practice tests for competitive exams
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
-            <span>© 2024 MCQ Test Platform</span>
-            <span>•</span>
-            <span>{totalQuestions}+ Questions</span>
-            <span>•</span>
-            <span>8 Categories</span>
-          </div>
-        </div>
-      </footer>
+  {/* Practice Tests - Yellow Theme */}
+  <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-yellow-200 group">
+    <CardHeader className="text-center pb-4">
+      <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-600 flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-lg">
+        <Trophy className="w-10 h-10" />
+      </div>
+      <CardTitle className="text-xl font-bold text-center mb-3 group-hover:text-yellow-600 transition-colors">
+        Practice Tests
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="pt-0 px-6 pb-6">
+      <CardDescription className="text-center leading-relaxed text-gray-600">
+        Mock tests simulating real exam conditions to boost your confidence
+      </CardDescription>
+    </CardContent>
+  </Card>
+
+  {/* Detailed Analysis - Purple Theme */}
+  <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-purple-200 group">
+    <CardHeader className="text-center pb-4">
+      <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-lg">
+        <Brain className="w-10 h-10" />
+      </div>
+      <CardTitle className="text-xl font-bold text-center mb-3 group-hover:text-purple-600 transition-colors">
+        Detailed Analysis
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="pt-0 px-6 pb-6">
+      <CardDescription className="text-center leading-relaxed text-gray-600">
+        Get insights and explanations for every question.
+      </CardDescription>
+    </CardContent>
+  </Card>
+</div>
+
     </div>
   );
 };
