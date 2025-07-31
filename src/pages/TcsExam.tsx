@@ -12,9 +12,9 @@ function TcsExam() {
       duration: "75 minutes",
       questions: 65,
       subsections: [
-        { name: "Verbal Ability", questions: "20", time: "25 min" },
-        { name: "Reasoning Ability", questions: "20", time: "25 min" },
-        { name: "Numerical Ability", questions: "25", time: "25 min" }
+        { name: "Verbal Ability", questions: "25", time: "20 min" },
+        { name: "Reasoning Ability", questions: "25", time: "20 min" },
+        { name: "Numerical Ability", questions: "25", time: "20 min" }
       ]
     },
     {
@@ -34,26 +34,6 @@ function TcsExam() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      {/* Header */}
-      {/* <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="bg-blue-600 p-2 rounded-lg">
-                <BookOpen className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-gray-900">TCS NQT Practice</h1>
-                <p className="text-sm text-gray-500">National Qualifier Test Preparation</p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-2 text-gray-600">
-              <User className="h-5 w-5" />
-              <span className="text-sm font-medium">Student Portal</span>
-            </div>
-          </div>
-        </div>
-      </header> */}
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -144,47 +124,43 @@ function TcsExam() {
                   </p>
 
                   {/* Instructions */}
-                  <ol className="list-decimal list-inside space-y-3 text-gray-800">
-                    <li>
-                      <strong>Be Punctual:</strong> Log in <strong>15–30 minutes before</strong> the scheduled time to complete verification and avoid last-minute issues.
-                    </li>
-                    <li>
-                      <strong>Section Timing:</strong> Each section has a <strong>fixed time limit</strong>. Once a section is over, you <strong>cannot return</strong> to it.
-                    </li>
-                    <li>
-                      <strong>No Section Switching:</strong> You must complete the current section before moving to the next one.
-                    </li>
-                    <li>
-                      <strong>Single Attempt Only:</strong> Once you submit a section/answer, you <strong>cannot modify it later</strong>.
-                    </li>
-                    <li>
-                      <strong>Proctored Environment:</strong> Keep your <strong>webcam & microphone ON</strong> throughout the test. Any suspicious activity may lead to disqualification.
-                    </li>
-                    <li>
-                      <strong>Identity Proof:</strong> Keep a <strong>valid photo ID</strong> (Aadhaar, Passport, College ID, etc.) ready for verification.
-                    </li>
-                    <li>
-                      <strong>No Unauthorized Material:</strong> Do <strong>NOT</strong> use mobile phones, calculators, books, or any other external resources.
-                    </li>
-                    <li>
-                      <strong>Stable Internet:</strong> Ensure a <strong>strong & stable internet connection</strong> to avoid disruptions.
-                    </li>
-                    <li>
-                      <strong>Do Not Refresh/Close:</strong> <strong>Do not close or refresh</strong> the browser during the test. This may lead to termination.
-                    </li>
-                    <li>
-                      <strong>Rough Work:</strong> Use only plain sheets for rough work (keep them ready if remote).
-                    </li>
-                    <li>
-                      <strong>Follow Proctor Instructions:</strong> Listen to and comply with all instructions given by the invigilator/proctor.
-                    </li>
-                    <li>
-                      <strong>Exam Decorum:</strong> Do not talk, move unnecessarily, or indulge in any malpractice.
-                    </li>
-                    <li>
-                      <strong>Answer Submission:</strong> Ensure that you <strong>submit all answers</strong> before the timer ends; unanswered questions will be marked incorrect.
-                    </li>
-                  </ol>
+                <ol className="list-decimal list-inside space-y-3 text-gray-800">
+  <li>
+    <strong>Be Punctual:</strong> Log in <strong>15–30 minutes before</strong> your exam slot for ID and environment verification.
+  </li>
+  <li>
+    <strong>Supported Device:</strong> Use a <strong>desktop or laptop computer</strong>. Mobile devices are not allowed.
+  </li>
+  <li>
+    <strong>Technical Setup:</strong> Ensure a <strong>reliable and stable internet connection</strong>. Disable VPN/proxy and close all unrelated programs.
+  </li>
+  <li>
+    <strong>ID Proof:</strong> Keep a <strong>valid government or college photo ID</strong> ready for verification (Aadhaar, Passport, College ID, etc.).
+  </li>
+  <li>
+    <strong>Test Login:</strong> Use your official TCS NQT credentials to access the exam. <strong>Do not share your login details</strong>.
+  </li>
+  <li>
+    <strong>Browser:</strong> Recommended browsers: <strong>Google Chrome</strong> or <strong>Mozilla Firefox</strong> (latest versions).
+  </li>
+  <li>
+    <strong>Proctoring:</strong> <strong>Webcam and microphone must be ON</strong> throughout the test for live/AI monitoring.
+  </li>
+  <li>
+    <strong>No Unauthorized Materials:</strong> <strong>Mobile phones, calculators, notes, books, smart watches, or any external resources are strictly prohibited</strong>.
+  </li>
+  <li>
+    <strong>Rough Work:</strong> You may use plain sheets; keep them visible and show them if asked by the proctor.
+  </li>
+  <li>
+    <strong>Don’t Refresh or Close:</strong> <strong>Do NOT refresh, close, or switch browser tabs/windows</strong> during the test. This can terminate your session.
+  </li>
+  <li>
+    <strong>Exam Conduct:</strong> Do not indulge in any malpractice. Adhere to exam decorum; suspicious activity is monitored and may lead to disqualification.
+  </li>
+</ol>
+
+
 
                   {/* Warning Box */}
                   <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mt-6">
@@ -220,7 +196,7 @@ function TcsExam() {
         </div>
 
         {/* Features */}
-        <div className="mt-16 grid md:grid-cols-3 gap-8">
+        {/* <div className="mt-16 grid md:grid-cols-3 gap-8">
           <div className="text-center">
             <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <Clock className="h-8 w-8 text-blue-600" />
@@ -242,7 +218,7 @@ function TcsExam() {
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Real Experience</h3>
             <p className="text-gray-600">Interface and flow designed to match the actual exam environment</p>
           </div>
-        </div>
+        </div> */}
       </main>
     </div>
   );

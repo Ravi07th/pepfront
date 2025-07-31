@@ -3,6 +3,24 @@ import { arithmeticAptitudeQuestions } from './arithmeticAptitudeQuestions';
 import { verbalReasoningQuestions } from './verbalReasoning';
 import { englishComprehensionQuestions } from './englishComprehension';
 
+export const trendingCategories: Category[] = [
+  {
+    id: 'placement-test',
+    name: 'Placement Test',
+    description: 'Comprehensive test with questions from multiple sections (90 questions, 120 mins)',
+    icon: '🏆',
+    color: 'secondary',
+    totalQuestions: 90
+  },
+  {
+    id: 'placement-test2',
+    name: 'Placement Test2',
+    description: 'Comprehensive test with questions from multiple sections (90 questions, 120 mins)',
+    icon: '🏆',
+    color: 'secondary',
+    totalQuestions: 90
+  },
+]
 export interface Question {
   id: string;
   question: string;

@@ -20,7 +20,8 @@ import CompanyOverview from "./components/company_overview_ui/sections/OverviewS
 
 import OverView from "./pages/OverView.tsx";
 import CompanyExamPlatform from "./components/company_overview_ui/CompanyExamPlatform.tsx";
-import InterviewPrep from "./components/student_notes/InterviewPep.tsx";
+import StudentNotesPage from "./components/student_notes/StudentNotesPage.tsx";
+import CognizantExam from "./pages/CognizantExam.tsx";
 
 const queryClient = new QueryClient();
 
@@ -32,7 +33,10 @@ const App = () => (
           
            {/* <Route path="/home" element={<Index />} /> */}
           <Route path="/index" element= {<Index1/>} /> 
-          {/* <Route path="/" element= {<TcsExam/>}/> */}
+
+          {/* Exam tranding Section */}
+          <Route path="/tcsExam" element= {<TcsExam/>}/>
+          <Route path="/cognizantExam" element= {<CognizantExam/>} />
           <Route path="/docs" element = {<Syllabus/>} />
          
           
@@ -41,16 +45,18 @@ const App = () => (
           
           {/* my testing */}
            
-           <Route path="/practice" element={<Practice />} />
+           <Route path="/" element={<Practice />} />
+           <Route path="/studentNotes" element={<StudentNotesPage />} />
            <Route path="/contact" element={<Contact />} />
           <Route path= "/uiComponents" element={<UiHome />} />
           <Route path= "/examPrep" element={<ExamPrep />} />
          <Route path="/study" element={<HomePage />} />
+         
           {/* <Route path="/company/:companyId" element={<CompanyPage />} /> */}
           <Route path="/company/:companyId/question/:questionId" element={<QuestionPage />} />
           <Route path="/contact" element={<Contact />} />
           {/* //over both saat ma */}
-          <Route path="/" element={<InterviewPrep />} />
+          {/* <Route path="/" element={<StudentNotesPage />} /> */}
           <Route path="/company/:companyId" element={<CompanyExamPlatform />} />
         </Routes>
       

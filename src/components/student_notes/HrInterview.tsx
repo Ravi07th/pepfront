@@ -7,10 +7,10 @@ import workerSrc from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
 
 import rrPdf from "/rr.pdf";
-const notesList = [
+const HrList = [
   {
-    id: "id1",
-    title: "Interview Qestion",
+    id: "id2",
+    title: "hr",
     file: rrPdf, // Use imported PDF file
     subject: "interview",
     tags: ["math", "sample"],

@@ -6,7 +6,7 @@ interface ExamEntryProps {
   onBack: () => void;
 }
 
-const ExamEntry: React.FC<ExamEntryProps> = ({ onStartExam, onBack }) => {
+const CognizantEntry: React.FC<ExamEntryProps> = ({ onStartExam, onBack }) => {
   const [agreed, setAgreed] = useState(false);
   const [language, setLanguage] = useState('English');
 
@@ -183,11 +183,11 @@ const ExamEntry: React.FC<ExamEntryProps> = ({ onStartExam, onBack }) => {
 
         {/* Footer */}
         <div className="text-center mt-6 text-gray-600 text-sm">
-          © TCS NQT Practice Platform
+          © Cognizant Practice Platform
         </div>
       </main>
     </div>
   );
 };
 
-export default ExamEntry;
+export default CognizantEntry;
