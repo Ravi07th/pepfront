@@ -2,49 +2,113 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Document, Page, pdfjs } from "react-pdf";
 import { Badge } from "@/components/ui/badge";
-import { Clock, ChevronLeft, ChevronRight, CheckCircle, Maximize, Minimize, BookOpen, ArrowLeft, ArrowRight, Lightbulb, Eye, HelpCircle } from "lucide-react";
-import { Question, questionBank, categories, getRandomQuestions } from "@/data/questions.ts";
+import {
+  Clock,
+  ChevronLeft,
+  ChevronRight,
+  CheckCircle,
+  Maximize,
+  Minimize,
+  BookOpen,
+  ArrowLeft,
+  ArrowRight,
+  Lightbulb,
+  Eye,
+  HelpCircle,
+} from "lucide-react";
+import {
+  Question,
+  questionBank,
+  categories,
+  getRandomQuestions,
+} from "@/data/questions.ts";
 import { TestResults } from "./TestResults";
 
 interface MCQTestProps {
   categoryId: string;
-  mode: 'practice' | 'test';
+  mode: "practice" | "test";
   onBack: () => void;
 }
 
 export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
-  const isPlacementTest = categoryId === 'placement-test';
-  const questionCount = isPlacementTest ? 90 : (mode === 'practice' ? 20 : 60);
-  const testDuration = isPlacementTest ? 7200 : 3600; // 120 minutes for placement test, 60 for others
-  
-  const [questions] = useState<Question[]>(() => getRandomQuestions(categoryId, questionCount));
+  const isPlacementTest = categoryId === "placement-test";
+  // number of question in practice page
+  const questionCount = isPlacementTest ? 90 : mode === "practice" ? 30 : 60;
+  const testDuration = isPlacementTest ? 7200 : 3600; // seconds: 120 minutes or 60
+
+  //mycode for slider
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [testMode, setTestMode] = useState<"practice" | "test">("test");
+  const handleStartTest = (categoryId: string, mode: "practice" | "test") => {
+    setSelectedCategory(categoryId);
+    setTestMode(mode);
+  };
+  const handleBackToCategories = () => {
+    setSelectedCategory(null);
+  };
+
+  // Helper to get questions for given categoryId: combine all subsections' questions shuffled and sliced
+  const getQuestionsForCategory = (
+    categoryId: string,
+    count: number
+  ): Question[] => {
+    if (!questionBank[categoryId]) return [];
+
+    // Combine all subsections' questions
+    const allQuestions: Question[] = Object.values(questionBank[categoryId]).flat();
+
+    if (allQuestions.length <= count) return allQuestions;
+
+    // Shuffle and return first 'count'
+    const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, count);
+  };
+
+  // UseState to hold questions, initialized once
+  const [questions] = useState<Question[]>(() => getQuestionsForCategory(categoryId, questionCount));
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number>>({});
-  const [timeLeft, setTimeLeft] = useState(mode === 'test' ? testDuration : 0);
+  const [timeLeft, setTimeLeft] = useState(mode === "test" ? testDuration : 0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showExplanation, setShowExplanation] = useState<Record<number, boolean>>({});
-  const [showTopicDetails, setShowTopicDetails] = useState(mode === 'practice');
+  const [showTopicDetails, setShowTopicDetails] = useState(mode === "practice");
   const [currentPage, setCurrentPage] = useState(0);
   const [showHints, setShowHints] = useState<Record<number, boolean>>({});
+  //pdf display
+
+  const [numPages, setNumPages] = useState<number>(0);
+  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [scale, setScale] = useState<number>(1.5);
+
+  function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
+    setNumPages(numPages);
+    setPageNumber(1);
+  }
 
   const questionsPerPage = 5;
   const totalPages = Math.ceil(questions.length / questionsPerPage);
-  const currentPageQuestions = questions.slice(currentPage * questionsPerPage, (currentPage + 1) * questionsPerPage);
+  const currentPageQuestions = questions.slice(
+    currentPage * questionsPerPage,
+    (currentPage + 1) * questionsPerPage
+  );
 
-  const category = categories.find(c => c.id === categoryId);
+  const category = categories.find((c) => c.id === categoryId);
   const currentQuestion = questions[currentQuestionIndex];
-  const progress = mode === 'practice' ? 
-    ((currentPage + 1) / totalPages) * 100 : 
-    ((currentQuestionIndex + 1) / questions.length) * 100;
+  const progress =
+    mode === "practice"
+      ? ((currentPage + 1) / totalPages) * 100
+      : ((currentQuestionIndex + 1) / questions.length) * 100;
   const answered = Object.keys(selectedAnswers).length;
 
   useEffect(() => {
-    if (mode === 'test' && timeLeft > 0 && !isSubmitted) {
+    if (mode === "test" && timeLeft > 0 && !isSubmitted) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
-    } else if (mode === 'test' && timeLeft === 0 && !isSubmitted) {
+    } else if (mode === "test" && timeLeft === 0 && !isSubmitted) {
       handleSubmit();
     }
   }, [timeLeft, isSubmitted, mode]);
@@ -53,20 +117,22 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
   const handleAnswerSelect = (questionIndex: number, optionIndex: number) => {
-    setSelectedAnswers(prev => ({
+    setSelectedAnswers((prev) => ({
       ...prev,
-      [questionIndex]: optionIndex
+      [questionIndex]: optionIndex,
     }));
-    
+
     // Show explanation for practice mode after selecting an answer
-    if (mode === 'practice') {
-      setShowExplanation(prev => ({
+    if (mode === "practice") {
+      setShowExplanation((prev) => ({
         ...prev,
-        [questionIndex]: true
+        [questionIndex]: true,
       }));
     }
   };
@@ -88,9 +154,9 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
   };
 
   const toggleHint = (questionIndex: number) => {
-    setShowHints(prev => ({
+    setShowHints((prev) => ({
       ...prev,
-      [questionIndex]: !prev[questionIndex]
+      [questionIndex]: !prev[questionIndex],
     }));
   };
 
@@ -120,68 +186,60 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
     let score = 0;
     let correct = 0;
     let wrong = 0;
-    
+
     questions.forEach((question, index) => {
       if (selectedAnswers[index] !== undefined) {
         if (selectedAnswers[index] === question.correctAnswer) {
           correct++;
-          score += isPlacementTest ? 2 : 1; // +2 for placement test, +1 for others
+          score += isPlacementTest ? 2 : 1; // +2 or +1
         } else {
           wrong++;
-          score -= isPlacementTest ? 1 : 0; // -1 for placement test, 0 for others
+          score -= isPlacementTest ? 1 : 0; // -1 for placement test only
         }
       }
     });
-    
+
     return { score, correct, wrong };
   };
 
-  // Topic Details Page for Practice Mode
-  if (showTopicDetails && mode === 'practice') {
+  // Practice mode: Show topic details page
+  if (showTopicDetails && mode === "practice") {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background to-background/50 flex items-center justify-center p-4">
-        <Card className="w-full max-w-2xl">
+        <Card className="w-full max-w-5xl bg-blue-100 mx-auto">
           <CardHeader>
             <div className="flex items-center gap-3">
-              <div className={`p-2 rounded-lg text-white`} style={{ backgroundColor: category?.color }}>
-                <BookOpen className="w-6 h-6" />
+              <div
+                className={`p-2 rounded-lg text-white`}
+                style={{ backgroundColor: category?.color }}
+              >
+
               </div>
               <div>
-                <CardTitle className="text-2xl">{category?.name}</CardTitle>
-                <p className="text-muted-foreground">{category?.description}</p>
+                <CardTitle className="text-4xl mb-5 text-center"><BookOpen className="w-6 h-6" />{category?.name}</CardTitle>
+                {/* <p className="text-muted-foreground">{category?.description}</p> */}
+                {category?.pdf && (
+                  <Document
+                    file={category?.pdf}
+                    onLoadSuccess={onDocumentLoadSuccess}
+                    loading={<div className="text-center text-blue-600 py-20">Loading PDF…</div>}
+                    onLoadError={(error) => {
+                      console.error("Error loading PDF:", error);
+                      alert(`Failed to load PDF: ${error.message || error}`);
+                    }}
+                    className="block"
+                  >
+                    {Array.from(new Array(numPages), (_, index) => (
+                      <Page key={`page_${index + 1}`} pageNumber={index + 1} scale={scale} />
+                    ))}
+                  </Document>
+
+                )}
               </div>
             </div>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="prose prose-sm max-w-none">
-              <h3 className="text-lg font-semibold mb-3">Topic Overview</h3>
-              <p className="text-muted-foreground mb-4">
-                This practice session will help you strengthen your understanding of {category?.name.toLowerCase()}. 
-                You'll encounter various types of questions designed to test your knowledge and problem-solving skills.
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                <div className="p-4 bg-muted/50 rounded-lg">
-                  <h4 className="font-medium mb-2">Practice Format</h4>
-                  <ul className="text-sm text-muted-foreground space-y-1">
-                    <li>• 5 questions per page</li>
-                    <li>• Navigate with Previous/Next buttons</li>
-                    <li>• Instant explanations available</li>
-                    <li>• No time limit - learn at your pace</li>
-                  </ul>
-                </div>
-                <div className="p-4 bg-muted/50 rounded-lg">
-                  <h4 className="font-medium mb-2">Study Tips</h4>
-                  <ul className="text-sm text-muted-foreground space-y-1">
-                    <li>• Read each question carefully</li>
-                    <li>• Think through your reasoning</li>
-                    <li>• Review explanations for better understanding</li>
-                    <li>• Practice regularly for improvement</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            
+
             <div className="flex justify-between items-center pt-4">
               <Button onClick={onBack} variant="outline">
                 <ArrowLeft className="w-4 h-4 mr-2" />
@@ -213,7 +271,7 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
           setSelectedAnswers({});
           setTimeLeft(testDuration);
           setCurrentPage(0);
-          setShowTopicDetails(mode === 'practice');
+          setShowTopicDetails(mode === "practice");
           setShowHints({});
         }}
         onBack={onBack}
@@ -228,7 +286,9 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
         <Card>
           <CardContent className="p-8 text-center">
             <p className="text-lg">No questions available for this category.</p>
-            <Button onClick={onBack} className="mt-4">Go Back</Button>
+            <Button onClick={onBack} className="mt-4">
+              Go Back
+            </Button>
           </CardContent>
         </Card>
       </div>
@@ -238,155 +298,212 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
   return (
     <div className="min-h-screen bg-background">
       <div className="flex-1">
-        {/* Header */}
         <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b border-border mb-6 p-4">
-        <div className="max-w-6xl mx-auto py-4">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-4">
-              <Button variant="outline" onClick={onBack} size="sm">
-                <ChevronLeft className="w-4 h-4 mr-1" />
-                Back
-              </Button>
-              <h1 className="text-2xl font-bold">{category?.name}</h1>
+          <div className="max-w-6xl mx-auto py-4">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-4">
+                <Button variant="outline" onClick={onBack} size="sm">
+                  <ChevronLeft className="w-4 h-4 mr-1" />
+                  Back
+                </Button>
+                <h1 className="text-2xl font-bold">{category?.name}</h1>
+              </div>
+              <div className="flex items-center gap-4">
+                {mode === "test" && !isSubmitted && (
+                  <>
+                    <div className="flex items-center gap-2 text-lg font-mono">
+                      <Clock className="w-5 h-5 text-destructive" />
+                      <span className={timeLeft < 300 ? "text-destructive animate-pulse" : "text-foreground"}>
+                        {formatTime(timeLeft)}
+                      </span>
+                    </div>
+                    <Button variant="outline" onClick={toggleFullscreen} size="sm">
+                      {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+                    </Button>
+                  </>
+                )}
+                {mode === "practice" && (
+                  <Badge variant="secondary" className="text-lg px-4 py-2">
+                    Practice Mode
+                  </Badge>
+                )}
+              </div>
             </div>
-            <div className="flex items-center gap-4">
-              {mode === 'test' && !isSubmitted && (
-                <>
-                  <div className="flex items-center gap-2 text-lg font-mono">
-                    <Clock className="w-5 h-5 text-destructive" />
-                    <span className={timeLeft < 300 ? "text-destructive animate-pulse" : "text-foreground"}>
-                      {formatTime(timeLeft)}
-                    </span>
-                  </div>
-                  <Button variant="outline" onClick={toggleFullscreen} size="sm">
-                    {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
-                  </Button>
-                </>
+
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              {mode === "practice" ? (
+                <span>
+                  Page {currentPage + 1} of {totalPages}
+                </span>
+              ) : (
+                <span>
+                  Question {currentQuestionIndex + 1} of {questions.length}
+                </span>
               )}
-              {mode === 'practice' && (
-                <Badge variant="secondary" className="text-lg px-4 py-2">
-                  Practice Mode
-                </Badge>
-              )}
+              <span>•</span>
+              <span>{answered} answered</span>
             </div>
+
+            <Progress value={progress} className="mt-2 h-2" />
           </div>
-          
-          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            {mode === 'practice' ? (
-              <span>Page {currentPage + 1} of {totalPages}</span>
-            ) : (
-              <span>Question {currentQuestionIndex + 1} of {questions.length}</span>
-            )}
-            <span>•</span>
-            <span>{answered} answered</span>
-          </div>
-          
-          <Progress value={progress} className="mt-2 h-2" />
-        </div>
         </div>
 
-        <div className="max-w-6xl mx-auto p-4">
-          {mode === 'practice' ? (
-            // Practice Mode: 5 questions per page
-            <div className="space-y-6">
-              {/* Questions on current page */}
-              {currentPageQuestions.map((question, pageIndex) => {
-                const actualIndex = currentPage * questionsPerPage + pageIndex;
-                return (
-                  <Card key={question.id} className="animate-slideInLeft">
-                    <CardHeader>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Badge variant="outline">Question {actualIndex + 1} of {questions.length}</Badge>
-                          <Badge variant={question.difficulty === 'easy' ? 'secondary' : 
-                                        question.difficulty === 'medium' ? 'default' : 'destructive'}>
-                            {question.difficulty}
-                          </Badge>
+        <div className="flex flex-col-2 ">
+          {mode === "practice" ? (
+            <div className="">
+              <aside
+                className={`fixed md:sticky top-0 md:top-16 z-50 bg-card border-r border-border w-64 p-4 transition-transform duration-300 rounded-xl
+              md:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
+                style={{ maxHeight: "calc(100vh - 80px)" }}
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-bold text-foreground">Categories</h2>
+                  <Button variant="ghost" className="md:hidden" onClick={() => setSidebarOpen(false)}>
+                    ✕
+                  </Button>
+                </div>
+                <div className="mb-4">
+                  <Button variant="default" className="w-full justify-center text-lg py-3" onClick={() => handleStartTest("live-test", "test")}>
+                    Start Preparation
+                  </Button>
+                </div>
+                <div className="space-y-2 overflow-y-auto pr-2" style={{ maxHeight: "calc(100vh - 200px)" }}>
+                  {categories.map((cat) => (
+                    <Button
+                      key={cat.id}
+                      variant="ghost"
+                      className="w-full justify-start text-left hover:bg-muted hover:text-blue-500"
+                      onClick={() => handleStartTest(cat.id, "practice")}
+                    >
+                      {cat.name}
+                    </Button>
+                  ))}
+                </div>
+              </aside>
+              <div className="  mx-20 ">
+                {currentPageQuestions.map((question, pageIndex) => {
+                  const actualIndex = currentPage * questionsPerPage + pageIndex;
+                  return (
+                    <Card key={question.id} className="animate-slideInLeft">
+                      <CardHeader>
+                        <div className="flex items-center  justify-between">
+                          <div className="flex items-center gap-2">
+                            <Badge variant="outline">
+                              Question {actualIndex + 1} of {questions.length}
+                            </Badge>
+                            <Badge
+                              variant={
+                                question.difficulty === "easy"
+                                  ? "secondary"
+                                  : question.difficulty === "medium"
+                                    ? "default"
+                                    : "destructive"
+                              }
+                            >
+                              {question.difficulty}
+                            </Badge>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => toggleHint(actualIndex)}
+                              className="text-blue-600 border-blue-200 hover:bg-blue-50"
+                            >
+                              <Lightbulb className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() =>
+                                setShowExplanation((prev) => ({
+                                  ...prev,
+                                  [actualIndex]: !prev[actualIndex],
+                                }))
+                              }
+                              className="text-green-600 border-green-200 hover:bg-green-50"
+                            >
+                              <Eye className="w-4 h-4" />
+                            </Button>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => toggleHint(actualIndex)}
-                            className="text-blue-600 border-blue-200 hover:bg-blue-50"
-                          >
-                            <Lightbulb className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setShowExplanation(prev => ({ ...prev, [actualIndex]: !prev[actualIndex] }))}
-                            className="text-green-600 border-green-200 hover:bg-green-50"
-                          >
-                            <Eye className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                      <div className="text-lg leading-relaxed">
-                        {question.question}
-                      </div>
-                      
-                      <div className="space-y-3">
-                        {question.options.map((option, optionIndex) => (
-                          <Button
-                            key={optionIndex}
-                            variant={selectedAnswers[actualIndex] === optionIndex ? "default" : "outline"}
-                            className={`w-full justify-start text-left h-auto p-4 ${
-                              selectedAnswers[actualIndex] === optionIndex
+                      </CardHeader>
+                      <CardContent className="space-y-6">
+                        <div className="text-lg leading-relaxed">{question.question}</div>
+
+                        <div className="space-y-3">
+                          {question.options.map((option, optionIndex) => (
+                            <Button
+                              key={optionIndex}
+                              variant={
+                                selectedAnswers[actualIndex] === optionIndex
+                                  ? "default"
+                                  : "outline"
+                              }
+                              className={`w-full justify-start text-left h-auto p-4 ${selectedAnswers[actualIndex] === optionIndex
                                 ? "bg-primary text-primary-foreground"
                                 : "hover:bg-muted"
-                            }`}
-                            onClick={() => handleAnswerSelect(actualIndex, optionIndex)}
-                          >
-                            <span className="font-semibold mr-3">{String.fromCharCode(65 + optionIndex)}.</span>
-                            <span className="flex-1">{option}</span>
-                          </Button>
-                        ))}
-                      </div>
-                      
-                      {/* Hint Feature */}
-                      {showHints[actualIndex] && (
-                        <Card className="bg-blue-50 border-l-4 border-l-blue-500 animate-fade-in">
-                          <CardContent className="p-4">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Lightbulb className="w-4 h-4 text-blue-600" />
-                              <span className="font-medium text-blue-800">Hint</span>
-                            </div>
-                            <p className="text-blue-700 text-sm">
-                              Think about the key concepts involved. Consider eliminating obviously wrong answers first, then analyze the remaining options carefully.
-                            </p>
-                          </CardContent>
-                        </Card>
-                      )}
-                      
-                      {/* Explanation for Practice Mode */}
-                      {showExplanation[actualIndex] && (
-                        <Card className="bg-muted/50 border-l-4 border-l-primary animate-fade-in">
-                          <CardContent className="p-4">
-                            <div className="space-y-3">
-                              <div className="flex items-center gap-2">
-                                <Badge variant={selectedAnswers[actualIndex] === question.correctAnswer ? "default" : "destructive"}>
-                                  {selectedAnswers[actualIndex] === question.correctAnswer ? "Correct!" : "Incorrect"}
-                                </Badge>
-                                <span className="text-sm text-muted-foreground">
-                                  Correct Answer: {String.fromCharCode(65 + question.correctAnswer)}
-                                </span>
-                              </div>
-                              <div className="text-sm leading-relaxed">
-                                <strong>Explanation:</strong> {question.explanation}
-                              </div>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      )}
-                    </CardContent>
-                  </Card>
-                );
-              })}
+                                }`}
+                              onClick={() => handleAnswerSelect(actualIndex, optionIndex)}
+                            >
+                              <span className="font-semibold mr-3">
+                                {String.fromCharCode(65 + optionIndex)}.
+                              </span>
+                              <span className="flex-1">{option}</span>
+                            </Button>
+                          ))}
+                        </div>
 
-              {/* Page Navigation - Moved to bottom */}
+                        {showHints[actualIndex] && (
+                          <Card className="bg-blue-50 border-l-4 border-l-blue-500 animate-fade-in">
+                            <CardContent className="p-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Lightbulb className="w-4 h-4 text-blue-600" />
+                                <span className="font-medium text-blue-800">Hint</span>
+                              </div>
+                              <p className="text-blue-700 text-sm">
+                                Think about the key concepts involved. Consider eliminating
+                                obviously wrong answers first, then analyze the remaining
+                                options carefully.
+                              </p>
+                            </CardContent>
+                          </Card>
+                        )}
+
+                        {showExplanation[actualIndex] && (
+                          <Card className="bg-muted/50 border-l-4 border-l-primary animate-fade-in">
+                            <CardContent className="p-4">
+                              <div className="space-y-3">
+                                <div className="flex items-center gap-2">
+                                  <Badge
+                                    variant={
+                                      selectedAnswers[actualIndex] === question.correctAnswer
+                                        ? "default"
+                                        : "destructive"
+                                    }
+                                  >
+                                    {selectedAnswers[actualIndex] === question.correctAnswer
+                                      ? "Correct!"
+                                      : "Incorrect"}
+                                  </Badge>
+                                  <span className="text-sm text-muted-foreground">
+                                    Correct Answer: {String.fromCharCode(65 + question.correctAnswer)}
+                                  </span>
+                                </div>
+                                <div className="text-sm leading-relaxed">
+                                  <strong>Explanation:</strong> {question.explanation}
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        )}
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+
+              {/* Page Navigation */}
               <div className="flex items-center justify-center gap-4 py-6">
                 <Button
                   onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
@@ -397,7 +514,7 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
                   <ChevronLeft className="w-4 h-4" />
                   Previous
                 </Button>
-                
+
                 <div className="flex items-center gap-2">
                   {Array.from({ length: totalPages }, (_, i) => (
                     <Button
@@ -411,20 +528,20 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
                     </Button>
                   ))}
                 </div>
-                
+
                 <Button
                   onClick={() => setCurrentPage(Math.min(totalPages - 1, currentPage + 1))}
                   disabled={currentPage === totalPages - 1}
                   variant="outline"
                   size="sm"
                 >
-                  Next
+                  Save
                   <ChevronRight className="w-4 h-4" />
                 </Button>
               </div>
             </div>
           ) : (
-            // Test Mode: Original single question layout
+            // Test Mode: Single Question View
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
               {/* Question Navigation Sidebar */}
               <div className="lg:col-span-1">
@@ -439,11 +556,10 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
                           key={index}
                           variant={currentQuestionIndex === index ? "default" : "outline"}
                           size="sm"
-                          className={`relative h-10 p-0 ${
-                            selectedAnswers[index] !== undefined
-                              ? "bg-success/10 border-success text-success-foreground"
-                              : ""
-                          }`}
+                          className={`relative h-10 p-0 ${selectedAnswers[index] !== undefined
+                            ? "bg-success/10 border-success text-success-foreground"
+                            : ""
+                            }`}
                           onClick={() => handleQuestionNavigation(index)}
                         >
                           {index + 1}
@@ -453,7 +569,7 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
                         </Button>
                       ))}
                     </div>
-                    
+
                     <div className="mt-4 space-y-2 text-xs">
                       <div className="flex items-center gap-2">
                         <div className="w-3 h-3 bg-success rounded"></div>
@@ -474,29 +590,35 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <Badge variant="outline">Question {currentQuestionIndex + 1}</Badge>
-                        <Badge variant={currentQuestion.difficulty === 'easy' ? 'secondary' : 
-                                      currentQuestion.difficulty === 'medium' ? 'default' : 'destructive'}>
+                        <Badge variant="outline">
+                          Question {currentQuestionIndex + 1}
+                        </Badge>
+                        <Badge
+                          variant={
+                            currentQuestion.difficulty === "easy"
+                              ? "secondary"
+                              : currentQuestion.difficulty === "medium"
+                                ? "default"
+                                : "destructive"
+                          }
+                        >
                           {currentQuestion.difficulty}
                         </Badge>
                       </div>
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-6">
-                    <div className="text-lg leading-relaxed">
-                      {currentQuestion.question}
-                    </div>
-                    
+                    <div className="text-lg leading-relaxed">{currentQuestion.question}</div>
+
                     <div className="space-y-3">
                       {currentQuestion.options.map((option, index) => (
                         <Button
                           key={index}
                           variant={selectedAnswers[currentQuestionIndex] === index ? "default" : "outline"}
-                          className={`w-full justify-start text-left h-auto p-4 ${
-                            selectedAnswers[currentQuestionIndex] === index
-                              ? "bg-primary text-primary-foreground"
-                              : "hover:bg-muted"
-                          }`}
+                          className={`w-full justify-start text-left h-auto p-4 ${selectedAnswers[currentQuestionIndex] === index
+                            ? "bg-primary text-primary-foreground"
+                            : "hover:bg-muted"
+                            }`}
                           onClick={() => handleAnswerSelect(currentQuestionIndex, index)}
                         >
                           <span className="font-semibold mr-3">{String.fromCharCode(65 + index)}.</span>
@@ -504,7 +626,7 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
                         </Button>
                       ))}
                     </div>
-                    
+
                     <div className="flex justify-between pt-4">
                       <Button
                         variant="outline"

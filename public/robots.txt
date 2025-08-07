@@ -13,34 +13,25 @@ Allow: /
 User-agent: *
 Allow: /
 
-//Study section page
-(components)
-1.CategoryCard
-2.MCQTest
-3.TestResult
-(data)
-4.questions.tsx
-(pages)
-5.ExamPrep
 
+
+//leave change in quantitative aptitude-> mensuration and geomatry
 //flow
-tesQuestion->ExamInterface(time logic)->ExamEntry->ResultPage
+
 //insert data from questions.tsx into TestResult page then 
 
 
-
+now move to wipro section do not change logic or code outside it
+now in wipro add 32 question more in quantitative-aptitude, 28 more in logical-reasoning and 36 question more in verbal-ability without changing any logic outside this wipro data set and follow same pattern and give previous year question using vaild perfrom and explaination
 //to fix 
-Scroll Problem in TcsPages
+
+change description before start the exam of everyone and align patten wise section
+
 in contact us mail is not going
-in ExamInterface need to add type mcq and for coding code
-time problem in examinterface
-tending card(tcs) and bakii dummy and crausel
-on clicking practice button having card including link and text https://prepinsta.com/tcs-syllabus/
-fix back problem in practice
-having 3 crard in section
+
  Submit buuton missing in MCQTest
 In ResultRage need to add one feedbackForm
-in tcs page starting from reasion ability fix this need to from start 1
+
 
 
 //future idea

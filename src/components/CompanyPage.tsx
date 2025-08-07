@@ -87,11 +87,11 @@ const CompanyPage: React.FC = () => {
   };
 
   const handleBackToHome = (): void => {
-    navigate('/study');
+    navigate('/coding');
   };
 
   const handleQuestionClick = (questionId: string): void => {
-    navigate(`/company/${companyId}/question/${questionId}`);
+    navigate(`/coding/${companyId}/question/${questionId}`);
   };
 
   if (!company) {

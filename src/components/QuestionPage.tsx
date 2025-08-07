@@ -145,7 +145,7 @@ const QuestionPage: React.FC = () => {
   };
 
   const handleBackClick = (): void => {
-    navigate(`/company/${companyId}`);
+    navigate(`/coding/${companyId}`);
   };
 
   return (

@@ -1,4 +1,6 @@
-// Original 5 good questions
+// generalAptitudeQuestions.ts
+
+// Original 5 unique questions
 const coreQuestions = [
   {
     id: 'ga-1',
@@ -6,7 +8,7 @@ const coreQuestions = [
     options: ["42", "40", "38", "44"],
     correctAnswer: 0,
     explanation: "The pattern is n(n+1): 1×2=2, 2×3=6, 3×4=12, 4×5=20, 5×6=30, 6×7=42",
-    difficulty: 'medium' as const
+    difficulty: 'medium' as const,
   },
   {
     id: 'ga-2',
@@ -14,7 +16,7 @@ const coreQuestions = [
     options: ["True", "False", "Cannot be determined", "Insufficient data"],
     correctAnswer: 0,
     explanation: "This is a valid syllogism. If A⊆B and B⊆C, then A⊆C.",
-    difficulty: 'easy' as const
+    difficulty: 'easy' as const,
   },
   {
     id: 'ga-3',
@@ -22,7 +24,7 @@ const coreQuestions = [
     options: ["3 km", "5 km", "8 km", "13 km"],
     correctAnswer: 0,
     explanation: "He forms a rectangle and ends up 3 km east of starting point.",
-    difficulty: 'medium' as const
+    difficulty: 'medium' as const,
   },
   {
     id: 'ga-4',
@@ -30,7 +32,7 @@ const coreQuestions = [
     options: ["Dog", "Cat", "Tiger", "Table"],
     correctAnswer: 3,
     explanation: "Table is not a living animal, while others are animals.",
-    difficulty: 'easy' as const
+    difficulty: 'easy' as const,
   },
   {
     id: 'ga-5',
@@ -38,23 +40,308 @@ const coreQuestions = [
     options: ["PDJFODF", "EOJDMDF", "FPJFOEF", "EOJMPDF"],
     correctAnswer: 1,
     explanation: "Each letter is moved 3 positions forward in the alphabet.",
-    difficulty: 'hard' as const
+    difficulty: 'hard' as const,
+  },
+   {
+    id: 'aa-1',
+    question: "What is 15% of 240?",
+    options: ["36", "32", "38", "34"],
+    correctAnswer: 0,
+    explanation: "15% of 240 = (15/100) × 240 = 36",
+    difficulty: 'easy' as const,
+  },
+  {
+    id: 'aa-2',
+    question: "If a train travels 60 km in 45 minutes, what is its speed in km/hr?",
+    options: ["75 km/hr", "80 km/hr", "85 km/hr", "90 km/hr"],
+    correctAnswer: 1,
+    explanation: "Speed = Distance/Time = 60/(45/60) = 60/(3/4) = 80 km/hr",
+    difficulty: 'medium' as const,
+  },
+  {
+    id: 'aa-3',
+    question: "A shopkeeper sells an article for Rs. 480 and gains 20%. What is the cost price?",
+    options: ["Rs. 400", "Rs. 420", "Rs. 440", "Rs. 460"],
+    correctAnswer: 0,
+    explanation: "If CP = x, then SP = x + 20% of x = 1.2x = 480, so x = 400",
+    difficulty: 'medium' as const,
+  },
+  {
+    id: 'aa-4',
+    question: "What is the compound interest on Rs. 1000 for 2 years at 10% per annum?",
+    options: ["Rs. 200", "Rs. 210", "Rs. 220", "Rs. 230"],
+    correctAnswer: 1,
+    explanation: "CI = P(1+r/100)^n - P = 1000(1.1)^2 - 1000 = 1210 - 1000 = 210",
+    difficulty: 'hard' as const,
+  },
+  {
+    id: 'aa-5',
+    question: "The average of 5 numbers is 27. If one number is excluded, the average becomes 25. What is the excluded number?",
+    options: ["35", "37", "39", "41"],
+    correctAnswer: 0,
+    explanation: "Sum of 5 numbers = 5×27 = 135. Sum of 4 numbers = 4×25 = 100. Excluded number = 135-100 = 35",
+    difficulty: 'medium' as const,
+  },
+
+  // Next 30 questions
+
+  {
+    id: 'aa-6',
+    question: "Two numbers are in the ratio 3:5 and their sum is 64. What are the numbers?",
+    options: ["24 and 40", "18 and 30", "20 and 34", "30 and 50"],
+    correctAnswer: 0,
+    explanation: "Sum = 3x + 5x = 8x = 64 ⇒ x = 8, thus numbers are 24 and 40",
+    difficulty: 'easy' as const,
+  },
+  {
+    id: 'aa-7',
+    question: "What is 12.5% of 1600?",
+    options: ["200", "180", "220", "250"],
+    correctAnswer: 0,
+    explanation: "12.5% of 1600 = (12.5/100) × 1600 = 200",
+    difficulty: 'easy' as const,
+  },
+  {
+    id: 'aa-8',
+    question: "If the price of sugar increases by 20%, by how much percent should one reduce the consumption to maintain the same expenditure?",
+    options: ["16.66%", "20%", "25%", "12.5%"],
+    correctAnswer: 0,
+    explanation: "Required reduction = (20/120)*100 = 16.66%",
+    difficulty: 'medium' as const,
+  },
+  {
+    id: 'aa-9',
+    question: "A number is decreased by 12. What percent of the original number is the new number?",
+    options: ["88%", "90%", "92%", "94%"],
+    correctAnswer: 0,
+    explanation: "New number is (100-12)% = 88% of original",
+    difficulty: 'easy' as const,
+  },
+  {
+    id: 'aa-10',
+    question: "A shopkeeper sells a book for Rs. 420 after giving 20% discount. What is the marked price of the book?",
+    options: ["Rs. 525", "Rs. 520", "Rs. 480", "Rs. 510"],
+    correctAnswer: 0,
+    explanation: "MP = 420 / 0.8 = Rs. 525",
+    difficulty: 'medium' as const,
+  },
+  {
+    id: 'aa-11',
+    question: "If an article is sold at 10% gain for Rs. 330, what is its cost price?",
+    options: ["Rs. 300", "Rs. 320", "Rs. 350", "Rs. 290"],
+    correctAnswer: 0,
+    explanation: "CP = 330 / 1.10 = Rs. 300",
+    difficulty: 'easy' as const,
+  },
+  {
+    id: 'aa-12',
+    question: "The population of a town increases by 10% every year. What will be the population after 2 years if current is 1,00,000?",
+    options: ["1,21,000", "1,10,000", "1,20,000", "1,15,000"],
+    correctAnswer: 0,
+    explanation: "Population = 100000 × 1.1 × 1.1 = 121000",
+    difficulty: 'medium' as const,
+  },
+  {
+    id: 'aa-13',
+    question: "What is the simple interest on Rs. 5000 at 8% per annum for 3 years?",
+    options: ["Rs. 1200", "Rs. 1400", "Rs. 1500", "Rs. 1600"],
+    correctAnswer: 1,
+    explanation: "SI = (5000 × 8 × 3)/100 = Rs. 1200",
+    difficulty: 'easy' as const,
+  },
+  {
+    id: 'aa-14',
+    question: "The compound interest on Rs. 800 for 2 years at 5% per annum is:",
+    options: ["Rs. 81.50", "Rs. 82", "Rs. 85", "Rs. 80"],
+    correctAnswer: 0,
+    explanation: "CI = 800*(1.05)^2 - 800 = Rs. 82, approximately Rs. 81.50",
+    difficulty: 'hard' as const,
+  },
+  {
+    id: 'aa-15',
+    question: "If a person saves Rs. 40 per week, how much will he save in 3 years?",
+    options: ["Rs. 6240", "Rs. 6000", "Rs. 6200", "Rs. 6300"],
+    correctAnswer: 0,
+    explanation: "Total weeks in 3 years = 3 × 52 =156; Savings = 156 × 40 = Rs. 6240",
+    difficulty: 'easy' as const,
+  },
+  {
+    id: 'aa-16',
+    question: "A tank is filled in 5 hours. How much time will be saved if two more similar tanks are added and filled together?",
+    options: ["3 hours", "4 hours", "5 hours", "2 hours"],
+    correctAnswer: 0,
+    explanation: "Filling rate is tripled, time = 5/3 ≈1.67 hours, time saved = 5 - 1.67 = 3.33 ~ 3 hours",
+    difficulty: 'medium' as const,
+  },
+  {
+    id: 'aa-17',
+    question: "The ratio of the ages of two persons is 5:7. After 5 years, the ratio becomes 6:8. What is the sum of their present ages?",
+    options: ["72", "70", "75", "68"],
+    correctAnswer: 0,
+    explanation: "Solve equations and get sum = 72",
+    difficulty: 'hard' as const,
+  },
+  {
+    id: 'aa-18',
+    question: "What is the difference between simple interest and compound interest on Rs. 5000 at 10% per annum for 2 years?",
+    options: ["Rs. 25", "Rs. 20", "Rs. 30", "Rs. 35"],
+    correctAnswer: 0,
+    explanation: "Difference = CI - SI = Rs. 25",
+    difficulty: 'medium' as const,
+  },
+  {
+    id: 'aa-19',
+    question: "A sum of money doubles itself in 6 years at simple interest. What is the rate of interest?",
+    options: ["16.67%", "15%", "12%", "12.5%"],
+    correctAnswer: 0,
+    explanation: "100% principal doubles in 6 years ⇒ SI = 100% in 6 years, Rate = (100×100)/(6×100) = 16.67%",
+    difficulty: 'medium' as const,
+  },
+  {
+    id: 'aa-20',
+    question: "The cost price of 20 articles is equal to the selling price of 16 articles. Find the gain or loss percentage.",
+    options: ["25% Gain", "25% Loss", "20% Loss", "50% Gain"],
+    correctAnswer: 0,
+    explanation: "Gain% = ((20-16)/16)*100 = 25%",
+    difficulty: 'medium' as const,
+  },
+  {
+    id: 'aa-21',
+    question: "A person borrows Rs. 12,000 at 10% simple interest. What will be the total amount to be paid after 4 years?",
+    options: ["Rs. 16,800", "Rs. 14,000", "Rs. 17,000", "Rs. 16,000"],
+    correctAnswer: 0,
+    explanation: "SI = (12000×10×4)/100 = 4800, Amount = 12000 + 4800 = 16800",
+    difficulty: 'easy' as const,
+  },
+  {
+    id: 'aa-22',
+    question: "If a 20% discount is given on the marked price of Rs. 500, what is the selling price?",
+    options: ["Rs. 400", "Rs. 420", "Rs. 450", "Rs. 480"],
+    correctAnswer: 0,
+    explanation: "Selling price = 500 - 20% of 500 = Rs. 400",
+    difficulty: 'easy' as const,
+  },
+  {
+    id: 'aa-23',
+    question: "The compound interest on Rs. 10000 at 8% per annum for 2 years compounded annually is:",
+    options: ["Rs. 1664", "Rs. 1600", "Rs. 1500", "Rs. 1700"],
+    correctAnswer: 0,
+    explanation: "CI = 10000*(1.08)^2 - 10000 = Rs. 1664",
+    difficulty: 'hard' as const,
+  },
+  {
+    id: 'aa-24',
+    question: "If the simple interest on Rs. 1500 for 3 years is Rs. 450, find the rate of interest.",
+    options: ["10%", "12%", "15%", "16%"],
+    correctAnswer: 2,
+    explanation: "SI = (P×R×T)/100 ⇒ 450 = (1500×R×3)/100 ⇒ R=10%",
+    difficulty: 'easy' as const,
+  },
+  {
+    id: 'aa-25',
+    question: "A sum of Rs. 8000 is lent at compound interest at 5% p.a. What will be amount after 3 years?",
+    options: ["Rs. 9260", "Rs. 9200", "Rs. 9250", "Rs. 9300"],
+    correctAnswer: 0,
+    explanation: "Amount = 8000*(1.05)^3 = Rs. 9260 approx.",
+    difficulty: 'medium' as const,
+  },
+  {
+    id: 'aa-26',
+    question: "The cost price of 10 pens is equal to the selling price of 8 pens. What is the gain percentage?",
+    options: ["25%", "20%", "22%", "15%"],
+    correctAnswer: 0,
+    explanation: "Gain% = ((10-8)/8)*100 = 25%",
+    difficulty: 'medium' as const,
+  },
+  {
+    id: 'aa-27',
+    question: "If a person invests Rs. 6000 at 10% simple interest per annum, how much interest will he get in 4 years?",
+    options: ["Rs. 2400", "Rs. 2500", "Rs. 2600", "Rs. 2000"],
+    correctAnswer: 0,
+    explanation: "SI = (6000×10×4)/100 = Rs. 2400",
+    difficulty: 'easy' as const,
+  },
+  {
+    id: 'aa-28',
+    question: "A man covers the first 12 kms at a speed of 30 km/h and next 18 kms at 24 km/h. What is his average speed?",
+    options: ["26.4 km/h", "27 km/h", "25.5 km/h", "28 km/h"],
+    correctAnswer: 0,
+    explanation: "Average Speed = Total distance / Total time = 30 × 24 × 30 / (24×12 + 30×18) = 26.4 km/h",
+    difficulty: 'hard' as const,
+  },
+  {
+    id: 'aa-29',
+    question: "The ratio of the efficiency of A and B is 5:7. If A can do a piece of work in 4 days, how long will B take?",
+    options: ["2.86 days", "3.5 days", "5 days", "4 days"],
+    correctAnswer: 0,
+    explanation: "Time taken by B = (Efficiency A / Efficiency B) × Time of A = (5/7)*4 = 2.86 days",
+    difficulty: 'medium' as const,
+  },
+  {
+    id: 'aa-30',
+    question: "Discount given on Rs. 800 is Rs. 100. What is the discount percentage?",
+    options: ["12.5%", "10%", "15%", "20%"],
+    correctAnswer: 0,
+    explanation: "Discount % = (100/800)*100 = 12.5%",
+    difficulty: 'easy' as const,
+  },
+  {
+    id: 'aa-31',
+    question: "Find the simple interest on Rs. 7500 for 4 years at 6% per annum.",
+    options: ["Rs. 1800", "Rs. 1850", "Rs. 1700", "Rs. 2000"],
+    correctAnswer: 0,
+    explanation: "SI = (7500×6×4)/100 = Rs. 1800",
+    difficulty: 'easy' as const,
+  },
+  {
+    id: 'aa-32',
+    question: "If a number is increased by 25%, what is the percentage increase in its square?",
+    options: ["56.25%", "50%", "55%", "52.25%"],
+    correctAnswer: 0,
+    explanation: "Increase in square = (1.25^2 - 1)*100 = 56.25%",
+    difficulty: 'medium' as const,
+  },
+  {
+    id: 'aa-33',
+    question: "Two numbers are in the ratio 7:9. If their sum is 32, what are the numbers?",
+    options: ["14 and 18", "15 and 17", "12 and 20", "16 and 16"],
+    correctAnswer: 0,
+    explanation: "7x + 9x = 32 ⇒ 16x = 32 ⇒ x = 2; Numbers are 14 and 18",
+    difficulty: 'easy' as const,
+  },
+  {
+    id: 'aa-34',
+    question: "The selling price of an article is Rs. 350 and the profit percentage is 25%. What is the cost price?",
+    options: ["Rs. 280", "Rs. 300", "Rs. 290", "Rs. 275"],
+    correctAnswer: 0,
+    explanation: "CP = SP / 1.25 = 350/1.25 = Rs. 280",
+    difficulty: 'medium' as const,
+  },
+  {
+    id: 'aa-35',
+    question: "A person invests Rs. 2000 for 2 years at compound interest at 10% per annum. What is the amount?",
+    options: ["Rs. 2420", "Rs. 2200", "Rs. 2400", "Rs. 2300"],
+    correctAnswer: 0,
+    explanation: "Amount = 2000 × (1 + 0.1)^2 = Rs. 2420",
+    difficulty: 'medium' as const,
   }
 ];
 
-// Helper function to deep-clone an object (to prevent reference issues)
-function clone(obj) {
-  return JSON.parse(JSON.stringify(obj));
+// Utility: shuffle an array randomly
+function shuffleArray<T>(arr: T[]): T[] {
+  return arr
+    .map(value => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value);
 }
 
-// Build the full list of 240 questions
-export const generalAptitudeQuestions = [...coreQuestions];
+// Desired number of questions to export (max is coreQuestions.length)
+const desiredCount = 35;
 
-// Fill up to 240 by randomly sampling from the core 5 questions
-for (let i = 6; i <= 240; i++) {
-  // Get a random core question, clone it, assign a new ID
-  const randomIndex = Math.floor(Math.random() * coreQuestions.length);
-  const q = clone(coreQuestions[randomIndex]);
-  q.id = `ga-${i}`;
-  generalAptitudeQuestions.push(q);
-}
+// Export shuffled non-repeating array, slice if needed
+export const generalAptitudeQuestions = (() => {
+  if (desiredCount >= coreQuestions.length) {
+    return shuffleArray(coreQuestions);
+  }
+  return shuffleArray(coreQuestions).slice(0, desiredCount);
+})();

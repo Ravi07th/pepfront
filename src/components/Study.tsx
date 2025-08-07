@@ -42,13 +42,12 @@ interface StatItemProps {
 const Study: React.FC = () => {
   const navigate = useNavigate();
 
-  const handleCompanyClick = (companyId: string): void => {
-    navigate(`/company/${companyId}`);
+  const handleCompanyClick = (companyId: string) => {
+    navigate(`/coding/${companyId}`);
   };
 
-  const handleStartPracticing = (e: React.MouseEvent<HTMLButtonElement>, companyId: string): void => {
-    e.stopPropagation();
-    navigate(`/company/${companyId}`);
+  const handleStartCoding = (companyId: string) => {
+    navigate(`/coding/${companyId}`);
   };
 
   const StatItem: React.FC<StatItemProps> = ({ value, label, color }) => (
@@ -240,7 +239,7 @@ const Study: React.FC = () => {
                   </Badge>
                   <Button 
                     className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 group-hover:shadow-lg transition-all"
-                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleStartPracticing(e, company.id)}
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleStartCoding(company.id)}
                   >
                     Start Practicing
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -285,7 +284,7 @@ const Study: React.FC = () => {
                   </Badge>
                   <Button 
                     className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 group-hover:shadow-lg transition-all"
-                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleStartPracticing(e, practice.id)}
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleStartCoding(practice.id)}
                   >
                     Start Practicing
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

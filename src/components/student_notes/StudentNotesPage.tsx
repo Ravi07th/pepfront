@@ -1,345 +1,426 @@
-import { useState } from "react";
-import { Document, Page, pdfjs } from "react-pdf";
-import { saveAs } from "file-saver";
+import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import {
-  ChevronLeft,
-  ChevronRight,
-  ArrowDown,
-  ZoomIn,
-  ZoomOut,
-  FileText,
   BookOpen,
-  Home,
+  Search as SearchIcon,
+  Grid,
+  List,
+  Download,
+  Eye,
+  Star,
+  Clock,
+  Bookmark,
+  Heart
 } from "lucide-react";
-import "pdfjs-dist/web/pdf_viewer.css";
-import workerSrc from "pdfjs-dist/build/pdf.worker.min.mjs?url";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-// Setup PDF.js worker
-pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
+// Updated PDF import to use existing PDF file
+const samplePdf = "/rr.pdf";
 
-// Demo PDF import (replace with your PDF file path)
-import rrPdf from "/rr.pdf";
-
-// Static notes list
+// Enhanced notes data structure with real image icons
 const notesList = [
   {
     id: "id1",
     title: "Top 30 Interview Questions",
-    navoption: "Interview Questions",
-    discription:
-      "These are common interview questions designed especially for students and fresh graduates. They focus on your education, skills, experiences, and goals to help you confidently prepare for campus placements, internships, or your first job.",
-    file: rrPdf,
-    tags: ["interview", "placement", "general"],
+    category: "Interview Prep",
+    description: "Common interview questions designed especially for students and fresh graduates. Focus on education, skills, experiences, and goals.",
+    file: samplePdf,
+    tags: ["interview", "placement", "general", "hr"],
+    duration: "2 hours",
+    downloads: 1250,
+    rating: 4.8,
+    views: 3400,
+    lastUpdated: "2024-01-15",
+    author: "Career Team",
+    icon: "/images/tcs.jpg",
+    color: "bg-blue-500"
   },
   {
     id: "id2",
-    title: "Gate Notes",
-    navoption: "GATE Study Material",
-    discription:
-      "Essential GATE exam study material, including previous year question topics, formulas, and tricks to score high in engineering entrance exams.",
-    file: rrPdf,
-    tags: ["gate", "exam", "entrance"],
+    title: "GATE Complete Study Guide",
+    category: "Exam Prep",
+    description: "Essential GATE exam study material with previous year questions, formulas, and tricks to score high in engineering entrance exams.",
+    file: samplePdf,
+    tags: ["gate", "exam", "entrance", "engineering"],
+    duration: "8 hours",
+    downloads: 2100,
+    rating: 4.9,
+    views: 5600,
+    lastUpdated: "2024-01-10",
+    author: "Exam Experts",
+    icon: "/images/infosys.jpg",
+    color: "bg-purple-500"
   },
   {
     id: "id3",
-    title: "Java Full Notes",
-    navoption: "Java Notes",
-    discription:
-      "Comprehensive notes covering Java basics to advanced OOP concepts, commonly asked Java interview questions, and best coding practices for engineering students.",
-    file: rrPdf,
-    tags: ["java", "programming", "oop"],
+    title: "Java Programming Masterclass",
+    category: "Programming",
+    description: "Comprehensive Java notes from basics to advanced OOP concepts, interview questions, and best coding practices.",
+    file: samplePdf,
+    tags: ["java", "programming", "oop", "backend"],
+    duration: "6 hours",
+    downloads: 1800,
+    rating: 4.7,
+    views: 4200,
+    lastUpdated: "2024-01-12",
+    author: "Java Guru",
+    icon: "/images/wipro.jpg",
+    color: "bg-orange-500"
   },
   {
     id: "id4",
-    title: "Python Crash Course",
-    navoption: "Python Notes",
-    discription:
-      "Quick-reference notes for Python covering syntax, data structures, and code snippets for data science and college projects.",
-    file: rrPdf,
-    tags: ["python", "programming", "coding"],
+    title: "Python Data Science Guide",
+    category: "Programming",
+    description: "Python notes covering syntax, data structures, libraries, and practical examples for data science projects.",
+    file: samplePdf,
+    tags: ["python", "data-science", "ml", "analytics"],
+    duration: "5 hours",
+    downloads: 1600,
+    rating: 4.6,
+    views: 3800,
+    lastUpdated: "2024-01-08",
+    author: "Data Scientist",
+    icon: "/images/cognizant.png",
+    color: "bg-green-500"
   },
-{
-  id: "id16",
-  title: "C Programming Guide",
-  navoption: "C Notes",
-  discription:
-    "Reference guide to C programming: pointers, arrays, structures, memory management, and sample programs for exams and interviews.",
-  file: rrPdf,
-  tags: ["c", "procedural", "programming", "system"],
-},
-{
-  id: "id17",
-  title: "C++ Masterclass",
-  navoption: "C++ Study",
-  discription:
-    "Complete C++ notes: OOP, STL, memory model, templates, and typical C++ interview coding problems for software roles.",
-  file: rrPdf,
-  tags: ["c++", "oop", "programming", "development"],
-},
-{
-  id: "id18",
-  title: "JavaScript Crash Course",
-  navoption: "JavaScript Notes",
-  discription:
-    "The most common JS syntax, ES6+, DOM, async programming, debugging, and web development patterns for placements and projects.",
-  file: rrPdf,
-  tags: ["javascript", "web", "frontend", "coding"],
-},
+  {
+    id: "id5",
+    title: "C Programming Fundamentals",
+    category: "Programming",
+    description: "Complete C programming guide covering pointers, arrays, structures, memory management, and system programming.",
+    file: samplePdf,
+    tags: ["c", "system-programming", "algorithms", "basics"],
+    duration: "4 hours",
+    downloads: 1400,
+    rating: 4.5,
+    views: 3200,
+    lastUpdated: "2024-01-05",
+    author: "System Expert",
+    icon: "/images/capgemini.jpg",
+    color: "bg-gray-500"
+  },
   {
     id: "id6",
-    title: "DBMS Quick Revision",
-    navoption: "DBMS Notes",
-    discription:
-      "Summary notes for Database Management Systems with ER models, normalization, SQL queries, and exam points for university and placements.",
-    file: rrPdf,
-    tags: ["dbms", "database", "sql"],
+    title: "C++ Advanced Concepts",
+    category: "Programming",
+    description: "Advanced C++ concepts including STL, templates, memory management, and modern C++ features for competitive programming.",
+    file: samplePdf,
+    tags: ["c++", "stl", "templates", "competitive"],
+    duration: "7 hours",
+    downloads: 1200,
+    rating: 4.8,
+    views: 2800,
+    lastUpdated: "2024-01-14",
+    author: "CPP Master",
+    icon: "/images/accenture.png",
+    color: "bg-blue-600"
   },
- 
+  {
+    id: "id7",
+    title: "JavaScript Web Development",
+    category: "Programming",
+    description: "Modern JavaScript ES6+, DOM manipulation, async programming, and web development patterns for full-stack development.",
+    file: samplePdf,
+    tags: ["javascript", "web", "frontend", "es6"],
+    duration: "5 hours",
+    downloads: 1900,
+    rating: 4.7,
+    views: 4500,
+    lastUpdated: "2024-01-11",
+    author: "Web Developer",
+    icon: "/images/google.jpg",
+    color: "bg-yellow-500"
+  },
   {
     id: "id8",
-    title: "Operating Systems Concepts",
-    navoption: "OS Notes",
-    discription:
-      "Essential OS topics like process management, scheduling, memory, and synchronization with solved questions for engineering exams.",
-    file: rrPdf,
-    tags: ["os", "operating systems", "theory"],
+    title: "Database Management Systems",
+    category: "Computer Science",
+    description: "Complete DBMS notes covering ER models, normalization, SQL queries, transactions, and database design principles.",
+    file: samplePdf,
+    tags: ["dbms", "database", "sql", "normalization"],
+    duration: "6 hours",
+    downloads: 1500,
+    rating: 4.6,
+    views: 3600,
+    lastUpdated: "2024-01-09",
+    author: "DB Expert",
+    icon: "/images/tcs.jpg",
+    color: "bg-indigo-500"
   },
   {
     id: "id9",
-    title: "Aptitude Formulas",
-    navoption: "Aptitude Notes",
-    discription:
-      "Maths aptitude shortcut tricks for quantitative, logical reasoning, and verbal skills, for campus placements and competitive exams.",
-    file: rrPdf,
-    tags: ["aptitude", "quant", "reasoning"],
+    title: "Operating Systems Concepts",
+    category: "Computer Science",
+    description: "OS fundamentals including process management, memory management, file systems, and synchronization concepts.",
+    file: samplePdf,
+    tags: ["operating-systems", "processes", "memory", "synchronization"],
+    duration: "8 hours",
+    downloads: 1100,
+    rating: 4.8,
+    views: 2600,
+    lastUpdated: "2024-01-13",
+    author: "OS Specialist",
+    icon: "/images/infosys.jpg",
+    color: "bg-red-500"
   },
   {
     id: "id10",
-    title: "Digital Logic Design",
-    navoption: "Digital Electronics",
-    discription:
-      "Key concepts of digital electronics: logic gates, flip-flops, counters, sequential circuits, and design examples for ECE/EEE students.",
-    file: rrPdf,
-    tags: ["digital", "electronics", "logic"],
-  },
-  {
-    id: "id13",
-    title: "Networks & Communication",
-    navoption: "Networking Notes",
-    discription:
-      "Protocols, OSI & TCP/IP models, routing algorithms, popular interview questions for Computer Networks and IT branch.",
-    file: rrPdf,
-    tags: ["network", "communication", "it"],
-  },
-
-{
-  id: "id20",
-  title: "PHP for Beginners",
-  navoption: "PHP Notes",
-  discription:
-    "Core PHP concepts, server-side scripting, database integration, and MVC, helpful for web dev interviews and backend tasks.",
-  file: rrPdf,
-  tags: ["php", "web", "backend", "scripting"],
-},
-
+    title: "Computer Networks",
+    category: "Computer Science",
+    description: "Networking fundamentals, protocols, routing, security, and practical network administration concepts.",
+    file: samplePdf,
+    tags: ["networks", "protocols", "routing", "security"],
+    duration: "6 hours",
+    downloads: 1300,
+    rating: 4.5,
+    views: 3100,
+    lastUpdated: "2024-01-07",
+    author: "Network Engineer",
+    icon: "/images/wipro.jpg",
+    color: "bg-cyan-500"
+  }
 ];
 
 export default function StudentNotesPage() {
-  const [selectedNote, setSelectedNote] = useState(notesList[0]);
-  const [numPages, setNumPages] = useState<number>(0);
-  const [pageNumber, setPageNumber] = useState<number>(1);
-  const [scale, setScale] = useState<number>(0.8);
+  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [sortBy, setSortBy] = useState("recent");
 
-  function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
-    setNumPages(numPages);
-    setPageNumber(1);
-  }
+  // Filter and sort notes
+  const filteredNotes = useMemo(() => {
+    let filtered = notesList;
 
-  function downloadPDF() {
-    saveAs(selectedNote.file, `${selectedNote.title}.pdf`);
-  }
+    // Filter by search term
+    if (searchTerm) {
+      filtered = filtered.filter(note =>
+        note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        note.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        note.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+      );
+    }
+
+    // Filter by category
+    if (selectedCategory !== "all") {
+      filtered = filtered.filter(note => note.category.toLowerCase().includes(selectedCategory.toLowerCase()));
+    }
+
+    // Sort notes
+    switch (sortBy) {
+      case "recent":
+        filtered.sort((a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime());
+        break;
+      case "popular":
+        filtered.sort((a, b) => b.downloads - a.downloads);
+        break;
+      case "rating":
+        filtered.sort((a, b) => b.rating - a.rating);
+        break;
+      case "title":
+        filtered.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+    }
+
+    return filtered;
+  }, [searchTerm, selectedCategory, sortBy]);
+
+  const handleNoteClick = (note: any) => {
+    navigate(`/pdf-viewer/${note.id}`);
+  };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-r from-slate-50 to-blue-50 dark:from-background dark:to-blue-900 overflow-hidden">
-      {/* Sidebar */}
-      <aside className="bg-white dark:bg-slate-900 shadow-lg border-r border-blue-100 dark:border-slate-800 w-72 min-w-[220px] hidden md:flex flex-col">
-        <div className="bg-white dark:bg-slate-900 p-6 border-b border-blue-100 dark:border-slate-800 flex items-center gap-3">
-          <BookOpen className="w-6 h-6 text-blue-600" />
-          <span className="text-xl font-bold text-blue-800 dark:text-blue-200 tracking-tight">
-            Student Notes
-          </span>
-        </div>
-        <nav className="flex-1 overflow-y-auto py-6 space-y-2">
-          {notesList.map((note) => (
-            <button
-              key={note.id}
-              className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg text-sm transition group relative ${
-                note.id === selectedNote.id
-                  ? "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-white font-semibold shadow"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-700"
-              }`}
-              onClick={() => {
-                setSelectedNote(note);
-                setPageNumber(1);
-                setScale(1.1);
-              }}
-              aria-label={`Select note: ${note.navoption}`}
-            >
-              <FileText className="w-5 h-6" />
-              <span className="truncate">{note.navoption}</span>
-              {note.id === selectedNote.id && (
-                <span
-                  className="absolute left-0 h-full w-1 bg-blue-700 rounded-r-lg"
-                  aria-hidden="true"
-                />
-              )}
-            </button>
-          ))}
-        </nav>
-        <div className="p-4 border-t border-blue-100 dark:border-slate-800 text-xs text-muted-foreground">
-          <Home className="inline w-3 h-3 mr-1" />
-          <a href="/" className="hover:underline">
-            Back to Dashboard
-          </a>
-        </div>
-      </aside>
-
-      {/* Main content area */}
-      <main className="flex-1 flex flex-col items-center bg-gradient-to-br from-white to-blue-100 dark:from-background dark:to-blue-900/40 px-4 md:px-8 py-8 overflow-auto relative">
-        <div className="max-w-4xl w-full">
-          {/* Sticky header */}
-          <div className="bg-opacity-70 dark:bg-opacity-70 bg-white dark:bg-slate-900 backdrop-blur-sm rounded-lg p-4 shadow-md">
-            <h1 className="text-3xl font-bold mb-2">{selectedNote.title}</h1>
-            <p className="text-lg font-medium text-gray-600 dark:text-gray-300">
-              {selectedNote.discription}
-            </p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      {/* Header */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Student Notes</h1>
+              <p className="text-gray-600 mt-1">Access comprehensive study materials and resources</p>
+            </div>
+            <div className="flex items-center space-x-4">
+              <Button variant="outline" size="sm">
+                <Bookmark className="h-4 w-4 mr-2" />
+                My Bookmarks
+              </Button>
+              <Button variant="outline" size="sm">
+                <Heart className="h-4 w-4 mr-2" />
+                Favorites
+              </Button>
+            </div>
           </div>
-
-          {/* PDF controls */}
-          <section className="flex flex-wrap justify-center items-center gap-3 mb-4 mt-5 z-20">
-            <button
-              onClick={() => setPageNumber((p) => Math.max(p - 1, 1))}
-              disabled={pageNumber === 1}
-              className="px-3 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed shadow"
-              aria-label="Previous Page"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <span className="text-sm px-3 font-mono select-none">
-              Page {pageNumber}{" "}
-              <span className="text-gray-400 dark:text-gray-500">
-                / {numPages || "?"}
-              </span>
-            </span>
-            <button
-              onClick={() => setPageNumber((p) => Math.min(p + 1, numPages))}
-              disabled={pageNumber >= numPages}
-              className="px-3 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed shadow"
-              aria-label="Next Page"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-            {/* Quick nav */}
-            <button
-              onClick={() => setPageNumber(1)}
-              disabled={pageNumber === 1}
-              className="text-blue-700 dark:text-blue-300 underline text-xs px-2 py-1"
-              aria-label="First Page"
-            >
-              First
-            </button>
-            <button
-              onClick={() => setPageNumber(numPages)}
-              disabled={pageNumber === numPages}
-              className="text-blue-700 dark:text-blue-300 underline text-xs px-2 py-1"
-              aria-label="Last Page"
-            >
-              Last
-            </button>
-            {/* Zoom */}
-            <button
-              title="Zoom Out"
-              onClick={() => setScale((s) => Math.max(s - 0.2, 0.7))}
-              className="bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600 px-3 py-2 rounded"
-              aria-label="Zoom Out"
-            >
-              <ZoomOut className="w-5 h-5" />
-            </button>
-            <button
-              title="Zoom In"
-              onClick={() => setScale((s) => s + 0.2)}
-              className="bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600 px-3 py-2 rounded"
-              aria-label="Zoom In"
-            >
-              <ZoomIn className="w-5 h-5" />
-            </button>
-            {/* Download */}
-            <button
-              onClick={downloadPDF}
-              className="px-3 py-2 rounded bg-green-600 text-white hover:bg-green-700 flex items-center font-medium shadow"
-              title="Download PDF"
-              aria-label="Download PDF"
-            >
-              <ArrowDown className="w-5 h-5 mr-1" />
-              Download
-            </button>
-          </section>
-
-          {/* PDF Display */}
-          <section className="bg-white dark:bg-slate-900 p-4 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 transition-shadow">
-            <Document
-              file={selectedNote.file}
-              onLoadSuccess={onDocumentLoadSuccess}
-              loading={
-                <div className="text-center text-blue-600 py-20">
-                  Loading PDF…
-                </div>
-              }
-              onLoadError={(error) => {
-                console.error("Error loading PDF:", error);
-                alert(`Failed to load PDF: ${error.message || error}`);
-              }}
-              className="block"
-            >
-              <Page pageNumber={pageNumber} scale={scale} />
-            </Document>
-          </section>
-
-          {/* Related resources */}
-          <section className="mt-6 bg-blue-100/70 dark:bg-blue-900/30 border border-blue-200 rounded-lg p-4">
-            <h2 className="text-lg font-semibold text-blue-800 dark:text-blue-200 flex items-center gap-2 mb-2">
-              <BookOpen className="w-5 h-5" />
-              Related Resources
-            </h2>
-            <ul className="flex flex-col md:flex-row gap-2">
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center gap-2 px-3 py-2 rounded bg-white dark:bg-slate-800 shadow hover:shadow-md transition border border-blue-200 dark:border-slate-700 text-blue-700 dark:text-blue-300"
-                >
-                  <ArrowDown className="w-4 h-4" /> Download Summary Notes (PDF)
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center gap-2 px-3 py-2 rounded bg-white dark:bg-slate-800 shadow hover:shadow-md transition border border-blue-200 dark:border-slate-700 text-blue-700 dark:text-blue-300"
-                >
-                  <FileText className="w-4 h-4" /> View More Notes on This Subject
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center gap-2 px-3 py-2 rounded bg-white dark:bg-slate-800 shadow hover:shadow-md transition border border-blue-200 dark:border-slate-700 text-blue-700 dark:text-blue-300"
-                >
-                  <ChevronRight className="w-4 h-4" /> Ask Questions in Student Forum
-                </a>
-              </li>
-            </ul>
-          </section>
         </div>
-      </main>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Search and Filters */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+          <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+            {/* Search */}
+            <div className="relative flex-1 max-w-md">
+              <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Input
+                placeholder="Search notes, topics, or tags..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+
+            {/* Category Filter */}
+            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder="Select category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Categories</SelectItem>
+                <SelectItem value="interview">Interview Prep</SelectItem>
+                <SelectItem value="exam">Exam Prep</SelectItem>
+                <SelectItem value="programming">Programming</SelectItem>
+                <SelectItem value="computer science">Computer Science</SelectItem>
+              </SelectContent>
+            </Select>
+
+            {/* Sort */}
+            <Select value={sortBy} onValueChange={setSortBy}>
+              <SelectTrigger className="w-40">
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="recent">Most Recent</SelectItem>
+                <SelectItem value="popular">Most Popular</SelectItem>
+                <SelectItem value="rating">Highest Rated</SelectItem>
+                <SelectItem value="title">Alphabetical</SelectItem>
+              </SelectContent>
+            </Select>
+
+            {/* View Mode */}
+            <div className="flex items-center space-x-2">
+              <Button
+                variant={viewMode === "grid" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setViewMode("grid")}
+              >
+                <Grid className="h-4 w-4" />
+              </Button>
+              <Button
+                variant={viewMode === "list" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setViewMode("list")}
+              >
+                <List className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Notes Grid/List */}
+        <div className={viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" : "space-y-4"}>
+          {filteredNotes.map((note) => (
+            <Card key={note.id} className="hover:shadow-lg transition-all duration-200 cursor-pointer group h-80" onClick={() => handleNoteClick(note)}>
+              <CardHeader className="">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center ">
+                    {/* <div className={`w-10 h-10 ${note.color} rounded-lg flex items-center justify-center overflow-hidden`}>
+                      <img 
+                        src={note.icon} 
+                        alt={note.title}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          // Fallback to a default icon if image fails to load
+                          e.currentTarget.style.display = 'none';
+                          e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                        }}
+                      />
+                      <BookOpen className="h-5 w-5 text-white hidden" />
+                    </div> */}
+                    <div>
+                      <CardTitle className="text-lg group-hover:text-blue-600 transition-colors">
+                        {note.title}
+                      </CardTitle>
+                      <CardDescription className="text-sm text-gray-500">
+                        {note.category}
+                      </CardDescription>
+                    </div>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                  {note.description}
+                </p>
+                
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center space-x-4 text-sm text-gray-500">
+                    <div className="flex items-center space-x-1">
+                      <Download className="h-4 w-4" />
+                      <span>{note.downloads}</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <Eye className="h-4 w-4" />
+                      <span>{note.views}</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                      <span>{note.rating}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-1 mb-4">
+                  {note.tags.slice(0, 3).map((tag, index) => (
+                    <Badge key={index} variant="outline" className="text-xs">
+                      {tag}
+                    </Badge>
+                  ))}
+                  {note.tags.length > 3 && (
+                    <Badge variant="outline" className="text-xs">
+                      +{note.tags.length - 3}
+                    </Badge>
+                  )}
+                </div>
+
+                <div className="flex items-center text-center justify-between">
+                  {/* <div className="flex items-center space-x-2 text-xs text-gray-500">
+                    <Clock className="h-3 w-3" />
+                    <span>{note.duration}</span>
+                    <span>•</span>
+                    <span>Updated {new Date(note.lastUpdated).toLocaleDateString()}</span>
+                  </div> */}
+                  {/* <div className="flex items-center text-center space-x-2"> */}
+                    <Button
+                      size="lg"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleNoteClick(note);
+                      }}
+                    >
+                      <Eye className="h-6 w-5 mr-1" />
+                      Read Now 
+                    </Button>
+                  {/* </div> */}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Empty State */}
+        {filteredNotes.length === 0 && (
+          <div className="text-center py-12">
+            <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No notes found</h3>
+            <p className="text-gray-500">Try adjusting your search or filter criteria.</p>
+          </div>
+        )}
+      </div>
+
+
     </div>
   );
 }
