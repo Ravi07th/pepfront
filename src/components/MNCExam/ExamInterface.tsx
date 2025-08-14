@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Clock, ChevronRight, CheckCircle, AlertCircle, Flag, SkipForward, ArrowLeft, LogOut } from 'lucide-react';
+import { Clock, ChevronRight, CheckCircle, AlertCircle, Flag, SkipForward, ArrowLeft, LogOut, Trophy } from 'lucide-react';
 import { Company, ExamType, ExamState, Question, QuestionStatus } from './types';
 import { getLimitedQuestionsByCompanyAndExam } from './data/questions';
+import { getRouteId } from './utils/routingUtils';
 import Timer from './Timer';
 import QuestionPanel from './QuestionPanel';
 import ResultsPage from './ResultsPage';
@@ -11,12 +12,14 @@ interface ExamInterfaceProps {
   company: Company;
   examType: ExamType;
   onExamEnd: () => void;
+  onReExam?: () => void; // Add prop for re-exam functionality
 }
 
 const ExamInterface: React.FC<ExamInterfaceProps> = ({ 
   company, 
   examType, 
-  onExamEnd 
+  onExamEnd,
+  onReExam
 }) => {
   const [currentSection, setCurrentSection] = useState(0);
   const [currentSubsection, setCurrentSubsection] = useState(0);
@@ -201,10 +204,38 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
 
   // Handle return to home from results page
   const handleReturnHome = () => {
+    // Safely exit fullscreen with error handling
     if (document.exitFullscreen) {
-      document.exitFullscreen();
+      document.exitFullscreen().catch((error) => {
+        console.log('[ExamInterface] Error exiting fullscreen:', error);
+        // Continue with navigation even if fullscreen exit fails
+      });
     }
     onExamEnd();
+  };
+
+  // Handle re-exam - navigate directly to introduction page
+  const handleReExam = () => {
+    console.log('[ExamInterface] Retake exam button clicked');
+    console.log('[ExamInterface] onReExam function available:', !!onReExam);
+    
+    // Safely exit fullscreen with error handling
+    if (document.exitFullscreen) {
+      document.exitFullscreen().catch((error) => {
+        console.log('[ExamInterface] Error exiting fullscreen:', error);
+        // Continue with navigation even if fullscreen exit fails
+      });
+    }
+    // Use the passed onReExam function if available, otherwise fallback to window.location
+    if (onReExam) {
+      console.log('[ExamInterface] Calling onReExam function');
+      onReExam();
+    } else {
+      console.log('[ExamInterface] Using fallback window.location');
+      // Fallback to window.location if onReExam is not provided
+      const routeId = getRouteId(company, examType);
+      window.location.href = `/mock-test/${routeId}`;
+    }
   };
 
   const handleTimeUp = () => {
@@ -227,11 +258,21 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
   };
 
   const handleQuestionChange = (questionIndex: number) => {
-    setCurrentQuestion(questionIndex);
-    // Mark the current question as visited
-    const currentQuestionId = currentQuestions[questionIndex]?.id;
-    if (currentQuestionId) {
-      setVisitedQuestions(prev => new Set([...prev, currentQuestionId]));
+    console.log('[ExamInterface] handleQuestionChange called with index:', questionIndex);
+    console.log('[ExamInterface] Current question before change:', currentQuestion);
+    console.log('[ExamInterface] Current questions array length:', currentQuestions.length);
+    console.log('[ExamInterface] Available questions:', currentQuestions.map((q, i) => `${i}: ${q.id}`));
+    
+    if (questionIndex >= 0 && questionIndex < currentQuestions.length) {
+      setCurrentQuestion(questionIndex);
+      // Mark the current question as visited
+      const currentQuestionId = currentQuestions[questionIndex]?.id;
+      if (currentQuestionId) {
+        setVisitedQuestions(prev => new Set([...prev, currentQuestionId]));
+      }
+      console.log('[ExamInterface] Question change completed successfully');
+    } else {
+      console.error('[ExamInterface] Invalid question index:', questionIndex, 'for questions array of length:', currentQuestions.length);
     }
   };
 
@@ -436,23 +477,167 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
       timeTaken={actualTimeTaken}
       onReturnHome={handleReturnHome}
       onViewSolutions={handleViewSolutions}
+      onReExam={handleReExam}
     />;
   }
 
   if (sectionSubmitted) {
+    const isMovingToResults = currentSection + 1 >= examType.sections.length;
+    
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center">
-        <div className="text-center bg-white p-12 rounded-2xl shadow-xl">
-          <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-6" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Section Submitted!</h2>
-          <p className="text-gray-600 mb-4">
-            Moving to: <span className="font-semibold">{
-              currentSection + 1 < examType.sections.length 
-                ? examType.sections[currentSection + 1].name
-                : "Results"
-            }</span>
-          </p>
-          <div className="animate-spin h-8 w-8 border-4 border-blue-600 border-t-transparent rounded-full mx-auto"></div>
+      <div className={`min-h-screen bg-gradient-to-br ${isMovingToResults 
+        ? 'from-yellow-50 via-orange-50 to-red-50' 
+        : 'from-green-50 via-blue-50 to-indigo-50'
+      } flex items-center justify-center p-4`}>
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          {isMovingToResults ? (
+            // Results Animation - Trophy and celebration theme
+            <>
+              <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob"></div>
+              <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-orange-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-2000"></div>
+              <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-red-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-4000"></div>
+              
+              {/* Celebration particles */}
+              {[...Array(12)].map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute w-2 h-2 bg-yellow-400 rounded-full animate-bounce"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    animationDelay: `${Math.random() * 2}s`,
+                    animationDuration: `${1 + Math.random()}s`
+                  }}
+                />
+              ))}
+            </>
+          ) : (
+            // Next Section Animation - Standard flow
+            <>
+              <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-green-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob"></div>
+              <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-2000"></div>
+              <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-4000"></div>
+            </>
+          )}
+        </div>
+
+        <div className="relative z-10 bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl p-8 sm:p-12 max-w-md w-full border border-white/20">
+          <div className="text-center">
+            {/* Enhanced Success Icon */}
+            <div className="relative mb-8">
+              <div className="w-20 h-20 mx-auto relative">
+                {isMovingToResults ? (
+                  // Results Icon - Trophy with celebration
+                  <>
+                    {/* Outer Ring - Golden */}
+                    <div className="absolute inset-0 rounded-full border-4 border-yellow-200/30"></div>
+                    <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-yellow-500 animate-spin"></div>
+                    
+                    {/* Middle Ring - Orange */}
+                    <div className="absolute inset-2 rounded-full border-4 border-orange-200/30"></div>
+                    <div className="absolute inset-2 rounded-full border-4 border-transparent border-t-orange-500 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '2s' }}></div>
+                    
+                    {/* Inner Circle with Trophy Icon */}
+                    <div className="absolute inset-4 rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
+                      <Trophy className="h-8 w-8 text-white" />
+                    </div>
+                    
+                    {/* Celebration sparkles */}
+                    <div className="absolute -top-2 -right-2 w-4 h-4 bg-yellow-400 rounded-full animate-pulse"></div>
+                    <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-orange-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                  </>
+                ) : (
+                  // Next Section Icon - Standard check
+                  <>
+                    {/* Outer Ring */}
+                    <div className="absolute inset-0 rounded-full border-4 border-green-200/30"></div>
+                    <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-green-500 animate-spin"></div>
+                    
+                    {/* Middle Ring */}
+                    <div className="absolute inset-2 rounded-full border-4 border-blue-200/30"></div>
+                    <div className="absolute inset-2 rounded-full border-4 border-transparent border-t-blue-500 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '2s' }}></div>
+                    
+                    {/* Inner Circle with Check Icon */}
+                    <div className="absolute inset-4 rounded-full bg-gradient-to-br from-green-500 to-blue-600 flex items-center justify-center">
+                      <CheckCircle className="h-8 w-8 text-white" />
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Content */}
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+              {isMovingToResults ? '🎉 Section Completed!' : 'Section Submitted!'}
+            </h2>
+            <p className="text-gray-600 mb-6 text-sm sm:text-base">
+              Moving to: <span className={`font-semibold ${isMovingToResults ? 'text-orange-600' : 'text-blue-600'}`}>{
+                currentSection + 1 < examType.sections.length 
+                  ? examType.sections[currentSection + 1].name
+                  : "Results"
+              }</span>
+            </p>
+
+            {/* Enhanced Progress Indicator */}
+            <div className="mb-6">
+              <div className="flex justify-center items-center space-x-2 mb-4">
+                {isMovingToResults ? (
+                  // Results dots - Golden theme
+                  <>
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                  </>
+                ) : (
+                  // Next section dots - Blue theme
+                  <>
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                  </>
+                )}
+              </div>
+              
+              {/* Animated Progress Bar */}
+              <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                <div className={`h-full rounded-full animate-pulse ${isMovingToResults 
+                  ? 'bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500' 
+                  : 'bg-gradient-to-r from-green-500 via-blue-500 to-indigo-500'
+                }`} style={{ width: isMovingToResults ? '95%' : '75%' }}></div>
+              </div>
+            </div>
+
+            {/* Enhanced Spinner */}
+            <div className="relative">
+              <div className="w-12 h-12 mx-auto relative">
+                {isMovingToResults ? (
+                  // Results spinner - Golden theme
+                  <>
+                    <div className="absolute inset-0 rounded-full border-4 border-yellow-200/30"></div>
+                    <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-yellow-600 animate-spin"></div>
+                    <div className="absolute inset-2 rounded-full border-4 border-orange-200/30"></div>
+                    <div className="absolute inset-2 rounded-full border-4 border-transparent border-t-orange-600 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
+                  </>
+                ) : (
+                  // Next section spinner - Blue theme
+                  <>
+                    <div className="absolute inset-0 rounded-full border-4 border-blue-200/30"></div>
+                    <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-blue-600 animate-spin"></div>
+                    <div className="absolute inset-2 rounded-full border-4 border-indigo-200/30"></div>
+                    <div className="absolute inset-2 rounded-full border-4 border-transparent border-t-indigo-600 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Results-specific celebration message */}
+            {isMovingToResults && (
+              <div className="mt-4 text-sm text-orange-600 font-medium animate-pulse">
+                🎊 Preparing your final results...
+              </div>
+            )}
+          </div>
         </div>
       </div>
     );
@@ -460,14 +645,143 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
 
   if (examSubmitting) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center">
-        <div className="text-center bg-white p-12 rounded-2xl shadow-xl">
-          <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-6" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Exam Submitted!</h2>
-          <p className="text-gray-600 mb-4">
-            Processing your results...
-          </p>
-          <div className="animate-spin h-8 w-8 border-4 border-green-600 border-t-transparent rounded-full mx-auto"></div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 flex items-center justify-center p-4">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob"></div>
+          <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-2000"></div>
+          <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-4000"></div>
+          
+          {/* Floating stars */}
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-yellow-400 rounded-full animate-pulse"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${1 + Math.random()}s`
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="relative z-10 bg-gray-800/90 backdrop-blur-lg rounded-3xl shadow-2xl p-8 sm:p-12 max-w-lg w-full border border-gray-700/20">
+          <div className="text-center">
+            {/* Unique Success Icon with Rocket */}
+            <div className="relative mb-8">
+              <div className="w-24 h-24 mx-auto relative">
+                {/* Outer Ring - Blue */}
+                <div className="absolute inset-0 rounded-full border-4 border-blue-200/30"></div>
+                <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-blue-500 animate-spin"></div>
+                
+                {/* Middle Ring - Indigo */}
+                <div className="absolute inset-2 rounded-full border-4 border-indigo-200/30"></div>
+                <div className="absolute inset-2 rounded-full border-4 border-transparent border-t-indigo-500 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '2s' }}></div>
+                
+                {/* Inner Ring - Purple */}
+                <div className="absolute inset-4 rounded-full border-4 border-purple-200/30"></div>
+                <div className="absolute inset-4 rounded-full border-4 border-transparent border-t-purple-500 animate-spin" style={{ animationDuration: '1.5s' }}></div>
+                
+                {/* Inner Circle with Rocket Icon */}
+                <div className="absolute inset-6 rounded-full bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 flex items-center justify-center">
+                  <div className="text-white text-2xl">🚀</div>
+                </div>
+                
+                {/* Rocket trail effect */}
+                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-8 h-4 bg-gradient-to-t from-orange-400 to-transparent rounded-full animate-pulse"></div>
+              </div>
+            </div>
+
+            {/* Content */}
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">🚀 Final Submission!</h2>
+            <p className="text-gray-300 mb-6 text-sm sm:text-base">
+              Launching your results into orbit...
+            </p>
+
+            {/* Unique Progress Animation */}
+            <div className="mb-6">
+              <div className="space-y-3">
+                {examType.sections.map((section, index) => (
+                  <div key={section.id} className="flex items-center justify-between p-3 bg-gradient-to-r from-gray-700 to-gray-600 rounded-lg border border-gray-600">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center">
+                        <span className="text-white text-sm font-bold">{index + 1}</span>
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-white">{section.name}</div>
+                        <div className="text-xs text-blue-400 font-medium">🚀 Launching...</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      {/* Rocket animation */}
+                      <div className="w-6 h-6 relative">
+                        <div className="absolute inset-0 text-blue-400 animate-bounce">🚀</div>
+                      </div>
+                      {/* Progress dots */}
+                      <div className="flex space-x-1">
+                        <div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></div>
+                        <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                        <div className="w-1.5 h-1.5 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Overall Progress with Rocket */}
+            <div className="mb-6">
+              <div className="flex justify-between text-sm text-gray-300 mb-2">
+                <span>Mission Progress</span>
+                <span>🚀 Launching...</span>
+              </div>
+              <div className="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-full animate-pulse relative" style={{ width: '95%' }}>
+                  {/* Rocket on progress bar */}
+                  <div className="absolute right-0 top-1/2 transform -translate-y-1/2 -translate-x-1 py-3 text-white text-sm animate-bounce">🚀</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Launch Sequence */}
+            {/* <div className="space-y-2 text-sm">
+              <div className="flex items-center justify-center space-x-2 text-gray-300">
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                <span>🚀 Mission Control: Systems check</span>
+              </div>
+              <div className="flex items-center justify-center space-x-2 text-gray-300">
+                <div className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                <span>🔥 Ignition sequence initiated</span>
+              </div>
+              <div className="flex items-center justify-center space-x-2 text-gray-300">
+                <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                <span>📊 Data processing in orbit</span>
+              </div>
+              <div className="flex items-center justify-center space-x-2 text-gray-300">
+                <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+                <span>⭐ Results preparing for landing</span>
+              </div>
+            </div> */}
+
+            {/* Enhanced Spinner with Rocket Theme */}
+            <div className="relative mt-6">
+              <div className="w-16 h-16 mx-auto relative">
+                <div className="absolute inset-0 rounded-full border-4 border-blue-200/30"></div>
+                <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-blue-500 animate-spin"></div>
+                <div className="absolute inset-2 rounded-full border-4 border-indigo-200/30"></div>
+                <div className="absolute inset-2 rounded-full border-4 border-transparent border-t-indigo-500 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
+                <div className="absolute inset-4 rounded-full border-4 border-purple-200/30"></div>
+                <div className="absolute inset-4 rounded-full border-4 border-transparent border-t-purple-500 animate-spin" style={{ animationDuration: '1s' }}></div>
+              </div>
+            </div>
+
+            {/* Final message */}
+            <div className="mt-4 text-sm text-blue-400 font-medium animate-pulse">
+              🚀 Mission accomplished! Preparing for results touchdown...
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -476,11 +790,62 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
   // Don't render the exam interface until timers are initialized
   if (!timersInitialized) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin h-12 w-12 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"></div>
-          <h3 className="text-xl font-semibold text-gray-900">Loading Exam...</h3>
-          <p className="text-gray-600">Please wait while we prepare your exam.</p>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob"></div>
+          <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-2000"></div>
+          <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-4000"></div>
+        </div>
+
+        <div className="relative z-10 bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl p-8 sm:p-12 max-w-md w-full border border-white/20">
+          <div className="text-center">
+            {/* Enhanced Loading Icon */}
+            <div className="relative mb-8">
+              <div className="w-20 h-20 mx-auto relative">
+                {/* Outer Ring */}
+                <div className="absolute inset-0 rounded-full border-4 border-blue-200/30"></div>
+                <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-blue-500 animate-spin"></div>
+                
+                {/* Middle Ring */}
+                <div className="absolute inset-2 rounded-full border-4 border-indigo-200/30"></div>
+                <div className="absolute inset-2 rounded-full border-4 border-transparent border-t-indigo-500 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '2s' }}></div>
+                
+                {/* Inner Circle */}
+                <div className="absolute inset-4 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                  <div className="w-6 h-6 bg-white rounded-full animate-pulse"></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Content */}
+            <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">Loading Exam...</h3>
+            <p className="text-gray-600 mb-6 text-sm sm:text-base">Please wait while we prepare your exam.</p>
+
+            {/* Enhanced Progress Indicator */}
+            <div className="mb-6">
+              <div className="flex justify-center items-center space-x-2 mb-4">
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+              </div>
+              
+              {/* Animated Progress Bar */}
+              <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-full animate-pulse" style={{ width: '60%' }}></div>
+              </div>
+            </div>
+
+            {/* Enhanced Spinner */}
+            <div className="relative">
+              <div className="w-12 h-12 mx-auto relative">
+                <div className="absolute inset-0 rounded-full border-4 border-blue-200/30"></div>
+                <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-blue-600 animate-spin"></div>
+                <div className="absolute inset-2 rounded-full border-4 border-indigo-200/30"></div>
+                <div className="absolute inset-2 rounded-full border-4 border-transparent border-t-indigo-600 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -493,8 +858,7 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
         className="text-white py-3 px-4"
                  style={{ 
            backgroundColor: company.id === 'accenture' ? '#A100FF' : 
-                          company.id === 'tcs' ? '#0066CC' :
-                          company.id === 'cognizant' ? '#1F4E79' :
+                          company.id === 'tcs-nqt' ? '#0066CC' :
                           company.id === 'cognizant' ? '#1F4E79' :
                           company.id === 'wipro' ? '#0066CC' :
                          company.id === 'infosys' ? '#0073E6' :
@@ -504,20 +868,11 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
                            '#3B82F6' // Default blue
          }}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <img
-              src={company.logo}
-              alt={company.name}
-              className="h-8 w-8 object-contain"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.src = '/placeholder.svg';
-              }}
-            />
-            <div className="text-lg font-bold">{examType.name}</div>
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0">
+          <div className="flex items-center space-x-2 sm:space-x-4">
+            <div className="text-sm sm:text-lg font-bold">{examType.name}</div>
           </div>
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-3 sm:space-x-6">
             <Timer 
               timeLeft={company.id === 'microsoft' ? (sectionTimeLeft[0] || 0) : (sectionTimeLeft[currentSection] || 0)}
                               onTimeUp={company.id === 'cognizant' ? handleCognizantSectionSubmit : 
@@ -527,10 +882,11 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
             />
             <button
               onClick={handleExamEnd}
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors flex items-center space-x-2"
+              className="bg-red-600 hover:bg-red-700 text-white px-3 sm:px-4 py-2 rounded text-xs sm:text-sm font-medium transition-colors flex items-center space-x-1 sm:space-x-2"
             >
-              <LogOut className="h-4 w-4" />
-              <span>Exit Test</span>
+              <LogOut className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="hidden sm:inline">Exit Test</span>
+              <span className="sm:hidden">Exit</span>
             </button>
           </div>
         </div>
@@ -539,7 +895,7 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
       {/* Section Navigation */}
       <div className="bg-gray-100 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-2">
-          <div className="flex space-x-1 overflow-x-auto">
+          <div className="flex space-x-1 overflow-x-auto pb-2 scrollbar-hide">
             {examType.sections.map((section, sIndex) => {
               const isActive = sIndex === currentSection;
               const isCompleted = sIndex < currentSection;
@@ -553,7 +909,7 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
               return (
                 <div
                   key={section.id}
-                  className={`relative flex-shrink-0 px-3 py-2 rounded-md font-medium text-xs transition-all duration-200 ${
+                  className={`relative flex-shrink-0 px-2 sm:px-3 py-1.5 sm:py-2 rounded-md font-medium text-xs transition-all duration-200 ${
                     isActive
                       ? 'bg-blue-600 text-white shadow-md'
                       : isCompleted
@@ -592,34 +948,33 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
       {/* Current Section Info */}
       <div className="bg-white border-b px-4 py-2">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between">
-            <div className="text-lg font-semibold text-blue-600">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-2 sm:space-y-0">
+            <div className="text-base sm:text-lg font-semibold text-blue-600">
               {formatSectionName(currentSectionData.name, currentSection)}
               {hasSubsections && currentSubsectionData && (
-                <span className="text-sm text-gray-600 ml-2">
+                <span className="text-xs sm:text-sm text-gray-600 ml-1 sm:ml-2">
                   - {currentSubsectionData.name}
                 </span>
               )}
             </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">
-                Question {currentQuestion + 1} of {currentQuestions.length}
-              </span>
+            <div className="flex items-center space-x-2 sm:space-x-4">
               {company.id === 'microsoft' ? (
                 <button
                   onClick={handleExamEnd}
-                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors"
+                  className="bg-green-600 hover:bg-green-700 text-white px-2 sm:px-4 py-1.5 sm:py-2 rounded text-xs sm:text-sm font-medium transition-colors"
                 >
-                  Submit All Sections
+                  <span className="hidden sm:inline">Submit All Sections</span>
+                  <span className="sm:hidden">Submit All</span>
                 </button>
               ) : (
                 <button
                   onClick={company.id === 'cognizant' ? handleCognizantSectionSubmit : 
                           company.id === 'wipro' ? handleWiproSectionSubmit :
                           company.id === 'infosys' ? handleInfosysSectionSubmit : handleSubmitSection}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-2 sm:px-4 py-1.5 sm:py-2 rounded text-xs sm:text-sm font-medium transition-colors"
                 >
-                  Submit Section
+                  <span className="hidden sm:inline">Submit Section</span>
+                  <span className="sm:hidden">Submit</span>
                 </button>
               )}
             </div>

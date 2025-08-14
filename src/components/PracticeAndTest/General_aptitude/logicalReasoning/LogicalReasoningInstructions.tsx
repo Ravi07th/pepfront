@@ -1,16 +1,27 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import InstructionsPage from '../common/InstructionsPage';
 
 const LogicalReasoningInstructions: React.FC = () => {
+  const { topicId } = useParams<{ topicId: string }>();
   const navigate = useNavigate();
 
   const handleStartTest = (topic: string) => {
-    navigate(`/logical-reasoning/test/${topic}`);
+    // For comprehensive mock test, use a special topic
+    if (topicId === 'comprehensive-logical') {
+      navigate(`/logical-reasoning/test/comprehensive-logical`);
+    } else {
+      navigate(`/logical-reasoning/test/${topic}`);
+    }
   };
 
   const handleGoBack = () => {
-    navigate('/logical-reasoning');
+    // For comprehensive mock test, return to test home
+    if (topicId === 'comprehensive-logical') {
+      navigate('/test');
+    } else {
+      navigate('/logical-reasoning');
+    }
   };
 
   return (

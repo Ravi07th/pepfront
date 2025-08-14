@@ -7,6 +7,18 @@ import QuestionPanel from './QuestionPanel';
 import ResultsPage from './ResultsPage';
 import SolutionViewer from './SolutionViewer';
 
+// Import all question data
+import { codingDecodingQuestions } from './data/codingDecodingData';
+import { bloodRelationsQuestions } from './data/bloodRelationsData';
+import { directionsDistanceQuestions as directionSenseQuestions } from './data/DirectionSenseData';
+import { seatingArrangementsQuestions } from './data/seatingArrangementsData';
+import { puzzlesQuestions } from './data/puzzlesData';
+import { seriesQuestions } from './data/SeriesData';
+import { syllogismsQuestions } from './data/syllogismsData';
+import { statementAssumptionQuestions } from './data/StatementAssumptionDtat';
+import { rankingOrderQuestions } from './data/rankingOrderData';
+import { analogiesQuestions } from './data/AnalogiesData';
+
 const LogicalReasoningMockTest: React.FC = () => {
   const { topic } = useParams<{ topic: string }>();
   const navigate = useNavigate();
@@ -17,8 +29,8 @@ const LogicalReasoningMockTest: React.FC = () => {
     id: topic || 'coding-decoding',
     name: topic ? topic.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : 'Coding-Decoding',
     description: 'Mock test for logical reasoning topic',
-    questionCount: 15,
-    duration: 20 // 20 minutes
+    questionCount: 60, // Changed to 60 questions
+    duration: 60 // Changed to 60 minutes
   }), [topic]);
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -31,6 +43,16 @@ const LogicalReasoningMockTest: React.FC = () => {
   const [visitedQuestions, setVisitedQuestions] = useState<Set<string>>(new Set());
   const [actualTimeTaken, setActualTimeTaken] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Function to shuffle array (Fisher-Yates algorithm)
+  const shuffleArray = <T,>(array: T[]): T[] => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
 
   // Check full screen status
   useEffect(() => {
@@ -70,126 +92,67 @@ const LogicalReasoningMockTest: React.FC = () => {
     }
   }, [isFullScreen]);
 
-  // Mock questions - in real implementation, this would come from a data file
+  // Get questions based on topic and randomly select 60
   const questions: LogicalQuestion[] = useMemo(() => {
-    // Generate proper logical reasoning questions based on topic
-    const mockQuestions: LogicalQuestion[] = [];
+    let topicQuestions: any[] = [];
     
-    const topicQuestions = {
-      'coding-decoding': [
-        {
-          question: "If 'APPLE' is coded as 'BQQMF', then how is 'ORANGE' coded?",
-          options: ['PSBOHF', 'PSBOIF', 'PSBOGF', 'PSBOGE'],
-          correctAnswer: 0,
-          explanation: "In this coding pattern, each letter is shifted by 1 position forward in the alphabet. A→B, P→Q, P→Q, L→M, E→F. So ORANGE becomes PSBOHF."
-        },
-        {
-          question: "In a certain code language, 'HAPPY' is written as 'JCRRA'. How is 'SMILE' written in that code?",
-          options: ['UOKNG', 'UOKNF', 'UOKMG', 'UOKMF'],
-          correctAnswer: 0,
-          explanation: "Each letter is shifted by 2 positions forward: S→U, M→O, I→K, L→N, E→G. So SMILE becomes UOKNG."
-        },
-        {
-          question: "If 'CAT' = 312, 'DOG' = 415, then 'BAT' = ?",
-          options: ['213', '312', '231', '123'],
-          correctAnswer: 0,
-          explanation: "The pattern is: C=3, A=1, T=2. So BAT = B(2) + A(1) + T(3) = 213."
-        },
-        {
-          question: "In a code, 'WORK' is written as 'XPSL'. How is 'PLAY' written?",
-          options: ['QMBZ', 'QMBY', 'QMBA', 'QMBX'],
-          correctAnswer: 0,
-          explanation: "Each letter is shifted by 1 position forward: P→Q, L→M, A→B, Y→Z. So PLAY becomes QMBZ."
-        },
-        {
-          question: "If 'RED' is coded as 'SFE', then 'BLUE' is coded as?",
-          options: ['CMVF', 'CMVE', 'CMVD', 'CMVC'],
-          correctAnswer: 0,
-          explanation: "Each letter is shifted by 1 position forward: B→C, L→M, U→V, E→F. So BLUE becomes CMVF."
-        }
-      ],
-      'blood-relations': [
-        {
-          question: "Pointing to a woman, a man said, 'Her mother's husband's sister is my aunt.' How is the woman related to the man?",
-          options: ['Sister', 'Cousin', 'Daughter', 'Niece'],
-          correctAnswer: 1,
-          explanation: "Her mother's husband = her father. Her father's sister = her aunt. If the man's aunt is the woman's aunt, they are cousins."
-        },
-        {
-          question: "A is B's sister. C is B's mother. D is C's father. E is D's mother. How is A related to D?",
-          options: ['Granddaughter', 'Daughter', 'Sister', 'Mother'],
-          correctAnswer: 0,
-          explanation: "A is B's sister, B is C's child, C is D's child. So A is D's grandchild (granddaughter)."
-        },
-        {
-          question: "If P + Q means P is the brother of Q; P - Q means P is the sister of Q; P × Q means P is the father of Q. Then which of the following means U is the uncle of P?",
-          options: ['U + N × P', 'U - N × P', 'U × N + P', 'U × N - P'],
-          correctAnswer: 0,
-          explanation: "U + N × P means U is brother of N, and N is father of P. So U is uncle of P."
-        },
-        {
-          question: "Pointing to a photograph, a man said, 'I have no brother or sister but that man's father is my father's son.' Who is in the photograph?",
-          options: ['His son', 'His father', 'His grandfather', 'His uncle'],
-          correctAnswer: 0,
-          explanation: "That man's father = my father's son = me (since I have no brother). So that man is my son."
-        },
-        {
-          question: "A is the son of C; C and Q are sisters; Z is the mother of Q and X is the son of Z. Which of the following statements is true?",
-          options: ['X and A are cousins', 'X is the maternal uncle of A', 'X is the uncle of A', 'A and X are brothers'],
-          correctAnswer: 1,
-          explanation: "C and Q are sisters. Z is mother of Q, so Z is also mother of C. X is son of Z, so X is brother of C. A is son of C, so X is maternal uncle of A."
-        }
-      ],
-      'directions-distance': [
-        {
-          question: "A person walks 10 km towards North, then turns right and walks 8 km, then turns left and walks 6 km. How far is he from the starting point?",
-          options: ['12 km', '14 km', '16 km', '18 km'],
-          correctAnswer: 1,
-          explanation: "Using Pythagoras theorem: √(6² + 12²) = √(36 + 144) = √180 = 13.42 ≈ 14 km."
-        },
-        {
-          question: "Rahul starts from point A and walks 5 km towards East, then 3 km towards North, then 4 km towards West. How far is he from point A?",
-          options: ['3 km', '4 km', '5 km', '6 km'],
-          correctAnswer: 2,
-          explanation: "Net displacement: 5 km East - 4 km West = 1 km East, 3 km North. Distance = √(1² + 3²) = √10 ≈ 3.16 km, closest to 3 km."
-        },
-        {
-          question: "A man faces North. He turns 90° clockwise, then 180° anticlockwise, then 90° clockwise. Which direction is he facing now?",
-          options: ['North', 'South', 'East', 'West'],
-          correctAnswer: 2,
-          explanation: "North → 90° clockwise → East → 180° anticlockwise → West → 90° clockwise → East."
-        },
-        {
-          question: "If South-East becomes North, North-East becomes West and so on, what will West become?",
-          options: ['North-East', 'South-East', 'North-West', 'South-West'],
-          correctAnswer: 1,
-          explanation: "The pattern shows a 135° clockwise rotation. So West becomes South-East."
-        },
-        {
-          question: "A person walks 12 km towards South, then turns right and walks 9 km, then turns left and walks 5 km. What is the shortest distance from starting point?",
-          options: ['10 km', '12 km', '13 km', '15 km'],
-          correctAnswer: 2,
-          explanation: "Net displacement: 12 km South - 5 km = 7 km South, 9 km East. Distance = √(7² + 9²) = √130 ≈ 11.4 km, closest to 13 km."
-        }
-      ]
-    };
-
-    const topicQuestionsList = topicQuestions[mockTopic.id as keyof typeof topicQuestions] || topicQuestions['coding-decoding'];
-    
-    for (let i = 0; i < mockTopic.questionCount; i++) {
-      const questionData = topicQuestionsList[i % topicQuestionsList.length];
-      mockQuestions.push({
-        id: `${mockTopic.id}-q${i + 1}`,
-        topicId: mockTopic.id,
-        question: questionData.question,
-        options: questionData.options,
-        correctAnswer: questionData.correctAnswer,
-        explanation: questionData.explanation,
-        difficulty: ['easy', 'medium', 'hard'][Math.floor(Math.random() * 3)] as 'easy' | 'medium' | 'hard'
-      });
+    // Map topic ID to corresponding question data
+    switch (topic) {
+      case 'comprehensive-logical':
+        // For comprehensive mock test, combine questions from all topics
+        const allTopics = [
+          ...codingDecodingQuestions.map(q => ({ ...q, topicId: 'coding-decoding' })),
+          ...bloodRelationsQuestions.map(q => ({ ...q, topicId: 'blood-relations' })),
+          ...directionSenseQuestions.map(q => ({ ...q, topicId: 'directions-sense' })),
+          ...seatingArrangementsQuestions.map(q => ({ ...q, topicId: 'seating-arrangements' })),
+          ...puzzlesQuestions.map(q => ({ ...q, topicId: 'puzzles' })),
+          ...seriesQuestions.map(q => ({ ...q, topicId: 'series' })),
+          ...syllogismsQuestions.map(q => ({ ...q, topicId: 'syllogisms' })),
+          ...statementAssumptionQuestions.map(q => ({ ...q, topicId: 'statement-assumption' })),
+          ...rankingOrderQuestions.map(q => ({ ...q, topicId: 'ranking-order' })),
+          ...analogiesQuestions.map(q => ({ ...q, topicId: 'analogies' }))
+        ];
+        // Shuffle all questions and select 60
+        const shuffledAll = shuffleArray(allTopics);
+        return shuffledAll.slice(0, 60);
+      case 'coding-decoding':
+        topicQuestions = codingDecodingQuestions.map(q => ({ ...q, topicId: 'coding-decoding' }));
+        break;
+      case 'blood-relations':
+        topicQuestions = bloodRelationsQuestions.map(q => ({ ...q, topicId: 'blood-relations' }));
+        break;
+      case 'directions-sense':
+        topicQuestions = directionSenseQuestions.map(q => ({ ...q, topicId: 'directions-sense' }));
+        break;
+      case 'seating-arrangements':
+        topicQuestions = seatingArrangementsQuestions.map(q => ({ ...q, topicId: 'seating-arrangements' }));
+        break;
+      case 'puzzles':
+        topicQuestions = puzzlesQuestions.map(q => ({ ...q, topicId: 'puzzles' }));
+        break;
+      case 'series':
+        topicQuestions = seriesQuestions.map(q => ({ ...q, topicId: 'series' }));
+        break;
+      case 'syllogisms':
+        topicQuestions = syllogismsQuestions.map(q => ({ ...q, topicId: 'syllogisms' }));
+        break;
+      case 'statement-assumption':
+        topicQuestions = statementAssumptionQuestions.map(q => ({ ...q, topicId: 'statement-assumption' }));
+        break;
+      case 'ranking-order':
+        topicQuestions = rankingOrderQuestions.map(q => ({ ...q, topicId: 'ranking-order' }));
+        break;
+      case 'analogies':
+        topicQuestions = analogiesQuestions.map(q => ({ ...q, topicId: 'analogies' }));
+        break;
+      default:
+        topicQuestions = codingDecodingQuestions.map(q => ({ ...q, topicId: 'coding-decoding' })); // Default fallback
     }
-    return mockQuestions;
-  }, [mockTopic]);
+
+    // Shuffle and select 60 questions (or all if less than 60)
+    const shuffledQuestions = shuffleArray(topicQuestions);
+    return shuffledQuestions.slice(0, 60);
+  }, [topic]);
 
   // Initialize exam
   useEffect(() => {
@@ -205,11 +168,17 @@ const LogicalReasoningMockTest: React.FC = () => {
   }, [examCompleted, showSolutions]);
 
   const handleExamEnd = () => {
-    console.log('handleExamEnd called, setting examCompleted to true');
+    console.log('handleExamEnd called, showing loading effect');
+    setIsSubmitting(true);
     const totalTime = mockTopic.duration * 60;
     const timeUsed = totalTime - timeLeft;
     setActualTimeTaken(timeUsed);
-    setExamCompleted(true);
+    
+    // Simulate a 4-second loading period before showing results
+    setTimeout(() => {
+      setExamCompleted(true);
+      setIsSubmitting(false);
+    }, 4000);
   };
 
   const handleReturnHome = () => {
@@ -222,15 +191,25 @@ const LogicalReasoningMockTest: React.FC = () => {
       (document as any).msExitFullscreen();
     }
     
-    // Navigate back to logical reasoning topics
-    navigate('/logical-reasoning');
+    // Navigate back based on test type
+    if (topic === 'comprehensive-logical') {
+      navigate('/test');
+    } else {
+      navigate('/logical-reasoning');
+    }
   };
 
   const handleTimeUp = () => {
-    console.log('handleTimeUp called, setting examCompleted to true');
+    console.log('handleTimeUp called, showing loading effect');
+    setIsSubmitting(true);
     const totalTime = mockTopic.duration * 60;
     setActualTimeTaken(totalTime); // All time used when time runs out
-    setExamCompleted(true);
+    
+    // Simulate a 4-second loading period before showing results
+    setTimeout(() => {
+      setExamCompleted(true);
+      setIsSubmitting(false);
+    }, 4000);
   };
 
   const handleAnswerChange = (questionId: string, answer: number | number[]) => {
@@ -250,6 +229,10 @@ const LogicalReasoningMockTest: React.FC = () => {
   const handleQuestionChange = (questionIndex: number) => {
     setCurrentQuestion(questionIndex);
     setVisitedQuestions(prev => new Set([...prev, questions[questionIndex]?.id || '']));
+    // Scroll to top when changing questions
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
   };
 
   const handleSubmitExam = () => {
@@ -352,35 +335,90 @@ const LogicalReasoningMockTest: React.FC = () => {
     setShowSolutions(false);
   };
 
+
+
   if (isSubmitting) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
-        <div className="bg-white rounded-xl shadow-2xl p-10 max-w-lg w-full mx-4 transform transition-all duration-500 hover:scale-105">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+          <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+          <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+        </div>
+
+        <div className="relative z-10 bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl p-12 max-w-md w-full mx-4 border border-white/20">
           <div className="text-center">
-            {/* Enhanced Spinner */}
-            <div className="relative mb-6">
-              <div className="animate-spin rounded-full h-20 w-20 border-4 border-blue-200 mx-auto"></div>
-              <div className="animate-spin rounded-full h-20 w-20 border-4 border-transparent border-t-blue-600 mx-auto absolute top-0 left-1/2 transform -translate-x-1/2"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-8 h-8 bg-blue-600 rounded-full animate-pulse"></div>
+            {/* Modern Animated Icon */}
+            <div className="relative mb-8">
+              <div className="w-24 h-24 mx-auto relative">
+                {/* Outer Ring */}
+                <div className="absolute inset-0 rounded-full border-4 border-purple-200/30"></div>
+                <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-purple-500 animate-spin"></div>
+                
+                {/* Middle Ring */}
+                <div className="absolute inset-2 rounded-full border-4 border-blue-200/30"></div>
+                <div className="absolute inset-2 rounded-full border-4 border-transparent border-t-blue-500 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '2s' }}></div>
+                
+                {/* Inner Circle */}
+                <div className="absolute inset-4 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center">
+                  <div className="w-6 h-6 bg-white rounded-full animate-pulse"></div>
+                </div>
               </div>
             </div>
-            
-            {/* Progress Bar */}
-            <div className="w-full bg-gray-200 rounded-full h-2 mb-6">
-              <div className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full animate-pulse" style={{ width: '60%' }}></div>
+
+            {/* Progress Indicator */}
+            <div className="mb-8">
+              <div className="flex justify-center items-center space-x-2 mb-4">
+                <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                <div className="w-2 h-2 bg-pink-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+              </div>
+              
+              {/* Animated Progress Bar */}
+              <div className="w-full bg-white/20 rounded-full h-3 overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-purple-500 via-blue-500 to-pink-500 rounded-full animate-pulse" style={{ width: '75%' }}></div>
+              </div>
             </div>
-            
-            <h3 className="text-xl font-bold text-gray-900 mb-3">Processing Your Test</h3>
-            <p className="text-gray-600 mb-6">Please wait while we analyze your answers and calculate your results...</p>
-            
-            {/* Enhanced Loading Dots */}
-            <div className="flex justify-center space-x-2">
-              <div className="w-3 h-3 bg-blue-600 rounded-full animate-bounce"></div>
-              <div className="w-3 h-3 bg-indigo-600 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-              <div className="w-3 h-3 bg-purple-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+
+            {/* Content */}
+            <h3 className="text-2xl font-bold text-white mb-4 tracking-wide">Analyzing Results</h3>
+            <p className="text-white/80 mb-8 leading-relaxed">
+              We're carefully evaluating your performance and preparing detailed insights...
+            </p>
+
+            {/* Animated Steps */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-center space-x-3 text-white/70">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span className="text-sm">Calculating scores</span>
+              </div>
+              <div className="flex items-center justify-center space-x-3 text-white/70">
+                <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                <span className="text-sm">Generating performance report</span>
+              </div>
+              <div className="flex items-center justify-center space-x-3 text-white/70">
+                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                <span className="text-sm">Preparing solutions</span>
+              </div>
             </div>
           </div>
+        </div>
+
+        {/* Floating Particles */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-white/30 rounded-full animate-float"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${3 + Math.random() * 2}s`
+              }}
+            ></div>
+          ))}
         </div>
       </div>
     );
@@ -388,6 +426,8 @@ const LogicalReasoningMockTest: React.FC = () => {
 
   if (showSolutions) {
     console.log('Rendering SolutionViewer, showSolutions is true');
+    console.log('Questions:', questions);
+    console.log('Answers:', answers);
     return (
       <SolutionViewer
         questions={questions}

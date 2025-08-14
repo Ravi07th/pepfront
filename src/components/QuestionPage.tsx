@@ -7,7 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Separator } from './ui/separator';
 import { useToast } from './ui/use-toast';
-import { companies, sampleQuestions, languages, approaches } from '../data/mockData';
+import { companies } from '../data/companyOverview';
+import { sampleQuestions } from '../data/MNC_coding/index';
 import { ArrowLeft, Clock, Zap, Copy, CheckCircle2, AlertCircle } from 'lucide-react';
 import { ScrollToTop } from './ScrollToTop';
 
@@ -42,7 +43,7 @@ interface Solution {
 interface Question {
   id: string;
   title: string;
-  description: string[];
+  description: string;
   difficulty: 'Easy' | 'Medium' | 'Hard';
   category: string[];
   input1: string;
@@ -64,6 +65,19 @@ interface RouteParams extends Record<string, string> {
 }
 
 type DifficultyType = 'Easy' | 'Medium' | 'Hard';
+
+// Define approaches and languages that were in mockData.js
+const approaches = [
+  { id: 'best', name: 'Best', description: 'Most optimal approach', color: 'text-green-500' },
+  { id: 'Average', name: 'Average', description: 'Optimized approach', color: 'text-yellow-500' },
+  { id: 'worst', name: 'Worst', description: 'Brute force approach', color: 'text-red-500' },
+];
+
+const languages = [
+  { id: 'python', name: 'Python', icon: '🐍' },
+  { id: 'java', name: 'Java', icon: '☕' },
+  { id: 'c', name: 'C', icon: '🔧' },
+];
 
 const QuestionPage: React.FC = () => {
   const { companyId, questionId } = useParams<RouteParams>();
@@ -171,8 +185,8 @@ const QuestionPage: React.FC = () => {
                   <div className="flex justify-between items-center">
                     {/* company info */}
                     <div className="flex items-center space-x-3">
-                      <div className={`w-12 h-12 bg-gradient-to-br ${company.color} rounded-xl flex items-center justify-center text-2xl`}>
-                        <img src={company.logo} />
+                      <div className={`w-12 h-12 bg-gradient-to-br ${company.color} rounded-xl flex items-center justify-center text-2xl text-white font-bold`}>
+                        {company.name.charAt(0)}
                       </div>
                       <div>
                         <div className="text-sm text-gray-400">{company.name}</div>

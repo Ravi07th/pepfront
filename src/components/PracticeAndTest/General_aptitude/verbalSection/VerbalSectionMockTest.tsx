@@ -1,23 +1,61 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Clock, ChevronRight, CheckCircle, AlertCircle, Flag, SkipForward, ArrowLeft, LogOut, Maximize2, Minimize2 } from 'lucide-react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { VerbalTopic, VerbalQuestion } from './types';
 import Timer from '../logicalReasoning/Timer.tsx';
 import QuestionPanel from '../logicalReasoning/QuestionPanel';
 import ResultsPage from '../logicalReasoning/ResultsPage';
 import SolutionViewer from '../logicalReasoning/SolutionViewer';
+
+// Import all verbal question data
+import { readingComprehensionQuestions } from './data/readingComprehensionData';
+import { tenseSubjectVerbAgreementQuestions } from './data/tenseSubjectVerbAgreementData';
+import { sportingErrorQuestions } from './data/sportingErrorData';
+import { paraJumblesQuestions } from './data/paraJumblesData';
+import { idiomsPhraseQuestions } from './data/idiomsPhraseData';
+import { sentenceCompletionQuestions } from './data/sentenceCompletionData';
+import { activepassiveVoiceQuestions } from './data/activepassiveVoiceData';
+
+interface VerbalQuestion {
+  id: string;
+  topicId: string;
+  question: string;
+  questionType?: 'single-choice' | 'multiple-choice' | 'true-false';
+  options: string[];
+  correctAnswer: number | number[];
+  explanation?: string;
+  difficulty?: 'easy' | 'medium' | 'hard' | string;
+  passage?: string; // For reading comprehension
+  diagram?: string;
+}
+
+interface VerbalTopic {
+  id: string;
+  name: string;
+  description: string;
+  questionCount: number;
+  duration: number; // in minutes
+}
+
+type VerbalQuestionStatus = 
+  | 'not-visited'
+  | 'not-answered'
+  | 'current'
+  | 'answered'
+  | 'marked'
+  | 'answered-marked';
 
 const VerbalSectionMockTest: React.FC = () => {
   const { topic } = useParams<{ topic: string }>();
   const navigate = useNavigate();
   const [isFullScreen, setIsFullScreen] = useState(false);
   
+  // Create mock topic object based on URL parameter
   const mockTopic: VerbalTopic = useMemo(() => ({
     id: topic || 'reading-comprehension',
     name: topic ? topic.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : 'Reading Comprehension',
     description: 'Mock test for verbal ability topic',
-    questionCount: 15,
-    duration: 20
+    questionCount: 60, // 60 questions
+    duration: 60 // 60 minutes
   }), [topic]);
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -30,6 +68,146 @@ const VerbalSectionMockTest: React.FC = () => {
   const [visitedQuestions, setVisitedQuestions] = useState<Set<string>>(new Set());
   const [actualTimeTaken, setActualTimeTaken] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Function to shuffle array (Fisher-Yates algorithm)
+  const shuffleArray = <T,>(array: T[]): T[] => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
+  // Get questions based on topic and randomly select 60
+  const questions: VerbalQuestion[] = useMemo(() => {
+    let topicQuestions: VerbalQuestion[] = [];
+    
+    // Map topic ID to corresponding question data
+    switch (topic) {
+      case 'comprehensive-verbal':
+        // For comprehensive mock test, combine questions from all topics
+        // First, process reading comprehension questions with proper passage grouping
+        const comprehensiveRCQuestions = readingComprehensionQuestions;
+        const comprehensiveGroupedRC: { passage: string; questions: VerbalQuestion[] }[] = [];
+        let comprehensiveCurrentGroup: { passage: string; questions: VerbalQuestion[] } | null = null;
+        
+        comprehensiveRCQuestions.forEach(question => {
+          if (question.passage) {
+            // Start a new group
+            if (comprehensiveCurrentGroup) {
+              comprehensiveGroupedRC.push(comprehensiveCurrentGroup);
+            }
+            comprehensiveCurrentGroup = {
+              passage: question.passage,
+              questions: [question]
+            };
+          } else if (comprehensiveCurrentGroup) {
+            // Add to current group
+            comprehensiveCurrentGroup.questions.push({
+              ...question,
+              passage: comprehensiveCurrentGroup.passage
+            });
+          }
+        });
+        
+        // Add the last group
+        if (comprehensiveCurrentGroup) {
+          comprehensiveGroupedRC.push(comprehensiveCurrentGroup);
+        }
+        
+        // Flatten reading comprehension questions with proper passages
+        const processedRCQuestions: VerbalQuestion[] = [];
+        comprehensiveGroupedRC.forEach(group => {
+          processedRCQuestions.push(...group.questions);
+        });
+        
+        // Combine with other topics
+        const allTopics = [
+          ...processedRCQuestions,
+          ...tenseSubjectVerbAgreementQuestions,
+          ...sportingErrorQuestions,
+          ...paraJumblesQuestions,
+          ...idiomsPhraseQuestions,
+          ...sentenceCompletionQuestions,
+          ...activepassiveVoiceQuestions
+        ];
+        // Shuffle all questions and select 60
+        const shuffledAll = shuffleArray(allTopics);
+        return shuffledAll.slice(0, 60);
+      case 'reading-comprehension':
+        // For reading comprehension, apply traditional format with shared passages
+        const rcQuestions = readingComprehensionQuestions;
+        
+        // Group questions by their passages (questions without passages will be grouped with the previous passage)
+        const groupedQuestions: { passage: string; questions: VerbalQuestion[] }[] = [];
+        let currentGroup: { passage: string; questions: VerbalQuestion[] } | null = null;
+        
+        rcQuestions.forEach(question => {
+          if (question.passage) {
+            // Start a new group
+            if (currentGroup) {
+              groupedQuestions.push(currentGroup);
+            }
+            currentGroup = {
+              passage: question.passage,
+              questions: [question]
+            };
+          } else if (currentGroup) {
+            // Add to current group
+            currentGroup.questions.push({
+              ...question,
+              passage: currentGroup.passage
+            });
+          }
+        });
+        
+        // Add the last group
+        if (currentGroup) {
+          groupedQuestions.push(currentGroup);
+        }
+        
+        // Shuffle the groups and flatten
+        const shuffledGroups = [...groupedQuestions].sort(() => Math.random() - 0.5);
+        topicQuestions = [];
+        
+        shuffledGroups.forEach(group => {
+          // Take up to 5 questions per group
+          const limitedQuestions = group.questions.slice(0, 5);
+          topicQuestions.push(...limitedQuestions);
+        });
+        break;
+      case 'tenses-subject-verb-agreement':
+        topicQuestions = tenseSubjectVerbAgreementQuestions;
+        break;
+      case 'spotting-error':
+        topicQuestions = sportingErrorQuestions;
+        break;
+      case 'para-jumbles':
+        topicQuestions = paraJumblesQuestions;
+        break;
+      case 'idioms-phrases':
+        topicQuestions = idiomsPhraseQuestions;
+        break;
+      case 'sentence-completion':
+        topicQuestions = sentenceCompletionQuestions;
+        break;
+      case 'active-passive-voice':
+        topicQuestions = activepassiveVoiceQuestions;
+        break;
+      default:
+        topicQuestions = readingComprehensionQuestions; // Default fallback
+    }
+
+    // For reading comprehension, we already processed the questions
+    // For other topics, shuffle and select 60 questions
+    if (topic === 'reading-comprehension') {
+      return topicQuestions.slice(0, 60);
+    } else {
+      const shuffledQuestions = shuffleArray(topicQuestions);
+      return shuffledQuestions.slice(0, 60);
+    }
+  }, [topic]);
 
   // Check full screen status
   useEffect(() => {
@@ -69,255 +247,7 @@ const VerbalSectionMockTest: React.FC = () => {
     }
   }, [isFullScreen]);
 
-  // Mock questions - in real implementation, this would come from a data file
-  const questions: VerbalQuestion[] = useMemo(() => {
-    // Generate proper verbal ability questions based on topic
-    const mockQuestions: VerbalQuestion[] = [];
-    
-    const topicQuestions = {
-      'reading-comprehension': [
-        {
-          question: "What is the main cause of climate change according to the passage?",
-          options: ['Natural cycles', 'Human activities', 'Volcanic eruptions', 'Solar radiation'],
-          correctAnswer: 1,
-          explanation: "The passage states that climate change is primarily attributed to human activities."
-        },
-        {
-          question: "Which statement is supported by the text about climate change?",
-          options: ['It is a natural phenomenon', 'The last decade was the warmest', 'Volcanic activity causes it', 'Solar radiation is the main cause'],
-          correctAnswer: 1,
-          explanation: "The passage explicitly states 'the last decade being the warmest on record.'"
-        },
-        {
-          question: "According to the passage, what is the primary driver of global warming?",
-          options: ['Natural climate cycles', 'Greenhouse gas emissions', 'Solar activity', 'Ocean currents'],
-          correctAnswer: 1,
-          explanation: "The passage identifies greenhouse gas emissions as the primary driver of global warming."
-        },
-        {
-          question: "What does the passage suggest about future climate trends?",
-          options: ['Temperatures will stabilize', 'Continued warming is expected', 'A cooling period will begin', 'No clear trend is indicated'],
-          correctAnswer: 1,
-          explanation: "The passage indicates that continued warming is expected based on current trends."
-        },
-        {
-          question: "Which of the following is NOT mentioned in the passage?",
-          options: ['Temperature records', 'Human activities', 'Volcanic eruptions', 'Economic impacts'],
-          correctAnswer: 3,
-          explanation: "Economic impacts are not mentioned in the passage."
-        }
-      ],
-      'sentence-completion': [
-        {
-          question: "Complete: The new policy was implemented to _____ efficiency.",
-          options: ['increase', 'decrease', 'maintain', 'ignore'],
-          correctAnswer: 0,
-          explanation: "The context suggests positive outcomes, so 'increase' is most appropriate."
-        },
-        {
-          question: "Choose the word: The research findings _____ the hypothesis.",
-          options: ['contradict', 'support', 'ignore', 'complicate'],
-          correctAnswer: 1,
-          explanation: "The context suggests a positive relationship, so 'support' is appropriate."
-        },
-        {
-          question: "Fill in the blank: The company's success _____ from its innovative approach.",
-          options: ['resulted', 'arose', 'stemmed', 'emerged'],
-          correctAnswer: 2,
-          explanation: "'Stemmed' is the most appropriate word as it indicates origin or source."
-        },
-        {
-          question: "Complete: Despite the challenges, the team _____ to complete the project.",
-          options: ['managed', 'succeeded', 'attempted', 'struggled'],
-          correctAnswer: 0,
-          explanation: "'Managed' indicates successful completion despite difficulties."
-        },
-        {
-          question: "Choose the best word: The evidence _____ the defendant's innocence.",
-          options: ['proves', 'suggests', 'indicates', 'demonstrates'],
-          correctAnswer: 3,
-          explanation: "'Demonstrates' is the strongest word indicating clear evidence."
-        }
-      ],
-      'error-identification': [
-        {
-          question: "Identify the error: The team have been working on this project for months.",
-          options: ['team', 'have', 'been', 'working'],
-          correctAnswer: 1,
-          explanation: "'Have' should be 'has' as 'team' is a singular collective noun."
-        },
-        {
-          question: "Find the mistake: Neither the students nor the teacher were present.",
-          options: ['Neither', 'students', 'teacher', 'were'],
-          correctAnswer: 3,
-          explanation: "'Were' should be 'was' as the verb agrees with the nearer subject 'teacher'."
-        },
-        {
-          question: "Spot the error: The data shows that climate change is real.",
-          options: ['data', 'shows', 'that', 'is'],
-          correctAnswer: 1,
-          explanation: "'Shows' should be 'show' as 'data' is plural."
-        },
-        {
-          question: "Identify the mistake: Each of the students have their own book.",
-          options: ['Each', 'students', 'have', 'their'],
-          correctAnswer: 2,
-          explanation: "'Have' should be 'has' as 'each' is singular."
-        },
-        {
-          question: "Find the error: The committee are divided on this issue.",
-          options: ['committee', 'are', 'divided', 'issue'],
-          correctAnswer: 1,
-          explanation: "'Are' should be 'is' as 'committee' is a singular collective noun."
-        }
-      ],
-      'para-jumbles': [
-        {
-          question: "Arrange the sentences: 1) The invention of the printing press 2) This led to widespread literacy 3) Revolutionized the spread of knowledge 4) In the 15th century",
-          options: ['1-4-3-2', '4-1-3-2', '1-3-4-2', '4-3-1-2'],
-          correctAnswer: 1,
-          explanation: "The correct order is: In the 15th century, the invention of the printing press revolutionized the spread of knowledge. This led to widespread literacy."
-        },
-        {
-          question: "Arrange: 1) The Industrial Revolution began 2) New technologies emerged 3) In the late 18th century 4) Changing society forever",
-          options: ['1-3-2-4', '3-1-2-4', '1-2-3-4', '3-2-1-4'],
-          correctAnswer: 1,
-          explanation: "The correct order is: In the late 18th century, the Industrial Revolution began. New technologies emerged, changing society forever."
-        },
-        {
-          question: "Arrange: 1) The discovery of penicillin 2) By Alexander Fleming 3) In 1928 4) Revolutionized medicine",
-          options: ['1-2-3-4', '3-2-1-4', '1-3-2-4', '3-1-2-4'],
-          correctAnswer: 1,
-          explanation: "The correct order is: In 1928, the discovery of penicillin by Alexander Fleming revolutionized medicine."
-        },
-        {
-          question: "Arrange: 1) The internet was developed 2) For military purposes 3) In the 1960s 4) As ARPANET",
-          options: ['1-3-4-2', '3-1-4-2', '1-4-3-2', '3-4-1-2'],
-          correctAnswer: 1,
-          explanation: "The correct order is: In the 1960s, the internet was developed as ARPANET for military purposes."
-        },
-        {
-          question: "Arrange: 1) The Wright brothers 2) Made the first powered flight 3) In 1903 4) At Kitty Hawk",
-          options: ['1-2-3-4', '3-1-2-4', '1-3-2-4', '3-2-1-4'],
-          correctAnswer: 1,
-          explanation: "The correct order is: In 1903, the Wright brothers made the first powered flight at Kitty Hawk."
-        }
-      ],
-      'vocabulary': [
-        {
-          question: "What is the meaning of 'ubiquitous'?",
-          options: ['Rare', 'Present everywhere', 'Expensive', 'Difficult'],
-          correctAnswer: 1,
-          explanation: "'Ubiquitous' means present, appearing, or found everywhere."
-        },
-        {
-          question: "Choose the synonym for 'ephemeral':",
-          options: ['Permanent', 'Temporary', 'Important', 'Beautiful'],
-          correctAnswer: 1,
-          explanation: "'Ephemeral' means lasting for a very short time; transitory."
-        },
-        {
-          question: "What does 'serendipity' mean?",
-          options: ['Bad luck', 'Good fortune', 'Hard work', 'Planning'],
-          correctAnswer: 1,
-          explanation: "'Serendipity' means the occurrence and development of events by chance in a happy or beneficial way."
-        },
-        {
-          question: "Choose the antonym for 'verbose':",
-          options: ['Talkative', 'Concise', 'Detailed', 'Complex'],
-          correctAnswer: 1,
-          explanation: "'Verbose' means using more words than necessary; wordy. Its antonym is 'concise'."
-        },
-        {
-          question: "What is the meaning of 'pragmatic'?",
-          options: ['Theoretical', 'Practical', 'Emotional', 'Creative'],
-          correctAnswer: 1,
-          explanation: "'Pragmatic' means dealing with things sensibly and realistically in a way that is based on practical rather than idealistic considerations."
-        }
-      ],
-      'sentence-improvement': [
-        {
-          question: "Improve: The reason why I am late is because of traffic.",
-          options: ['The reason I am late is because of traffic.', 'I am late because of traffic.', 'The reason why I am late is traffic.', 'I am late due to traffic.'],
-          correctAnswer: 1,
-          explanation: "Remove redundancy: 'The reason why' and 'because' are redundant. Simply say 'I am late because of traffic.'"
-        },
-        {
-          question: "Improve: Each and every student must submit their assignment.",
-          options: ['Each student must submit their assignment.', 'Every student must submit their assignment.', 'Each and every student must submit his assignment.', 'All students must submit their assignments.'],
-          correctAnswer: 3,
-          explanation: "Use 'all students' and 'assignments' for clarity and avoid redundancy."
-        },
-        {
-          question: "Improve: The data shows that the results are positive.",
-          options: ['The data show that the results are positive.', 'The data indicates that the results are positive.', 'The data demonstrates that the results are positive.', 'The data prove that the results are positive.'],
-          correctAnswer: 0,
-          explanation: "'Data' is plural, so use 'show' instead of 'shows'."
-        },
-        {
-          question: "Improve: I have been working here since 5 years.",
-          options: ['I have been working here for 5 years.', 'I have been working here since 5 years ago.', 'I have been working here from 5 years.', 'I have been working here since 5 years back.'],
-          correctAnswer: 0,
-          explanation: "Use 'for' with duration and 'since' with a point in time."
-        },
-        {
-          question: "Improve: The team are divided on this issue.",
-          options: ['The team is divided on this issue.', 'The team members are divided on this issue.', 'The teams are divided on this issue.', 'The team have divided on this issue.'],
-          correctAnswer: 0,
-          explanation: "'Team' is a singular collective noun, so use 'is' instead of 'are'."
-        }
-      ],
-      'grammar-usage': [
-        {
-          question: "Choose the correct form: The committee _____ divided on this issue.",
-          options: ['is', 'are', 'have', 'has'],
-          correctAnswer: 0,
-          explanation: "'Committee' is a singular collective noun, so use 'is'."
-        },
-        {
-          question: "Select the right tense: By next year, I _____ here for ten years.",
-          options: ['will work', 'will have worked', 'will be working', 'work'],
-          correctAnswer: 1,
-          explanation: "Use future perfect tense for an action that will be completed by a specific time in the future."
-        },
-        {
-          question: "Choose the correct pronoun: Neither John nor his friends _____ present.",
-          options: ['was', 'were', 'is', 'are'],
-          correctAnswer: 1,
-          explanation: "When using 'neither...nor', the verb agrees with the nearer subject 'friends' (plural)."
-        },
-        {
-          question: "Select the appropriate article: _____ university is located in the city center.",
-          options: ['A', 'An', 'The', 'No article'],
-          correctAnswer: 2,
-          explanation: "Use 'the' when referring to a specific university that is known or mentioned."
-        },
-        {
-          question: "Choose the correct form: The data _____ analyzed yesterday.",
-          options: ['was', 'were', 'is', 'are'],
-          correctAnswer: 0,
-          explanation: "'Data' can be treated as singular in formal contexts, so 'was' is acceptable."
-        }
-      ]
-    };
-
-    const topicQuestionsList = topicQuestions[mockTopic.id as keyof typeof topicQuestions] || topicQuestions['reading-comprehension'];
-    
-    for (let i = 0; i < mockTopic.questionCount; i++) {
-      const questionData = topicQuestionsList[i % topicQuestionsList.length];
-      mockQuestions.push({
-        id: `${mockTopic.id}-q${i + 1}`,
-        topicId: mockTopic.id,
-        question: questionData.question,
-        options: questionData.options,
-        correctAnswer: questionData.correctAnswer,
-        explanation: questionData.explanation,
-        difficulty: ['easy', 'medium', 'hard'][Math.floor(Math.random() * 3)] as 'easy' | 'medium' | 'hard'
-      });
-    }
-    return mockQuestions;
-  }, [mockTopic]);
-
+  // Initialize exam
   useEffect(() => {
     if (!examStartTime) {
       setExamStartTime(Date.now());
@@ -325,11 +255,23 @@ const VerbalSectionMockTest: React.FC = () => {
     }
   }, [examStartTime, questions]);
 
+  // Monitor state changes
+  useEffect(() => {
+    console.log('State changed - examCompleted:', examCompleted, 'showSolutions:', showSolutions);
+  }, [examCompleted, showSolutions]);
+
   const handleExamEnd = () => {
+    console.log('handleExamEnd called, showing loading effect');
+    setIsSubmitting(true);
     const totalTime = mockTopic.duration * 60;
     const timeUsed = totalTime - timeLeft;
     setActualTimeTaken(timeUsed);
-    setExamCompleted(true);
+    
+    // Simulate a 4-second loading period before showing results
+    setTimeout(() => {
+      setExamCompleted(true);
+      setIsSubmitting(false);
+    }, 4000);
   };
 
   const handleReturnHome = () => {
@@ -342,14 +284,25 @@ const VerbalSectionMockTest: React.FC = () => {
       (document as any).msExitFullscreen();
     }
     
-    // Navigate back to verbal section topics
-    navigate('/verbal-ability');
+    // Navigate back based on test type
+    if (topic === 'comprehensive-verbal') {
+      navigate('/test');
+    } else {
+      navigate('/verbal-ability');
+    }
   };
 
   const handleTimeUp = () => {
+    console.log('handleTimeUp called, showing loading effect');
+    setIsSubmitting(true);
     const totalTime = mockTopic.duration * 60;
-    setActualTimeTaken(totalTime);
-    setExamCompleted(true);
+    setActualTimeTaken(totalTime); // All time used when time runs out
+    
+    // Simulate a 4-second loading period before showing results
+    setTimeout(() => {
+      setExamCompleted(true);
+      setIsSubmitting(false);
+    }, 4000);
   };
 
   const handleAnswerChange = (questionId: string, answer: number | number[]) => {
@@ -369,6 +322,10 @@ const VerbalSectionMockTest: React.FC = () => {
   const handleQuestionChange = (questionIndex: number) => {
     setCurrentQuestion(questionIndex);
     setVisitedQuestions(prev => new Set([...prev, questions[questionIndex]?.id || '']));
+    // Scroll to top when changing questions
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
   };
 
   const handleSubmitExam = () => {
@@ -380,7 +337,14 @@ const VerbalSectionMockTest: React.FC = () => {
     }, 4000);
   };
 
-  const getQuestionStatus = (questionId: string) => {
+  const getQuestionStatus = (questionId: string): VerbalQuestionStatus => {
+    console.log(`getQuestionStatus called for ${questionId}:`, {
+      currentQuestionId: questions[currentQuestion]?.id,
+      isMarked: markedForReview[questionId],
+      hasAnswer: answers[questionId] !== undefined,
+      isVisited: visitedQuestions.has(questionId)
+    });
+    
     if (questions[currentQuestion]?.id === questionId) {
       return 'current';
     }
@@ -400,15 +364,33 @@ const VerbalSectionMockTest: React.FC = () => {
     return 'not-visited';
   };
 
-  const calculateResults = () => {
+  const getTotalProgress = () => {
+    const total = questions.length;
+    const answered = Object.keys(answers).length;
+    return { total, answered, percentage: (answered / total) * 100 };
+  };
+
+  const calculateResults = (): any => {
     const totalQuestions = questions.length;
     const answeredQuestions = Object.keys(answers).length;
     let correctAnswers = 0;
 
     questions.forEach(question => {
       const userAnswer = answers[question.id];
-      if (userAnswer !== undefined && userAnswer === question.correctAnswer) {
-        correctAnswers++;
+      if (userAnswer !== undefined) {
+        if (Array.isArray(question.correctAnswer)) {
+          // Multiple choice
+          if (Array.isArray(userAnswer) && 
+              userAnswer.length === question.correctAnswer.length &&
+              userAnswer.every(ans => Array.isArray(question.correctAnswer) && question.correctAnswer.includes(ans))) {
+            correctAnswers++;
+          }
+        } else {
+          // Single choice
+          if (userAnswer === question.correctAnswer) {
+            correctAnswers++;
+          }
+        }
       }
     });
 
@@ -423,7 +405,7 @@ const VerbalSectionMockTest: React.FC = () => {
       score,
       percentage,
       timeTaken,
-      passed: percentage >= 60,
+      passed: percentage >= 60, // 60% passing criteria
       topicResults: [{
         topicId: mockTopic.id,
         topicName: mockTopic.name,
@@ -437,65 +419,106 @@ const VerbalSectionMockTest: React.FC = () => {
   };
 
   const handleViewSolutions = () => {
+    console.log('handleViewSolutions called, setting showSolutions to true');
     setShowSolutions(true);
   };
 
   const handleBackFromSolutions = () => {
+    console.log('handleBackFromSolutions called, setting showSolutions to false');
     setShowSolutions(false);
   };
 
   if (isSubmitting) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
-        <div className="bg-white rounded-xl shadow-2xl p-10 max-w-lg w-full mx-4 transform transition-all duration-500 hover:scale-105">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+          <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+          <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+        </div>
+
+        <div className="relative z-10 bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl p-12 max-w-md w-full mx-4 border border-white/20">
           <div className="text-center">
-            {/* Enhanced Spinner */}
-            <div className="relative mb-6">
-              <div className="animate-spin rounded-full h-20 w-20 border-4 border-blue-200 mx-auto"></div>
-              <div className="animate-spin rounded-full h-20 w-20 border-4 border-transparent border-t-blue-600 mx-auto absolute top-0 left-1/2 transform -translate-x-1/2"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-8 h-8 bg-blue-600 rounded-full animate-pulse"></div>
+            {/* Modern Animated Icon */}
+            <div className="relative mb-8">
+              <div className="w-24 h-24 mx-auto relative">
+                {/* Outer Ring */}
+                <div className="absolute inset-0 rounded-full border-4 border-purple-200/30"></div>
+                <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-purple-500 animate-spin"></div>
+                
+                {/* Middle Ring */}
+                <div className="absolute inset-2 rounded-full border-4 border-blue-200/30"></div>
+                <div className="absolute inset-2 rounded-full border-4 border-transparent border-t-blue-500 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '2s' }}></div>
+                
+                {/* Inner Circle */}
+                <div className="absolute inset-4 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center">
+                  <div className="w-6 h-6 bg-white rounded-full animate-pulse"></div>
+                </div>
               </div>
             </div>
-            
-            {/* Progress Bar */}
-            <div className="w-full bg-gray-200 rounded-full h-2 mb-6">
-              <div className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full animate-pulse" style={{ width: '60%' }}></div>
-            </div>
-            
-            <h3 className="text-xl font-bold text-gray-900 mb-3">Processing Your Test</h3>
-            <p className="text-gray-600 mb-6">Please wait while we analyze your answers and calculate your results...</p>
-            
-            {/* Enhanced Loading Dots */}
-            <div className="flex justify-center space-x-2">
-              <div className="w-3 h-3 bg-blue-600 rounded-full animate-bounce"></div>
-              <div className="w-3 h-3 bg-indigo-600 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-              <div className="w-3 h-3 bg-purple-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-              <div className="w-3 h-3 bg-pink-600 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }}></div>
-            </div>
-            
-            {/* Status Messages */}
-            <div className="mt-6 space-y-2">
-              <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span>Validating answers...</span>
+
+            {/* Progress Indicator */}
+            <div className="mb-8">
+              <div className="flex justify-center items-center space-x-2 mb-4">
+                <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                <div className="w-2 h-2 bg-pink-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
               </div>
-              <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
-                <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                <span>Calculating scores...</span>
+              
+              {/* Animated Progress Bar */}
+              <div className="w-full bg-white/20 rounded-full h-3 overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-purple-500 via-blue-500 to-pink-500 rounded-full animate-pulse" style={{ width: '75%' }}></div>
               </div>
-              <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
-                <span>Generating results...</span>
+            </div>
+
+            {/* Content */}
+            <h3 className="text-2xl font-bold text-white mb-4 tracking-wide">Analyzing Results</h3>
+            <p className="text-white/80 mb-8 leading-relaxed">
+              We're carefully evaluating your performance and preparing detailed insights...
+            </p>
+
+            {/* Animated Steps */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-center space-x-3 text-white/70">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span className="text-sm">Calculating scores</span>
+              </div>
+              <div className="flex items-center justify-center space-x-3 text-white/70">
+                <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                <span className="text-sm">Generating performance report</span>
+              </div>
+              <div className="flex items-center justify-center space-x-3 text-white/70">
+                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                <span className="text-sm">Preparing solutions</span>
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Floating Particles */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-white/30 rounded-full animate-float"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${3 + Math.random() * 2}s`
+              }}
+            ></div>
+          ))}
         </div>
       </div>
     );
   }
 
   if (showSolutions) {
+    console.log('Rendering SolutionViewer, showSolutions is true');
+    console.log('Questions:', questions);
+    console.log('Answers:', answers);
     return (
       <SolutionViewer
         questions={questions}
@@ -507,6 +530,7 @@ const VerbalSectionMockTest: React.FC = () => {
 
   if (examCompleted) {
     const results = calculateResults();
+    console.log('Exam completed, showing ResultsPage with results:', results);
     return (
       <ResultsPage
         results={results}
@@ -517,19 +541,20 @@ const VerbalSectionMockTest: React.FC = () => {
   }
 
   const currentQuestionData = questions[currentQuestion];
+  const progress = getTotalProgress();
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Header - Same as MNC Exam */}
-      <header className="text-white py-3 px-4" style={{ backgroundColor: '#3B82F6' }}>
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="h-8 w-8 bg-white rounded-full flex items-center justify-center">
-              <span className="text-blue-600 font-bold text-sm">VA</span>
+      {/* Header - Same as other mock tests */}
+      <header className="text-white py-2 sm:py-3 px-2 sm:px-4" style={{ backgroundColor: '#3B82F6' }}>
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
+          <div className="flex items-center space-x-2 sm:space-x-4">
+            <div className="h-6 w-6 sm:h-8 sm:w-8 bg-white rounded-full flex items-center justify-center">
+              <span className="text-blue-600 font-bold text-xs sm:text-sm">VA</span>
             </div>
-            <div className="text-lg font-bold">{mockTopic.name} Mock Test</div>
+            <div className="text-base sm:text-lg font-bold">{mockTopic.name} Mock Test</div>
           </div>
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center justify-between sm:justify-end space-x-2 sm:space-x-6">
             <Timer
               timeLeft={timeLeft}
               onTimeUp={handleTimeUp}
@@ -542,10 +567,11 @@ const VerbalSectionMockTest: React.FC = () => {
             />
             <button
               onClick={handleExamEnd}
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors flex items-center space-x-2"
+              className="bg-red-600 hover:bg-red-700 text-white px-2 sm:px-4 py-1 sm:py-2 rounded text-xs sm:text-sm font-medium transition-colors flex items-center space-x-1 sm:space-x-2"
             >
-              <LogOut className="h-4 w-4" />
-              <span>Exit Test</span>
+              <LogOut className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="hidden sm:inline">Exit Test</span>
+              <span className="sm:hidden">Exit</span>
             </button>
           </div>
         </div>
@@ -553,9 +579,9 @@ const VerbalSectionMockTest: React.FC = () => {
 
       {/* Section Navigation - Simplified for single topic */}
       <div className="bg-gray-100 border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-2">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 py-1 sm:py-2">
           <div className="flex space-x-1">
-            <div className="relative flex-shrink-0 px-3 py-2 rounded-md font-medium text-xs bg-blue-600 text-white shadow-md">
+            <div className="relative flex-shrink-0 px-2 sm:px-3 py-1 sm:py-2 rounded-md font-medium text-xs bg-blue-600 text-white shadow-md">
               <div className="flex items-center space-x-1">
                 <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
                 <span className="font-medium">{mockTopic.name}</span>
@@ -566,19 +592,19 @@ const VerbalSectionMockTest: React.FC = () => {
       </div>
 
       {/* Current Section Info */}
-      <div className="bg-white border-b px-4 py-2">
+      <div className="bg-white border-b px-2 sm:px-4 py-1 sm:py-2">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between">
-            <div className="text-lg font-semibold text-blue-600">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
+            <div className="text-base sm:text-lg font-semibold text-blue-600">
               Verbal Ability
             </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">
+            <div className="flex items-center justify-between sm:justify-end space-x-2 sm:space-x-4">
+              <span className="text-xs sm:text-sm text-gray-600">
                 Question {currentQuestion + 1} of {questions.length}
               </span>
               <button
                 onClick={handleSubmitExam}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-2 sm:px-4 py-1 sm:py-2 rounded text-xs sm:text-sm font-medium transition-colors"
               >
                 Submit Test
               </button>
@@ -587,36 +613,37 @@ const VerbalSectionMockTest: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 flex">
-        <QuestionPanel
-          question={currentQuestionData}
-          currentQuestionIndex={currentQuestion}
-          totalQuestions={questions.length}
-          userAnswer={answers[currentQuestionData?.id || '']}
-          onAnswerChange={(answer) => handleAnswerChange(currentQuestionData?.id || '', answer)}
-          onMarkForReview={() => handleMarkForReview(currentQuestionData?.id || '')}
-          isMarkedForReview={markedForReview[currentQuestionData?.id || ''] || false}
-          onNextQuestion={() => {
-            if (currentQuestion < questions.length - 1) {
-              handleQuestionChange(currentQuestion + 1);
-            }
-          }}
-          onPreviousQuestion={() => {
-            if (currentQuestion > 0) {
-              handleQuestionChange(currentQuestion - 1);
-            }
-          }}
-          canGoNext={currentQuestion < questions.length - 1}
-          canGoPrevious={currentQuestion > 0}
-          allQuestions={questions}
-          allAnswers={answers}
-          allMarkedForReview={markedForReview}
-          visitedQuestions={visitedQuestions}
-          onQuestionChange={handleQuestionChange}
-          getQuestionStatus={getQuestionStatus}
-        />
-      </div>
+             {/* Main Content - Same as other mock tests */}
+       <div className="flex-1 flex">
+         <QuestionPanel
+           question={currentQuestionData as any}
+           currentQuestionIndex={currentQuestion}
+           totalQuestions={questions.length}
+           userAnswer={answers[currentQuestionData?.id || '']}
+           onAnswerChange={(answer) => handleAnswerChange(currentQuestionData?.id || '', answer)}
+           onMarkForReview={() => handleMarkForReview(currentQuestionData?.id || '')}
+           isMarkedForReview={markedForReview[currentQuestionData?.id || ''] || false}
+           onNextQuestion={() => {
+             if (currentQuestion < questions.length - 1) {
+               handleQuestionChange(currentQuestion + 1);
+             }
+           }}
+           onPreviousQuestion={() => {
+             if (currentQuestion > 0) {
+               handleQuestionChange(currentQuestion - 1);
+             }
+           }}
+           canGoNext={currentQuestion < questions.length - 1}
+           canGoPrevious={currentQuestion > 0}
+           // Add these new props for proper navigation and status
+           allQuestions={questions as any}
+           allAnswers={answers}
+           allMarkedForReview={markedForReview}
+           visitedQuestions={visitedQuestions}
+           onQuestionChange={handleQuestionChange}
+           getQuestionStatus={getQuestionStatus as any}
+         />
+       </div>
     </div>
   );
 };

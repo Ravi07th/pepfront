@@ -1,5 +1,6 @@
 import React from 'react';
 import SectionPage from '@/components/common/SectionPage';
+import { useNavigate } from 'react-router-dom';
 import { 
   BookOpen, 
   Link, 
@@ -11,55 +12,56 @@ import {
 } from 'lucide-react';
 
 const VerbalSection: React.FC = () => {
+  const navigate = useNavigate();
   const verbalTopics = [
     {
       id: 'reading-comprehension',
       name: 'Reading Comprehension',
       description: 'Practice reading comprehension with short and medium length passages.',
       icon: <BookOpen className="text-blue-600" />,
-      totalQuestions: 50
+      totalQuestions: 60
     },
     {
-      id: 'sentence-completion',
-      name: 'Sentence Completion',
+      id: 'tenses-subject-verb-agreement',
+      name: 'Tenses, Subject and Verb Agreement',
       description: 'Master sentence completion and paragraph organization.',
       icon: <Link className="text-green-600" />,
-      totalQuestions: 40
+      totalQuestions: 60
     },
     {
-      id: 'error-identification',
-      name: 'Error Identification & Correction',
+      id: 'spotting-error',
+      name: 'Spotting Error',
       description: 'Identify and correct grammatical errors in sentences.',
       icon: <CheckCircle className="text-purple-600" />,
-      totalQuestions: 45
+      totalQuestions: 60
     },
     {
       id: 'para-jumbles',
       name: 'Para Jumbles',
       description: 'Arrange jumbled sentences in logical order.',
       icon: <Puzzle className="text-orange-600" />,
-      totalQuestions: 35
+      totalQuestions: 60
     },
     {
-      id: 'vocabulary',
-      name: 'Vocabulary-based Questions',
+      id: 'idioms-phrases',
+      name: 'Idioms and Phrases',
       description: 'Enhance vocabulary and word usage skills.',
       icon: <MessageSquare className="text-red-600" />,
-      totalQuestions: 55
+      totalQuestions: 60
     },
     {
-      id: 'sentence-improvement',
-      name: 'Sentence Improvement',
+      id: 'sentence-completion',
+      name: 'Sentence Completion',
       description: 'Improve sentence structure and grammar usage.',
       icon: <FileText className="text-indigo-600" />,
-      totalQuestions: 45
+      totalQuestions: 60
     },
     {
-      id: 'grammar-usage',
-      name: 'Grammar Usage',
+      id: 'active-passive-voice',
+      name: 'Active and Passive Voice',
       description: 'Master English grammar rules and applications.',
       icon: <BookMarked className="text-teal-600" />,
-      totalQuestions: 50
+      totalQuestions: 60
     }
   ];
 
@@ -67,10 +69,10 @@ const VerbalSection: React.FC = () => {
     console.log(`Starting ${type} for ${topicId}`);
     if (type === 'test') {
       // Navigate to instructions page first
-      window.location.href = `/verbal-ability/instructions/${topicId}`;
+      navigate(`/verbal-ability/instructions/${topicId}`);
     } else {
       // Navigate to formula page first (like logical reasoning)
-      window.location.href = `/verbal-ability/formula/${topicId}`;
+      navigate(`/verbal-ability/formula/${topicId}`);
     }
   };
 

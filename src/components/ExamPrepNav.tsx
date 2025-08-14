@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Home,
   Target,
   BarChart3,
-  Settings,
   Bookmark,
-  Award,
   Play,
   X,
   ChevronRight,
@@ -23,6 +22,13 @@ import {
   Lightbulb,
   FileText,
   Menu,
+  Calculator,
+  Code,
+  BookText,
+  Calendar,
+  ClipboardList,
+  Bell,
+  ThumbsUp,
 } from "lucide-react";
 
 interface ExamPrepNavProps {
@@ -43,10 +49,50 @@ const ExamPrepNav: React.FC<ExamPrepNavProps> = ({
   setSidebarCollapsed,
 }) => {
   const [internalSidebarCollapsed, setInternalSidebarCollapsed] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
   
   // Use external state if provided, otherwise use internal state
   const isCollapsed = setSidebarCollapsed ? sidebarCollapsed : internalSidebarCollapsed;
   const setIsCollapsed = setSidebarCollapsed || setInternalSidebarCollapsed;
+
+  // Navigation handlers
+  const handleNavigation = (route: string) => {
+    navigate(route);
+  };
+
+  // Check if current route is active
+  const isActiveRoute = (route: string) => {
+    return location.pathname === route || location.pathname.startsWith(route + '/');
+  };
+
+  // Mock test data
+  const mockTests = [
+    {
+      id: 'verbal-mock',
+      name: 'Verbal Mock Test',
+      route: '/verbal-ability/instructions/comprehensive-verbal',
+      icon: <BookOpen className="w-3 h-3 text-white" />
+    },
+    {
+      id: 'aptitude-mock',
+      name: 'Aptitude Mock Test',
+      route: '/quantitative-aptitude/instructions/comprehensive-aptitude',
+      icon: <Calculator className="w-3 h-3 text-white" />
+    },
+    {
+      id: 'logical-mock',
+      name: 'Logical Mock Test',
+      route: '/logical-reasoning/instructions/comprehensive-logical',
+      icon: <Brain className="w-3 h-3 text-white" />
+    },
+    {
+      id: 'programming-mock',
+      name: 'Programming Mock Test',
+      route: '/programming/instructions/comprehensive-programming',
+      icon: <Code className="w-3 h-3 text-white" />
+    }
+  ];
 
   return (
     <>
@@ -57,7 +103,7 @@ const ExamPrepNav: React.FC<ExamPrepNavProps> = ({
         }
         
         .custom-scrollbar::-webkit-scrollbar-track {
-          background: #f1f5f9;
+          background: #1e293b;
           border-radius: 10px;
         }
         
@@ -74,7 +120,7 @@ const ExamPrepNav: React.FC<ExamPrepNavProps> = ({
         /* For Firefox */
         .custom-scrollbar {
           scrollbar-width: thin;
-          scrollbar-color: #3b82f6 #f1f5f9;
+          scrollbar-color: #3b82f6 #1e293b;
         }
         
         /* Hide scrollbar for mobile */
@@ -92,10 +138,13 @@ const ExamPrepNav: React.FC<ExamPrepNavProps> = ({
         /* Hover Effects */
         .nav-item {
           transition: all 0.2s ease;
+          cursor: pointer;
         }
 
         .nav-item:hover {
           transform: translateX(4px);
+          background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+          color: white;
         }
 
         .nav-item.active {
@@ -119,145 +168,216 @@ const ExamPrepNav: React.FC<ExamPrepNavProps> = ({
         }
       `}</style>
 
-      {/* Modern Sidebar */}
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div 
+          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Modern Dark Sidebar */}
       <aside
-        className={`bg-white border border-gray-200 rounded-lg shadow-lg transition-all duration-300
-            ${isCollapsed ? "w-10" : "w-full"}
-            h-fit`}
+        className={`bg-gradient-to-b from-slate-900 to-slate-800 border border-slate-700 shadow-2xl transition-all duration-300 backdrop-blur-sm ${
+          sidebarOpen ? 'fixed lg:relative inset-y-0 left-0 z-50 w-64 lg:w-64' : 'hidden lg:block w-64'
+        }`}
       >
-        {/* Sidebar Header */}
-        <div className="p-2 border-b border-gray-100">
+        {/* Sidebar Header with Company Logo */}
+        <div className="p-4 border-b border-slate-700">
           <div className="flex items-center justify-between">
-            {!isCollapsed && (
-              <div className="flex items-center space-x-2">
-                <div>
-                  <h2 className="text-lg font-bold text-gray-900">ExamPrep</h2>
-                  <p className="text-xs text-gray-500">Study Dashboard</p>
-                </div>
+            <div className="flex items-center space-x-3">
+              {/* Company Logo */}
+              <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-lg">
+                <img src="/favicon.png" alt="PrepCampus Logo" className="w-8 h-8 object-contain" />
               </div>
-            )}
-            <div className="flex items-center space-x-2">
-              <Button 
-                variant="ghost" 
-                size="sm"
-                className="hidden lg:flex"
-                onClick={() => setIsCollapsed(!isCollapsed)}
-              >
-                {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
-              </Button>
+              <div>
+                <h2 className="text-lg font-bold text-white">PrepCampus</h2>
+                <p className="text-xs text-slate-400">Learning Platform</p>
+              </div>
             </div>
+            {/* Mobile Close Button */}
+            <button
+              onClick={() => setSidebarOpen(false)}
+              className="lg:hidden p-2 rounded-lg hover:bg-slate-700 transition-colors"
+            >
+              <X className="w-5 h-5 text-slate-400" />
+            </button>
           </div>
         </div>
 
         {/* Quick Actions */}
-        {!isCollapsed && (
-          <div className="p-2 border-b border-gray-100">
-            <Button 
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-2"
-              onClick={() => onStartTest("live-test", "test")}
-            >
-              <Play className="w-4 h-4 mr-2" />
-              Start Practice
-            </Button>
-          </div>
-        )}
+        <div className="p-4 border-b border-slate-700">
+          <Button 
+            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-2 font-semibold shadow-lg"
+            onClick={() => onStartTest("live-test", "test")}
+          >
+            <Play className="w-4 h-4 mr-2" />
+            Start Practice
+          </Button>
+        </div>
 
         {/* Navigation Sections */}
-        <div className="p-2">
+        <div className="p-4">
           {/* Main Navigation */}
           <div className="space-y-1">
             <div className="px-2 py-1">
-              <h3 className={`text-xs font-semibold text-gray-500 uppercase tracking-wider ${isCollapsed ? 'hidden' : ''}`}>
+              <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
                 Main Menu
               </h3>
             </div>
             
-            {/* Dashboard */}
-            <div className="nav-item flex items-center px-2 py-1 rounded-lg cursor-pointer hover:bg-gray-50">
-              <Home className="w-4 h-4 mr-2 text-gray-600" />
-              {!isCollapsed && <span className="text-gray-700 font-medium text-sm">Dashboard</span>}
+            {/* Quantitative Aptitude */}
+            <div 
+              className={`nav-item flex items-center px-3 py-2 rounded-lg text-slate-300 hover:text-white ${
+                isActiveRoute('/quantitative-aptitude') ? 'active' : ''
+              }`}
+              onClick={() => handleNavigation('/quantitative-aptitude')}
+            >
+              <Calculator className={`w-4 h-4 mr-3 ${isActiveRoute('/quantitative-aptitude') ? 'text-white' : 'text-blue-400'}`} />
+              <span className="font-medium text-sm">Quantitative Aptitude</span>
             </div>
 
-            {/* Practice Tests */}
-            <div className="nav-item flex items-center px-2 py-1 rounded-lg cursor-pointer bg-purple-100 text-purple-700">
-              <Target className="w-4 h-4 mr-2 text-purple-600" />
-              {!isCollapsed && <span className="font-medium text-sm">Practice Tests</span>}
+            {/* Logical Reasoning */}
+            <div 
+              className={`nav-item flex items-center px-3 py-2 rounded-lg text-slate-300 hover:text-white ${
+                isActiveRoute('/logical-reasoning') ? 'active' : ''
+              }`}
+              onClick={() => handleNavigation('/logical-reasoning')}
+            >
+              <Brain className={`w-4 h-4 mr-3 ${isActiveRoute('/logical-reasoning') ? 'text-white' : 'text-purple-400'}`} />
+              <span className="font-medium text-sm">Logical Reasoning</span>
             </div>
 
-            {/* Progress */}
-            <div className="nav-item flex items-center px-2 py-1 rounded-lg cursor-pointer hover:bg-gray-50">
-              <BarChart3 className="w-4 h-4 mr-2 text-gray-600" />
-              {!isCollapsed && <span className="text-gray-700 font-medium text-sm">Progress</span>}
+            {/* Verbal Ability */}
+            <div 
+              className={`nav-item flex items-center px-3 py-2 rounded-lg text-slate-300 hover:text-white ${
+                isActiveRoute('/verbal-ability') ? 'active' : ''
+              }`}
+              onClick={() => handleNavigation('/verbal-ability')}
+            >
+              <BookOpen className={`w-4 h-4 mr-3 ${isActiveRoute('/verbal-ability') ? 'text-white' : 'text-green-400'}`} />
+              <span className="font-medium text-sm">Verbal Ability</span>
             </div>
 
-            {/* Bookmarks */}
-            <div className="nav-item flex items-center px-2 py-1 rounded-lg cursor-pointer hover:bg-gray-50">
-              <Bookmark className="w-4 h-4 mr-2 text-gray-600" />
-              {!isCollapsed && <span className="text-gray-700 font-medium text-sm">Bookmarks</span>}
+            {/* Programming */}
+            <div 
+              className={`nav-item flex items-center px-3 py-2 rounded-lg text-slate-300 hover:text-white ${
+                isActiveRoute('/programming') ? 'active' : ''
+              }`}
+              onClick={() => handleNavigation('/programming')}
+            >
+              <Code className={`w-4 h-4 mr-3 ${isActiveRoute('/programming') ? 'text-white' : 'text-green-400'}`} />
+              <span className="font-medium text-sm">Programming</span>
+            </div>
+
+            {/* Student Notes */}
+            <div 
+              className={`nav-item flex items-center px-3 py-2 rounded-lg text-slate-300 hover:text-white ${
+                isActiveRoute('/student-notes') ? 'active' : ''
+              }`}
+              onClick={() => handleNavigation('/student-notes')}
+            >
+              <BookText className={`w-4 h-4 mr-3 ${isActiveRoute('/student-notes') ? 'text-white' : 'text-yellow-400'}`} />
+              <span className="font-medium text-sm">Student Notes</span>
+            </div>
+
+            {/* Exam Syllabus */}
+            <div 
+              className={`nav-item flex items-center px-3 py-2 rounded-lg text-slate-300 hover:text-white ${
+                isActiveRoute('/syllabus') ? 'active' : ''
+              }`}
+              onClick={() => handleNavigation('/syllabus')}
+            >
+              <Calendar className={`w-4 h-4 mr-3 ${isActiveRoute('/syllabus') ? 'text-white' : 'text-red-400'}`} />
+              <span className="font-medium text-sm">Exam Syllabus</span>
+            </div>
+
+            {/* Mock Test */}
+            <div 
+              className={`nav-item flex items-center px-3 py-2 rounded-lg text-slate-300 hover:text-white ${
+                isActiveRoute('/mock-test') ? 'active' : ''
+              }`}
+              onClick={() => handleNavigation('/mock-test')}
+            >
+              <ClipboardList className={`w-4 h-4 mr-3 ${isActiveRoute('/mock-test') ? 'text-white' : 'text-blue-400'}`} />
+              <span className="font-medium text-sm">MNCs Mock Test</span>
             </div>
           </div>
 
-          {/* Categories Section */}
-          <div className="mt-6 space-y-2">
+          {/* Mock Tests Section */}
+          <div className="mt-6 space-y-1">
             <div className="px-3 py-2">
-              <h3 className={`text-xs font-semibold text-gray-500 uppercase tracking-wider ${isCollapsed ? 'hidden' : ''}`}>
-                Categories
+              <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Mock Tests
               </h3>
             </div>
             
-            {categories.slice(0, 3).map((cat) => (
+            {mockTests.map((test) => (
               <div 
-                key={cat.id}
-                className="nav-item flex items-center px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-50"
-                onClick={() => onStartTest(cat.id, "practice")}
+                key={test.id}
+                className="nav-item flex items-center px-3 py-2 rounded-lg text-slate-300 hover:text-white"
+                onClick={() => handleNavigation(test.route)}
               >
                 <div className="w-5 h-5 mr-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded flex items-center justify-center">
-                  <BookOpen className="w-3 h-3 text-white" />
+                  {test.icon}
                 </div>
-                {!isCollapsed && (
-                  <div className="flex-1">
-                    <span className="text-gray-700 font-medium text-sm">{cat.name}</span>
-                    <div className="flex items-center justify-between mt-1">
-                      <span className="text-xs text-gray-500">{cat.totalQuestions} questions</span>
-                      <Badge variant="secondary" className="text-xs">Live</Badge>
-                    </div>
+                <div className="flex-1">
+                  <span className="text-slate-300 font-medium text-sm">{test.name}</span>
+                  <div className="flex items-center justify-between mt-1">
+                    <span className="text-xs text-slate-500">60 questions</span>
+                    <Badge variant="secondary" className="text-xs bg-red-600 text-white">Live</Badge>
                   </div>
-                )}
+                </div>
               </div>
             ))}
           </div>
 
-          {/* Quick Stats */}
-          {!isCollapsed && (
-            <div className="mt-6 p-3 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg">
-              <h3 className="text-xs font-semibold text-gray-700 mb-2">Quick Stats</h3>
-              <div className="space-y-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-gray-600">Completed</span>
-                  <span className="text-xs font-semibold text-green-600">12 Tests</span>
+          {/* Notifications Section */}
+          <div className="mt-6 space-y-1">
+            <div className="px-3 py-2">
+              <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Notifications
+              </h3>
+            </div>
+            
+            {/* Sample notifications - in real app, these would come from API */}
+            <div className="space-y-2">
+              <div className="nav-item flex items-center px-3 py-2 rounded-lg text-slate-300 hover:text-white">
+                <div className="w-5 h-5 mr-3 bg-gradient-to-br from-green-500 to-blue-600 rounded flex items-center justify-center">
+                  <ThumbsUp className="w-3 h-3 text-white" />
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-gray-600">Accuracy</span>
-                  <span className="text-xs font-semibold text-blue-600">85%</span>
+                <div className="flex-1">
+                  <span className="text-slate-300 font-medium text-sm">Someone liked your explanation</span>
+                  <div className="flex items-center justify-between mt-1">
+                    <span className="text-xs text-slate-500">2 min ago</span>
+                    <Badge variant="secondary" className="text-xs bg-green-600 text-white">New</Badge>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-gray-600">Streak</span>
-                  <span className="text-xs font-semibold text-purple-600">7 Days</span>
+              </div>
+              
+              <div className="nav-item flex items-center px-3 py-2 rounded-lg text-slate-300 hover:text-white">
+                <div className="w-5 h-5 mr-3 bg-gradient-to-br from-purple-500 to-pink-600 rounded flex items-center justify-center">
+                  <Bell className="w-3 h-3 text-white" />
+                </div>
+                <div className="flex-1">
+                  <span className="text-slate-300 font-medium text-sm">New comment on your post</span>
+                  <div className="flex items-center justify-between mt-1">
+                    <span className="text-xs text-slate-500">5 min ago</span>
+                    <Badge variant="secondary" className="text-xs bg-purple-600 text-white">New</Badge>
+                  </div>
                 </div>
               </div>
             </div>
-          )}
+          </div>
 
-          {/* Bottom Actions */}
-          <div className="mt-6 space-y-2">
-            <div className="nav-item flex items-center px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-50">
-              <Settings className="w-5 h-5 mr-3 text-gray-600" />
-              {!isCollapsed && <span className="text-gray-700 font-medium text-sm">Settings</span>}
-            </div>
-            
-            <div className="nav-item flex items-center px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-50">
-              <Award className="w-5 h-5 mr-3 text-gray-600" />
-              {!isCollapsed && <span className="text-gray-700 font-medium text-sm">Achievements</span>}
+          {/* Bottom Section */}
+          <div className="mt-6 pt-4 border-t border-slate-700">
+            <div className="text-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-2 shadow-lg">
+                <Trophy className="w-5 h-5 text-white" />
+              </div>
+              <p className="text-xs text-slate-400">Ready to excel?</p>
+              <p className="text-xs text-slate-500">Start your journey today</p>
             </div>
           </div>
         </div>

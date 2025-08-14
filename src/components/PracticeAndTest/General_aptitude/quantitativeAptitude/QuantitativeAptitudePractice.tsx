@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calculator, Percent, TrendingUp, Clock, Navigation, Droplets, Users, BarChart3, Target, Square, PieChart, Hash } from 'lucide-react';
+import { Calculator, Percent, TrendingUp, Clock, Navigation, Droplets, Users, BarChart3, Target, Square, Hash } from 'lucide-react';
 import PracticeComponent from '../common/PracticeComponent';
 import { numberSystemQuestions } from './data/numberSystemData';
 import { percentageRatioQuestions } from './data/percentageRatioData';
@@ -13,7 +13,6 @@ import { averagesQuestions } from './data/averagesData';
 import { permutationAndCombinationQuestions } from './data/permutationAndCombinationData';
 import { probabilityQuestions } from './data/probabilityData';
 import { algebraAndLinearEquationsQuestions } from './data/algebraAndlinearEquationsData';
-import { dataInterpretationQuestions } from './data/dataInterpretationData';
 
 const QuantitativeAptitudePractice: React.FC = () => {
   const categories = [
@@ -88,12 +87,6 @@ const QuantitativeAptitudePractice: React.FC = () => {
       name: 'Algebra & Linear Equations',
       icon: <Calculator className="w-5 h-5" />,
       description: 'Algebraic expressions and linear equations'
-    },
-    {
-      id: 'data-interpretation',
-      name: 'Data Interpretation',
-      icon: <PieChart className="w-5 h-5" />,
-      description: 'Tables, graphs, and chart analysis'
     }
   ];
 
@@ -123,8 +116,6 @@ const QuantitativeAptitudePractice: React.FC = () => {
         return probabilityQuestions;
       case 'algebra-linear-equations':
         return algebraAndLinearEquationsQuestions;
-      case 'data-interpretation':
-        return dataInterpretationQuestions;
       default:
         return numberSystemQuestions;
     }
@@ -156,8 +147,6 @@ const QuantitativeAptitudePractice: React.FC = () => {
         return 'Probability';
       case 'algebra-linear-equations':
         return 'Algebra & Linear Equations';
-      case 'data-interpretation':
-        return 'Data Interpretation';
       default:
         return 'Quantitative Aptitude';
     }

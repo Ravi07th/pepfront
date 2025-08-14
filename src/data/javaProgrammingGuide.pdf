@@ -1,0 +1,1154 @@
+%PDF-1.4
+1 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+
+2 0 obj
+<<
+/Type /Pages
+/Kids [3 0 R 6 0 R 9 0 R 12 0 R 15 0 R 18 0 R 21 0 R 24 0 R 27 0 R 30 0 R]
+/Count 10
+>>
+endobj
+
+3 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 4 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+4 0 obj
+<<
+/Length 4000
+>>
+stream
+BT
+/F1 24 Tf
+100 750 Td
+(PerpCampus) Tj
+/F1 18 Tf
+0 -40 Td
+(Complete Java Programming Guide) Tj
+/F1 14 Tf
+0 -30 Td
+(Comprehensive Tutorial for Beginners to Advanced - 2025) Tj
+/F1 12 Tf
+0 -50 Td
+(Table of Contents:) Tj
+0 -20 Td
+(1. Introduction to Java) Tj
+0 -15 Td
+(2. Java Environment Setup) Tj
+0 -15 Td
+(3. Basic Syntax and Structure) Tj
+0 -15 Td
+(4. Variables and Data Types) Tj
+0 -15 Td
+(5. Operators and Expressions) Tj
+0 -15 Td
+(6. Control Flow Statements) Tj
+0 -15 Td
+(7. Arrays and Collections) Tj
+0 -15 Td
+(8. Object-Oriented Programming) Tj
+0 -15 Td
+(9. Exception Handling) Tj
+0 -15 Td
+(10. File I/O Operations) Tj
+0 -15 Td
+(11. Multithreading) Tj
+0 -15 Td
+(12. Java Collections Framework) Tj
+0 -15 Td
+(13. Generics) Tj
+0 -15 Td
+(14. Lambda Expressions) Tj
+0 -15 Td
+(15. Streams API) Tj
+0 -15 Td
+(16. Java 8+ Features) Tj
+0 -15 Td
+(17. Database Connectivity) Tj
+0 -15 Td
+(18. Web Development) Tj
+0 -15 Td
+(19. Design Patterns) Tj
+0 -15 Td
+(20. Best Practices) Tj
+ET
+endstream
+endobj
+
+6 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 7 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+7 0 obj
+<<
+/Length 4000
+>>
+stream
+BT
+/F1 16 Tf
+50 750 Td
+(1. Introduction to Java) Tj
+/F1 12 Tf
+0 -30 Td
+(Java is a high-level, object-oriented programming language developed by Sun Microsystems in 1995.) Tj
+0 -20 Td
+(Key Features:) Tj
+0 -15 Td
+• Platform Independent (Write Once, Run Anywhere)) Tj
+0 -15 Td
+• Object-Oriented) Tj
+0 -15 Td
+• Secure and Robust) Tj
+0 -15 Td
+• Multithreaded) Tj
+0 -15 Td
+• High Performance) Tj
+0 -15 Td
+• Distributed) Tj
+0 -30 Td
+(Java Editions:) Tj
+0 -15 Td
+• Java SE (Standard Edition) - Core Java) Tj
+0 -15 Td
+• Java EE (Enterprise Edition) - Web Applications) Tj
+0 -15 Td
+• Java ME (Micro Edition) - Mobile Applications) Tj
+0 -30 Td
+(2. Java Environment Setup) Tj
+0 -20 Td
+(Steps to set up Java Development Environment:) Tj
+0 -15 Td
+1. Download JDK from Oracle website) Tj
+0 -15 Td
+2. Install JDK on your system) Tj
+0 -15 Td
+3. Set JAVA_HOME environment variable) Tj
+0 -15 Td
+4. Add Java to PATH) Tj
+0 -15 Td
+5. Verify installation: java -version) Tj
+0 -30 Td
+(3. Basic Syntax and Structure) Tj
+0 -20 Td
+(Hello World Example:) Tj
+0 -15 Td
+public class HelloWorld {) Tj
+0 -15 Td
+    public static void main(String[] args) {) Tj
+0 -15 Td
+        System.out.println("Hello, World!");) Tj
+0 -15 Td
+    }) Tj
+0 -15 Td
+}) Tj
+0 -30 Td
+(Key Points:) Tj
+0 -15 Td
+• Class name must match file name) Tj
+0 -15 Td
+• main() method is the entry point) Tj
+0 -15 Td
+• Statements end with semicolon) Tj
+0 -15 Td
+• Code blocks use curly braces) Tj
+ET
+endstream
+endobj
+
+8 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 10 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+9 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 11 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+10 0 obj
+<<
+/Length 4000
+>>
+stream
+BT
+/F1 16 Tf
+50 750 Td
+(4. Variables and Data Types) Tj
+/F1 12 Tf
+0 -30 Td
+(Primitive Data Types:) Tj
+0 -15 Td
+• byte: 8-bit signed integer (-128 to 127)) Tj
+0 -15 Td
+• short: 16-bit signed integer (-32,768 to 32,767)) Tj
+0 -15 Td
+• int: 32-bit signed integer (-2^31 to 2^31-1)) Tj
+0 -15 Td
+• long: 64-bit signed integer (-2^63 to 2^63-1)) Tj
+0 -15 Td
+• float: 32-bit floating point) Tj
+0 -15 Td
+• double: 64-bit floating point) Tj
+0 -15 Td
+• boolean: true or false) Tj
+0 -15 Td
+• char: 16-bit Unicode character) Tj
+0 -30 Td
+(Variable Declaration:) Tj
+0 -15 Td
+int number = 10;) Tj
+0 -15 Td
+String name = "Java";) Tj
+0 -15 Td
+double price = 99.99;) Tj
+0 -15 Td
+boolean isActive = true;) Tj
+0 -30 Td
+(5. Operators and Expressions) Tj
+0 -20 Td
+(Arithmetic Operators: +, -, *, /, %)) Tj
+0 -15 Td
+(Assignment Operators: =, +=, -=, *=, /=)) Tj
+0 -15 Td
+(Comparison Operators: ==, !=, <, >, <=, >=)) Tj
+0 -15 Td
+(Logical Operators: &&, ||, !)) Tj
+0 -15 Td
+(Bitwise Operators: &, |, ^, ~, <<, >>)) Tj
+0 -30 Td
+(6. Control Flow Statements) Tj
+0 -20 Td
+(If-Else Statement:) Tj
+0 -15 Td
+if (condition) {) Tj
+0 -15 Td
+    // code block) Tj
+0 -15 Td
+} else if (condition2) {) Tj
+0 -15 Td
+    // code block) Tj
+0 -15 Td
+} else {) Tj
+0 -15 Td
+    // default code block) Tj
+0 -15 Td
+}) Tj
+ET
+endstream
+endobj
+
+11 0 obj
+<<
+/Length 4000
+>>
+stream
+BT
+/F1 16 Tf
+50 750 Td
+(Loops in Java:) Tj
+/F1 12 Tf
+0 -30 Td
+(For Loop:) Tj
+0 -15 Td
+for (int i = 0; i < 10; i++) {) Tj
+0 -15 Td
+    System.out.println(i);) Tj
+0 -15 Td
+}) Tj
+0 -20 Td
+(While Loop:) Tj
+0 -15 Td
+while (condition) {) Tj
+0 -15 Td
+    // code block) Tj
+0 -15 Td
+}) Tj
+0 -20 Td
+(Do-While Loop:) Tj
+0 -15 Td
+do {) Tj
+0 -15 Td
+    // code block) Tj
+0 -15 Td
+} while (condition);) Tj
+0 -30 Td
+(7. Arrays and Collections) Tj
+0 -20 Td
+(Array Declaration:) Tj
+0 -15 Td
+int[] numbers = new int[5];) Tj
+0 -15 Td
+int[] numbers = {1, 2, 3, 4, 5};) Tj
+0 -20 Td
+(Array Operations:) Tj
+0 -15 Td
+• Access: numbers[0]) Tj
+0 -15 Td
+• Length: numbers.length) Tj
+0 -15 Td
+• Iteration: for-each loop) Tj
+0 -30 Td
+(8. Object-Oriented Programming) Tj
+0 -20 Td
+(Classes and Objects:) Tj
+0 -15 Td
+class Car {) Tj
+0 -15 Td
+    private String brand;) Tj
+0 -15 Td
+    private String model;) Tj
+0 -15 Td
+    public Car(String brand, String model) {) Tj
+0 -15 Td
+        this.brand = brand;) Tj
+0 -15 Td
+        this.model = model;) Tj
+0 -15 Td
+    }) Tj
+0 -15 Td
+}) Tj
+ET
+endstream
+endobj
+
+12 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 13 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+13 0 obj
+<<
+/Length 4000
+>>
+stream
+BT
+/F1 16 Tf
+50 750 Td
+(OOP Concepts:) Tj
+/F1 12 Tf
+0 -30 Td
+(1. Encapsulation: Bundling data and methods together)) Tj
+0 -20 Td
+(2. Inheritance: Creating new classes from existing ones)) Tj
+0 -15 Td
+class ElectricCar extends Car {) Tj
+0 -15 Td
+    private int batteryCapacity;) Tj
+0 -15 Td
+}) Tj
+0 -20 Td
+(3. Polymorphism: Same interface, different implementations)) Tj
+0 -15 Td
+(4. Abstraction: Hiding complex implementation details)) Tj
+0 -30 Td
+(9. Exception Handling) Tj
+0 -20 Td
+(Try-Catch Block:) Tj
+0 -15 Td
+try {) Tj
+0 -15 Td
+    // risky code) Tj
+0 -15 Td
+} catch (Exception e) {) Tj
+0 -15 Td
+    // handle exception) Tj
+0 -15 Td
+} finally {) Tj
+0 -15 Td
+    // always executed) Tj
+0 -15 Td
+}) Tj
+0 -20 Td
+(Common Exceptions:) Tj
+0 -15 Td
+• NullPointerException) Tj
+0 -15 Td
+• ArrayIndexOutOfBoundsException) Tj
+0 -15 Td
+• NumberFormatException) Tj
+0 -15 Td
+• IOException) Tj
+0 -30 Td
+(10. File I/O Operations) Tj
+0 -20 Td
+(Reading Files:) Tj
+0 -15 Td
+BufferedReader reader = new BufferedReader(new FileReader("file.txt"));) Tj
+0 -15 Td
+String line = reader.readLine();) Tj
+0 -20 Td
+(Writing Files:) Tj
+0 -15 Td
+BufferedWriter writer = new BufferedWriter(new FileWriter("file.txt"));) Tj
+0 -15 Td
+writer.write("Hello Java");) Tj
+ET
+endstream
+endobj
+
+14 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 16 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+15 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 17 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+16 0 obj
+<<
+/Length 4000
+>>
+stream
+BT
+/F1 16 Tf
+50 750 Td
+(11. Multithreading) Tj
+/F1 12 Tf
+0 -30 Td
+(Creating Threads:) Tj
+0 -15 Td
+(1. Extending Thread class:) Tj
+0 -15 Td
+class MyThread extends Thread {) Tj
+0 -15 Td
+    public void run() {) Tj
+0 -15 Td
+        // thread code) Tj
+0 -15 Td
+    }) Tj
+0 -15 Td
+}) Tj
+0 -20 Td
+(2. Implementing Runnable interface:) Tj
+0 -15 Td
+class MyRunnable implements Runnable {) Tj
+0 -15 Td
+    public void run() {) Tj
+0 -15 Td
+        // thread code) Tj
+0 -15 Td
+    }) Tj
+0 -15 Td
+}) Tj
+0 -30 Td
+(Thread Synchronization:) Tj
+0 -15 Td
+synchronized void method() {) Tj
+0 -15 Td
+    // synchronized code) Tj
+0 -15 Td
+}) Tj
+0 -30 Td
+(12. Java Collections Framework) Tj
+0 -20 Td
+(List Interface: ArrayList, LinkedList)) Tj
+0 -15 Td
+(Set Interface: HashSet, TreeSet)) Tj
+0 -15 Td
+(Map Interface: HashMap, TreeMap)) Tj
+0 -15 Td
+(Queue Interface: PriorityQueue, LinkedList)) Tj
+0 -30 Td
+(ArrayList Example:) Tj
+0 -15 Td
+ArrayList<String> list = new ArrayList<>();) Tj
+0 -15 Td
+list.add("Java");) Tj
+0 -15 Td
+list.add("Python");) Tj
+0 -15 Td
+for (String item : list) {) Tj
+0 -15 Td
+    System.out.println(item);) Tj
+0 -15 Td
+}) Tj
+ET
+endstream
+endobj
+
+17 0 obj
+<<
+/Length 4000
+>>
+stream
+BT
+/F1 16 Tf
+50 750 Td
+(13. Generics) Tj
+/F1 12 Tf
+0 -30 Td
+(Generic Classes:) Tj
+0 -15 Td
+class Box<T> {) Tj
+0 -15 Td
+    private T content;) Tj
+0 -15 Td
+    public void set(T content) {) Tj
+0 -15 Td
+        this.content = content;) Tj
+0 -15 Td
+    }) Tj
+0 -15 Td
+    public T get() {) Tj
+0 -15 Td
+        return content;) Tj
+0 -15 Td
+    }) Tj
+0 -15 Td
+}) Tj
+0 -20 Td
+(Generic Methods:) Tj
+0 -15 Td
+public static <T> void printArray(T[] array) {) Tj
+0 -15 Td
+    for (T element : array) {) Tj
+0 -15 Td
+        System.out.println(element);) Tj
+0 -15 Td
+    }) Tj
+0 -15 Td
+}) Tj
+0 -30 Td
+(14. Lambda Expressions) Tj
+0 -20 Td
+(Basic Syntax: (parameters) -> expression)) Tj
+0 -15 Td
+(Examples:) Tj
+0 -15 Td
+• () -> System.out.println("Hello")) Tj
+0 -15 Td
+• (x, y) -> x + y) Tj
+0 -15 Td
+• n -> n * n) Tj
+0 -20 Td
+(Using with Collections:) Tj
+0 -15 Td
+list.forEach(item -> System.out.println(item));) Tj
+0 -15 Td
+list.removeIf(item -> item.length() < 5);) Tj
+0 -30 Td
+(15. Streams API) Tj
+0 -20 Td
+(Stream Operations:) Tj
+0 -15 Td
+• filter(): Filter elements) Tj
+0 -15 Td
+• map(): Transform elements) Tj
+0 -15 Td
+• reduce(): Aggregate elements) Tj
+0 -15 Td
+• collect(): Collect results) Tj
+ET
+endstream
+endobj
+
+18 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 19 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+19 0 obj
+<<
+/Length 4000
+>>
+stream
+BT
+/F1 16 Tf
+50 750 Td
+(Stream Example:) Tj
+/F1 12 Tf
+0 -30 Td
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);) Tj
+0 -15 Td
+int sum = numbers.stream()) Tj
+0 -15 Td
+    .filter(n -> n % 2 == 0)) Tj
+0 -15 Td
+    .mapToInt(Integer::intValue)) Tj
+0 -15 Td
+    .sum();) Tj
+0 -30 Td
+(16. Java 8+ Features) Tj
+0 -20 Td
+(Optional Class:) Tj
+0 -15 Td
+Optional<String> optional = Optional.of("Java");) Tj
+0 -15 Td
+String result = optional.orElse("Default");) Tj
+0 -20 Td
+(Default Methods in Interfaces:) Tj
+0 -15 Td
+interface Vehicle {) Tj
+0 -15 Td
+    default void start() {) Tj
+0 -15 Td
+        System.out.println("Starting vehicle");) Tj
+0 -15 Td
+    }) Tj
+0 -15 Td
+}) Tj
+0 -30 Td
+(17. Database Connectivity (JDBC)) Tj
+0 -20 Td
+(Connecting to Database:) Tj
+0 -15 Td
+String url = "jdbc:mysql://localhost:3306/database";) Tj
+0 -15 Td
+Connection conn = DriverManager.getConnection(url, user, password);) Tj
+0 -20 Td
+(Executing Queries:) Tj
+0 -15 Td
+Statement stmt = conn.createStatement();) Tj
+0 -15 Td
+ResultSet rs = stmt.executeQuery("SELECT * FROM users");) Tj
+0 -15 Td
+while (rs.next()) {) Tj
+0 -15 Td
+    String name = rs.getString("name");) Tj
+0 -15 Td
+}) Tj
+ET
+endstream
+endobj
+
+20 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 22 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+21 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 23 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+22 0 obj
+<<
+/Length 4000
+>>
+stream
+BT
+/F1 16 Tf
+50 750 Td
+(18. Web Development) Tj
+/F1 12 Tf
+0 -30 Td
+(Servlets:) Tj
+0 -15 Td
+public class MyServlet extends HttpServlet {) Tj
+0 -15 Td
+    protected void doGet(HttpServletRequest request,) Tj
+0 -15 Td
+                        HttpServletResponse response)) Tj
+0 -15 Td
+            throws ServletException, IOException {) Tj
+0 -15 Td
+        response.getWriter().println("Hello Servlet");) Tj
+0 -15 Td
+    }) Tj
+0 -15 Td
+}) Tj
+0 -30 Td
+(JSP - JavaServer Pages:) Tj
+0 -15 Td
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>) Tj
+0 -15 Td
+<html>) Tj
+0 -15 Td
+<body>) Tj
+0 -15 Td
+    <h1>Welcome to JSP</h1>) Tj
+0 -15 Td
+    <% String message = "Hello from JSP"; %>) Tj
+0 -15 Td
+    <p><%= message %></p>) Tj
+0 -15 Td
+</body>) Tj
+0 -15 Td
+</html>) Tj
+0 -30 Td
+(19. Design Patterns) Tj
+0 -20 Td
+(Singleton Pattern:) Tj
+0 -15 Td
+public class Singleton {) Tj
+0 -15 Td
+    private static Singleton instance;) Tj
+0 -15 Td
+    private Singleton() {}) Tj
+0 -15 Td
+    public static Singleton getInstance() {) Tj
+0 -15 Td
+        if (instance == null) {) Tj
+0 -15 Td
+            instance = new Singleton();) Tj
+0 -15 Td
+        }) Tj
+0 -15 Td
+        return instance;) Tj
+0 -15 Td
+    }) Tj
+0 -15 Td
+}) Tj
+ET
+endstream
+endobj
+
+23 0 obj
+<<
+/Length 4000
+>>
+stream
+BT
+/F1 16 Tf
+50 750 Td
+(Factory Pattern:) Tj
+/F1 12 Tf
+0 -30 Td
+interface Shape {) Tj
+0 -15 Td
+    void draw();) Tj
+0 -15 Td
+}) Tj
+0 -15 Td
+class Circle implements Shape {) Tj
+0 -15 Td
+    public void draw() {) Tj
+0 -15 Td
+        System.out.println("Drawing Circle");) Tj
+0 -15 Td
+    }) Tj
+0 -15 Td
+}) Tj
+0 -20 Td
+(Observer Pattern:) Tj
+0 -15 Td
+interface Observer {) Tj
+0 -15 Td
+    void update(String message);) Tj
+0 -15 Td
+}) Tj
+0 -15 Td
+class Subject {) Tj
+0 -15 Td
+    private List<Observer> observers = new ArrayList<>();) Tj
+0 -15 Td
+    public void attach(Observer observer) {) Tj
+0 -15 Td
+        observers.add(observer);) Tj
+0 -15 Td
+    }) Tj
+0 -15 Td
+    public void notifyObservers(String message) {) Tj
+0 -15 Td
+        for (Observer observer : observers) {) Tj
+0 -15 Td
+            observer.update(message);) Tj
+0 -15 Td
+        }) Tj
+0 -15 Td
+    }) Tj
+0 -15 Td
+}) Tj
+0 -30 Td
+(20. Best Practices) Tj
+0 -20 Td
+(Coding Standards:) Tj
+0 -15 Td
+• Use meaningful variable names) Tj
+0 -15 Td
+• Follow camelCase convention) Tj
+0 -15 Td
+• Write comments for complex logic) Tj
+0 -15 Td
+• Keep methods small and focused) Tj
+0 -15 Td
+• Use constants for magic numbers) Tj
+0 -20 Td
+(Performance Tips:) Tj
+0 -15 Td
+• Use StringBuilder for string concatenation) Tj
+0 -15 Td
+• Prefer interfaces over concrete classes) Tj
+0 -15 Td
+• Use appropriate data structures) Tj
+0 -15 Td
+• Avoid unnecessary object creation) Tj
+0 -15 Td
+• Use try-with-resources for I/O operations) Tj
+ET
+endstream
+endobj
+
+24 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 25 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+25 0 obj
+<<
+/Length 4000
+>>
+stream
+BT
+/F1 16 Tf
+50 750 Td
+(Security Best Practices:) Tj
+/F1 12 Tf
+0 -30 Td
+• Validate all inputs) Tj
+0 -15 Td
+• Use prepared statements for SQL queries) Tj
+0 -15 Td
+• Implement proper authentication) Tj
+0 -15 Td
+• Use HTTPS for sensitive data) Tj
+0 -15 Td
+• Keep dependencies updated) Tj
+0 -30 Td
+(Testing Best Practices:) Tj
+0 -20 Td
+• Write unit tests for all methods) Tj
+0 -15 Td
+• Use meaningful test names) Tj
+0 -15 Td
+• Test edge cases and exceptions) Tj
+0 -15 Td
+• Use mocking frameworks) Tj
+0 -15 Td
+• Maintain high test coverage) Tj
+0 -30 Td
+(Common Java Frameworks:) Tj
+0 -20 Td
+• Spring Framework - Dependency Injection) Tj
+0 -15 Td
+• Hibernate - Object-Relational Mapping) Tj
+0 -15 Td
+• Maven/Gradle - Build Tools) Tj
+0 -15 Td
+• JUnit - Testing Framework) Tj
+0 -15 Td
+• Log4j - Logging Framework) Tj
+0 -30 Td
+(Java Tools and IDEs:) Tj
+0 -20 Td
+• IntelliJ IDEA - Popular Java IDE) Tj
+0 -15 Td
+• Eclipse - Open-source IDE) Tj
+0 -15 Td
+• NetBeans - Oracle's IDE) Tj
+0 -15 Td
+• VS Code - Lightweight editor) Tj
+0 -15 Td
+• Maven - Build automation tool) Tj
+ET
+endstream
+endobj
+
+26 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 28 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+27 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 29 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+28 0 obj
+<<
+/Length 4000
+>>
+stream
+BT
+/F1 16 Tf
+50 750 Td
+(Advanced Java Concepts) Tj
+/F1 12 Tf
+0 -30 Td
+(Reflection API:) Tj
+0 -15 Td
+Class<?> clazz = MyClass.class;) Tj
+0 -15 Td
+Method[] methods = clazz.getMethods();) Tj
+0 -15 Td
+Field[] fields = clazz.getDeclaredFields();) Tj
+0 -30 Td
+(Annotations:) Tj
+0 -15 Td
+@Override) Tj
+0 -15 Td
+@Deprecated) Tj
+0 -15 Td
+@SuppressWarnings) Tj
+0 -15 Td
+@FunctionalInterface) Tj
+0 -30 Td
+(Custom Annotations:) Tj
+0 -15 Td
+@interface MyAnnotation {) Tj
+0 -15 Td
+    String value() default "";) Tj
+0 -15 Td
+    int count() default 0;) Tj
+0 -15 Td
+}) Tj
+0 -30 Td
+(Serialization:) Tj
+0 -15 Td
+class Person implements Serializable {) Tj
+0 -15 Td
+    private String name;) Tj
+0 -15 Td
+    private int age;) Tj
+0 -15 Td
+}) Tj
+0 -20 Td
+(Serialization Example:) Tj
+0 -15 Td
+ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("person.ser"));) Tj
+0 -15 Td
+oos.writeObject(person);) Tj
+0 -15 Td
+oos.close();) Tj
+ET
+endstream
+endobj
+
+29 0 obj
+<<
+/Length 4000
+>>
+stream
+BT
+/F1 16 Tf
+50 750 Td
+(Java Memory Management:) Tj
+/F1 12 Tf
+0 -30 Td
+(Garbage Collection:) Tj
+0 -15 Td
+• Automatic memory management) Tj
+0 -15 Td
+• Different GC algorithms available) Tj
+0 -15 Td
+• System.gc() - Request garbage collection) Tj
+0 -15 Td
+• finalize() method - Cleanup before GC) Tj
+0 -30 Td
+(Memory Areas:) Tj
+0 -20 Td
+• Heap - Object storage) Tj
+0 -15 Td
+• Stack - Method calls and local variables) Tj
+0 -15 Td
+• Method Area - Class metadata) Tj
+0 -15 Td
+• Native Method Stack) Tj
+0 -30 Td
+(Java Performance Tuning:) Tj
+0 -20 Td
+• JVM tuning parameters) Tj
+0 -15 Td
+• Heap size optimization) Tj
+0 -15 Td
+• GC algorithm selection) Tj
+0 -15 Td
+• Profiling tools) Tj
+0 -30 Td
+(Conclusion:) Tj
+0 -20 Td
+Java is a powerful, versatile programming language that continues to evolve.) Tj
+0 -15 Td
+Mastering Java opens doors to various career opportunities in software development.) Tj
+0 -15 Td
+Keep learning and practicing to become a proficient Java developer.) Tj
+0 -30 Td
+(Resources for Further Learning:) Tj
+0 -20 Td
+• Oracle Java Documentation) Tj
+0 -15 Td
+• Java Tutorials and Courses) Tj
+0 -15 Td
+• Open Source Projects) Tj
+0 -15 Td
+• Java Community Forums) Tj
+0 -15 Td
+• Practice Coding Problems) Tj
+ET
+endstream
+endobj
+
+5 0 obj
+<<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+>>
+endobj
+
+xref
+0 31
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000250 00000 n 
+0000000350 00000 n 
+0000000409 00000 n 
+0000000468 00000 n 
+0000000527 00000 n 
+0000000586 00000 n 
+0000000645 00000 n 
+0000000704 00000 n 
+0000000763 00000 n 
+0000000822 00000 n 
+0000000881 00000 n 
+0000000940 00000 n 
+0000000999 00000 n 
+0000001058 00000 n 
+0000001117 00000 n 
+0000001176 00000 n 
+0000001235 00000 n 
+0000001294 00000 n 
+0000001353 00000 n 
+0000001412 00000 n 
+0000001471 00000 n 
+0000001530 00000 n 
+0000001589 00000 n 
+0000001648 00000 n 
+0000001707 00000 n 
+0000001766 00000 n 
+trailer
+<<
+/Size 31
+/Root 1 0 R
+>>
+startxref
+1850
+%%EOF

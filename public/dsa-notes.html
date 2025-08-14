@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DSA Notes - Data Structures & Algorithms</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --secondary: #7c3aed;
+      --success: #059669;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --dark: #1f2937;
+      --light: #f8fafc;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #f8fafc;
+    }
+    .code-box {
+    background-color: #f4f6f9; /* light pastel grey */
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    overflow-x: auto;
+    border: 1px solid #d0d7de;
+    margin-bottom: 10px;
+}
+
+/* Syntax Highlighting */
+.code-box code {
+    color: #2b2b2b; /* dark grey text */
+}
+.code-box code .keyword { color: #d73a49; font-weight: bold; }
+.code-box code .number { color: #005cc5; }
+.code-box code .comment { color: #6a737d; font-style: italic; }
+
+/* Output Box */
+.output-box {
+    background-color: #fff4e6; /* soft orange */
+    padding: 8px;
+    border-left: 4px solid #f0a500;
+    border-radius: 5px;
+    font-family: monospace;
+    display: inline-block;
+}
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      margin-bottom: 30px;
+      border-radius: 12px;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #047857;
+      transform: translateY(-2px);
+    }
+
+    .content {
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section h2 {
+      color: var(--primary);
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 10px;
+    }
+
+    .section h3 {
+      color: var(--dark);
+      font-size: 1.4rem;
+      margin: 25px 0 15px 0;
+    }
+
+    .code-block {
+      background: #1e293b;
+      color: #e2e8f0;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 15px 0;
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+    }
+
+    .highlight {
+      background: #fef3c7;
+      padding: 15px;
+      border-left: 4px solid var(--warning);
+      margin: 15px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .complexity-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    .complexity-table th,
+    .complexity-table td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+
+    .complexity-table th {
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+    }
+
+    .complexity-table tr:nth-child(even) {
+      background: #f8f9fa;
+    }
+
+    .algorithm-steps {
+      background: #f0f9ff;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 15px 0;
+    }
+
+    .algorithm-steps ol {
+      margin-left: 20px;
+    }
+
+    .algorithm-steps li {
+      margin-bottom: 8px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    @media print {
+      .controls {
+        display: none;
+      }
+      
+      body {
+        background: white;
+      }
+      
+      .header {
+        background: var(--primary) !important;
+        -webkit-print-color-adjust: exact;
+      }
+
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Data Structures & Algorithms</h1>
+      <p>Comprehensive Guide for IT Students and Freshers</p>
+      <p style="margin-top: 10px; font-size: 0.9rem;">PrepCampus • Your Learning Partner</p>
+    </div>
+
+    <div class="controls">
+      <button class="btn btn-primary" onclick="window.print()">
+        📄 Download PDF
+      </button>
+      <a href="/student-notes" class="btn btn-success">
+        ← Back to Notes
+      </a>
+    </div>
+
+    <div class="content">
+      <!-- Arrays -->
+      <div class="section">
+        <h2>1. Arrays</h2>
+      
+                 <h3>1.1 Introduction</h3>
+         <p>
+           An <strong>Array</strong> is a fundamental data structure that stores a <strong>collection of elements</strong> in a
+           <em>contiguous block of memory</em>. Think of it as a <strong>linear collection</strong> where each element has a unique position called an <strong>index</strong>.
+         </p>
+         
+         <p>
+           <strong>Key Characteristics:</strong>
+         </p>
+         <ul>
+           <li><strong>Homogeneous:</strong> All elements in an array are of the <strong>same data type</strong> (all integers, all floats, all characters, etc.)</li>
+           <li><strong>Fixed Size:</strong> Once declared, the size of an array remains constant (in most programming languages)</li>
+           <li><strong>Indexed Access:</strong> Each element can be accessed directly using its position number (index)</li>
+           <li><strong>Sequential Storage:</strong> Elements are stored in consecutive memory locations for efficient access</li>
+           <li><strong>Random Access:</strong> You can access any element directly without traversing through others</li>
+         </ul>
+         
+         <p>
+           <strong>Memory Layout:</strong> Arrays use <em>contiguous memory allocation</em>, meaning all elements are stored next to each other in memory. This allows the computer to calculate the exact memory address of any element using a simple formula.
+         </p>
+      
+        <div class="highlight">
+          <strong>Memory Trick:</strong> Think of an array like a <strong>row of houses</strong> with house numbers
+          (indexes). All houses are next to each other, and each house stores one thing.
+        </div>
+      
+        <p>
+          In programming, each element of an array can be accessed using an <strong>index</strong> (also called a subscript).
+          <ul>
+            <li>Index starts from <code>0</code> in most languages (C, C++, Java, Python).</li>
+            <li>First element = index 0, last element = index <code>size - 1</code>.</li>
+          </ul>
+        </p>
+      
+                 <h3>1.2 Why use Arrays?</h3>
+         <p>
+           Arrays are one of the most fundamental and widely used data structures in programming. Here's why they are essential:
+         </p>
+         <ul>
+           <li><strong>Efficient Storage:</strong> Store multiple values of the same type under a single variable name, reducing memory overhead</li>
+           <li><strong>Fast Access:</strong> Direct access to any element using its index (O(1) time complexity)</li>
+           <li><strong>Easy Iteration:</strong> Simple loops to process all elements sequentially</li>
+           <li><strong>Memory Efficiency:</strong> Contiguous memory allocation reduces fragmentation and improves cache performance</li>
+           <li><strong>Mathematical Operations:</strong> Easy to perform operations on collections of numbers (sum, average, sorting, etc.)</li>
+           <li><strong>Data Organization:</strong> Keep related data together for better code organization and readability</li>
+           <li><strong>Algorithm Foundation:</strong> Many advanced algorithms and data structures are built upon arrays</li>
+           <li><strong>Performance:</strong> Excellent cache locality due to contiguous memory storage</li>
+         </ul>
+         
+         <p>
+           <strong>Real-World Applications:</strong> Arrays are used in databases, image processing, scientific computing, game development, and virtually every programming domain.
+         </p>
+      
+                 <h3>1.3 How Arrays Work in Memory</h3>
+         <p>
+           Understanding how arrays work in memory is crucial for optimizing performance and understanding their behavior. Arrays use a <strong>contiguous memory allocation strategy</strong>, which means all elements are stored in consecutive memory locations.
+         </p>
+         
+         <p>
+           <strong>Memory Allocation Process:</strong>
+         </p>
+         <ol>
+           <li><strong>Base Address:</strong> The computer allocates a starting memory address for the array</li>
+           <li><strong>Sequential Storage:</strong> Each subsequent element is stored immediately after the previous one</li>
+           <li><strong>Size Calculation:</strong> Total memory = Number of elements × Size of each element</li>
+           <li><strong>Address Calculation:</strong> Any element's address can be calculated using: Base Address + (Index × Element Size)</li>
+         </ol>
+         
+         <p>
+           <strong>Example:</strong> If the base address of the array is <code>1000</code> and each element takes <code>4 bytes</code> (integer),
+           then the memory layout would be:
+         </p>
+                 <table class="complexity-table">
+          <tr>
+            <th>Index</th>
+            <th>Value</th>
+            <th>Address</th>
+          </tr>
+          <tr><td>0</td><td>10</td><td>1000</td></tr>
+          <tr><td>1</td><td>20</td><td>1004</td></tr>
+          <tr><td>2</td><td>30</td><td>1008</td></tr>
+          <tr><td>3</td><td>40</td><td>1012</td></tr>
+        </table>
+                 <p>
+           <strong>Why This Matters:</strong> This memory layout is why accessing <code>arr[2]</code> is extremely fast — the computer directly calculates its memory address
+           using the formula:
+         </p>
+         <pre><code>Address = Base Address + (Index × Size of each element)</code></pre>
+         
+         <p>
+           <strong>Performance Benefits:</strong>
+         </p>
+         <ul>
+           <li><strong>O(1) Access Time:</strong> Direct calculation without searching or traversing</li>
+           <li><strong>Cache Efficiency:</strong> Contiguous memory improves CPU cache performance</li>
+           <li><strong>Predictable Performance:</strong> Access time is consistent regardless of array size</li>
+           <li><strong>Memory Locality:</strong> Related data is stored together, reducing cache misses</li>
+         </ul>
+      
+                 <h2>1.4 Array Declaration and Initialization</h2>
+         <p>
+           Arrays can be declared and initialized in various ways depending on the programming language and your specific needs. Understanding these different methods helps you choose the most appropriate approach for your use case.
+         </p>
+        <div class="code-box">
+    <pre><code>
+    // <span class="comment">1. Declaration with size</span>
+    <span class="keyword">int</span> marks[<span class="number">5</span>]; <span class="comment">// Creates an array of 5 integers</span>
+    
+    <span class="comment">// 2. Declaration + Initialization</span>
+    <span class="keyword">int</span> marks[<span class="number">5</span>] = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>};
+    
+    <span class="comment">// 3. Initialization without size</span>
+    <span class="keyword">int</span> marks[] = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>}; 
+    <span class="comment">// Compiler counts size automatically</span>
+    
+    <span class="comment">// 4. Accessing elements</span>
+    printf(<span class="keyword">"%d"</span>, marks[<span class="number">0</span>]); <span class="comment">// prints 10</span>
+    printf(<span class="keyword">"%d"</span>, marks[<span class="number">4</span>]); <span class="comment">// prints 50</span>
+    
+    <span class="comment">// 5. Updating an element</span>
+    marks[<span class="number">2</span>] = <span class="number">99</span>; 
+    <span class="comment">// Now marks = {10, 20, 99, 40, 50}</span>
+    </code></pre>
+        </div>
+    
+        <!-- 1.5 Traversing an Array -->
+                 <h2>1.5 Traversing an Array</h2>
+         <p>
+           <strong>Array Traversal</strong> is the process of visiting each element of the array one by one, typically in a systematic order. This is one of the most fundamental operations performed on arrays and is essential for many algorithms and data processing tasks.
+         </p>
+         
+         <p>
+           <strong>Common Traversal Patterns:</strong>
+         </p>
+         <ul>
+           <li><strong>Forward Traversal:</strong> Visit elements from index 0 to n-1</li>
+           <li><strong>Backward Traversal:</strong> Visit elements from index n-1 to 0</li>
+           <li><strong>Partial Traversal:</strong> Visit only a subset of elements</li>
+           <li><strong>Conditional Traversal:</strong> Visit elements based on certain conditions</li>
+         </ul>
+        <div class="code-box">
+    <pre><code>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) {
+        printf(<span class="keyword">"%d "</span>, marks[i]);
+    }
+    </code></pre>
+        </div>
+    
+        <!-- Output -->
+        <div class="output-box">
+            <strong>Output:</strong> 10 20 99 40 50
+        </div>
+      
+                 <h3>1.6 Common Operations & Time Complexity Analysis</h3>
+         <p>
+           Understanding the time complexity of array operations is crucial for algorithm design and performance optimization. Different operations have different efficiency characteristics, and knowing these helps you choose the right approach for your specific problem.
+         </p>
+        <table class="complexity-table">
+          <tr>
+            <th>Operation</th>
+            <th>Time Complexity</th>
+            <th>Explanation</th>
+          </tr>
+          <tr>
+            <td>Access (by index)</td>
+            <td>O(1)</td>
+            <td>Direct jump using formula.</td>
+          </tr>
+          <tr>
+            <td>Search (Linear)</td>
+            <td>O(n)</td>
+            <td>Check each element until found.</td>
+          </tr>
+          <tr>
+            <td>Insertion (end)</td>
+            <td>O(1)</td>
+            <td>Place at next empty position.</td>
+          </tr>
+          <tr>
+            <td>Insertion (middle)</td>
+            <td>O(n)</td>
+            <td>Shift elements to make space.</td>
+          </tr>
+          <tr>
+            <td>Deletion (middle)</td>
+            <td>O(n)</td>
+            <td>Shift elements to fill the gap.</td>
+          </tr>
+        </table>
+      
+                 <h3>1.7 Advantages of Arrays</h3>
+         <p>
+           Arrays offer several significant advantages that make them the foundation of many data structures and algorithms:
+         </p>
+         <ul>
+           <li><strong>Fast Random Access:</strong> O(1) time complexity for accessing any element using its index</li>
+           <li><strong>Memory Efficiency:</strong> Contiguous memory allocation reduces overhead and improves cache performance</li>
+           <li><strong>Simple Implementation:</strong> Easy to understand, implement, and debug</li>
+           <li><strong>Predictable Performance:</strong> Consistent access times regardless of data size</li>
+           <li><strong>Cache Locality:</strong> Excellent CPU cache performance due to contiguous storage</li>
+           <li><strong>Foundation for Other Structures:</strong> Many advanced data structures are built upon arrays</li>
+           <li><strong>Efficient Iteration:</strong> Fast sequential access for processing all elements</li>
+           <li><strong>Mathematical Operations:</strong> Easy to perform vector and matrix operations</li>
+           <li><strong>Memory Predictability:</strong> Fixed size allows for precise memory allocation</li>
+           <li><strong>Language Support:</strong> Native support in all programming languages</li>
+         </ul>
+      
+                 <h3>1.8 Disadvantages of Arrays</h3>
+         <p>
+           While arrays are powerful and efficient, they also have several limitations that make them unsuitable for certain applications:
+         </p>
+         <ul>
+           <li><strong>Fixed Size:</strong> Cannot grow or shrink at runtime in most programming languages (except dynamic arrays)</li>
+           <li><strong>Expensive Insertions/Deletions:</strong> Inserting or deleting elements in the middle requires shifting all subsequent elements (O(n) time complexity)</li>
+           <li><strong>Memory Wastage:</strong> May allocate more memory than needed if size is overestimated</li>
+           <li><strong>Homogeneous Data:</strong> All elements must be of the same data type, limiting flexibility</li>
+           <li><strong>Memory Fragmentation:</strong> Large arrays may cause memory fragmentation issues</li>
+           <li><strong>No Built-in Bounds Checking:</strong> In languages like C/C++, accessing invalid indices can cause buffer overflows</li>
+           <li><strong>Inefficient for Dynamic Data:</strong> Poor performance when data size changes frequently</li>
+           <li><strong>Memory Allocation Issues:</strong> May fail to allocate memory for very large arrays</li>
+           <li><strong>Limited Flexibility:</strong> Cannot easily represent hierarchical or complex relationships</li>
+           <li><strong>Search Complexity:</strong> Linear search is O(n) unless the array is sorted</li>
+         </ul>
+      
+                 <h3>1.9 Real-Life Applications and Examples</h3>
+         <p>
+           Arrays are used extensively in real-world applications across various domains. Understanding these applications helps you see the practical importance of arrays in solving real problems.
+         </p>
+         
+         <p><strong>Everyday Examples:</strong></p>
+         <ul>
+           <li><strong>Temperature Records:</strong> Daily temperatures for a week, monthly averages, yearly climate data</li>
+           <li><strong>Academic Records:</strong> Student marks in exams, attendance records, grade point averages</li>
+           <li><strong>Seating Arrangements:</strong> Theater seats, classroom seating, stadium seating</li>
+           <li><strong>Contact Lists:</strong> Phone numbers, email addresses, contact information</li>
+           <li><strong>Inventory Management:</strong> Product quantities, stock levels, item codes</li>
+         </ul>
+         
+         <p><strong>Technical Applications:</strong></p>
+         <ul>
+           <li><strong>Image Processing:</strong> Pixel arrays, color channels, image filters</li>
+           <li><strong>Audio Processing:</strong> Sound samples, frequency data, audio buffers</li>
+           <li><strong>Game Development:</strong> Game board states, player positions, score tracking</li>
+           <li><strong>Database Systems:</strong> Record storage, index structures, query results</li>
+           <li><strong>Scientific Computing:</strong> Mathematical vectors, matrices, statistical data</li>
+           <li><strong>Web Development:</strong> Form data, API responses, user sessions</li>
+           <li><strong>Financial Applications:</strong> Stock prices, transaction history, portfolio data</li>
+           <li><strong>Machine Learning:</strong> Feature vectors, training data, model parameters</li>
+         </ul>
+      
+                 <div class="highlight">
+           <strong>Exam Tip:</strong> Remember — Array is best when:
+          <ul>
+            <li>You know the size in advance.</li>
+            <li>You need fast access by position.</li>
+            <li>You don’t insert/delete much in the middle.</li>
+          </ul>
+        </div>
+      </div>
+      
+      
+      <!-- 2. Strings -->
+      <div class="section">
+        <h2>2. Strings</h2>
+        
+                 <h3>2.1 Introduction to Strings</h3>
+         <p>
+           A <strong>String</strong> is a fundamental data structure that represents a sequence of characters. It is one of the most commonly used data types in programming, essential for text processing, data manipulation, and user interface development.
+         </p>
+         
+         <p>
+           <strong>Key Characteristics:</strong>
+         </p>
+         <ul>
+           <li><strong>Character Sequence:</strong> Ordered collection of characters (letters, numbers, symbols, spaces)</li>
+           <li><strong>Immutable Nature:</strong> In most programming languages, strings cannot be modified once created (new strings are created instead)</li>
+           <li><strong>Indexed Access:</strong> Each character can be accessed using its position (index) in the string</li>
+           <li><strong>Length Property:</strong> Strings have a defined length (number of characters)</li>
+           <li><strong>Unicode Support:</strong> Modern strings support international characters and symbols</li>
+           <li><strong>Text Processing:</strong> Built-in methods for searching, replacing, and manipulating text</li>
+         </ul>
+         
+         <p>
+           <strong>Importance in Programming:</strong> Strings are fundamental for file I/O, user input processing, data parsing, web development, database operations, and virtually every application that deals with human-readable text.
+         </p>
+
+        <div class="highlight">
+          <strong>Key Concept:</strong> Strings are essentially arrays of characters, but with special properties
+          and built-in methods for text manipulation.
+        </div>
+
+                 <h3>2.2 String Representation in Memory</h3>
+         <p>
+           Understanding how strings are represented in memory is crucial for optimizing string operations and understanding their performance characteristics. Different programming languages and systems use various approaches to store string data.
+         </p>
+         
+         <p><strong>Common String Representation Methods:</strong></p>
+         <ul>
+           <li><strong>Character Array:</strong> Each character stored in consecutive memory locations, similar to arrays</li>
+           <li><strong>Null-terminated Strings:</strong> C-style strings that end with a special null character ('\0') to mark the end</li>
+           <li><strong>Length-prefixed Strings:</strong> Store the string length at the beginning, followed by the character data</li>
+           <li><strong>Object-based Strings:</strong> Modern languages treat strings as objects with metadata and methods</li>
+           <li><strong>Rope Data Structure:</strong> Used for very large strings, breaking them into smaller pieces</li>
+           <li><strong>String Interning:</strong> Shared storage for identical strings to save memory</li>
+         </ul>
+         
+         <p>
+           <strong>Memory Considerations:</strong> String representation affects memory usage, access speed, and the efficiency of operations like concatenation, substring extraction, and comparison.
+         </p>
+
+                 <div class="code-box">
+     <pre><code>
+     // <span class="comment">String representation in different languages</span>
+     // <span class="comment">C/C++ - Character array</span>
+     <span class="keyword">char</span> str[] = <span class="keyword">"Hello World"</span>;
+     <span class="keyword">char</span>* str2 = <span class="keyword">"Hello World"</span>;
+     
+     // <span class="comment">Java - String object</span>
+     <span class="keyword">String</span> str = <span class="keyword">"Hello World"</span>;
+     
+     // <span class="comment">Python - String object</span>
+     str = <span class="keyword">"Hello World"</span>
+     
+     // <span class="comment">JavaScript</span>
+     <span class="keyword">let</span> str = <span class="keyword">"Hello World"</span>;
+     </code></pre>
+         </div>
+
+        <h3>2.3 Common String Operations</h3>
+        
+        <h4>2.3.1 Basic Operations</h4>
+        <table class="complexity-table">
+          <tr>
+            <th>Operation</th>
+            <th>Time Complexity</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>Length</td>
+            <td>O(1)</td>
+            <td>Get string length</td>
+          </tr>
+          <tr>
+            <td>Access</td>
+            <td>O(1)</td>
+            <td>Access character at index</td>
+          </tr>
+          <tr>
+            <td>Concatenation</td>
+            <td>O(n+m)</td>
+            <td>Join two strings</td>
+          </tr>
+          <tr>
+            <td>Substring</td>
+            <td>O(k)</td>
+            <td>Extract substring of length k</td>
+          </tr>
+        </table>
+
+                 <h4>2.3.2 String Manipulation</h4>
+         <div class="code-box">
+     <pre><code>
+     // <span class="comment">Common string operations</span>
+     <span class="keyword">String</span> str = <span class="keyword">"Hello World"</span>;
+     
+     // <span class="comment">Length</span>
+     <span class="keyword">int</span> len = str.length();  <span class="comment">// 11</span>
+     
+     // <span class="comment">Access character</span>
+     <span class="keyword">char</span> ch = str.charAt(<span class="number">0</span>);  <span class="comment">// 'H'</span>
+     
+     // <span class="comment">Substring</span>
+     <span class="keyword">String</span> sub = str.substring(<span class="number">0</span>, <span class="number">5</span>);  <span class="comment">// "Hello"</span>
+     
+     // <span class="comment">Concatenation</span>
+     <span class="keyword">String</span> result = str + <span class="keyword">"!"</span>;  <span class="comment">// "Hello World!"</span>
+     
+     // <span class="comment">Case conversion</span>
+     <span class="keyword">String</span> upper = str.toUpperCase();  <span class="comment">// "HELLO WORLD"</span>
+     <span class="keyword">String</span> lower = str.toLowerCase();  <span class="comment">// "hello world"</span>
+     
+     // <span class="comment">Replace</span>
+     <span class="keyword">String</span> replaced = str.replace(<span class="keyword">"World"</span>, <span class="keyword">"Java"</span>);  <span class="comment">// "Hello Java"</span>
+     </code></pre>
+         </div>
+
+        <h3>2.4 String Algorithms</h3>
+
+                 <h4>2.4.1 String Reversal</h4>
+         <p>Reverse a string using different approaches:</p>
+         
+         <div class="code-box">
+     <pre><code>
+     // <span class="comment">Method 1: Using two pointers</span>
+     <span class="keyword">public</span> <span class="keyword">String</span> reverse(<span class="keyword">String</span> str) {
+         <span class="keyword">char</span>[] chars = str.toCharArray();
+         <span class="keyword">int</span> left = <span class="number">0</span>, right = chars.length - <span class="number">1</span>;
+         
+         <span class="keyword">while</span> (left &lt; right) {
+             <span class="keyword">char</span> temp = chars[left];
+             chars[left] = chars[right];
+             chars[right] = temp;
+             left++;
+             right--;
+         }
+         
+         <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">String</span>(chars);
+     }
+     
+     // <span class="comment">Method 2: Using StringBuilder</span>
+     <span class="keyword">public</span> <span class="keyword">String</span> reverse(<span class="keyword">String</span> str) {
+         <span class="keyword">return</span> <span class="keyword">new</span> StringBuilder(str).reverse().toString();
+     }
+     
+     // <span class="comment">Method 3: Recursive approach</span>
+     <span class="keyword">public</span> <span class="keyword">String</span> reverse(<span class="keyword">String</span> str) {
+         <span class="keyword">if</span> (str.length() &lt;= <span class="number">1</span>) <span class="keyword">return</span> str;
+         <span class="keyword">return</span> reverse(str.substring(<span class="number">1</span>)) + str.charAt(<span class="number">0</span>);
+     }
+     </code></pre>
+         </div>
+
+                 <h4>2.4.2 Palindrome Check</h4>
+         <p>Check if a string is palindrome (reads same forward and backward):</p>
+         
+         <div class="code-box">
+     <pre><code>
+     <span class="keyword">public</span> <span class="keyword">boolean</span> isPalindrome(<span class="keyword">String</span> str) {
+         // <span class="comment">Remove non-alphanumeric characters and convert to lowercase</span>
+         str = str.replaceAll(<span class="keyword">"[^a-zA-Z0-9]"</span>, <span class="keyword">""</span>).toLowerCase();
+         
+         <span class="keyword">int</span> left = <span class="number">0</span>, right = str.length() - <span class="number">1</span>;
+         
+         <span class="keyword">while</span> (left &lt; right) {
+             <span class="keyword">if</span> (str.charAt(left) != str.charAt(right)) {
+                 <span class="keyword">return</span> <span class="keyword">false</span>;
+             }
+             left++;
+             right--;
+         }
+         
+         <span class="keyword">return</span> <span class="keyword">true</span>;
+     }
+     
+     // <span class="comment">Example usage</span>
+     System.out.println(isPalindrome(<span class="keyword">"A man, a plan, a canal: Panama"</span>)); <span class="comment">// true</span>
+     System.out.println(isPalindrome(<span class="keyword">"race a car"</span>)); <span class="comment">// false</span>
+     </code></pre>
+         </div>
+
+                 <h4>2.4.3 String Anagrams</h4>
+         <p>Check if two strings are anagrams (contain same characters in different order):</p>
+         
+         <div class="code-box">
+     <pre><code>
+     // <span class="comment">Method 1: Using character count array</span>
+     <span class="keyword">public</span> <span class="keyword">boolean</span> isAnagram(<span class="keyword">String</span> s, <span class="keyword">String</span> t) {
+         <span class="keyword">if</span> (s.length() != t.length()) <span class="keyword">return</span> <span class="keyword">false</span>;
+         
+         <span class="keyword">int</span>[] count = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">26</span>]; <span class="comment">// Assuming lowercase letters only</span>
+         
+         <span class="keyword">for</span> (<span class="keyword">char</span> c : s.toCharArray()) {
+             count[c - <span class="keyword">'a'</span>]++;
+         }
+         
+         <span class="keyword">for</span> (<span class="keyword">char</span> c : t.toCharArray()) {
+             count[c - <span class="keyword">'a'</span>]--;
+             <span class="keyword">if</span> (count[c - <span class="keyword">'a'</span>] &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;
+         }
+         
+         <span class="keyword">return</span> <span class="keyword">true</span>;
+     }
+     
+     // <span class="comment">Method 2: Using sorting</span>
+     <span class="keyword">public</span> <span class="keyword">boolean</span> isAnagram(<span class="keyword">String</span> s, <span class="keyword">String</span> t) {
+         <span class="keyword">if</span> (s.length() != t.length()) <span class="keyword">return</span> <span class="keyword">false</span>;
+         
+         <span class="keyword">char</span>[] sChars = s.toCharArray();
+         <span class="keyword">char</span>[] tChars = t.toCharArray();
+         
+         Arrays.sort(sChars);
+         Arrays.sort(tChars);
+         
+         <span class="keyword">return</span> Arrays.equals(sChars, tChars);
+     }
+     </code></pre>
+         </div>
+
+                 <h4>2.4.4 Longest Common Subsequence (LCS)</h4>
+         <p>Find the longest subsequence present in both strings (characters need not be consecutive):</p>
+         
+         <div class="code-box">
+     <pre><code>
+     <span class="keyword">public</span> <span class="keyword">int</span> longestCommonSubsequence(<span class="keyword">String</span> text1, <span class="keyword">String</span> text2) {
+         <span class="keyword">int</span> m = text1.length(), n = text2.length();
+         <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[m + <span class="number">1</span>][n + <span class="number">1</span>];
+         
+         <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i++) {
+             <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++) {
+                 <span class="keyword">if</span> (text1.charAt(i - <span class="number">1</span>) == text2.charAt(j - <span class="number">1</span>)) {
+                     dp[i][j] = dp[i - <span class="number">1</span>][j - <span class="number">1</span>] + <span class="number">1</span>;
+                 } <span class="keyword">else</span> {
+                     dp[i][j] = Math.max(dp[i - <span class="number">1</span>][j], dp[i][j - <span class="number">1</span>]);
+                 }
+             }
+         }
+         
+         <span class="keyword">return</span> dp[m][n];
+     }
+     
+     // <span class="comment">Example</span>
+     // <span class="comment">text1 = "abcde", text2 = "ace"</span>
+     // <span class="comment">LCS = "ace" (length 3)</span>
+     </code></pre>
+         </div>
+
+        <h4>2.4.5 String Matching Algorithms</h4>
+
+                 <h5>a) Naive String Matching</h5>
+         <div class="code-box">
+     <pre><code>
+     <span class="keyword">public</span> <span class="keyword">int</span> naiveSearch(<span class="keyword">String</span> text, <span class="keyword">String</span> pattern) {
+         <span class="keyword">int</span> n = text.length();
+         <span class="keyword">int</span> m = pattern.length();
+         
+         <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n - m; i++) {
+             <span class="keyword">int</span> j;
+             <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; m; j++) {
+                 <span class="keyword">if</span> (text.charAt(i + j) != pattern.charAt(j)) {
+                     <span class="keyword">break</span>;
+                 }
+             }
+             <span class="keyword">if</span> (j == m) {
+                 <span class="keyword">return</span> i; <span class="comment">// Pattern found at index i</span>
+             }
+         }
+         <span class="keyword">return</span> -<span class="number">1</span>; <span class="comment">// Pattern not found</span>
+     }
+     
+     // <span class="comment">Time Complexity: O((n-m+1) * m) = O(n*m) in worst case</span>
+     </code></pre>
+         </div>
+
+                 <h5>b) KMP (Knuth-Morris-Pratt) Algorithm</h5>
+         <p>Efficient string matching using prefix function:</p>
+         
+         <div class="code-box">
+     <pre><code>
+     <span class="keyword">public</span> <span class="keyword">int</span> kmpSearch(<span class="keyword">String</span> text, <span class="keyword">String</span> pattern) {
+         <span class="keyword">int</span> n = text.length();
+         <span class="keyword">int</span> m = pattern.length();
+         
+         // <span class="comment">Compute prefix function</span>
+         <span class="keyword">int</span>[] lps = computeLPS(pattern);
+         
+         <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;
+         <span class="keyword">while</span> (i &lt; n) {
+             <span class="keyword">if</span> (pattern.charAt(j) == text.charAt(i)) {
+                 i++;
+                 j++;
+             }
+             <span class="keyword">if</span> (j == m) {
+                 <span class="keyword">return</span> i - j; <span class="comment">// Pattern found</span>
+             } <span class="keyword">else</span> <span class="keyword">if</span> (i &lt; n &amp;&amp; pattern.charAt(j) != text.charAt(i)) {
+                 <span class="keyword">if</span> (j != <span class="number">0</span>) {
+                     j = lps[j - <span class="number">1</span>];
+                 } <span class="keyword">else</span> {
+                     i++;
+                 }
+             }
+         }
+         <span class="keyword">return</span> -<span class="number">1</span>;
+     }
+     
+     <span class="keyword">private</span> <span class="keyword">int</span>[] computeLPS(<span class="keyword">String</span> pattern) {
+         <span class="keyword">int</span> m = pattern.length();
+         <span class="keyword">int</span>[] lps = <span class="keyword">new</span> <span class="keyword">int</span>[m];
+         <span class="keyword">int</span> len = <span class="number">0</span>, i = <span class="number">1</span>;
+         
+         <span class="keyword">while</span> (i &lt; m) {
+             <span class="keyword">if</span> (pattern.charAt(i) == pattern.charAt(len)) {
+                 len++;
+                 lps[i] = len;
+                 i++;
+             } <span class="keyword">else</span> {
+                 <span class="keyword">if</span> (len != <span class="number">0</span>) {
+                     len = lps[len - <span class="number">1</span>];
+                 } <span class="keyword">else</span> {
+                     lps[i] = <span class="number">0</span>;
+                     i++;
+                 }
+             }
+         }
+         <span class="keyword">return</span> lps;
+     }
+     
+     // <span class="comment">Time Complexity: O(n + m)</span>
+     </code></pre>
+         </div>
+
+        <h3>2.5 Advanced String Problems</h3>
+
+                 <h4>2.5.1 Longest Palindromic Substring</h4>
+         <div class="code-box">
+     <pre><code>
+     <span class="keyword">public</span> <span class="keyword">String</span> longestPalindrome(<span class="keyword">String</span> s) {
+         <span class="keyword">if</span> (s == <span class="keyword">null</span> || s.length() &lt; <span class="number">2</span>) <span class="keyword">return</span> s;
+         
+         <span class="keyword">int</span> start = <span class="number">0</span>, maxLen = <span class="number">1</span>;
+         <span class="keyword">int</span> n = s.length();
+         
+         <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+             // <span class="comment">Check odd length palindromes</span>
+             <span class="keyword">int</span> len1 = expandAroundCenter(s, i, i);
+             // <span class="comment">Check even length palindromes</span>
+             <span class="keyword">int</span> len2 = expandAroundCenter(s, i, i + <span class="number">1</span>);
+             
+             <span class="keyword">int</span> len = Math.max(len1, len2);
+             <span class="keyword">if</span> (len &gt; maxLen) {
+                 start = i - (len - <span class="number">1</span>) / <span class="number">2</span>;
+                 maxLen = len;
+             }
+         }
+         
+         <span class="keyword">return</span> s.substring(start, start + maxLen);
+     }
+     
+     <span class="keyword">private</span> <span class="keyword">int</span> expandAroundCenter(<span class="keyword">String</span> s, <span class="keyword">int</span> left, <span class="keyword">int</span> right) {
+         <span class="keyword">while</span> (left &gt;= <span class="number">0</span> &amp;&amp; right &lt; s.length() &amp;&amp; s.charAt(left) == s.charAt(right)) {
+             left--;
+             right++;
+         }
+         <span class="keyword">return</span> right - left - <span class="number">1</span>;
+     }
+     </code></pre>
+         </div>
+
+                 <h4>2.5.2 Valid Parentheses</h4>
+         <div class="code-box">
+     <pre><code>
+     <span class="keyword">public</span> <span class="keyword">boolean</span> isValid(<span class="keyword">String</span> s) {
+         Stack&lt;Character&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();
+         
+         <span class="keyword">for</span> (<span class="keyword">char</span> c : s.toCharArray()) {
+             <span class="keyword">if</span> (c == <span class="keyword">'('</span> || c == <span class="keyword">'{'</span> || c == <span class="keyword">'['</span>) {
+                 stack.push(c);
+             } <span class="keyword">else</span> {
+                 <span class="keyword">if</span> (stack.isEmpty()) <span class="keyword">return</span> <span class="keyword">false</span>;
+                 
+                 <span class="keyword">char</span> top = stack.pop();
+                 <span class="keyword">if</span> ((c == <span class="keyword">')'</span> &amp;&amp; top != <span class="keyword">'('</span>) || 
+                     (c == <span class="keyword">'}'</span> &amp;&amp; top != <span class="keyword">'{'</span>) || 
+                     (c == <span class="keyword">']'</span> &amp;&amp; top != <span class="keyword">'['</span>)) {
+                     <span class="keyword">return</span> <span class="keyword">false</span>;
+                 }
+             }
+         }
+         
+         <span class="keyword">return</span> stack.isEmpty();
+     }
+     </code></pre>
+         </div>
+
+                 <h4>2.5.3 String Compression</h4>
+         <div class="code-box">
+     <pre><code>
+     <span class="keyword">public</span> <span class="keyword">String</span> compress(<span class="keyword">String</span> chars) {
+         StringBuilder sb = <span class="keyword">new</span> StringBuilder();
+         <span class="keyword">int</span> count = <span class="number">1</span>;
+         
+         <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; chars.length(); i++) {
+             <span class="keyword">if</span> (chars.charAt(i) == chars.charAt(i - <span class="number">1</span>)) {
+                 count++;
+             } <span class="keyword">else</span> {
+                 sb.append(chars.charAt(i - <span class="number">1</span>));
+                 <span class="keyword">if</span> (count &gt; <span class="number">1</span>) {
+                     sb.append(count);
+                 }
+                 count = <span class="number">1</span>;
+             }
+         }
+         
+         // <span class="comment">Handle last group</span>
+         sb.append(chars.charAt(chars.length() - <span class="number">1</span>));
+         <span class="keyword">if</span> (count &gt; <span class="number">1</span>) {
+             sb.append(count);
+         }
+         
+         <span class="keyword">return</span> sb.toString();
+     }
+     
+     // <span class="comment">Example: "aaabbc" → "a3b2c"</span>
+     </code></pre>
+         </div>
+
+        <h3>2.6 String Interview Questions</h3>
+        
+                 <div class="highlight">
+           <h4>Q1: Find the first non-repeating character in a string</h4>
+           <div class="code-box">
+public char firstUniqChar(String s) {
+    int[] count = new int[26];
+    
+    // Count frequency of each character
+    for (char c : s.toCharArray()) {
+        count[c - 'a']++;
+    }
+    
+    // Find first character with count 1
+    for (char c : s.toCharArray()) {
+        if (count[c - 'a'] == 1) {
+            return c;
+        }
+    }
+    
+    return '#'; // No unique character found
+}
+          </div>
+        </div>
+
+                 <div class="highlight">
+           <h4>Q2: Check if strings are rotations of each other</h4>
+           <div class="code-box">
+public boolean isRotation(String s1, String s2) {
+    if (s1.length() != s2.length()) return false;
+    
+    // Concatenate s1 with itself and check if s2 is substring
+    String concatenated = s1 + s1;
+    return concatenated.contains(s2);
+}
+
+// Example: "waterbottle" and "erbottlewat" are rotations
+          </div>
+        </div>
+
+                 <div class="highlight">
+           <h4>Q3: Find all anagrams in a string</h4>
+           <div class="code-box">
+public List<Integer> findAnagrams(String s, String p) {
+    List<Integer> result = new ArrayList<>();
+    if (s.length() < p.length()) return result;
+    
+    int[] pCount = new int[26];
+    int[] sCount = new int[26];
+    
+    // Count characters in pattern
+    for (char c : p.toCharArray()) {
+        pCount[c - 'a']++;
+    }
+    
+    // Sliding window
+    for (int i = 0; i < s.length(); i++) {
+        sCount[s.charAt(i) - 'a']++;
+        
+        if (i >= p.length()) {
+            sCount[s.charAt(i - p.length()) - 'a']--;
+        }
+        
+        if (Arrays.equals(pCount, sCount)) {
+            result.add(i - p.length() + 1);
+        }
+    }
+    
+    return result;
+}
+          </div>
+        </div>
+
+        <h3>2.7 Key Takeaways</h3>
+        <ul>
+          <li><strong>Immutable Nature:</strong> Strings cannot be modified once created</li>
+          <li><strong>Memory Efficiency:</strong> String interning can save memory</li>
+          <li><strong>Pattern Matching:</strong> KMP algorithm is efficient for string searching</li>
+          <li><strong>Palindrome Problems:</strong> Use two-pointer technique</li>
+          <li><strong>Anagram Problems:</strong> Use character counting or sorting</li>
+          <li><strong>Dynamic Programming:</strong> Useful for LCS and other complex problems</li>
+        </ul>
+
+        <div class="highlight">
+          <strong>Interview Tip:</strong> Always clarify if the string contains only ASCII characters, 
+          Unicode characters, or special symbols. This affects the approach and space complexity.
+        </div>
+      </div>
+
+      <!-- Linked Lists -->
+      <div class="section">
+                 <h2>3. Linked Lists</h2>
+         
+         <h3>3.1 Introduction to Linked Lists</h3>
+         <p>
+           A <strong>Linked List</strong> is a linear data structure consisting of a sequence of elements called <strong>nodes</strong>, where each node contains data and a reference (link) to the next node in the sequence. Unlike arrays, linked lists do not require contiguous memory allocation, making them more flexible for dynamic data.
+         </p>
+         
+         <p>
+           <strong>Key Characteristics:</strong>
+         </p>
+         <ul>
+           <li><strong>Dynamic Size:</strong> Can grow and shrink at runtime without memory reallocation</li>
+           <li><strong>Non-contiguous Memory:</strong> Nodes can be scattered throughout memory</li>
+           <li><strong>Sequential Access:</strong> Must traverse from the beginning to access elements</li>
+           <li><strong>Flexible Structure:</strong> Easy to insert and delete elements at any position</li>
+           <li><strong>Memory Efficiency:</strong> Only allocates memory for actual data and links</li>
+         </ul>
+         
+         <h3>3.2 Types of Linked Lists</h3>
+         <p>
+           Linked lists come in several variations, each offering different trade-offs between functionality and complexity:
+         </p>
+         <ul>
+           <li><strong>Singly Linked List:</strong> Each node contains data and a reference to the next node only</li>
+           <li><strong>Doubly Linked List:</strong> Each node contains data and references to both next and previous nodes</li>
+           <li><strong>Circular Linked List:</strong> The last node points back to the first node, creating a circular structure</li>
+           <li><strong>Circular Doubly Linked List:</strong> Combines the benefits of both circular and doubly linked lists</li>
+           <li><strong>Skip List:</strong> A probabilistic data structure that allows fast search within an ordered sequence</li>
+         </ul>
+
+                 <div class="code-box">
+     <pre><code>
+     // <span class="comment">Node structure for singly linked list</span>
+     <span class="keyword">struct</span> Node {
+         <span class="keyword">int</span> data;
+         <span class="keyword">struct</span> Node* next;
+     };
+     
+     // <span class="comment">Creating a new node</span>
+     <span class="keyword">struct</span> Node* newNode(<span class="keyword">int</span> data) {
+         <span class="keyword">struct</span> Node* node = (<span class="keyword">struct</span> Node*)malloc(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> Node));
+         node-&gt;data = data;
+         node-&gt;next = <span class="keyword">NULL</span>;
+         <span class="keyword">return</span> node;
+     }
+     </code></pre>
+         </div>
+
+        <h3>3.2 Time Complexity</h3>
+        <table class="complexity-table">
+          <tr>
+            <th>Operation</th>
+            <th>Time Complexity</th>
+            <th>Space Complexity</th>
+          </tr>
+          <tr>
+            <td>Access</td>
+            <td>O(n)</td>
+            <td>O(1)</td>
+          </tr>
+          <tr>
+            <td>Search</td>
+            <td>O(n)</td>
+            <td>O(1)</td>
+          </tr>
+          <tr>
+            <td>Insertion (at beginning)</td>
+            <td>O(1)</td>
+            <td>O(1)</td>
+          </tr>
+          <tr>
+            <td>Deletion (at beginning)</td>
+            <td>O(1)</td>
+            <td>O(1)</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Stacks -->
+      <div class="section">
+                 <h2>4. Stacks</h2>
+         
+         <h3>4.1 Introduction to Stacks</h3>
+         <p>
+           A <strong>Stack</strong> is a linear data structure that follows the <strong>Last In First Out (LIFO)</strong> principle. Think of it like a stack of plates - you can only add or remove plates from the top. The last element added to the stack is the first one to be removed.
+         </p>
+         
+         <p>
+           <strong>Key Characteristics:</strong>
+         </p>
+         <ul>
+           <li><strong>LIFO Principle:</strong> Last element added is the first one removed</li>
+           <li><strong>Single Access Point:</strong> Only the top element is accessible</li>
+           <li><strong>Dynamic Size:</strong> Can grow and shrink as needed</li>
+           <li><strong>Simple Operations:</strong> Limited set of operations (push, pop, peek)</li>
+           <li><strong>Efficient Operations:</strong> All operations are O(1) time complexity</li>
+           <li><strong>Memory Management:</strong> Used by programming languages for function calls</li>
+         </ul>
+         
+         <h3>4.2 LIFO Principle Explained</h3>
+         <p>
+           The <strong>Last In First Out (LIFO)</strong> principle means that the most recently added element is the first one to be removed. This is similar to how a stack of books works - you can only remove the book that was placed on top most recently.
+         </p>
+
+        <div class="algorithm-steps">
+          <h4>Basic Operations:</h4>
+          <ol>
+            <li><strong>Push:</strong> Add an element to the top</li>
+            <li><strong>Pop:</strong> Remove the top element</li>
+            <li><strong>Peek/Top:</strong> View the top element without removing</li>
+            <li><strong>isEmpty:</strong> Check if stack is empty</li>
+          </ol>
+        </div>
+
+                 <div class="code-box">
+     <pre><code>
+     // <span class="comment">Stack implementation using array</span>
+     <span class="keyword">class</span> Stack {
+         <span class="keyword">private</span> <span class="keyword">int</span> maxSize;
+         <span class="keyword">private</span> <span class="keyword">int</span>[] stackArray;
+         <span class="keyword">private</span> <span class="keyword">int</span> top;
+         
+         <span class="keyword">public</span> Stack(<span class="keyword">int</span> size) {
+             maxSize = size;
+             stackArray = <span class="keyword">new</span> <span class="keyword">int</span>[maxSize];
+             top = -<span class="number">1</span>;
+         }
+         
+         <span class="keyword">public</span> <span class="keyword">void</span> push(<span class="keyword">int</span> value) {
+             <span class="keyword">if</span> (top &lt; maxSize - <span class="number">1</span>) {
+                 stackArray[++top] = value;
+             }
+         }
+         
+         <span class="keyword">public</span> <span class="keyword">int</span> pop() {
+             <span class="keyword">if</span> (top &gt;= <span class="number">0</span>) {
+                 <span class="keyword">return</span> stackArray[top--];
+             }
+             <span class="keyword">return</span> -<span class="number">1</span>; <span class="comment">// Stack underflow</span>
+         }
+     }
+     </code></pre>
+         </div>
+
+        <h3>3.2 Applications</h3>
+        <ul>
+          <li>Function call management (call stack)</li>
+          <li>Expression evaluation</li>
+          <li>Undo operations</li>
+          <li>Backtracking algorithms</li>
+          <li>Browser history</li>
+        </ul>
+      </div>
+
+      <!-- Queues -->
+      <div class="section">
+                 <h2>5. Queues</h2>
+         
+         <h3>5.1 Introduction to Queues</h3>
+         <p>
+           A <strong>Queue</strong> is a linear data structure that follows the <strong>First In First Out (FIFO)</strong> principle. Think of it like a line of people waiting for a service - the first person to join the line is the first one to be served.
+         </p>
+         
+         <p>
+           <strong>Key Characteristics:</strong>
+         </p>
+         <ul>
+           <li><strong>FIFO Principle:</strong> First element added is the first one removed</li>
+           <li><strong>Two Access Points:</strong> Elements are added at the rear and removed from the front</li>
+           <li><strong>Dynamic Size:</strong> Can grow and shrink as needed</li>
+           <li><strong>Ordered Processing:</strong> Maintains the order of elements</li>
+           <li><strong>Efficient Operations:</strong> Enqueue and dequeue operations are O(1) time complexity</li>
+           <li><strong>Real-world Modeling:</strong> Naturally models many real-world scenarios</li>
+         </ul>
+         
+         <h3>5.2 FIFO Principle Explained</h3>
+         <p>
+           The <strong>First In First Out (FIFO)</strong> principle means that the first element added to the queue is the first one to be removed. This is similar to how a queue of people works - the person who arrived first gets served first.
+         </p>
+
+                 <div class="code-box">
+     <pre><code>
+     // <span class="comment">Queue implementation using array</span>
+     <span class="keyword">class</span> Queue {
+         <span class="keyword">private</span> <span class="keyword">int</span> maxSize;
+         <span class="keyword">private</span> <span class="keyword">int</span>[] queueArray;
+         <span class="keyword">private</span> <span class="keyword">int</span> front;
+         <span class="keyword">private</span> <span class="keyword">int</span> rear;
+         <span class="keyword">private</span> <span class="keyword">int</span> currentSize;
+         
+         <span class="keyword">public</span> Queue(<span class="keyword">int</span> size) {
+             maxSize = size;
+             queueArray = <span class="keyword">new</span> <span class="keyword">int</span>[maxSize];
+             front = <span class="number">0</span>;
+             rear = -<span class="number">1</span>;
+             currentSize = <span class="number">0</span>;
+         }
+         
+         <span class="keyword">public</span> <span class="keyword">void</span> enqueue(<span class="keyword">int</span> value) {
+             <span class="keyword">if</span> (currentSize &lt; maxSize) {
+                 rear = (rear + <span class="number">1</span>) % maxSize;
+                 queueArray[rear] = value;
+                 currentSize++;
+             }
+         }
+         
+         <span class="keyword">public</span> <span class="keyword">int</span> dequeue() {
+             <span class="keyword">if</span> (currentSize &gt; <span class="number">0</span>) {
+                 <span class="keyword">int</span> value = queueArray[front];
+                 front = (front + <span class="number">1</span>) % maxSize;
+                 currentSize--;
+                 <span class="keyword">return</span> value;
+             }
+             <span class="keyword">return</span> -<span class="number">1</span>; <span class="comment">// Queue underflow</span>
+         }
+     }
+     </code></pre>
+         </div>
+
+        <h3>4.2 Types of Queues</h3>
+        <ul>
+          <li><strong>Simple Queue:</strong> Basic FIFO queue</li>
+          <li><strong>Circular Queue:</strong> Efficient use of array space</li>
+          <li><strong>Priority Queue:</strong> Elements with priority</li>
+          <li><strong>Double-ended Queue (Deque):</strong> Insert/delete from both ends</li>
+        </ul>
+      </div>
+
+      <!-- Trees -->
+      <div class="section">
+                 <h2>6. Trees</h2>
+         
+         <h3>6.1 Introduction to Trees</h3>
+         <p>
+           A <strong>Tree</strong> is a hierarchical data structure consisting of nodes connected by edges. It represents a hierarchical relationship between elements, similar to a family tree or organizational chart.
+         </p>
+         
+         <p>
+           <strong>Key Characteristics:</strong>
+         </p>
+         <ul>
+           <li><strong>Hierarchical Structure:</strong> Elements are organized in levels with parent-child relationships</li>
+           <li><strong>Single Root:</strong> One node serves as the starting point (root) of the tree</li>
+           <li><strong>No Cycles:</strong> No loops or cycles in the structure</li>
+           <li><strong>Connected Graph:</strong> Every node is reachable from the root</li>
+           <li><strong>Flexible Structure:</strong> Can represent complex hierarchical relationships</li>
+           <li><strong>Efficient Search:</strong> Many tree types offer fast search operations</li>
+         </ul>
+         
+         <h3>6.2 Tree Terminology</h3>
+         <ul>
+           <li><strong>Node:</strong> Each element in the tree containing data and references to children</li>
+           <li><strong>Root:</strong> The topmost node with no parent</li>
+           <li><strong>Parent:</strong> A node that has one or more children</li>
+           <li><strong>Child:</strong> A node that has a parent</li>
+           <li><strong>Leaf:</strong> A node with no children</li>
+           <li><strong>Sibling:</strong> Nodes that share the same parent</li>
+           <li><strong>Ancestor:</strong> Any node on the path from root to a given node</li>
+           <li><strong>Descendant:</strong> Any node reachable from a given node</li>
+           <li><strong>Height:</strong> The length of the longest path from root to a leaf</li>
+           <li><strong>Depth:</strong> The length of the path from root to a specific node</li>
+         </ul>
+         
+         <h3>6.3 Binary Tree</h3>
+         <p>
+           A <strong>Binary Tree</strong> is a tree data structure where each node has at most two children, referred to as the <strong>left child</strong> and <strong>right child</strong>. This is one of the most fundamental tree structures and serves as the basis for many advanced data structures.
+         </p>
+
+                 <div class="code-box">
+     <pre><code>
+     // <span class="comment">Binary Tree Node</span>
+     <span class="keyword">class</span> TreeNode {
+         <span class="keyword">int</span> data;
+         TreeNode left;
+         TreeNode right;
+         
+         TreeNode(<span class="keyword">int</span> data) {
+             <span class="keyword">this</span>.data = data;
+             <span class="keyword">this</span>.left = <span class="keyword">null</span>;
+             <span class="keyword">this</span>.right = <span class="keyword">null</span>;
+         }
+     }
+     
+     // <span class="comment">Tree Traversals</span>
+     <span class="keyword">void</span> inorder(TreeNode root) {
+         <span class="keyword">if</span> (root != <span class="keyword">null</span>) {
+             inorder(root.left);
+             System.out.print(root.data + <span class="keyword">" "</span>);
+             inorder(root.right);
+         }
+     }
+     
+     <span class="keyword">void</span> preorder(TreeNode root) {
+         <span class="keyword">if</span> (root != <span class="keyword">null</span>) {
+             System.out.print(root.data + <span class="keyword">" "</span>);
+             preorder(root.left);
+             preorder(root.right);
+         }
+     }
+     
+     <span class="keyword">void</span> postorder(TreeNode root) {
+         <span class="keyword">if</span> (root != <span class="keyword">null</span>) {
+             postorder(root.left);
+             postorder(root.right);
+             System.out.print(root.data + <span class="keyword">" "</span>);
+         }
+     }
+     </code></pre>
+         </div>
+
+        <h3>5.2 Binary Search Tree (BST)</h3>
+        <div class="highlight">
+          <strong>Properties:</strong>
+          <ul>
+            <li>Left subtree contains nodes with values less than the parent</li>
+            <li>Right subtree contains nodes with values greater than the parent</li>
+            <li>Both left and right subtrees must also be BSTs</li>
+          </ul>
+        </div>
+
+        <h3>5.3 Time Complexity</h3>
+        <table class="complexity-table">
+          <tr>
+            <th>Operation</th>
+            <th>Average Case</th>
+            <th>Worst Case</th>
+          </tr>
+          <tr>
+            <td>Search</td>
+            <td>O(log n)</td>
+            <td>O(n)</td>
+          </tr>
+          <tr>
+            <td>Insertion</td>
+            <td>O(log n)</td>
+            <td>O(n)</td>
+          </tr>
+          <tr>
+            <td>Deletion</td>
+            <td>O(log n)</td>
+            <td>O(n)</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Graphs -->
+      <div class="section">
+                 <h2>7. Graphs</h2>
+         
+         <h3>7.1 Introduction to Graphs</h3>
+         <p>
+           A <strong>Graph</strong> is a non-linear data structure consisting of a finite set of vertices (nodes) and edges that connect these vertices. Graphs are used to represent relationships between objects and are fundamental in modeling real-world networks, social connections, and complex systems.
+         </p>
+         
+         <p>
+           <strong>Key Characteristics:</strong>
+         </p>
+         <ul>
+           <li><strong>Vertices (Nodes):</strong> Represent entities or objects in the system</li>
+           <li><strong>Edges:</strong> Represent relationships or connections between vertices</li>
+           <li><strong>Flexible Structure:</strong> Can represent complex relationships and networks</li>
+           <li><strong>Directional/Undirectional:</strong> Edges can be directed or undirected</li>
+           <li><strong>Weighted/Unweighted:</strong> Edges can have associated weights or costs</li>
+           <li><strong>Cyclic/Acyclic:</strong> Can contain cycles or be acyclic</li>
+         </ul>
+         
+         <h3>7.2 Types of Graphs</h3>
+         <ul>
+           <li><strong>Undirected Graph:</strong> Edges have no direction, bidirectional relationships</li>
+           <li><strong>Directed Graph (Digraph):</strong> Edges have direction, one-way relationships</li>
+           <li><strong>Weighted Graph:</strong> Edges have associated weights or costs</li>
+           <li><strong>Unweighted Graph:</strong> All edges have equal weight</li>
+           <li><strong>Connected Graph:</strong> Every vertex is reachable from every other vertex</li>
+           <li><strong>Disconnected Graph:</strong> Contains isolated components</li>
+           <li><strong>Complete Graph:</strong> Every vertex is connected to every other vertex</li>
+           <li><strong>Bipartite Graph:</strong> Vertices can be divided into two disjoint sets</li>
+         </ul>
+         
+         <h3>7.3 Graph Representation</h3>
+         <p>
+           Graphs can be represented in memory using various data structures, each with different trade-offs in terms of space complexity and operation efficiency.
+         </p>
+
+                 <div class="code-box">
+     <pre><code>
+     // <span class="comment">Adjacency Matrix representation</span>
+     <span class="keyword">class</span> Graph {
+         <span class="keyword">private</span> <span class="keyword">int</span> V;
+         <span class="keyword">private</span> <span class="keyword">int</span>[][] adjMatrix;
+         
+         Graph(<span class="keyword">int</span> vertices) {
+             V = vertices;
+             adjMatrix = <span class="keyword">new</span> <span class="keyword">int</span>[V][V];
+         }
+         
+         <span class="keyword">void</span> addEdge(<span class="keyword">int</span> src, <span class="keyword">int</span> dest) {
+             adjMatrix[src][dest] = <span class="number">1</span>;
+             adjMatrix[dest][src] = <span class="number">1</span>; <span class="comment">// For undirected graph</span>
+         }
+     }
+     
+     // <span class="comment">Adjacency List representation</span>
+     <span class="keyword">class</span> Graph {
+         <span class="keyword">private</span> <span class="keyword">int</span> V;
+         <span class="keyword">private</span> LinkedList&lt;Integer&gt;[] adjList;
+         
+         Graph(<span class="keyword">int</span> vertices) {
+             V = vertices;
+             adjList = <span class="keyword">new</span> LinkedList[V];
+             <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; V; i++) {
+                 adjList[i] = <span class="keyword">new</span> LinkedList&lt;&gt;();
+             }
+         }
+         
+         <span class="keyword">void</span> addEdge(<span class="keyword">int</span> src, <span class="keyword">int</span> dest) {
+             adjList[src].add(dest);
+             adjList[dest].add(src); <span class="comment">// For undirected graph</span>
+         }
+     }
+     </code></pre>
+         </div>
+
+        <h3>6.2 Graph Traversal</h3>
+        <div class="algorithm-steps">
+          <h4>Breadth First Search (BFS):</h4>
+          <ol>
+            <li>Start from a given vertex</li>
+            <li>Visit all adjacent vertices</li>
+            <li>Use a queue to keep track of vertices to visit</li>
+            <li>Mark visited vertices to avoid cycles</li>
+          </ol>
+        </div>
+
+        <div class="algorithm-steps">
+          <h4>Depth First Search (DFS):</h4>
+          <ol>
+            <li>Start from a given vertex</li>
+            <li>Go as deep as possible along each branch</li>
+            <li>Use recursion or stack</li>
+            <li>Backtrack when reaching a dead end</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Sorting Algorithms -->
+      <div class="section">
+                 <h2>8. Sorting Algorithms</h2>
+         
+         <h3>8.1 Introduction to Sorting</h3>
+         <p>
+           <strong>Sorting</strong> is the process of arranging elements in a specific order (ascending or descending). It is one of the most fundamental operations in computer science and is used in virtually every application that deals with data.
+         </p>
+         
+         <p>
+           <strong>Importance of Sorting:</strong>
+         </p>
+         <ul>
+           <li><strong>Data Organization:</strong> Makes data easier to read, search, and analyze</li>
+           <li><strong>Search Optimization:</strong> Sorted data enables efficient search algorithms like binary search</li>
+           <li><strong>Data Analysis:</strong> Essential for statistical analysis and data mining</li>
+           <li><strong>User Experience:</strong> Users expect data to be presented in organized formats</li>
+           <li><strong>Algorithm Efficiency:</strong> Many algorithms work better with sorted data</li>
+           <li><strong>Database Operations:</strong> Improves query performance and indexing</li>
+         </ul>
+         
+         <p>
+           <strong>Sorting Criteria:</strong> Algorithms can be compared based on:
+         </p>
+         <ul>
+           <li><strong>Time Complexity:</strong> How fast the algorithm runs</li>
+           <li><strong>Space Complexity:</strong> How much extra memory is required</li>
+           <li><strong>Stability:</strong> Whether equal elements maintain their relative order</li>
+           <li><strong>In-place:</strong> Whether the algorithm modifies the original array</li>
+           <li><strong>Adaptive:</strong> Whether the algorithm performs better on partially sorted data</li>
+         </ul>
+        
+                                   <h3>8.2 Bubble Sort</h3>
+         <div class="code-box">
+     <pre><code>
+     <span class="keyword">void</span> bubbleSort(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n) {
+         <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n-<span class="number">1</span>; i++) {
+             <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n-i-<span class="number">1</span>; j++) {
+                 <span class="keyword">if</span> (arr[j] &gt; arr[j+<span class="number">1</span>]) {
+                     // <span class="comment">Swap arr[j] and arr[j+1]</span>
+                     <span class="keyword">int</span> temp = arr[j];
+                     arr[j] = arr[j+<span class="number">1</span>];
+                     arr[j+<span class="number">1</span>] = temp;
+                 }
+             }
+         }
+     }
+     </code></pre>
+         </div>
+         <p><strong>Time Complexity:</strong> O(n²) | <strong>Space Complexity:</strong> O(1)</p>
+
+                                   <h3>8.3 Quick Sort</h3>
+         <div class="code-box">
+     <pre><code>
+     <span class="keyword">int</span> partition(<span class="keyword">int</span> arr[], <span class="keyword">int</span> low, <span class="keyword">int</span> high) {
+         <span class="keyword">int</span> pivot = arr[high];
+         <span class="keyword">int</span> i = (low - <span class="number">1</span>);
+         
+         <span class="keyword">for</span> (<span class="keyword">int</span> j = low; j &lt; high; j++) {
+             <span class="keyword">if</span> (arr[j] &lt;= pivot) {
+                 i++;
+                 <span class="keyword">int</span> temp = arr[i];
+                 arr[i] = arr[j];
+                 arr[j] = temp;
+             }
+         }
+         
+         <span class="keyword">int</span> temp = arr[i + <span class="number">1</span>];
+         arr[i + <span class="number">1</span>] = arr[high];
+         arr[high] = temp;
+         
+         <span class="keyword">return</span> i + <span class="number">1</span>;
+     }
+     
+     <span class="keyword">void</span> quickSort(<span class="keyword">int</span> arr[], <span class="keyword">int</span> low, <span class="keyword">int</span> high) {
+         <span class="keyword">if</span> (low &lt; high) {
+             <span class="keyword">int</span> pi = partition(arr, low, high);
+             quickSort(arr, low, pi - <span class="number">1</span>);
+             quickSort(arr, pi + <span class="number">1</span>, high);
+         }
+     }
+     </code></pre>
+         </div>
+         <p><strong>Time Complexity:</strong> O(n log n) average, O(n²) worst | <strong>Space Complexity:</strong> O(log n)</p>
+
+                                   <h3>8.4 Merge Sort</h3>
+         <div class="code-box">
+     <pre><code>
+     <span class="keyword">void</span> merge(<span class="keyword">int</span> arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> m, <span class="keyword">int</span> r) {
+         <span class="keyword">int</span> n1 = m - l + <span class="number">1</span>;
+         <span class="keyword">int</span> n2 = r - m;
+         
+         <span class="keyword">int</span> L[] = <span class="keyword">new</span> <span class="keyword">int</span>[n1];
+         <span class="keyword">int</span> R[] = <span class="keyword">new</span> <span class="keyword">int</span>[n2];
+         
+         <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n1; ++i)
+             L[i] = arr[l + i];
+         <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n2; ++j)
+             R[j] = arr[m + <span class="number">1</span> + j];
+         
+         <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>, k = l;
+         <span class="keyword">while</span> (i &lt; n1 &amp;&amp; j &lt; n2) {
+             <span class="keyword">if</span> (L[i] &lt;= R[j]) {
+                 arr[k] = L[i];
+                 i++;
+             } <span class="keyword">else</span> {
+                 arr[k] = R[j];
+                 j++;
+             }
+             k++;
+         }
+         
+         <span class="keyword">while</span> (i &lt; n1) {
+             arr[k] = L[i];
+             i++;
+             k++;
+         }
+         
+         <span class="keyword">while</span> (j &lt; n2) {
+             arr[k] = R[j];
+             j++;
+             k++;
+         }
+     }
+     
+     <span class="keyword">void</span> mergeSort(<span class="keyword">int</span> arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r) {
+         <span class="keyword">if</span> (l &lt; r) {
+             <span class="keyword">int</span> m = l + (r - l) / <span class="number">2</span>;
+             mergeSort(arr, l, m);
+             mergeSort(arr, m + <span class="number">1</span>, r);
+             merge(arr, l, m, r);
+         }
+     }
+     </code></pre>
+         </div>
+         <p><strong>Time Complexity:</strong> O(n log n) | <strong>Space Complexity:</strong> O(n)</p>
+      </div>
+
+      <!-- Searching Algorithms -->
+      <div class="section">
+                 <h2>9. Searching Algorithms</h2>
+         
+         <h3>9.1 Introduction to Searching</h3>
+         <p>
+           <strong>Searching</strong> is the process of finding a specific element or value within a collection of data. It is one of the most fundamental operations in computer science and is used in virtually every application.
+         </p>
+         
+         <p>
+           <strong>Types of Search:</strong>
+         </p>
+         <ul>
+           <li><strong>Linear Search:</strong> Check each element sequentially until found</li>
+           <li><strong>Binary Search:</strong> Efficient search in sorted data using divide-and-conquer</li>
+           <li><strong>Hash-based Search:</strong> Use hash functions for constant-time search</li>
+           <li><strong>Tree-based Search:</strong> Use tree structures for efficient search</li>
+           <li><strong>Pattern Search:</strong> Find patterns or substrings within text</li>
+         </ul>
+         
+         <p>
+           <strong>Search Criteria:</strong> Algorithms can be compared based on:
+         </p>
+         <ul>
+           <li><strong>Time Complexity:</strong> How fast the search completes</li>
+           <li><strong>Space Complexity:</strong> How much extra memory is required</li>
+           <li><strong>Data Requirements:</strong> Whether data needs to be sorted or structured</li>
+           <li><strong>Success Rate:</strong> How often the search finds the target</li>
+           <li><strong>Adaptability:</strong> How well it handles different data distributions</li>
+         </ul>
+        
+                                   <h3>9.2 Linear Search</h3>
+         <div class="code-box">
+     <pre><code>
+     <span class="keyword">int</span> linearSearch(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n, <span class="keyword">int</span> x) {
+         <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+             <span class="keyword">if</span> (arr[i] == x)
+                 <span class="keyword">return</span> i;
+         }
+         <span class="keyword">return</span> -<span class="number">1</span>; <span class="comment">// Element not found</span>
+     }
+     </code></pre>
+         </div>
+         <p><strong>Time Complexity:</strong> O(n) | <strong>Space Complexity:</strong> O(1)</p>
+
+                                   <h3>9.3 Binary Search</h3>
+         <div class="code-box">
+     <pre><code>
+     <span class="keyword">int</span> binarySearch(<span class="keyword">int</span> arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> x) {
+         <span class="keyword">if</span> (r &gt;= l) {
+             <span class="keyword">int</span> mid = l + (r - l) / <span class="number">2</span>;
+             
+             <span class="keyword">if</span> (arr[mid] == x)
+                 <span class="keyword">return</span> mid;
+             
+             <span class="keyword">if</span> (arr[mid] &gt; x)
+                 <span class="keyword">return</span> binarySearch(arr, l, mid - <span class="number">1</span>, x);
+             
+             <span class="keyword">return</span> binarySearch(arr, mid + <span class="number">1</span>, r, x);
+         }
+         <span class="keyword">return</span> -<span class="number">1</span>; <span class="comment">// Element not found</span>
+     }
+     </code></pre>
+         </div>
+         <p><strong>Time Complexity:</strong> O(log n) | <strong>Space Complexity:</strong> O(1) iterative, O(log n) recursive</p>
+
+        <div class="highlight">
+          <strong>Important:</strong> Binary search requires the array to be sorted!
+        </div>
+      </div>
+
+      <!-- Dynamic Programming -->
+      <div class="section">
+                 <h2>10. Dynamic Programming</h2>
+         
+         <h3>10.1 Introduction to Dynamic Programming</h3>
+         <p>
+           <strong>Dynamic Programming (DP)</strong> is a method for solving complex problems by breaking them down into simpler subproblems. It is both a mathematical optimization method and a computer programming method.
+         </p>
+         
+         <p>
+           <strong>Key Principles:</strong>
+         </p>
+         <ul>
+           <li><strong>Optimal Substructure:</strong> The optimal solution to a problem contains optimal solutions to its subproblems</li>
+           <li><strong>Overlapping Subproblems:</strong> The same subproblems are solved multiple times</li>
+           <li><strong>Memoization:</strong> Store results of subproblems to avoid recomputation</li>
+           <li><strong>Bottom-up or Top-down:</strong> Can be implemented iteratively or recursively</li>
+         </ul>
+         
+         <p>
+           <strong>When to Use Dynamic Programming:</strong>
+         </p>
+         <ul>
+           <li><strong>Optimization Problems:</strong> Finding the best solution among many possibilities</li>
+           <li><strong>Counting Problems:</strong> Finding the number of ways to do something</li>
+           <li><strong>Decision Problems:</strong> Making optimal decisions at each step</li>
+           <li><strong>Sequential Problems:</strong> Problems that can be broken into stages</li>
+         </ul>
+         
+         <p>
+           <strong>Common Applications:</strong> Fibonacci sequence, shortest path problems, knapsack problem, longest common subsequence, matrix chain multiplication, and many more.
+         </p>
+        
+                                   <h3>10.2 Fibonacci Sequence</h3>
+         <div class="code-box">
+     <pre><code>
+     // <span class="comment">Recursive approach (inefficient)</span>
+     <span class="keyword">int</span> fib(<span class="keyword">int</span> n) {
+         <span class="keyword">if</span> (n &lt;= <span class="number">1</span>) <span class="keyword">return</span> n;
+         <span class="keyword">return</span> fib(n-<span class="number">1</span>) + fib(n-<span class="number">2</span>);
+     }
+     
+     // <span class="comment">Dynamic Programming approach</span>
+     <span class="keyword">int</span> fibDP(<span class="keyword">int</span> n) {
+         <span class="keyword">int</span> dp[] = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">1</span>];
+         dp[<span class="number">0</span>] = <span class="number">0</span>;
+         dp[<span class="number">1</span>] = <span class="number">1</span>;
+         
+         <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) {
+             dp[i] = dp[i-<span class="number">1</span>] + dp[i-<span class="number">2</span>];
+         }
+         <span class="keyword">return</span> dp[n];
+     }
+     </code></pre>
+         </div>
+
+                                   <h3>10.3 Longest Common Subsequence (LCS)</h3>
+         <div class="code-box">
+     <pre><code>
+     <span class="keyword">int</span> lcs(<span class="keyword">char</span>[] X, <span class="keyword">char</span>[] Y, <span class="keyword">int</span> m, <span class="keyword">int</span> n) {
+         <span class="keyword">int</span> L[][] = <span class="keyword">new</span> <span class="keyword">int</span>[m+<span class="number">1</span>][n+<span class="number">1</span>];
+         
+         <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= m; i++) {
+             <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= n; j++) {
+                 <span class="keyword">if</span> (i == <span class="number">0</span> || j == <span class="number">0</span>)
+                     L[i][j] = <span class="number">0</span>;
+                 <span class="keyword">else</span> <span class="keyword">if</span> (X[i-<span class="number">1</span>] == Y[j-<span class="number">1</span>])
+                     L[i][j] = L[i-<span class="number">1</span>][j-<span class="number">1</span>] + <span class="number">1</span>;
+                 <span class="keyword">else</span>
+                     L[i][j] = Math.max(L[i-<span class="number">1</span>][j], L[i][j-<span class="number">1</span>]);
+             }
+         }
+         <span class="keyword">return</span> L[m][n];
+     }
+     </code></pre>
+         </div>
+         <p><strong>Time Complexity:</strong> O(mn) | <strong>Space Complexity:</strong> O(mn)</p>
+      </div>
+
+      <!-- Practice Problems -->
+      <div class="section">
+                 <h2>11. Common Interview Problems</h2>
+         
+         <h3>11.1 Introduction to Interview Problems</h3>
+         <p>
+           Interview problems are carefully designed questions that test your understanding of data structures, algorithms, and problem-solving skills. These problems are commonly used in technical interviews to assess a candidate's programming abilities and analytical thinking.
+         </p>
+         
+         <p>
+           <strong>Problem-Solving Approach:</strong>
+         </p>
+         <ol>
+           <li><strong>Understand the Problem:</strong> Read carefully and clarify any ambiguities</li>
+           <li><strong>Identify Input/Output:</strong> Determine what the function should accept and return</li>
+           <li><strong>Consider Edge Cases:</strong> Think about boundary conditions and special cases</li>
+           <li><strong>Choose Data Structures:</strong> Select appropriate structures for the problem</li>
+           <li><strong>Design Algorithm:</strong> Plan your approach before coding</li>
+           <li><strong>Analyze Complexity:</strong> Consider time and space complexity</li>
+           <li><strong>Test Your Solution:</strong> Verify with examples and edge cases</li>
+         </ol>
+         
+         <p>
+           <strong>Common Problem Categories:</strong>
+         </p>
+         <ul>
+           <li><strong>Array/String Manipulation:</strong> Working with sequences of data</li>
+           <li><strong>Two Pointers:</strong> Using multiple pointers to solve problems efficiently</li>
+           <li><strong>Sliding Window:</strong> Maintaining a window of elements</li>
+           <li><strong>Hash Table Problems:</strong> Using hash maps for fast lookups</li>
+           <li><strong>Tree/Graph Traversal:</strong> Navigating hierarchical structures</li>
+           <li><strong>Dynamic Programming:</strong> Solving optimization problems</li>
+         </ul>
+        
+                                   <h3>11.2 Two Sum</h3>
+         <div class="code-box">
+     <pre><code>
+     // <span class="comment">Find two numbers that add up to target</span>
+     <span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) {
+         Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();
+         
+         <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) {
+             <span class="keyword">int</span> complement = target - nums[i];
+             <span class="keyword">if</span> (map.containsKey(complement)) {
+                 <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[] {map.get(complement), i};
+             }
+             map.put(nums[i], i);
+         }
+         <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[] {};
+     }
+     </code></pre>
+         </div>
+
+                                   <h3>11.3 Reverse a String</h3>
+         <div class="code-box">
+     <pre><code>
+     <span class="keyword">public</span> <span class="keyword">String</span> reverseString(<span class="keyword">String</span> s) {
+         <span class="keyword">char</span>[] chars = s.toCharArray();
+         <span class="keyword">int</span> left = <span class="number">0</span>, right = chars.length - <span class="number">1</span>;
+         
+         <span class="keyword">while</span> (left &lt; right) {
+             <span class="keyword">char</span> temp = chars[left];
+             chars[left] = chars[right];
+             chars[right] = temp;
+             left++;
+             right--;
+         }
+         <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">String</span>(chars);
+     }
+     </code></pre>
+         </div>
+
+                                   <h3>11.4 Check if String is Palindrome</h3>
+         <div class="code-box">
+     <pre><code>
+     <span class="keyword">public</span> <span class="keyword">boolean</span> isPalindrome(<span class="keyword">String</span> s) {
+         s = s.toLowerCase().replaceAll(<span class="keyword">"[^a-zA-Z0-9]"</span>, <span class="keyword">""</span>);
+         <span class="keyword">int</span> left = <span class="number">0</span>, right = s.length() - <span class="number">1</span>;
+         
+         <span class="keyword">while</span> (left &lt; right) {
+             <span class="keyword">if</span> (s.charAt(left) != s.charAt(right)) {
+                 <span class="keyword">return</span> <span class="keyword">false</span>;
+             }
+             left++;
+             right--;
+         }
+         <span class="keyword">return</span> <span class="keyword">true</span>;
+     }
+     </code></pre>
+         </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>© 2024 PrepCampus. All rights reserved.</p>
+      <p>Visit www.prepcampus.com for more study materials and resources.</p>
+    </div>
+  </div>
+
+  <script>
+    // Add smooth scrolling for better navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Add print functionality
+    function printPage() {
+      window.print();
+    }
+  </script>
+</body>
+</html>

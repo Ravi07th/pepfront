@@ -1,426 +1,595 @@
-import { useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  BookOpen,
-  Search as SearchIcon,
-  Grid,
-  List,
-  Download,
-  Eye,
-  Star,
-  Clock,
-  Bookmark,
-  Heart
-} from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Search, BookOpen, Code, Network, Brain, Star, Filter, Globe, Database, Cpu, Users } from 'lucide-react';
+import PDFGenerator from './PDFGenerator';
 
-// Updated PDF import to use existing PDF file
-const samplePdf = "/rr.pdf";
-
-// Enhanced notes data structure with real image icons
-const notesList = [
-  {
-    id: "id1",
-    title: "Top 30 Interview Questions",
-    category: "Interview Prep",
-    description: "Common interview questions designed especially for students and fresh graduates. Focus on education, skills, experiences, and goals.",
-    file: samplePdf,
-    tags: ["interview", "placement", "general", "hr"],
-    duration: "2 hours",
-    downloads: 1250,
-    rating: 4.8,
-    views: 3400,
-    lastUpdated: "2024-01-15",
-    author: "Career Team",
-    icon: "/images/tcs.jpg",
-    color: "bg-blue-500"
-  },
-  {
-    id: "id2",
-    title: "GATE Complete Study Guide",
-    category: "Exam Prep",
-    description: "Essential GATE exam study material with previous year questions, formulas, and tricks to score high in engineering entrance exams.",
-    file: samplePdf,
-    tags: ["gate", "exam", "entrance", "engineering"],
-    duration: "8 hours",
-    downloads: 2100,
-    rating: 4.9,
-    views: 5600,
-    lastUpdated: "2024-01-10",
-    author: "Exam Experts",
-    icon: "/images/infosys.jpg",
-    color: "bg-purple-500"
-  },
-  {
-    id: "id3",
-    title: "Java Programming Masterclass",
-    category: "Programming",
-    description: "Comprehensive Java notes from basics to advanced OOP concepts, interview questions, and best coding practices.",
-    file: samplePdf,
-    tags: ["java", "programming", "oop", "backend"],
-    duration: "6 hours",
-    downloads: 1800,
-    rating: 4.7,
-    views: 4200,
-    lastUpdated: "2024-01-12",
-    author: "Java Guru",
-    icon: "/images/wipro.jpg",
-    color: "bg-orange-500"
-  },
-  {
-    id: "id4",
-    title: "Python Data Science Guide",
-    category: "Programming",
-    description: "Python notes covering syntax, data structures, libraries, and practical examples for data science projects.",
-    file: samplePdf,
-    tags: ["python", "data-science", "ml", "analytics"],
-    duration: "5 hours",
-    downloads: 1600,
-    rating: 4.6,
-    views: 3800,
-    lastUpdated: "2024-01-08",
-    author: "Data Scientist",
-    icon: "/images/cognizant.png",
-    color: "bg-green-500"
-  },
-  {
-    id: "id5",
-    title: "C Programming Fundamentals",
-    category: "Programming",
-    description: "Complete C programming guide covering pointers, arrays, structures, memory management, and system programming.",
-    file: samplePdf,
-    tags: ["c", "system-programming", "algorithms", "basics"],
-    duration: "4 hours",
-    downloads: 1400,
-    rating: 4.5,
-    views: 3200,
-    lastUpdated: "2024-01-05",
-    author: "System Expert",
-    icon: "/images/capgemini.jpg",
-    color: "bg-gray-500"
-  },
-  {
-    id: "id6",
-    title: "C++ Advanced Concepts",
-    category: "Programming",
-    description: "Advanced C++ concepts including STL, templates, memory management, and modern C++ features for competitive programming.",
-    file: samplePdf,
-    tags: ["c++", "stl", "templates", "competitive"],
-    duration: "7 hours",
-    downloads: 1200,
-    rating: 4.8,
-    views: 2800,
-    lastUpdated: "2024-01-14",
-    author: "CPP Master",
-    icon: "/images/accenture.png",
-    color: "bg-blue-600"
-  },
-  {
-    id: "id7",
-    title: "JavaScript Web Development",
-    category: "Programming",
-    description: "Modern JavaScript ES6+, DOM manipulation, async programming, and web development patterns for full-stack development.",
-    file: samplePdf,
-    tags: ["javascript", "web", "frontend", "es6"],
-    duration: "5 hours",
-    downloads: 1900,
-    rating: 4.7,
-    views: 4500,
-    lastUpdated: "2024-01-11",
-    author: "Web Developer",
-    icon: "/images/google.jpg",
-    color: "bg-yellow-500"
-  },
-  {
-    id: "id8",
-    title: "Database Management Systems",
-    category: "Computer Science",
-    description: "Complete DBMS notes covering ER models, normalization, SQL queries, transactions, and database design principles.",
-    file: samplePdf,
-    tags: ["dbms", "database", "sql", "normalization"],
-    duration: "6 hours",
-    downloads: 1500,
-    rating: 4.6,
-    views: 3600,
-    lastUpdated: "2024-01-09",
-    author: "DB Expert",
-    icon: "/images/tcs.jpg",
-    color: "bg-indigo-500"
-  },
-  {
-    id: "id9",
-    title: "Operating Systems Concepts",
-    category: "Computer Science",
-    description: "OS fundamentals including process management, memory management, file systems, and synchronization concepts.",
-    file: samplePdf,
-    tags: ["operating-systems", "processes", "memory", "synchronization"],
-    duration: "8 hours",
-    downloads: 1100,
-    rating: 4.8,
-    views: 2600,
-    lastUpdated: "2024-01-13",
-    author: "OS Specialist",
-    icon: "/images/infosys.jpg",
-    color: "bg-red-500"
-  },
-  {
-    id: "id10",
-    title: "Computer Networks",
-    category: "Computer Science",
-    description: "Networking fundamentals, protocols, routing, security, and practical network administration concepts.",
-    file: samplePdf,
-    tags: ["networks", "protocols", "routing", "security"],
-    duration: "6 hours",
-    downloads: 1300,
-    rating: 4.5,
-    views: 3100,
-    lastUpdated: "2024-01-07",
-    author: "Network Engineer",
-    icon: "/images/wipro.jpg",
-    color: "bg-cyan-500"
-  }
-];
-
-export default function StudentNotesPage() {
+const StudentNotesPage: React.FC = () => {
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [sortBy, setSortBy] = useState("recent");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [sortBy, setSortBy] = useState('title');
 
-  // Filter and sort notes
-  const filteredNotes = useMemo(() => {
-    let filtered = notesList;
+  // Enhanced notes data structure
+  const notesList = [
+    {
+      id: "id1",
+      title: "Top 30 Interview Questions for IT Freshers",
+      category: "Interview Prep",
+      description: "Comprehensive interview guide with 30 essential questions, sample answers, and tips specifically designed for IT freshers and students.",
+      tags: ["interview", "freshers", "it", "placement"],
+      icon: <BookOpen className="w-6 h-6" />,
+      gradient: "from-yellow-400 to-orange-500",
+      bgGradient: "from-yellow-900/20 to-orange-900/20",
+      featured: true,
+      stats: { questions: "30+", difficulty: "Beginner", time: "15 min", downloads: "2.5K" },
+      features: ["PDF Download", "Interview Tips", "Sample Answers"]
+    },
+    {
+      id: "id2",
+      title: "Data Structures & Algorithms - Complete Guide",
+      category: "Programming",
+      description: "Comprehensive DSA guide with detailed explanations, code examples, complexity analysis, and common interview problems. Perfect for placement preparation!",
+      tags: ["dsa", "algorithms", "programming", "coding", "interview"],
+      icon: <Code className="w-6 h-6" />,
+      gradient: "from-blue-500 to-cyan-500",
+      bgGradient: "from-blue-900/20 to-cyan-900/20",
+      featured: true,
+      stats: { questions: "200+", difficulty: "All Levels", time: "90 min", downloads: "3.2K" },
+      features: ["Detailed Explanations", "Code Examples", "Complexity Analysis", "Interview Problems", "PDF Download"]
+    },
+    {
+      id: "id3",
+      title: "Web Development Fundamentals",
+      category: "Web Dev",
+      description: "Essential concepts of web development including HTML, CSS, JavaScript, and modern frameworks.",
+      tags: ["web", "html", "css", "javascript"],
+      icon: <Globe className="w-6 h-6" />,
+      gradient: "from-purple-500 to-pink-500",
+      bgGradient: "from-purple-900/20 to-pink-900/20",
+      featured: false,
+      stats: { questions: "80+", difficulty: "Beginner", time: "30 min", downloads: "1.2K" },
+      features: ["Modern Frameworks", "Responsive Design", "Best Practices"]
+    },
+    {
+      id: "id4",
+      title: "Database Management Systems",
+      category: "Database",
+      description: "Comprehensive guide to database concepts, SQL, and modern database technologies.",
+      tags: ["database", "sql", "dbms", "nosql"],
+      icon: <Database className="w-6 h-6" />,
+      gradient: "from-green-500 to-emerald-500",
+      bgGradient: "from-green-900/20 to-emerald-900/20",
+      featured: false,
+      stats: { questions: "60+", difficulty: "Intermediate", time: "25 min", downloads: "950" },
+      features: ["SQL Queries", "NoSQL", "Database Design"]
+    },
+    {
+      id: "id5",
+      title: "System Design Principles",
+      category: "Architecture",
+      description: "Learn system design concepts, scalability patterns, and best practices for building robust applications.",
+      tags: ["system-design", "architecture", "scalability"],
+      icon: <Network className="w-6 h-6" />,
+      gradient: "from-red-500 to-pink-500",
+      bgGradient: "from-red-900/20 to-pink-900/20",
+      featured: false,
+      stats: { questions: "40+", difficulty: "Advanced", time: "60 min", downloads: "750" },
+      features: ["Scalability", "Architecture Patterns", "Case Studies"]
+    },
+    {
+      id: "id6",
+      title: "Top 30 Interview Questions for Fresher",
+      category: "Interview Prep",
+      description: "Comprehensive guide with top 30 interview questions specifically tailored for IT freshers with detailed answers and tips.",
+      tags: ["interview", "fresher", "it", "career", "preparation"],
+      icon: <Users className="w-6 h-6" />,
+      gradient: "from-indigo-500 to-purple-500",
+      bgGradient: "from-indigo-900/20 to-purple-900/20",
+      featured: true,
+      stats: { questions: "30+", difficulty: "Beginner", time: "45 min", downloads: "1.2K" },
+      features: ["Interview Tips", "Sample Answers", "Career Guidance", "PDF Download"]
+    },
+    {
+      id: "id7",
+      title: "C Programming Fundamentals",
+      category: "Programming",
+      description: "Complete guide to C programming language covering syntax, data types, control structures, functions, arrays, pointers, and memory management.",
+      tags: ["c", "programming", "basics", "syntax", "pointers"],
+      icon: <Code className="w-6 h-6" />,
+      gradient: "from-teal-500 to-cyan-500",
+      bgGradient: "from-teal-900/20 to-cyan-900/20",
+      featured: false,
+      stats: { questions: "100+", difficulty: "Beginner", time: "60 min", downloads: "1.8K" },
+      features: ["Syntax Examples", "Code Snippets", "Memory Management", "File Handling", "PDF Download"]
+    },
+    {
+      id: "id8",
+      title: "Automata Theory - Complete Guide",
+      category: "Programming",
+      description: "Comprehensive guide to Automata Theory covering Finite Automata, Regular Expressions, Context-Free Grammars, Pushdown Automata, and Turing Machines with detailed explanations and examples.",
+      tags: ["automata", "theory", "finite-automata", "regular-expressions", "turing-machines"],
+      icon: <Cpu className="w-6 h-6" />,
+      gradient: "from-violet-500 to-purple-500",
+      bgGradient: "from-violet-900/20 to-purple-900/20",
+      featured: false,
+      stats: { questions: "150+", difficulty: "Advanced", time: "120 min", downloads: "950" },
+      features: ["Finite Automata", "Regular Expressions", "Context-Free Grammars", "Turing Machines", "PDF Download"]
+    },
+                  {
+                id: "id9",
+                title: "Operating System - Complete Guide",
+                category: "Programming",
+                description: "Comprehensive Operating System guide covering process management, memory management, file systems, I/O management, deadlocks, and modern OS case studies with practical examples.",
+                tags: ["operating-system", "os", "process-management", "memory-management", "file-systems"],
+                icon: <Cpu className="w-6 h-6" />,
+                gradient: "from-orange-500 to-red-500",
+                bgGradient: "from-orange-900/20 to-red-900/20",
+                featured: false,
+                stats: { questions: "200+", difficulty: "Intermediate", time: "150 min", downloads: "1.2K" },
+                features: ["Process Management", "Memory Management", "File Systems", "I/O Management", "PDF Download"]
+              },
+              {
+                id: "id10",
+                title: "Computer Network - Complete Guide",
+                category: "Networking",
+                description: "Comprehensive Computer Network guide covering OSI model, TCP/IP protocols, routing, switching, network security, wireless networks, and emerging technologies with practical examples.",
+                tags: ["computer-network", "networking", "tcp-ip", "routing", "network-security"],
+                icon: <Network className="w-6 h-6" />,
+                gradient: "from-blue-500 to-purple-500",
+                bgGradient: "from-blue-900/20 to-purple-900/20",
+                featured: false,
+                stats: { questions: "250+", difficulty: "Intermediate", time: "180 min", downloads: "1.5K" },
+                features: ["OSI Model", "TCP/IP Protocols", "Routing & Switching", "Network Security", "PDF Download"]
+              },
+              {
+                id: "id11",
+                title: "Python Programming - Complete Guide",
+                category: "Programming",
+                description: "Comprehensive Python programming guide covering basics, data types, control flow, functions, OOP, modules, file handling, exception handling, and advanced concepts with practical examples.",
+                tags: ["python", "programming", "basics", "oop", "modules", "file-handling"],
+                icon: <Code className="w-6 h-6" />,
+                gradient: "from-green-500 to-blue-500",
+                bgGradient: "from-green-900/20 to-blue-900/20",
+                featured: false,
+                stats: { questions: "300+", difficulty: "All Levels", time: "200 min", downloads: "2.0K" },
+                features: ["Python Basics", "OOP Concepts", "File Handling", "Exception Handling", "PDF Download"]
+              }
+  ];
 
-    // Filter by search term
-    if (searchTerm) {
-      filtered = filtered.filter(note =>
-        note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        note.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        note.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-      );
-    }
+  const categories = [
+    { value: 'all', label: 'All Categories' },
+    { value: 'Interview Prep', label: 'Interview Prep' },
+    { value: 'Programming', label: 'Programming' },
+    { value: 'Web Dev', label: 'Web Development' },
+    { value: 'Database', label: 'Database' },
+    { value: 'Architecture', label: 'Architecture' },
+    { value: 'AI/ML', label: 'AI/ML' }
+  ];
 
-    // Filter by category
-    if (selectedCategory !== "all") {
-      filtered = filtered.filter(note => note.category.toLowerCase().includes(selectedCategory.toLowerCase()));
-    }
+  const sortOptions = [
+    { value: 'title', label: 'Title' },
+    { value: 'category', label: 'Category' },
+    { value: 'featured', label: 'Featured' }
+  ];
+
+  const filteredAndSortedNotes = useMemo(() => {
+    let filtered = notesList.filter(note => {
+      const matchesSearch = note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           note.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           note.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+      
+      const matchesCategory = selectedCategory === 'all' || note.category === selectedCategory;
+      
+      return matchesSearch && matchesCategory;
+    });
 
     // Sort notes
-    switch (sortBy) {
-      case "recent":
-        filtered.sort((a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime());
-        break;
-      case "popular":
-        filtered.sort((a, b) => b.downloads - a.downloads);
-        break;
-      case "rating":
-        filtered.sort((a, b) => b.rating - a.rating);
-        break;
-      case "title":
-        filtered.sort((a, b) => a.title.localeCompare(b.title));
-        break;
-    }
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case 'title':
+          return a.title.localeCompare(b.title);
+        case 'category':
+          return a.category.localeCompare(b.category);
+        case 'featured':
+          return b.featured ? 1 : -1;
+        default:
+          return 0;
+      }
+    });
 
     return filtered;
   }, [searchTerm, selectedCategory, sortBy]);
 
+  const featuredNotes = notesList.filter(note => note.featured);
+  const regularNotes = filteredAndSortedNotes.filter(note => !note.featured);
+
   const handleNoteClick = (note: any) => {
-    navigate(`/pdf-viewer/${note.id}`);
+    if (note.id === "id1") {
+      // Open the interview questions PDF in a new tab
+      window.open('/pdf/interviewQue.pdf', '_blank');
+    } else if (note.id === "id2") {
+      // Open the DSA notes in a new tab
+      window.open('/dsa-notes', '_blank');
+    } else if (note.id === "id3") {
+      // Open the coding notes in a new tab
+      window.open('/coding-notes', '_blank');
+    } else if (note.id === "id7") {
+      // Open the C programming notes in a new tab
+      window.open('/c-programming-notes', '_blank');
+    } else if (note.id === "id8") {
+      // Open the automata theory notes in a new tab
+      window.open('/automata-notes', '_blank');
+                  } else if (note.id === "id9") {
+                // Open the operating system notes in a new tab
+                window.open('/osnotes', '_blank');
+              } else if (note.id === "id10") {
+                // Open the computer network notes in a new tab
+                window.open('/computer-network-notes', '_blank');
+              } else if (note.id === "id11") {
+                // Open the Python notes in a new tab
+                window.open('/python-notes', '_blank');
+              } else {
+      // For other notes, navigate to PDF viewer
+      navigate(`/pdf-viewer/${note.id}`);
+    }
+  };
+
+  const getCategoryColor = (category: string) => {
+    const colorMap: { [key: string]: string } = {
+      'Interview Prep': 'bg-yellow-900/30 text-yellow-300 border-yellow-500/30',
+      'Programming': 'bg-blue-900/30 text-blue-300 border-blue-500/30',
+      'Web Dev': 'bg-purple-900/30 text-purple-300 border-purple-500/30',
+      'Database': 'bg-green-900/30 text-green-300 border-green-500/30',
+      'Architecture': 'bg-red-900/30 text-red-300 border-red-500/30',
+      'AI/ML': 'bg-indigo-900/30 text-indigo-300 border-indigo-500/30'
+    };
+    return colorMap[category] || 'bg-gray-900/30 text-gray-300 border-gray-500/30';
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Student Notes</h1>
-              <p className="text-gray-600 mt-1">Access comprehensive study materials and resources</p>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Button variant="outline" size="sm">
-                <Bookmark className="h-4 w-4 mr-2" />
-                My Bookmarks
-              </Button>
-              <Button variant="outline" size="sm">
-                <Heart className="h-4 w-4 mr-2" />
-                Favorites
-              </Button>
-            </div>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+      <div className="container mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-white mb-4">
+            Student Notes & Resources
+          </h1>
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+            Comprehensive study materials, interview guides, and learning resources 
+            to help you excel in your IT career journey.
+          </p>
         </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Search and Filters */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
-          <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+        {/* Search and Filter Section */}
+        <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700 p-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {/* Search */}
-            <div className="relative flex-1 max-w-md">
-              <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input
-                placeholder="Search notes, topics, or tags..."
+                placeholder="Search notes..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="pl-10 bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500"
               />
             </div>
 
             {/* Category Filter */}
             <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-48">
+              <SelectTrigger className="bg-gray-700/50 border-gray-600 text-white">
                 <SelectValue placeholder="Select category" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Categories</SelectItem>
-                <SelectItem value="interview">Interview Prep</SelectItem>
-                <SelectItem value="exam">Exam Prep</SelectItem>
-                <SelectItem value="programming">Programming</SelectItem>
-                <SelectItem value="computer science">Computer Science</SelectItem>
+              <SelectContent className="bg-gray-800 border-gray-600 text-white">
+                {categories.map((category) => (
+                  <SelectItem key={category.value} value={category.value} className="hover:bg-gray-700">
+                    {category.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
 
             {/* Sort */}
             <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-40">
+              <SelectTrigger className="bg-gray-700/50 border-gray-600 text-white">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="recent">Most Recent</SelectItem>
-                <SelectItem value="popular">Most Popular</SelectItem>
-                <SelectItem value="rating">Highest Rated</SelectItem>
-                <SelectItem value="title">Alphabetical</SelectItem>
+              <SelectContent className="bg-gray-800 border-gray-600 text-white">
+                {sortOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value} className="hover:bg-gray-700">
+                    {option.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
 
-            {/* View Mode */}
-            <div className="flex items-center space-x-2">
-              <Button
-                variant={viewMode === "grid" ? "default" : "outline"}
-                size="sm"
-                onClick={() => setViewMode("grid")}
-              >
-                <Grid className="h-4 w-4" />
-              </Button>
-              <Button
-                variant={viewMode === "list" ? "default" : "outline"}
-                size="sm"
-                onClick={() => setViewMode("list")}
-              >
-                <List className="h-4 w-4" />
-              </Button>
-            </div>
+            {/* Clear Filters */}
+            <Button
+              variant="outline"
+              onClick={() => {
+                setSearchTerm('');
+                setSelectedCategory('all');
+                setSortBy('title');
+              }}
+              className="flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white"
+            >
+              <Filter className="h-4 w-4" />
+              Clear Filters
+            </Button>
           </div>
         </div>
 
-        {/* Notes Grid/List */}
-        <div className={viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" : "space-y-4"}>
-          {filteredNotes.map((note) => (
-            <Card key={note.id} className="hover:shadow-lg transition-all duration-200 cursor-pointer group h-80" onClick={() => handleNoteClick(note)}>
-              <CardHeader className="">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center ">
-                    {/* <div className={`w-10 h-10 ${note.color} rounded-lg flex items-center justify-center overflow-hidden`}>
-                      <img 
-                        src={note.icon} 
-                        alt={note.title}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          // Fallback to a default icon if image fails to load
-                          e.currentTarget.style.display = 'none';
-                          e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                        }}
-                      />
-                      <BookOpen className="h-5 w-5 text-white hidden" />
-                    </div> */}
-                    <div>
-                      <CardTitle className="text-lg group-hover:text-blue-600 transition-colors">
-                        {note.title}
-                      </CardTitle>
-                      <CardDescription className="text-sm text-gray-500">
-                        {note.category}
-                      </CardDescription>
-                    </div>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                  {note.description}
-                </p>
-                
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-4 text-sm text-gray-500">
-                    <div className="flex items-center space-x-1">
-                      <Download className="h-4 w-4" />
-                      <span>{note.downloads}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Eye className="h-4 w-4" />
-                      <span>{note.views}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                      <span>{note.rating}</span>
-                    </div>
-                  </div>
-                </div>
+                 {/* Featured Section */}
+         {featuredNotes.length > 0 && (
+           <div className="mb-8">
+             <div className="flex items-center gap-2 mb-4">
+               <Star className="h-5 w-5 text-yellow-500" />
+               <h2 className="text-2xl font-semibold text-white">Featured Notes</h2>
+             </div>
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+               {featuredNotes.map((note) => (
+                 <div
+                   key={note.id}
+                   className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${note.bgGradient} hover:from-gray-800 hover:via-gray-700 hover:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-700 hover:border-gray-600 hover:scale-[1.02] transform ease-in-out cursor-pointer`}
+                   onClick={() => handleNoteClick(note)}
+                 >
+                   {/* Animated Background Pattern */}
+                   <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+                     <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${note.gradient} rounded-full -translate-y-16 translate-x-16 animate-pulse`}></div>
+                     <div className={`absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr ${note.gradient} rounded-full translate-y-10 -translate-x-10 animate-bounce delay-1000`}></div>
+                     <div className={`absolute top-1/2 left-1/2 w-16 h-16 bg-gradient-to-br ${note.gradient} rounded-full -translate-x-8 -translate-y-8 animate-spin delay-500`}></div>
+                   </div>
 
-                <div className="flex flex-wrap gap-1 mb-4">
-                  {note.tags.slice(0, 3).map((tag, index) => (
-                    <Badge key={index} variant="outline" className="text-xs">
-                      {tag}
-                    </Badge>
-                  ))}
-                  {note.tags.length > 3 && (
-                    <Badge variant="outline" className="text-xs">
-                      +{note.tags.length - 3}
-                    </Badge>
-                  )}
-                </div>
+                   {/* Card Content */}
+                   <div className="relative p-6">
+                     {/* Header with Icon */}
+                     <div className="flex items-center justify-between mb-4">
+                       <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${note.gradient} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                         {note.icon}
+                       </div>
+                       <div className="text-right">
+                         <div className="text-xs text-gray-400 font-medium">Difficulty</div>
+                         <div className="text-sm font-bold text-white">{note.stats.difficulty}</div>
+                       </div>
+                     </div>
 
-                <div className="flex items-center text-center justify-between">
-                  {/* <div className="flex items-center space-x-2 text-xs text-gray-500">
-                    <Clock className="h-3 w-3" />
-                    <span>{note.duration}</span>
-                    <span>•</span>
-                    <span>Updated {new Date(note.lastUpdated).toLocaleDateString()}</span>
-                  </div> */}
-                  {/* <div className="flex items-center text-center space-x-2"> */}
-                    <Button
-                      size="lg"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleNoteClick(note);
-                      }}
-                    >
-                      <Eye className="h-6 w-5 mr-1" />
-                      Read Now 
-                    </Button>
-                  {/* </div> */}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                     {/* Title */}
+                     <div className="flex items-start justify-between mb-3">
+                       <h3 className="text-xl font-bold text-white group-hover:text-gray-200 transition-colors duration-300">
+                         {note.title}
+                       </h3>
+                       <Badge variant="secondary" className="bg-yellow-900/30 text-yellow-300 border-yellow-500/30">
+                         Featured
+                       </Badge>
+                     </div>
 
-        {/* Empty State */}
-        {filteredNotes.length === 0 && (
-          <div className="text-center py-12">
-            <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No notes found</h3>
-            <p className="text-gray-500">Try adjusting your search or filter criteria.</p>
-          </div>
-        )}
+                     {/* Stats Bar */}
+                     <div className="flex items-center justify-between mb-4 p-3 bg-gray-800/50 rounded-lg backdrop-blur-sm">
+                       <div className="text-center">
+                         <div className="text-lg font-bold text-white">
+                           {note.stats.questions}
+                         </div>
+                         <div className="text-xs text-gray-400">
+                           Questions
+                         </div>
+                       </div>
+                       <div className="text-center">
+                         <div className="text-lg font-bold text-white">{note.stats.time}</div>
+                         <div className="text-xs text-gray-400">Avg Time</div>
+                       </div>
+                       <div className="text-center">
+                         <div className="text-lg font-bold text-white">{note.stats.downloads}</div>
+                         <div className="text-xs text-gray-400">Downloads</div>
+                       </div>
+                     </div>
+
+                     {/* Category Badge */}
+                     <Badge className={`${getCategoryColor(note.category)} mb-4 border`}>
+                       {note.category}
+                     </Badge>
+
+                     {/* Description */}
+                     <p className="text-gray-300 text-sm mb-4 line-clamp-3">
+                       {note.description}
+                     </p>
+
+                     {/* Features Tags */}
+                     <div className="flex flex-wrap gap-1 mb-4">
+                       {note.features.map((feature, i) => (
+                         <span key={i} className={`px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r ${note.gradient} text-white opacity-80 group-hover:opacity-100 transition-opacity duration-300`}>
+                           {feature}
+                         </span>
+                       ))}
+                     </div>
+
+                     {/* Tags */}
+                     <div className="flex flex-wrap gap-1 mb-4">
+                       {note.tags.slice(0, 3).map((tag) => (
+                         <Badge key={tag} variant="outline" className="text-xs bg-gray-800/50 border-gray-600 text-gray-300">
+                           {tag}
+                         </Badge>
+                       ))}
+                       {note.tags.length > 3 && (
+                         <Badge variant="outline" className="text-xs bg-gray-800/50 border-gray-600 text-gray-300">
+                           +{note.tags.length - 3}
+                         </Badge>
+                       )}
+                     </div>
+
+                     {/* Enhanced Button */}
+                     <button className={`relative overflow-hidden bg-gradient-to-r ${note.gradient} text-white px-6 py-3 rounded-xl text-sm font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 w-full group/btn`}>
+                       <span className="relative z-10 flex items-center justify-center">
+                         <BookOpen className="h-4 w-4 mr-2" />
+                         Read Now
+                         <div className="ml-2 group-hover/btn:translate-x-1 transition-transform duration-300">
+                           →
+                         </div>
+                       </span>
+                       <div className="absolute inset-0 bg-white opacity-0 group-hover/btn:opacity-20 transition-opacity duration-300"></div>
+                     </button>
+                   </div>
+
+                   {/* Enhanced Hover Effect Overlay */}
+                   <div className={`absolute inset-0 bg-gradient-to-r ${note.gradient} opacity-0 group-hover:opacity-5 transition-all duration-500 rounded-2xl`}></div>
+
+                   {/* Animated Bottom Accent */}
+                   <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${note.gradient} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left`}></div>
+
+                   {/* Floating Elements */}
+                   <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                     <div className={`w-3 h-3 bg-gradient-to-r ${note.gradient} rounded-full animate-ping`}></div>
+                   </div>
+                 </div>
+               ))}
+             </div>
+           </div>
+         )}
+
+                 {/* All Notes Section */}
+         <div>
+           <div className="flex items-center justify-between mb-4">
+             <h2 className="text-2xl font-semibold text-white">
+               All Study Notes
+             </h2>
+             <span className="text-sm text-gray-400">
+               {regularNotes.length} note{regularNotes.length !== 1 ? 's' : ''}
+             </span>
+           </div>
+
+           {regularNotes.length > 0 ? (
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+               {regularNotes.map((note) => (
+                 <div
+                   key={note.id}
+                   className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${note.bgGradient} hover:from-gray-800 hover:via-gray-700 hover:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-700 hover:border-gray-600 hover:scale-[1.02] transform ease-in-out cursor-pointer`}
+                   onClick={() => handleNoteClick(note)}
+                 >
+                   {/* Animated Background Pattern */}
+                   <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+                     <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${note.gradient} rounded-full -translate-y-16 translate-x-16 animate-pulse`}></div>
+                     <div className={`absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr ${note.gradient} rounded-full translate-y-10 -translate-x-10 animate-bounce delay-1000`}></div>
+                     <div className={`absolute top-1/2 left-1/2 w-16 h-16 bg-gradient-to-br ${note.gradient} rounded-full -translate-x-8 -translate-y-8 animate-spin delay-500`}></div>
+                   </div>
+
+                   {/* Card Content */}
+                   <div className="relative p-6">
+                     {/* Header with Icon */}
+                     <div className="flex items-center justify-between mb-4">
+                       <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${note.gradient} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                         {note.icon}
+                       </div>
+                       <div className="text-right">
+                         <div className="text-xs text-gray-400 font-medium">Difficulty</div>
+                         <div className="text-sm font-bold text-white">{note.stats.difficulty}</div>
+                       </div>
+                     </div>
+
+                     {/* Title */}
+                     <h3 className="text-xl font-bold mb-3 text-white group-hover:text-gray-200 transition-colors duration-300">
+                       {note.title}
+                     </h3>
+
+                     {/* Stats Bar */}
+                     <div className="flex items-center justify-between mb-4 p-3 bg-gray-800/50 rounded-lg backdrop-blur-sm">
+                       <div className="text-center">
+                         <div className="text-lg font-bold text-white">
+                           {note.stats.questions}
+                         </div>
+                         <div className="text-xs text-gray-400">
+                           Questions
+                         </div>
+                       </div>
+                       <div className="text-center">
+                         <div className="text-lg font-bold text-white">{note.stats.time}</div>
+                         <div className="text-xs text-gray-400">Avg Time</div>
+                       </div>
+                       <div className="text-center">
+                         <div className="text-lg font-bold text-white">{note.stats.downloads}</div>
+                         <div className="text-xs text-gray-400">Downloads</div>
+                       </div>
+                     </div>
+
+                     {/* Category Badge */}
+                     <Badge className={`${getCategoryColor(note.category)} mb-4 border`}>
+                       {note.category}
+                     </Badge>
+
+                     {/* Description */}
+                     <p className="text-gray-300 text-sm mb-4 line-clamp-3">
+                       {note.description}
+                     </p>
+
+                     {/* Features Tags */}
+                     <div className="flex flex-wrap gap-1 mb-4">
+                       {note.features.map((feature, i) => (
+                         <span key={i} className={`px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r ${note.gradient} text-white opacity-80 group-hover:opacity-100 transition-opacity duration-300`}>
+                           {feature}
+                         </span>
+                       ))}
+                     </div>
+
+                     {/* Tags */}
+                     <div className="flex flex-wrap gap-1 mb-4">
+                       {note.tags.slice(0, 3).map((tag) => (
+                         <Badge key={tag} variant="outline" className="text-xs bg-gray-800/50 border-gray-600 text-gray-300">
+                           {tag}
+                         </Badge>
+                       ))}
+                       {note.tags.length > 3 && (
+                         <Badge variant="outline" className="text-xs bg-gray-800/50 border-gray-600 text-gray-300">
+                           +{note.tags.length - 3}
+                         </Badge>
+                       )}
+                     </div>
+
+                     {/* Enhanced Button */}
+                     <button className={`relative overflow-hidden bg-gradient-to-r ${note.gradient} text-white px-6 py-3 rounded-xl text-sm font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 w-full group/btn`}>
+                       <span className="relative z-10 flex items-center justify-center">
+                         <BookOpen className="h-4 w-4 mr-2" />
+                         Read Now
+                         <div className="ml-2 group-hover/btn:translate-x-1 transition-transform duration-300">
+                           →
+                         </div>
+                       </span>
+                       <div className="absolute inset-0 bg-white opacity-0 group-hover/btn:opacity-20 transition-opacity duration-300"></div>
+                     </button>
+                   </div>
+
+                   {/* Enhanced Hover Effect Overlay */}
+                   <div className={`absolute inset-0 bg-gradient-to-r ${note.gradient} opacity-0 group-hover:opacity-5 transition-all duration-500 rounded-2xl`}></div>
+
+                   {/* Animated Bottom Accent */}
+                   <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${note.gradient} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left`}></div>
+
+                   {/* Floating Elements */}
+                   <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                     <div className={`w-3 h-3 bg-gradient-to-r ${note.gradient} rounded-full animate-ping`}></div>
+                   </div>
+                 </div>
+               ))}
+             </div>
+           ) : (
+             <div className="text-center py-12">
+               <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+               <h3 className="text-lg font-medium text-white mb-2">No notes found</h3>
+               <p className="text-gray-400">
+                 Try adjusting your search or filter criteria to find what you're looking for.
+               </p>
+             </div>
+           )}
+         </div>
+
+                 {/* PDF Generator Section */}
+         <div className="mt-12">
+           <PDFGenerator className="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700 p-6" />
+         </div>
       </div>
-
-
     </div>
   );
-}
+};
+
+export default StudentNotesPage;

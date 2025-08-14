@@ -1,0 +1,2285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operating System Notes - PrepCampus</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .download-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .download-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .section {
+            margin: 30px 0;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin: 20px 0 10px 0;
+        }
+
+        .section h4 {
+            color: #495057;
+            font-size: 1.2em;
+            margin: 15px 0 8px 0;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #fdcb6e;
+            margin: 15px 0;
+        }
+
+        .important {
+            background: linear-gradient(135deg, #a8e6cf, #dcedc1);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2ecc71;
+            margin: 15px 0;
+        }
+
+        .code-box {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid #667eea;
+        }
+
+        .algorithm-steps {
+            background: #f1f2f6;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #3742fa;
+        }
+
+        .definition-box {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        .example-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #2196f3;
+        }
+
+        .complexity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .complexity-table th,
+        .complexity-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .complexity-table th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .complexity-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .complexity-table tr:hover {
+            background: #e9ecef;
+        }
+
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+
+        .keyword {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .comment {
+            color: #95a5a6;
+            font-style: italic;
+        }
+
+        .number {
+            color: #f39c12;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+                margin: 0;
+            }
+            .download-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🖥️ Operating System Notes</h1>
+            <p>Complete Guide for Placement Preparation - PrepCampus</p>
+            <button class="download-btn" onclick="downloadAsPrint()"> Download</button>
+            <p></p>
+        </div>
+
+        <div class="section">
+            <h2>📋 Course Overview</h2>
+            <div class="highlight">
+                <strong>Course Objectives:</strong>
+                <ul>
+                    <li>Understand core OS concepts and architecture</li>
+                    <li>Manage processes, memory, storage, and I/O effectively</li>
+                    <li>Learn synchronization, concurrency, and deadlock resolution</li>
+                    <li>Explore file systems, protection mechanisms, and modern OS case studies</li>
+                </ul>
+            </div>
+
+            
+        </div>
+
+        <div class="section">
+            <h2>Unit I: OS Overview & Structure</h2>
+            
+            <h3>1.1 Definition and Functions</h3>
+            <div class="definition-box">
+                <strong>Operating System:</strong> An operating system is a comprehensive system software that serves as the fundamental interface between computer hardware and user applications. It is a complex software system that manages all hardware resources, provides essential services to application programs, and creates a user-friendly environment for human-computer interaction. The OS acts as a resource manager, coordinator, and service provider that ensures efficient, secure, and reliable operation of the entire computing system.
+            </div>
+            
+            <div class="important">
+                <strong>Detailed Functions of an Operating System:</strong>
+                <ul>
+                    <li><strong>Resource Management:</strong> Efficiently allocates and manages CPU, memory, storage, and I/O devices among competing processes, ensuring optimal utilization and preventing resource conflicts</li>
+                    <li><strong>Process Management:</strong> Creates, schedules, terminates, and coordinates processes, handling process synchronization, communication, and deadlock prevention</li>
+                    <li><strong>Memory Management:</strong> Manages primary and secondary memory, implementing virtual memory systems, memory protection, and efficient memory allocation strategies</li>
+                    <li><strong>File System Management:</strong> Organizes and manages files and directories, providing hierarchical storage, access control, data persistence, and backup mechanisms</li>
+                    <li><strong>Device Management:</strong> Controls and coordinates hardware devices through device drivers, handling device allocation, buffering, and error recovery</li>
+                    <li><strong>Security and Protection:</strong> Implements comprehensive access control, user authentication, data encryption, and system protection mechanisms</li>
+                    <li><strong>User Interface:</strong> Provides both command-line and graphical interfaces for user interaction, enabling efficient human-computer communication</li>
+                    <li><strong>Network Management:</strong> Handles network communication, protocols, distributed computing support, and remote resource access</li>
+                    <li><strong>Error Handling:</strong> Detects, reports, and recovers from hardware and software errors, ensuring system stability and reliability</li>
+                    <li><strong>Performance Monitoring:</strong> Tracks system performance metrics, resource usage patterns, and provides optimization recommendations</li>
+                </ul>
+            </div>
+
+            <h4>Core Functions of OS:</h4>
+            <ul>
+                <li><strong>Process Management:</strong> Creating, scheduling, and terminating processes</li>
+                <li><strong>Memory Management:</strong> Allocating and deallocating memory space</li>
+                <li><strong>File System Management:</strong> Organizing and tracking files and directories</li>
+                <li><strong>Device Management:</strong> Controlling peripheral devices</li>
+                <li><strong>Security and Protection:</strong> Ensuring system and user data security</li>
+                <li><strong>User Interface:</strong> Providing user-friendly interface</li>
+            </ul>
+
+            <h3>1.2 Types of Operating Systems</h3>
+            
+            <h4>Batch Operating System</h4>
+            <div class="definition-box">
+                <strong>Definition:</strong> A batch operating system is a type of OS that processes jobs in groups or batches without user interaction. Jobs with similar requirements are grouped together and executed sequentially, maximizing system utilization and throughput while minimizing idle time.
+            </div>
+            <div class="example-box">
+                <strong>Detailed Characteristics:</strong>
+                <ul>
+                    <li><strong>Batch Processing:</strong> Jobs are collected and executed in batches without user interaction during execution</li>
+                    <li><strong>High Throughput:</strong> Optimized for processing large volumes of similar jobs efficiently</li>
+                    <li><strong>Low Response Time:</strong> No immediate user interaction, resulting in longer turnaround times</li>
+                    <li><strong>Job Scheduling:</strong> Uses sophisticated algorithms to optimize job ordering and resource allocation</li>
+                    <li><strong>Resource Efficiency:</strong> Maximizes CPU and memory utilization through batch optimization</li>
+                    <li><strong>Error Handling:</strong> Comprehensive error detection and recovery mechanisms for batch operations</li>
+                    <li><strong>Historical Context:</strong> Developed for early mainframe systems where computing resources were expensive and limited</li>
+                    <li><strong>Modern Applications:</strong> Still used in data processing centers, scientific computing, and large-scale data analysis</li>
+                </ul>
+            </div>
+
+            <h4>Time-Sharing Operating System</h4>
+            <div class="definition-box">
+                <strong>Definition:</strong> A time-sharing operating system allows multiple users to access and use computer resources simultaneously by rapidly switching between different user programs. It provides each user with the illusion of having exclusive access to the computer while efficiently sharing CPU time and other resources among all active users.
+            </div>
+            <div class="example-box">
+                <strong>Detailed Characteristics:</strong>
+                <ul>
+                    <li><strong>Multi-User Support:</strong> Multiple users can access the system simultaneously through terminals or network connections</li>
+                    <li><strong>CPU Time Sharing:</strong> CPU time is divided into small time slices and allocated among multiple users in a round-robin fashion</li>
+                    <li><strong>Interactive Response:</strong> Provides quick response times for interactive applications and user commands</li>
+                    <li><strong>Resource Sharing:</strong> Efficiently shares memory, storage, and peripheral devices among multiple users</li>
+                    <li><strong>Process Scheduling:</strong> Implements sophisticated scheduling algorithms to ensure fair resource allocation</li>
+                    <li><strong>Memory Management:</strong> Uses virtual memory and paging to support multiple concurrent processes</li>
+                    <li><strong>Security and Isolation:</strong> Provides user authentication, access control, and process isolation for security</li>
+                    <li><strong>File System:</strong> Hierarchical file system with user-specific directories and access permissions</li>
+                    <li><strong>Network Support:</strong> Built-in networking capabilities for remote access and distributed computing</li>
+                    <li><strong>Modern Examples:</strong> Unix, Linux, Windows, macOS, Android, iOS</li>
+                </ul>
+            </div>
+
+            <h4>Real-Time Operating System</h4>
+            <div class="definition-box">
+                <strong>Definition:</strong> A real-time operating system (RTOS) is designed to process data and respond to events within strict time constraints. It guarantees that critical tasks are completed within specified deadlines, making it essential for applications where timing is critical for system safety and functionality.
+            </div>
+            <div class="example-box">
+                <strong>Detailed Characteristics:</strong>
+                <ul>
+                    <li><strong>Predictable Timing:</strong> Guarantees response times within specified limits for critical operations</li>
+                    <li><strong>Deterministic Behavior:</strong> Provides consistent and predictable system behavior under all conditions</li>
+                    <li><strong>Priority-Based Scheduling:</strong> Uses priority-based scheduling to ensure critical tasks meet deadlines</li>
+                    <li><strong>Minimal Latency:</strong> Minimizes interrupt latency and context switching overhead</li>
+                    <li><strong>Resource Management:</strong> Efficient resource allocation with predictable timing characteristics</li>
+                    <li><strong>Error Handling:</strong> Robust error detection and recovery mechanisms for system reliability</li>
+                    <li><strong>Two Types:</strong>
+                        <ul>
+                            <li><strong>Hard Real-Time:</strong> Missing a deadline results in system failure (e.g., medical devices, aircraft control)</li>
+                            <li><strong>Soft Real-Time:</strong> Missing a deadline degrades performance but doesn't cause failure (e.g., multimedia streaming)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Applications:</strong> Medical devices, automotive systems, industrial automation, aerospace, telecommunications</li>
+                    <li><strong>Examples:</strong> VxWorks, QNX, FreeRTOS, RTEMS, Windows CE, Linux with RT patches</li>
+                </ul>
+            </div>
+
+            <h3>1.3 OS Services and System Calls</h3>
+            
+            <h4>OS Services:</h4>
+            <ul>
+                <li><strong>Program Execution:</strong> Loading programs into memory and running them</li>
+                <li><strong>I/O Operations:</strong> Managing input/output operations</li>
+                <li><strong>File System Manipulation:</strong> Creating, deleting, reading, writing files</li>
+                <li><strong>Communication:</strong> Inter-process communication</li>
+                <li><strong>Error Detection:</strong> Detecting and handling errors</li>
+                <li><strong>Resource Allocation:</strong> Allocating resources to processes</li>
+                <li><strong>Accounting:</strong> Tracking resource usage</li>
+                <li><strong>Protection and Security:</strong> Protecting system and user data</li>
+            </ul>
+
+            <h4>System Calls:</h4>
+            <div class="code-box">
+                <pre><code><span class="comment">// Example of system calls in C</span>
+<span class="keyword">#include</span> &lt;unistd.h&gt;
+<span class="keyword">#include</span> &lt;fcntl.h&gt;
+<span class="keyword">#include</span> &lt;sys/types.h&gt;
+<span class="keyword">#include</span> &lt;sys/wait.h&gt;
+
+<span class="keyword">int</span> main() {
+    <span class="comment">// Process control system calls</span>
+    <span class="keyword">pid_t</span> pid = fork();  
+    <span class="comment">// Create new process</span>
+    
+    <span class="keyword">if</span> (pid == <span class="number">0</span>) {
+        <span class="comment">// Child process</span>
+        printf(<span class="string">"Child process executing\n"</span>);
+        exit(<span class="number">0</span>);
+    } <span class="keyword">else</span> <span class="keyword">if</span> (pid > <span class="number">0</span>) {
+        <span class="comment">// Parent process</span>
+        wait(NULL);  
+        <span class="comment">// Wait for child to complete</span>
+        printf(<span class="string">"Child process completed\n"</span>);
+    }
+    
+    <span class="comment">// File manipulation system calls</span>
+    <span class="keyword">int</span> fd = open(<span class="string">"file.txt"</span>, O_RDONLY);  
+    <span class="comment">// Open file for reading</span>
+    
+    <span class="keyword">if</span> (fd == -<span class="number">1</span>) {
+        perror(<span class="string">"Error opening file"</span>);
+        <span class="keyword">return</span> <span class="number">1</span>;
+    }
+    
+    <span class="keyword">char</span> buffer[<span class="number">1024</span>];
+    <span class="keyword">int</span> bytes_read = read(fd, buffer, <span class="number">1024</span>);  
+    <span class="comment">// Read from file</span>
+    
+    <span class="keyword">if</span> (bytes_read > <span class="number">0</span>) {
+        printf(<span class="string">"Read %d bytes\n"</span>, bytes_read);
+    }
+    
+    close(fd);  
+    <span class="comment">// Close file descriptor</span>
+    
+    <span class="comment">// Device management system calls</span>
+    <span class="keyword">int</span> device_fd = open(<span class="string">"/dev/device"</span>, O_RDWR);
+    <span class="keyword">if</span> (device_fd != -<span class="number">1</span>) {
+        ioctl(device_fd, command, arg);  
+        <span class="comment">// Device control operation</span>
+        close(device_fd);
+    }
+    
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+            </div>
+
+            <h3>1.4 Architecture Styles</h3>
+            
+            <h4>Monolithic Architecture</h4>
+            <div class="definition-box">
+                <strong>Definition:</strong> A monolithic architecture is an OS design where all operating system services run in kernel mode as a single large program. The entire operating system runs as a single process in kernel space, with all system calls, device drivers, file systems, and memory management functions integrated into one large executable. This architecture provides direct access to hardware and efficient system calls but can be complex to maintain and debug.
+            </div>
+            <div class="example-box">
+                <strong>Detailed Characteristics:</strong>
+                <ul>
+                    <li><strong>Single Kernel Space:</strong> All OS components run in privileged kernel mode with direct hardware access</li>
+                    <li><strong>Efficient System Calls:</strong> Direct function calls between OS components without inter-process communication overhead</li>
+                    <li><strong>Hardware Access:</strong> Direct access to hardware resources without abstraction layers</li>
+                    <li><strong>Performance:</strong> High performance due to minimal overhead and direct memory access</li>
+                    <li><strong>Complexity:</strong> Large, complex codebase that can be difficult to maintain and debug</li>
+                    <li><strong>Reliability:</strong> A bug in any component can crash the entire system</li>
+                    <li><strong>Security:</strong> All components run with full privileges, increasing security risks</li>
+                    <li><strong>Examples:</strong> Traditional Unix kernels, early Linux kernels, MS-DOS</li>
+                </ul>
+            </div>
+            <div class="example-box">
+                <strong>Advantages:</strong>
+                <ul>
+                    <li>Better performance due to direct communication</li>
+                    <li>Efficient resource sharing</li>
+                    <li>Simple design and implementation</li>
+                </ul>
+                <strong>Disadvantages:</strong>
+                <ul>
+                    <li>Difficult to maintain and modify</li>
+                    <li>System crash affects entire OS</li>
+                    <li>Large kernel size</li>
+                </ul>
+                <strong>Example:</strong> Traditional Unix, Linux (partially)
+            </div>
+
+            <h4>Microkernel Architecture</h4>
+            <div class="definition-box">
+                <strong>Definition:</strong> A microkernel architecture is an OS design where only essential core services run in kernel mode, while all other operating system services run as separate user processes. The microkernel provides only basic services like process management, memory management, and inter-process communication (IPC), with all other services (file systems, device drivers, networking) implemented as user-space servers that communicate through message passing.
+            </div>
+            <div class="example-box">
+                <strong>Detailed Characteristics:</strong>
+                <ul>
+                    <li><strong>Minimal Kernel:</strong> Kernel contains only essential services: process management, memory management, and IPC</li>
+                    <li><strong>User-Space Services:</strong> File systems, device drivers, networking, and other services run as user processes</li>
+                    <li><strong>Message Passing:</strong> Communication between services occurs through well-defined message passing interfaces</li>
+                    <li><strong>Modularity:</strong> Services can be added, removed, or modified without affecting the core kernel</li>
+                    <li><strong>Fault Isolation:</strong> A failure in one service doesn't crash the entire system</li>
+                    <li><strong>Security:</strong> Services run with limited privileges, reducing security risks</li>
+                    <li><strong>Portability:</strong> Core kernel is hardware-independent and easily portable</li>
+                    <li><strong>Performance Overhead:</strong> Message passing introduces communication overhead</li>
+                    <li><strong>Complexity:</strong> More complex design due to distributed service architecture</li>
+                    <li><strong>Examples:</strong> QNX, MINIX, Mach, L4, seL4, HelenOS</li>
+                </ul>
+            </div>
+
+            <h3>1.5 Generations of Operating Systems</h3>
+            <table class="complexity-table">
+                <thead>
+                    <tr>
+                        <th>Generation</th>
+                        <th>Period</th>
+                        <th>Characteristics</th>
+                        <th>Examples</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>First (1945-1955)</td>
+                        <td>1945-1955</td>
+                        <td>Vacuum tubes, no OS, machine language</td>
+                        <td>ENIAC, UNIVAC</td>
+                    </tr>
+                    <tr>
+                        <td>Second (1955-1965)</td>
+                        <td>1955-1965</td>
+                        <td>Transistors, batch systems, assembly language</td>
+                        <td>IBM 1401, FORTRAN</td>
+                    </tr>
+                    <tr>
+                        <td>Third (1965-1980)</td>
+                        <td>1965-1980</td>
+                        <td>Integrated circuits, multiprogramming, time-sharing</td>
+                        <td>Unix, Multics</td>
+                    </tr>
+                    <tr>
+                        <td>Fourth (1980-1990)</td>
+                        <td>1980-1990</td>
+                        <td>Personal computers, GUI, networking</td>
+                        <td>MS-DOS, Mac OS</td>
+                    </tr>
+                    <tr>
+                        <td>Fifth (1990-Present)</td>
+                        <td>1990-Present</td>
+                        <td>Mobile computing, cloud, virtualization</td>
+                        <td>Android, iOS, Windows 10</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Unit II: Process & Thread Management</h2>
+            
+            <h3>2.1 Concept of Processes</h3>
+            <div class="definition-box">
+                <strong>Process:</strong> A process is a program in execution that represents the basic unit of work in an operating system. It is a dynamic entity that consists of an executable program, associated data, and system resources. A process is created when a program is loaded into memory and begins execution, and it terminates when the program completes or is terminated. Each process has its own address space, system resources, and execution context that are isolated from other processes.
+            </div>
+            
+            <div class="important">
+                <strong>Detailed Process Components:</strong>
+                <ul>
+                    <li><strong>Program Counter (PC):</strong> Points to the next instruction to execute in the program</li>
+                    <li><strong>Process Stack:</strong> Contains temporary data, function parameters, return addresses, and local variables</li>
+                    <li><strong>Data Section:</strong> Contains global variables and static data that persist throughout program execution</li>
+                    <li><strong>Heap:</strong> Memory dynamically allocated during runtime using functions like malloc() and free()</li>
+                    <li><strong>Text Section:</strong> Contains the actual program code and instructions that are executed</li>
+                    <li><strong>Process State:</strong> Current state of the process (new, ready, running, waiting, terminated)</li>
+                    <li><strong>CPU Registers:</strong> Current values of all CPU registers including general-purpose and special-purpose registers</li>
+                    <li><strong>Process ID (PID):</strong> Unique identifier assigned to each process by the operating system</li>
+                    <li><strong>Parent Process ID (PPID):</strong> Identifier of the process that created this process</li>
+                    <li><strong>File Descriptors:</strong> List of open files and their associated file descriptors</li>
+                    <li><strong>Memory Limits:</strong> Information about memory allocation and limits for the process</li>
+                    <li><strong>Priority and Scheduling Information:</strong> Process priority, scheduling parameters, and CPU usage statistics</li>
+                </ul>
+            </div>
+
+            <h4>Process Control Block (PCB)</h4>
+            <div class="code-box">
+                <pre><code><span class="comment">// Structure of Process Control Block</span>
+<span class="keyword">struct</span> PCB {
+    <span class="comment">// Process identification</span>
+    <span class="keyword">int</span> process_id;           
+    <span class="comment">// Unique process identifier</span>
+    <span class="keyword">int</span> parent_id;            
+    <span class="comment">// Parent process ID</span>
+    
+    <span class="comment">// Process state information</span>
+    <span class="keyword">char</span> process_state;        
+    <span class="comment">// New, Ready, Running, Waiting, Terminated</span>
+    <span class="keyword">int</span> priority;              
+    <span class="comment">// Process priority level</span>
+    
+    <span class="comment">// CPU state information</span>
+    <span class="keyword">int</span> program_counter;       
+    <span class="comment">// Address of next instruction</span>
+    <span class="keyword">int</span> cpu_registers[<span class="number">16</span>];    
+    <span class="comment">// General purpose registers</span>
+    <span class="keyword">int</span> stack_pointer;         
+    <span class="comment">// Current stack pointer</span>
+    <span class="keyword">int</span> base_pointer;          
+    <span class="comment">// Current base pointer</span>
+    
+    <span class="comment">// Memory management information</span>
+    <span class="keyword">int</span> memory_limits;         
+    <span class="comment">// Memory allocation limits</span>
+    <span class="keyword">int</span> page_table_ptr;        
+    <span class="comment">// Pointer to page table</span>
+    <span class="keyword">int</span> memory_usage;          
+    <span class="comment">// Current memory usage</span>
+    
+    <span class="comment">// File management information</span>
+    <span class="keyword">int</span> list_of_open_files;    
+    <span class="comment">// List of open file descriptors</span>
+    <span class="keyword">int</span> working_directory;     
+    <span class="comment">// Current working directory</span>
+    
+    <span class="comment">// CPU scheduling information</span>
+    <span class="keyword">int</span> cpu_usage;             
+    <span class="comment">// Total CPU time used</span>
+    <span class="keyword">int</span> waiting_time;          
+    <span class="comment">// Time spent in waiting queue</span>
+    <span class="keyword">int</span> arrival_time;          
+    <span class="comment">// Time when process arrived</span>
+    <span class="keyword">int</span> burst_time;            
+    <span class="comment">// Estimated CPU burst time</span>
+    
+    <span class="comment">// Process communication information</span>
+    <span class="keyword">int</span> message_queue;         
+    <span class="comment">// Message queue for IPC</span>
+    <span class="keyword">int</span> semaphores;            
+    <span class="comment">// Associated semaphores</span>
+    
+    <span class="comment">// Process hierarchy information</span>
+    <span class="keyword">int</span> child_processes[<span class="number">10</span>]; 
+    <span class="comment">// Array of child process IDs</span>
+    <span class="keyword">int</span> num_children;          
+    <span class="comment">// Number of child processes</span>
+};</code></pre>
+            </div>
+
+            <h4>Process Life Cycle</h4>
+            <div class="algorithm-steps">
+                <strong>Process States:</strong>
+                <ol>
+                    <li><strong>New:</strong> Process is being created</li>
+                    <li><strong>Ready:</strong> Process is waiting to be assigned to a processor</li>
+                    <li><strong>Running:</strong> Instructions are being executed</li>
+                    <li><strong>Waiting:</strong> Process is waiting for some event to occur</li>
+                    <li><strong>Terminated:</strong> Process has finished execution</li>
+                </ol>
+            </div>
+
+            <h4>Context Switching</h4>
+            <div class="definition-box">
+                <strong>Context Switch:</strong> A context switch is the process of saving the current state (context) of a running process or thread and loading the saved state of another process or thread so that execution can resume from the same point later. This is a fundamental mechanism in multitasking operating systems that allows multiple processes to share a single CPU by rapidly switching between them, creating the illusion of concurrent execution. The context switch involves saving all the information needed to restore the process later, including CPU registers, program counter, memory management information, and other process-specific data.
+            </div>
+            
+            <div class="important">
+                <strong>Detailed Context Switch Process:</strong>
+                <ul>
+                    <li><strong>State Preservation:</strong> Saves the current process's CPU registers (general-purpose registers, program counter, stack pointer, base pointer, status registers), memory management information (page table pointers, memory limits), and process-specific data (file descriptors, working directory, process state)</li>
+                    <li><strong>Process Control Block Update:</strong> Updates the Process Control Block (PCB) of the current process with the saved context information, including CPU usage statistics, waiting time, and current state</li>
+                    <li><strong>Scheduler Invocation:</strong> Calls the CPU scheduler to determine which process should run next based on scheduling algorithms and process priorities</li>
+                    <li><strong>Memory Management Switch:</strong> Switches memory management context, including page tables, memory protection settings, and virtual memory mappings for the new process</li>
+                    <li><strong>State Restoration:</strong> Loads the saved context of the new process from its PCB, restoring all CPU registers, program counter, and process-specific information</li>
+                    <li><strong>Execution Transfer:</strong> Transfers control to the new process, resuming execution from the exact point where it was previously interrupted</li>
+                    <li><strong>Cache Invalidation:</strong> May invalidate CPU cache entries to ensure the new process doesn't access stale data from the previous process</li>
+                    <li><strong>Performance Overhead:</strong> Context switching has significant overhead due to the time required to save and restore process state, making it a critical factor in system performance</li>
+                </ul>
+            </div>
+
+            <h3>2.2 CPU Scheduling</h3>
+            
+            <h4>Scheduler Types</h4>
+            <ul>
+                <li><strong>Long-term Scheduler (Job Scheduler):</strong> Selects processes from the job pool and loads them into memory</li>
+                <li><strong>Medium-term Scheduler:</strong> Swaps processes in and out of memory</li>
+                <li><strong>Short-term Scheduler (CPU Scheduler):</strong> Selects which process should be executed next</li>
+            </ul>
+
+            <h4>Scheduling Algorithms</h4>
+            
+            <h5>First Come First Serve (FCFS)</h5>
+            <div class="code-box">
+                <pre><code><span class="comment">// FCFS Scheduling Algorithm</span>
+<span class="keyword">void</span> fcfs_scheduling(<span class="keyword">struct</span> Process processes[], <span class="keyword">int</span> n) {
+    <span class="keyword">int</span> current_time = <span class="number">0</span>;
+    <span class="keyword">float</span> total_waiting_time = <span class="number">0</span>;
+    
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) {
+        <span class="comment">// Process arrives at current_time</span>
+        <span class="keyword">if</span>(current_time < processes[i].arrival_time) {
+            current_time = processes[i].arrival_time;
+        }
+        
+        <span class="comment">// Calculate waiting time</span>
+        processes[i].waiting_time = current_time - processes[i].arrival_time;
+        total_waiting_time += processes[i].waiting_time;
+        
+        <span class="comment">// Execute process</span>
+        current_time += processes[i].burst_time;
+        processes[i].completion_time = current_time;
+    }
+    
+    <span class="keyword">float</span> avg_waiting_time = total_waiting_time / n;
+    printf(<span class="string">"Average Waiting Time: %.2f\n"</span>, avg_waiting_time);
+}</code></pre>
+            </div>
+
+            <h5>Shortest Job First (SJF)</h5>
+            <div class="code-box">
+                <pre><code><span class="comment">// SJF Scheduling Algorithm (Non-preemptive)</span>
+<span class="keyword">void</span> sjf_scheduling(<span class="keyword">struct</span> Process processes[], <span class="keyword">int</span> n) {
+    <span class="keyword">int</span> current_time = <span class="number">0</span>;
+    <span class="keyword">int</span> completed = <span class="number">0</span>;
+    
+    <span class="keyword">while</span>(completed < n) {
+        <span class="keyword">int</span> shortest_job = -<span class="number">1</span>;
+        <span class="keyword">int</span> min_burst = INT_MAX;
+        
+        <span class="comment">// Find shortest job that has arrived</span>
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) {
+            <span class="keyword">if</span>(processes[i].arrival_time <= current_time && 
+               processes[i].remaining_time > <span class="number">0</span> && 
+               processes[i].burst_time < min_burst) {
+                shortest_job = i;
+                min_burst = processes[i].burst_time;
+            }
+        }
+        
+        <span class="keyword">if</span>(shortest_job == -<span class="number">1</span>) {
+            current_time++;
+            <span class="keyword">continue</span>;
+        }
+        
+        <span class="comment">// Execute the shortest job</span>
+        processes[shortest_job].waiting_time = current_time - processes[shortest_job].arrival_time;
+        current_time += processes[shortest_job].burst_time;
+        processes[shortest_job].completion_time = current_time;
+        processes[shortest_job].remaining_time = <span class="number">0</span>;
+        completed++;
+    }
+}</code></pre>
+            </div>
+
+            <h5>Round Robin (RR)</h5>
+            <div class="code-box">
+                <pre><code><span class="comment">// Round Robin Scheduling Algorithm</span>
+<span class="keyword">void</span> round_robin(<span class="keyword">struct</span> Process processes[], <span class="keyword">int</span> n, <span class="keyword">int</span> quantum) {
+    <span class="keyword">int</span> current_time = <span class="number">0</span>;
+    <span class="keyword">int</span> completed = <span class="number">0</span>;
+    
+    <span class="keyword">while</span>(completed < n) {
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) {
+            <span class="keyword">if</span>(processes[i].remaining_time > <span class="number">0</span> && 
+               processes[i].arrival_time <= current_time) {
+                
+                <span class="keyword">if</span>(processes[i].remaining_time > quantum) {
+                    current_time += quantum;
+                    processes[i].remaining_time -= quantum;
+                } <span class="keyword">else</span> {
+                    current_time += processes[i].remaining_time;
+                    processes[i].waiting_time = current_time - processes[i].arrival_time - processes[i].burst_time;
+                    processes[i].remaining_time = <span class="number">0</span>;
+                    completed++;
+                }
+            }
+        }
+    }
+}</code></pre>
+            </div>
+
+            <h5>Priority Scheduling</h5>
+            <div class="code-box">
+                <pre><code><span class="comment">// Priority Scheduling Algorithm</span>
+<span class="keyword">void</span> priority_scheduling(<span class="keyword">struct</span> Process processes[], <span class="keyword">int</span> n) {
+    <span class="keyword">int</span> current_time = <span class="number">0</span>;
+    <span class="keyword">int</span> completed = <span class="number">0</span>;
+    
+    <span class="keyword">while</span>(completed < n) {
+        <span class="keyword">int</span> highest_priority = -<span class="number">1</span>;
+        <span class="keyword">int</span> min_priority = INT_MAX;
+        
+        <span class="comment">// Find highest priority job that has arrived</span>
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) {
+            <span class="keyword">if</span>(processes[i].arrival_time <= current_time && 
+               processes[i].remaining_time > <span class="number">0</span> && 
+               processes[i].priority < min_priority) {
+                highest_priority = i;
+                min_priority = processes[i].priority;
+            }
+        }
+        
+        <span class="keyword">if</span>(highest_priority == -<span class="number">1</span>) {
+            current_time++;
+            <span class="keyword">continue</span>;
+        }
+        
+        <span class="comment">// Execute the highest priority job</span>
+        processes[highest_priority].waiting_time = current_time - processes[highest_priority].arrival_time;
+        current_time += processes[highest_priority].burst_time;
+        processes[highest_priority].completion_time = current_time;
+        processes[highest_priority].remaining_time = <span class="number">0</span>;
+        completed++;
+    }
+}</code></pre>
+            </div>
+
+            <h3>2.3 Threads</h3>
+            
+            <h4>Thread vs Process</h4>
+            <table class="complexity-table">
+                <thead>
+                    <tr>
+                        <th>Characteristic</th>
+                        <th>Process</th>
+                        <th>Thread</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Definition</td>
+                        <td>Program in execution</td>
+                        <td>Segment of a process</td>
+                    </tr>
+                    <tr>
+                        <td>Creation</td>
+                        <td>Independent</td>
+                        <td>Within process</td>
+                    </tr>
+                    <tr>
+                        <td>Memory</td>
+                        <td>Separate memory space</td>
+                        <td>Shared memory space</td>
+                    </tr>
+                    <tr>
+                        <td>Context Switch</td>
+                        <td>Expensive</td>
+                        <td>Inexpensive</td>
+                    </tr>
+                    <tr>
+                        <td>Communication</td>
+                        <td>Inter-process communication</td>
+                        <td>Shared memory</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Thread Implementation</h4>
+            
+            <h5>User Threads</h5>
+            <div class="code-box">
+                <pre><code><span class="comment">// User Thread Implementation in C</span>
+<span class="keyword">#include</span> &lt;pthread.h&gt;
+
+<span class="keyword">void</span>* thread_function(<span class="keyword">void</span>* arg) {
+    <span class="keyword">int</span> thread_id = *(<span class="keyword">int</span>*)arg;
+    printf(<span class="string">"Thread %d is running\n"</span>, thread_id);
+    <span class="keyword">return</span> NULL;
+}
+
+<span class="keyword">int</span> main() {
+    pthread_t threads[<span class="number">5</span>];
+    <span class="keyword">int</span> thread_ids[<span class="number">5</span>];
+    
+    <span class="comment">// Create threads</span>
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">5</span>; i++) {
+        thread_ids[i] = i;
+        pthread_create(&threads[i], NULL, thread_function, &thread_ids[i]);
+    }
+    
+    <span class="comment">// Wait for threads to complete</span>
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">5</span>; i++) {
+        pthread_join(threads[i], NULL);
+    }
+    
+    printf(<span class="string">"All threads completed\n"</span>);
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+            </div>
+
+            <h3>2.4 Process Synchronization</h3>
+            
+            <h4>Critical Section Problem</h4>
+            <div class="definition-box">
+                <strong>Critical Section:</strong> A critical section is a segment of code in a multi-process or multi-threaded program where shared resources (such as variables, data structures, files, or hardware devices) are accessed or modified. It is called "critical" because if multiple processes or threads execute this code simultaneously, it can lead to race conditions, data corruption, inconsistent states, or other unpredictable behavior. The fundamental requirement is that only one process or thread should execute in its critical section at any given time, ensuring mutual exclusion and data integrity.
+            </div>
+            
+            <div class="important">
+                <strong>Detailed Characteristics of Critical Sections:</strong>
+                <ul>
+                    <li><strong>Mutual Exclusion:</strong> Ensures that only one process can execute the critical section at any time, preventing concurrent access to shared resources</li>
+                    <li><strong>Progress:</strong> If no process is executing in its critical section, then a process that wants to enter its critical section should be allowed to do so without unnecessary delay</li>
+                    <li><strong>Bounded Waiting:</strong> A process should not wait indefinitely to enter its critical section, preventing starvation of processes</li>
+                    <li><strong>Shared Resource Protection:</strong> Protects shared variables, data structures, files, databases, or hardware devices from concurrent access</li>
+                    <li><strong>Race Condition Prevention:</strong> Prevents race conditions where the outcome depends on the relative timing of process execution</li>
+                    <li><strong>Data Consistency:</strong> Ensures that shared data remains in a consistent and valid state throughout program execution</li>
+                    <li><strong>Atomic Operations:</strong> Makes operations on shared resources appear atomic (indivisible) to other processes</li>
+                    <li><strong>Deadlock Prevention:</strong> Must be designed to avoid deadlock situations where processes wait indefinitely for each other</li>
+                </ul>
+            </div>
+
+            <h4>Peterson's Algorithm</h4>
+            <div class="code-box">
+                <pre><code><span class="comment">// Peterson's Algorithm for Two Processes</span>
+<span class="keyword">int</span> turn = <span class="number">0</span>;
+<span class="keyword">int</span> flag[<span class="number">2</span>] = {<span class="number">0</span>, <span class="number">0</span>};
+
+<span class="keyword">void</span> enter_critical_section(<span class="keyword">int</span> process_id) {
+    <span class="keyword">int</span> other = <span class="number">1</span> - process_id;
+    
+    flag[process_id] = <span class="number">1</span>;  
+    <span class="comment">// Show interest</span>
+    turn = other;        
+    <span class="comment">// Give turn to other process</span>
+    
+    <span class="comment">// Wait until other process is not interested or it's our turn</span>
+    <span class="keyword">while</span>(flag[other] == <span class="number">1</span> && turn == other) {
+        <span class="comment">// Busy wait</span>
+    }
+}
+
+<span class="keyword">void</span> exit_critical_section(<span class="keyword">int</span> process_id) {
+    flag[process_id] = <span class="number">0</span>;  
+    <span class="comment">// No longer interested</span>
+}</code></pre>
+            </div>
+
+            <h4>Semaphores</h4>
+            <div class="code-box">
+                <pre><code><span class="comment">// Semaphore Implementation</span>
+<span class="keyword">#include</span> &lt;semaphore.h&gt;
+
+sem_t mutex;  
+<span class="comment">// Binary semaphore for mutual exclusion</span>
+sem_t empty;  
+<span class="comment">// Counting semaphore for empty slots</span>
+sem_t full;   
+<span class="comment">// Counting semaphore for full slots</span>
+
+<span class="keyword">void</span> producer() {
+    <span class="keyword">while</span>(<span class="number">1</span>) {
+        <span class="comment">// Produce item</span>
+        sem_wait(&empty);  
+        <span class="comment">// Wait for empty slot</span>
+        sem_wait(&mutex);  
+        <span class="comment">// Enter critical section</span>
+        
+        <span class="comment">// Add item to buffer</span>
+        
+        sem_post(&mutex);  
+        <span class="comment">// Exit critical section</span>
+        sem_post(&full);   
+        <span class="comment">// Signal that buffer is full</span>
+    }
+}
+
+<span class="keyword">void</span> consumer() {
+    <span class="keyword">while</span>(<span class="number">1</span>) {
+        sem_wait(&full);   
+        <span class="comment">// Wait for full slot</span>
+        sem_wait(&mutex);  
+        <span class="comment">// Enter critical section</span>
+        
+        <span class="comment">// Remove item from buffer</span>
+        
+        sem_post(&mutex);  
+        <span class="comment">// Exit critical section</span>
+        sem_post(&empty);  
+        <span class="comment">// Signal that buffer is empty</span>
+    }
+}</code></pre>
+            </div>
+
+            <h4>Mutexes</h4>
+            <div class="code-box">
+                <pre><code><span class="comment">// Mutex Implementation</span>
+<span class="keyword">#include</span> &lt;pthread.h&gt;
+
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
+<span class="keyword">void</span>* thread_function(<span class="keyword">void</span>* arg) {
+    pthread_mutex_lock(&mutex);  
+    <span class="comment">// Acquire lock</span>
+    
+    <span class="comment">// Critical section</span>
+    printf(<span class="string">"Thread %d in critical section\n"</span>, *(<span class="keyword">int</span>*)arg);
+    
+    pthread_mutex_unlock(&mutex);  
+    <span class="comment">// Release lock</span>
+    <span class="keyword">return</span> NULL;
+}</code></pre>
+            </div>
+
+            <h4>Classic Concurrency Problems</h4>
+            
+            <h5>Dining Philosophers Problem</h5>
+            <div class="code-box">
+                <pre><code><span class="comment">// Dining Philosophers Problem Solution</span>
+<span class="keyword">#include</span> &lt;pthread.h&gt;
+<span class="keyword">#include</span> &lt;semaphore.h&gt;
+
+<span class="keyword">#define</span> N <span class="number">5</span>  
+<span class="comment">// Number of philosophers</span>
+
+sem_t chopsticks[N];
+sem_t mutex;
+
+<span class="keyword">void</span>* philosopher(<span class="keyword">void</span>* arg) {
+    <span class="keyword">int</span> id = *(<span class="keyword">int</span>*)arg;
+    <span class="keyword">int</span> left = id;
+    <span class="keyword">int</span> right = (id + <span class="number">1</span>) % N;
+    
+    <span class="keyword">while</span>(<span class="number">1</span>) {
+        <span class="comment">// Think</span>
+        printf(<span class="string">"Philosopher %d is thinking\n"</span>, id);
+        
+        <span class="comment">// Pick up chopsticks</span>
+        sem_wait(&mutex);
+        sem_wait(&chopsticks[left]);
+        sem_wait(&chopsticks[right]);
+        sem_post(&mutex);
+        
+        <span class="comment">// Eat</span>
+        printf(<span class="string">"Philosopher %d is eating\n"</span>, id);
+        
+        <span class="comment">// Put down chopsticks</span>
+        sem_post(&chopsticks[left]);
+        sem_post(&chopsticks[right]);
+    }
+    
+    <span class="keyword">return</span> NULL;
+}</code></pre>
+            </div>
+
+            <h5>Readers-Writers Problem</h5>
+            <div class="code-box">
+                <pre><code><span class="comment">// Readers-Writers Problem Solution</span>
+<span class="keyword">#include</span> &lt;pthread.h&gt;
+<span class="keyword">#include</span> &lt;semaphore.h&gt;
+
+sem_t mutex;      
+<span class="comment">// Protects read_count</span>
+sem_t write_lock; 
+<span class="comment">// Protects the shared resource</span>
+<span class="keyword">int</span> read_count = <span class="number">0</span>;
+
+<span class="keyword">void</span>* reader(<span class="keyword">void</span>* arg) {
+    <span class="keyword">int</span> id = *(<span class="keyword">int</span>*)arg;
+    
+    <span class="keyword">while</span>(<span class="number">1</span>) {
+        sem_wait(&mutex);
+        read_count++;
+        <span class="keyword">if</span>(read_count == <span class="number">1</span>) {
+            sem_wait(&write_lock);  
+            <span class="comment">// First reader blocks writers</span>
+        }
+        sem_post(&mutex);
+        
+        <span class="comment">// Read the shared resource</span>
+        printf(<span class="string">"Reader %d is reading\n"</span>, id);
+        
+        sem_wait(&mutex);
+        read_count--;
+        <span class="keyword">if</span>(read_count == <span class="number">0</span>) {
+            sem_post(&write_lock);  
+            <span class="comment">// Last reader allows writers</span>
+        }
+        sem_post(&mutex);
+    }
+    
+    <span class="keyword">return</span> NULL;
+}
+
+<span class="keyword">void</span>* writer(<span class="keyword">void</span>* arg) {
+    <span class="keyword">int</span> id = *(<span class="keyword">int</span>*)arg;
+    
+    <span class="keyword">while</span>(<span class="number">1</span>) {
+        sem_wait(&write_lock);
+        
+        <span class="comment">// Write to the shared resource</span>
+        printf(<span class="string">"Writer %d is writing\n"</span>, id);
+        
+        sem_post(&write_lock);
+    }
+    
+    <span class="keyword">return</span> NULL;
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Unit III: Deadlocks & Memory Management</h2>
+            
+            <h3>3.1 Deadlock</h3>
+            
+            <h4>Deadlock Definition</h4>
+            <div class="definition-box">
+                <strong>Deadlock:</strong> A deadlock is a situation in a multi-process system where two or more processes are unable to proceed because each is waiting for a resource that is held by another process in the set. It is a state of permanent blocking where processes are stuck in a circular wait condition, preventing any of them from making progress. Deadlocks are a fundamental problem in concurrent systems and can cause system-wide performance degradation or complete system failure if not properly managed.
+            </div>
+            
+            <div class="important">
+                <strong>Detailed Characteristics of Deadlocks:</strong>
+                <ul>
+                    <li><strong>Permanent Blocking:</strong> Once a deadlock occurs, the involved processes remain blocked indefinitely unless external intervention occurs</li>
+                    <li><strong>Resource Contention:</strong> Deadlocks arise from competition for limited system resources such as CPU, memory, files, or hardware devices</li>
+                    <li><strong>Circular Dependency:</strong> Processes form a circular chain where each process holds resources needed by the next process in the chain</li>
+                    <li><strong>System-wide Impact:</strong> Deadlocks can affect multiple processes and potentially the entire system, not just the directly involved processes</li>
+                    <li><strong>Predictable Conditions:</strong> Deadlocks occur only when all four necessary conditions are simultaneously satisfied</li>
+                    <li><strong>Detection Difficulty:</strong> Deadlocks can be difficult to detect in complex systems with many processes and resources</li>
+                    <li><strong>Recovery Complexity:</strong> Resolving deadlocks often requires process termination or resource preemption, which can be disruptive</li>
+                </ul>
+            </div>
+            
+            <h4>Deadlock Conditions</h4>
+            <div class="important">
+                <strong>Four necessary conditions for deadlock:</strong>
+                <ol>
+                    <li><strong>Mutual Exclusion:</strong> At least one resource must be non-shareable, meaning only one process can use it at a time. This condition prevents multiple processes from simultaneously accessing the same resource, creating the potential for resource contention.</li>
+                    <li><strong>Hold and Wait:</strong> A process must be holding at least one resource and waiting for additional resources that are currently held by other processes. This condition allows processes to hold resources while waiting for others, creating the potential for circular waiting.</li>
+                    <li><strong>No Preemption:</strong> Resources cannot be forcibly removed from a process that is holding them. The process must voluntarily release the resource when it completes its task, preventing forced resource reallocation.</li>
+                    <li><strong>Circular Wait:</strong> A set of processes must be waiting for each other in a circular manner, where each process holds a resource needed by the next process in the chain, creating a closed loop of resource dependencies.</li>
+                </ol>
+            </div>
+
+            <h4>Deadlock Prevention</h4>
+            <ul>
+                <li><strong>Eliminate Mutual Exclusion:</strong> Use shareable resources</li>
+                <li><strong>Eliminate Hold and Wait:</strong> Request all resources at once</li>
+                <li><strong>Allow Preemption:</strong> Force resource release</li>
+                <li><strong>Eliminate Circular Wait:</strong> Use resource ordering</li>
+            </ul>
+
+            <h4>Banker's Algorithm</h4>
+            <div class="code-box">
+                <pre><code><span class="comment">// Banker's Algorithm Implementation</span>
+<span class="keyword">#define</span> MAX_PROCESSES <span class="number">5</span>
+<span class="keyword">#define</span> MAX_RESOURCES <span class="number">3</span>
+
+<span class="keyword">int</span> available[MAX_RESOURCES];
+<span class="keyword">int</span> maximum[MAX_PROCESSES][MAX_RESOURCES];
+<span class="keyword">int</span> allocation[MAX_PROCESSES][MAX_RESOURCES];
+<span class="keyword">int</span> need[MAX_PROCESSES][MAX_RESOURCES];
+<span class="keyword">int</span> finish[MAX_PROCESSES] = {<span class="number">0</span>};
+
+<span class="keyword">int</span> is_safe_state() {
+    <span class="keyword">int</span> work[MAX_RESOURCES];
+    <span class="keyword">int</span> safe_sequence[MAX_PROCESSES];
+    <span class="keyword">int</span> count = <span class="number">0</span>;
+    
+    <span class="comment">// Initialize work array</span>
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < MAX_RESOURCES; i++) {
+        work[i] = available[i];
+    }
+    
+    <span class="comment">// Find a process that can be allocated resources</span>
+    <span class="keyword">while</span>(count < MAX_PROCESSES) {
+        <span class="keyword">int</span> found = <span class="number">0</span>;
+        
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < MAX_PROCESSES; i++) {
+            <span class="keyword">if</span>(!finish[i]) {
+                <span class="keyword">int</span> can_allocate = <span class="number">1</span>;
+                
+                <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j < MAX_RESOURCES; j++) {
+                    <span class="keyword">if</span>(need[i][j] > work[j]) {
+                        can_allocate = <span class="number">0</span>;
+                        <span class="keyword">break</span>;
+                    }
+                }
+                
+                <span class="keyword">if</span>(can_allocate) {
+                    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j < MAX_RESOURCES; j++) {
+                        work[j] += allocation[i][j];
+                    }
+                    safe_sequence[count] = i;
+                    finish[i] = <span class="number">1</span>;
+                    count++;
+                    found = <span class="number">1</span>;
+                }
+            }
+        }
+        
+        <span class="keyword">if</span>(!found) {
+            <span class="keyword">return</span> <span class="number">0</span>; 
+            <span class="comment">// Deadlock detected</span>
+        }
+    }
+    
+    <span class="keyword">return</span> <span class="number">1</span>; 
+    <span class="comment">// Safe state</span>
+}</code></pre>
+            </div>
+
+            <h3>3.2 Memory Management</h3>
+            
+            <h4>Memory Allocation Techniques</h4>
+            <div class="definition-box">
+                <strong>Memory Allocation:</strong> Memory allocation is the process of assigning portions of computer memory to programs and processes for their execution. The operating system manages memory allocation to ensure efficient use of available memory resources, prevent memory conflicts between processes, and provide optimal performance. Different allocation techniques are used depending on the system requirements, memory constraints, and performance goals.
+            </div>
+            
+            <div class="important">
+                <strong>1. Partitioning Techniques:</strong>
+                <ul>
+                    <li><strong>Fixed Partitioning:</strong> Memory is divided into fixed-size partitions of predetermined sizes. Each partition can hold exactly one process, and processes must fit entirely within a partition. This method is simple to implement but suffers from internal fragmentation when processes are smaller than their allocated partitions.</li>
+                    <li><strong>Variable Partitioning:</strong> Memory is divided dynamically based on the actual size of processes. Partitions are created and destroyed as processes arrive and depart, allowing for more efficient memory utilization. This method eliminates internal fragmentation but may create external fragmentation over time.</li>
+                    <li><strong>Best Fit:</strong> Allocates the smallest partition that is large enough to hold the process. This minimizes internal fragmentation by finding the closest match between process size and partition size, but requires searching through all available partitions.</li>
+                    <li><strong>Worst Fit:</strong> Allocates the largest available partition to a process. This approach leaves larger remaining fragments, which may be more useful for future allocations, but can lead to inefficient memory utilization.</li>
+                    <li><strong>First Fit:</strong> Allocates the first partition that is large enough to hold the process. This is the fastest allocation method as it stops searching at the first suitable partition, but may not be the most efficient in terms of memory utilization.</li>
+                </ul>
+            </div>
+
+            <h4>Paging</h4>
+            <div class="code-box">
+                <pre><code><span class="comment">// Page Table Entry Structure</span>
+<span class="keyword">struct</span> page_table_entry {
+    <span class="keyword">int</span> frame_number;     
+    <span class="comment">// Physical frame number</span>
+    <span class="keyword">int</span> valid_bit;        
+    <span class="comment">// 1 if page is in memory</span>
+    <span class="keyword">int</span> dirty_bit;        
+    <span class="comment">// 1 if page has been modified</span>
+    <span class="keyword">int</span> reference_bit;    
+    <span class="comment">// 1 if page has been accessed</span>
+    <span class="keyword">int</span> protection;       
+    <span class="comment">// Read/write permissions</span>
+};</code></pre>
+            </div>
+
+            <h4>Virtual Memory</h4>
+            <div class="definition-box">
+                <strong>Virtual Memory:</strong> Virtual memory is a memory management technique that allows a computer to use more memory than is physically available by temporarily transferring data from random access memory (RAM) to disk storage. It creates an illusion of a large, contiguous memory space by combining physical memory and disk storage, enabling programs to run even when they require more memory than is physically available. Virtual memory provides memory isolation between processes, efficient memory utilization, and support for programs larger than physical memory.
+            </div>
+            
+            <div class="important">
+                <strong>Detailed Virtual Memory Characteristics:</strong>
+                <ul>
+                    <li><strong>Memory Abstraction:</strong> Provides a uniform address space that is independent of the actual physical memory layout</li>
+                    <li><strong>Process Isolation:</strong> Each process has its own virtual address space, preventing one process from accessing another's memory</li>
+                    <li><strong>Memory Protection:</strong> Implements access control mechanisms to prevent unauthorized memory access and ensure system security</li>
+                    <li><strong>Demand Paging:</strong> Pages are loaded into memory only when needed, reducing initial memory requirements and improving system performance</li>
+                    <li><strong>Page Sharing:</strong> Allows multiple processes to share the same physical pages for code and data, reducing memory usage</li>
+                    <li><strong>Memory Overcommitment:</strong> Enables the system to allocate more virtual memory than physical memory, improving memory utilization</li>
+                    <li><strong>Transparent Implementation:</strong> Applications are unaware of the virtual memory system and work with virtual addresses transparently</li>
+                </ul>
+            </div>
+            
+            <div class="important">
+                <strong>Page Replacement Algorithms:</strong>
+                <ul>
+                    <li><strong>FIFO (First In First Out):</strong> Replaces the oldest page in memory, simple to implement but may not consider page usage patterns</li>
+                    <li><strong>LRU (Least Recently Used):</strong> Replaces the page that has not been accessed for the longest time, based on the principle of locality</li>
+                    <li><strong>Optimal:</strong> Replaces the page that will not be used for the longest time in the future, theoretical algorithm used for comparison</li>
+                    <li><strong>Clock Algorithm:</strong> Uses a circular buffer with a reference bit to approximate LRU behavior with lower overhead</li>
+                    <li><strong>Second Chance:</strong> Gives pages a second chance before replacement by checking the reference bit</li>
+                    <li><strong>Working Set:</strong> Keeps only the pages that are actively being used by each process in memory</li>
+                </ul>
+            </div>
+
+            <h4>Thrashing</h4>
+            <div class="definition-box">
+                <strong>Thrashing:</strong> Thrashing is a severe performance degradation condition in virtual memory systems where the operating system spends an excessive amount of time swapping pages between main memory and secondary storage (disk) instead of executing actual user processes. This occurs when the system is overwhelmed with page faults, causing a continuous cycle of page swapping that dramatically reduces system performance and responsiveness.
+            </div>
+            
+            <div class="important">
+                <strong>Detailed Causes and Characteristics of Thrashing:</strong>
+                <ul>
+                    <li><strong>Memory Overcommitment:</strong> When too many processes are competing for limited physical memory, causing frequent page faults and continuous swapping</li>
+                    <li><strong>Inefficient Page Replacement:</strong> Poor page replacement algorithms that don't consider locality of reference, leading to unnecessary page swaps</li>
+                    <li><strong>Working Set Exceedance:</strong> When the total working set size of all active processes exceeds the available physical memory capacity</li>
+                    <li><strong>Locality Violation:</strong> Processes that don't exhibit good spatial or temporal locality, causing frequent page faults</li>
+                    <li><strong>Memory Fragmentation:</strong> Internal or external fragmentation that reduces effective memory utilization</li>
+                    <li><strong>I/O Bottleneck:</strong> Slow disk I/O operations that cause page swapping to become a major performance bottleneck</li>
+                    <li><strong>System Response Degradation:</strong> Dramatic increase in response time and decrease in throughput as the system becomes unresponsive</li>
+                    <li><strong>CPU Utilization Drop:</strong> CPU utilization drops significantly as the system spends most time waiting for I/O operations</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Unit IV: File Systems & I/O Management</h2>
+            
+            <h3>4.1 File Systems</h3>
+            
+            <h4>File Concept</h4>
+            <div class="definition-box">
+                <strong>File:</strong> A file is a named collection of related information that is stored on secondary storage devices such as hard disks, solid-state drives, or optical media. Files serve as the basic unit of data storage and organization in computer systems, providing a logical abstraction over physical storage devices. Files can contain various types of data including text, images, programs, databases, or any other digital information, and they are managed by the operating system's file system component.
+            </div>
+            
+            <div class="important">
+                <strong>Detailed File Characteristics:</strong>
+                <ul>
+                    <li><strong>Persistence:</strong> Files provide permanent storage that survives system reboots and power failures, unlike volatile memory</li>
+                    <li><strong>Named Access:</strong> Files are accessed through human-readable names that provide a convenient way to reference stored data</li>
+                    <li><strong>Hierarchical Organization:</strong> Files are organized in directory structures that allow logical grouping and easy navigation</li>
+                    <li><strong>Access Control:</strong> Files support various protection mechanisms including read, write, execute permissions and user-based access control</li>
+                    <li><strong>Metadata Storage:</strong> Files store additional information about themselves including creation time, modification time, size, and ownership</li>
+                    <li><strong>Device Independence:</strong> Files provide a uniform interface regardless of the underlying storage device characteristics</li>
+                    <li><strong>Sharing Capability:</strong> Files can be shared between multiple users and processes with appropriate access controls</li>
+                    <li><strong>Backup and Recovery:</strong> Files support backup and recovery operations for data protection and disaster recovery</li>
+                </ul>
+            </div>
+            
+            <div class="important">
+                <strong>File Attributes:</strong>
+                <ul>
+                    <li><strong>Name:</strong> Human-readable identifier that uniquely identifies the file within its directory context</li>
+                    <li><strong>Type:</strong> File extension or internal type that indicates the file's format and how it should be processed</li>
+                    <li><strong>Location:</strong> Pointer to file location on device, including device ID, track, sector, and block information</li>
+                    <li><strong>Size:</strong> Current file size in bytes, which may change as the file is modified during its lifetime</li>
+                    <li><strong>Protection:</strong> Access control information including read, write, execute permissions for owner, group, and others</li>
+                    <li><strong>Time, Date, User ID:</strong> Metadata for tracking creation time, last modification time, last access time, and file ownership</li>
+                </ul>
+            </div>
+
+            <h4>Directory Structures</h4>
+            <div class="code-box">
+                <pre><code><span class="comment">// Directory Entry Structure</span>
+<span class="keyword">struct</span> directory_entry {
+    <span class="keyword">char</span> filename[<span class="number">32</span>];
+    <span class="keyword">int</span> inode_number;
+    <span class="keyword">char</span> file_type;        
+    <span class="comment">// 'f' for file, 'd' for directory</span>
+    <span class="keyword">long</span> file_size;
+    <span class="keyword">time_t</span> creation_time;
+    <span class="keyword">time_t</span> modification_time;
+};</code></pre>
+            </div>
+
+            <h4>File Allocation Methods</h4>
+            <div class="important">
+                <strong>1. Contiguous Allocation:</strong>
+                <ul>
+                    <li><strong>Storage Method:</strong> Files are stored in consecutive blocks on the disk, with each file occupying a continuous sequence of disk blocks</li>
+                    <li><strong>Fast Sequential Access:</strong> Excellent performance for sequential file access since all blocks are adjacent and can be read in a single disk operation</li>
+                    <li><strong>External Fragmentation Problem:</strong> Creates external fragmentation as files are created and deleted, leaving gaps that may be too small for new files</li>
+                    <li><strong>File Size Limitation:</strong> Requires knowing the maximum file size in advance, which can be difficult to predict</li>
+                    <li><strong>Simple Implementation:</strong> Straightforward to implement and manage, with direct block addressing</li>
+                </ul>
+                
+                <strong>2. Linked Allocation:</strong>
+                <ul>
+                    <li><strong>Storage Method:</strong> Files are stored as a linked list of disk blocks, where each block contains a pointer to the next block in the file</li>
+                    <li><strong>No External Fragmentation:</strong> Eliminates external fragmentation since any free block can be used to store file data</li>
+                    <li><strong>Slow Random Access:</strong> Poor performance for random access since the system must traverse the linked list to reach a specific block</li>
+                    <li><strong>Space Overhead:</strong> Each block contains a pointer, reducing the effective storage capacity for actual file data</li>
+                    <li><strong>Reliability Issues:</strong> If one block pointer is corrupted, the entire file becomes inaccessible</li>
+                </ul>
+                
+                <strong>3. Indexed Allocation:</strong>
+                <ul>
+                    <li><strong>Storage Method:</strong> Uses an index block that contains pointers to all the blocks belonging to a file, similar to a page table in memory management</li>
+                    <li><strong>Supports Random Access:</strong> Excellent random access performance since any block can be accessed directly through the index</li>
+                    <li><strong>Overhead of Index Block:</strong> Each file requires an index block, which consumes additional disk space</li>
+                    <li><strong>Flexible File Size:</strong> Supports files of varying sizes without the fragmentation problems of contiguous allocation</li>
+                    <li><strong>Complex Implementation:</strong> More complex to implement and manage compared to other allocation methods</li>
+                </ul>
+            </div>
+
+            <h3>4.2 I/O Management</h3>
+            
+            <h4>Disk Structure and Scheduling</h4>
+            <div class="definition-box">
+                <strong>Disk Structure:</strong> A disk consists of multiple platters, each with two surfaces. Each surface is divided into concentric circles called tracks, and tracks are further divided into sectors. The disk head moves across tracks to read/write data, and the time taken for this movement is called seek time. The disk scheduling algorithms optimize the order of disk requests to minimize total seek time and improve overall disk performance.
+            </div>
+            
+            <div class="important">
+                <strong>Disk Performance Metrics:</strong>
+                <ul>
+                    <li><strong>Seek Time:</strong> Time taken to move the disk head from current track to target track</li>
+                    <li><strong>Rotational Latency:</strong> Time for the desired sector to rotate under the disk head</li>
+                    <li><strong>Transfer Time:</strong> Time to transfer data between disk and memory</li>
+                    <li><strong>Total Access Time:</strong> Sum of seek time, rotational latency, and transfer time</li>
+                    <li><strong>Throughput:</strong> Number of I/O operations completed per unit time</li>
+                </ul>
+            </div>
+            
+            <div class="code-box">
+                <pre><code><span class="comment">// Disk Scheduling Algorithms</span>
+
+<span class="comment">// First Come First Serve (FCFS)</span>
+<span class="keyword">int</span> fcfs(<span class="keyword">int</span> requests[], <span class="keyword">int</span> n, <span class="keyword">int</span> head) {
+    <span class="keyword">int</span> total_seek = <span class="number">0</span>;
+    
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) {
+        total_seek += abs(requests[i] - head);
+        head = requests[i];
+    }
+    
+    <span class="keyword">return</span> total_seek;
+}
+
+<span class="comment">// Shortest Seek Time First (SSTF)</span>
+<span class="keyword">int</span> sstf(<span class="keyword">int</span> requests[], <span class="keyword">int</span> n, <span class="keyword">int</span> head) {
+    <span class="keyword">int</span> total_seek = <span class="number">0</span>;
+    <span class="keyword">int</span> visited[<span class="number">1000</span>] = {<span class="number">0</span>};
+    
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) {
+        <span class="keyword">int</span> min_distance = INT_MAX;
+        <span class="keyword">int</span> min_index = -<span class="number">1</span>;
+        
+        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j < n; j++) {
+            <span class="keyword">if</span>(!visited[j]) {
+                <span class="keyword">int</span> distance = abs(requests[j] - head);
+                <span class="keyword">if</span>(distance < min_distance) {
+                    min_distance = distance;
+                    min_index = j;
+                }
+            }
+        }
+        
+        total_seek += min_distance;
+        head = requests[min_index];
+        visited[min_index] = <span class="number">1</span>;
+    }
+    
+    <span class="keyword">return</span> total_seek;
+}
+
+<span class="comment">// SCAN (Elevator) Algorithm</span>
+<span class="keyword">int</span> scan(<span class="keyword">int</span> requests[], <span class="keyword">int</span> n, <span class="keyword">int</span> head, <span class="keyword">int</span> direction) {
+    <span class="keyword">int</span> total_seek = <span class="number">0</span>;
+    <span class="keyword">int</span> visited[<span class="number">1000</span>] = {<span class="number">0</span>};
+    
+    <span class="comment">// Sort requests for efficient processing</span>
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < n-<span class="number">1</span>; i++) {
+        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j < n-i-<span class="number">1</span>; j++) {
+            <span class="keyword">if</span>(requests[j] > requests[j+<span class="number">1</span>]) {
+                <span class="keyword">int</span> temp = requests[j];
+                requests[j] = requests[j+<span class="number">1</span>];
+                requests[j+<span class="number">1</span>] = temp;
+            }
+        }
+    }
+    
+    <span class="comment">// Process requests based on direction</span>
+    <span class="keyword">if</span>(direction == <span class="number">1</span>) { <span class="comment">// Moving towards higher tracks</span>
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) {
+            <span class="keyword">if</span>(requests[i] >= head) {
+                total_seek += abs(requests[i] - head);
+                head = requests[i];
+            }
+        }
+        <span class="comment">// Reverse direction and process remaining requests</span>
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = n-<span class="number">1</span>; i >= <span class="number">0</span>; i--) {
+            <span class="keyword">if</span>(requests[i] < head) {
+                total_seek += abs(requests[i] - head);
+                head = requests[i];
+            }
+        }
+    } <span class="keyword">else</span> { <span class="comment">// Moving towards lower tracks</span>
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = n-<span class="number">1</span>; i >= <span class="number">0</span>; i--) {
+            <span class="keyword">if</span>(requests[i] <= head) {
+                total_seek += abs(requests[i] - head);
+                head = requests[i];
+            }
+        }
+        <span class="comment">// Reverse direction and process remaining requests</span>
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) {
+            <span class="keyword">if</span>(requests[i] > head) {
+                total_seek += abs(requests[i] - head);
+                head = requests[i];
+            }
+        }
+    }
+    
+    <span class="keyword">return</span> total_seek;
+}</code></pre>
+            </div>
+
+            <h4>RAID Organizations</h4>
+            <div class="definition-box">
+                <strong>RAID (Redundant Array of Independent Disks):</strong> RAID is a storage technology that combines multiple physical disk drives into a single logical unit for the purposes of data redundancy, performance improvement, or both. RAID systems distribute data across multiple disks using various techniques such as striping, mirroring, and parity to achieve different levels of fault tolerance and performance characteristics.
+            </div>
+            
+            <div class="important">
+                <strong>RAID Levels and Their Characteristics:</strong>
+                <ul>
+                    <li><strong>RAID 0 (Striping):</strong> 
+                        <ul>
+                            <li>Data is distributed across multiple disks in stripes</li>
+                            <li>Provides maximum performance improvement through parallel I/O operations</li>
+                            <li>No redundancy - if one disk fails, all data is lost</li>
+                            <li>Storage efficiency: 100% (no space overhead)</li>
+                            <li>Best for: High-performance applications where data loss is acceptable</li>
+                        </ul>
+                    </li>
+                    <li><strong>RAID 1 (Mirroring):</strong> 
+                        <ul>
+                            <li>Data is duplicated on two or more identical disks</li>
+                            <li>Provides excellent fault tolerance - can survive failure of all but one disk</li>
+                            <li>Read performance is improved due to parallel reads</li>
+                            <li>Write performance may be slightly degraded</li>
+                            <li>Storage efficiency: 50% (half the space is used for redundancy)</li>
+                            <li>Best for: Critical data that requires high availability</li>
+                        </ul>
+                    </li>
+                    <li><strong>RAID 5 (Distributed Parity):</strong> 
+                        <ul>
+                            <li>Uses distributed parity across all disks in the array</li>
+                            <li>Can survive failure of one disk without data loss</li>
+                            <li>Good read performance, moderate write performance</li>
+                            <li>Storage efficiency: (n-1)/n where n is the number of disks</li>
+                            <li>Write penalty due to parity calculation</li>
+                            <li>Best for: Balanced performance and fault tolerance</li>
+                        </ul>
+                    </li>
+                    <li><strong>RAID 6 (Double Parity):</strong> 
+                        <ul>
+                            <li>Uses two parity blocks distributed across all disks</li>
+                            <li>Can survive failure of two disks simultaneously</li>
+                            <li>Higher fault tolerance than RAID 5</li>
+                            <li>Storage efficiency: (n-2)/n where n is the number of disks</li>
+                            <li>Higher write penalty due to dual parity calculation</li>
+                            <li>Best for: High-reliability requirements with larger disk arrays</li>
+                        </ul>
+                    </li>
+                    <li><strong>RAID 10 (Striped Mirrors):</strong> 
+                        <ul>
+                            <li>Combines RAID 0 striping with RAID 1 mirroring</li>
+                            <li>Excellent performance and fault tolerance</li>
+                            <li>Can survive failure of one disk in each mirrored pair</li>
+                            <li>Storage efficiency: 50% (same as RAID 1)</li>
+                            <li>Requires minimum of 4 disks</li>
+                            <li>Best for: High-performance applications requiring fault tolerance</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="code-box">
+                <pre><code><span class="comment">// RAID 5 Parity Calculation</span>
+<span class="keyword">unsigned</span> <span class="keyword">char</span> calculate_parity(<span class="keyword">unsigned</span> <span class="keyword">char</span> data[], <span class="keyword">int</span> size) {
+    <span class="keyword">unsigned</span> <span class="keyword">char</span> parity = <span class="number">0</span>;
+    
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < size; i++) {
+        parity ^= data[i]; <span class="comment">// XOR operation for parity</span>
+    }
+    
+    <span class="keyword">return</span> parity;
+}
+
+<span class="comment">// RAID 5 Data Recovery</span>
+<span class="keyword">unsigned</span> <span class="keyword">char</span> recover_data(<span class="keyword">unsigned</span> <span class="keyword">char</span> data[], <span class="keyword">int</span> size, 
+                           <span class="keyword">unsigned</span> <span class="keyword">char</span> parity, <span class="keyword">int</span> failed_index) {
+    <span class="keyword">unsigned</span> <span class="keyword">char</span> recovered = parity;
+    
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < size; i++) {
+        <span class="keyword">if</span>(i != failed_index) {
+            recovered ^= data[i];
+        }
+    }
+    
+    <span class="keyword">return</span> recovered;
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Unit V: Protection, Security & Case Studies</h2>
+            
+            <h3>5.1 Protection & Security</h3>
+            
+            <h4>Access Control Models</h4>
+            <div class="definition-box">
+                <strong>Access Control:</strong> Access control is a security mechanism that regulates who or what can view or use resources in a computing environment. It is a fundamental concept in security that minimizes risk to the business or organization. Access control systems perform authorization identification, authentication, access approval, and accountability of entities through login credentials including passwords, personal identification numbers (PINs), biometric scans, and physical or electronic keys.
+            </div>
+            
+            <div class="important">
+                <strong>Access Control Models:</strong>
+                <ul>
+                    <li><strong>Discretionary Access Control (DAC):</strong> The owner of the resource determines who can access it and what permissions they have</li>
+                    <li><strong>Mandatory Access Control (MAC):</strong> Access is controlled by the system based on security labels and clearance levels</li>
+                    <li><strong>Role-Based Access Control (RBAC):</strong> Access is granted based on the role of the user in the organization</li>
+                    <li><strong>Attribute-Based Access Control (ABAC):</strong> Access is determined by evaluating attributes of the user, resource, and environment</li>
+                </ul>
+            </div>
+            
+            <div class="code-box">
+                <pre><code><span class="comment">// Access Control Matrix Implementation</span>
+<span class="keyword">struct</span> access_control_entry {
+    <span class="keyword">char</span> subject[<span class="number">32</span>];    <span class="comment">// User or process identifier</span>
+    <span class="keyword">char</span> object[<span class="number">32</span>];     <span class="comment">// File or resource identifier</span>
+    <span class="keyword">int</span> permissions;        <span class="comment">// Read, Write, Execute permissions</span>
+};
+
+<span class="comment">// Access Control Matrix</span>
+<span class="keyword">struct</span> access_control_matrix {
+    <span class="keyword">struct</span> access_control_entry entries[<span class="number">1000</span>];
+    <span class="keyword">int</span> entry_count;
+};
+
+<span class="comment">// Check access permissions</span>
+<span class="keyword">int</span> check_access(<span class="keyword">char</span>* subject, <span class="keyword">char</span>* object, <span class="keyword">int</span> permission) {
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < matrix.entry_count; i++) {
+        <span class="keyword">if</span>(strcmp(matrix.entries[i].subject, subject) == <span class="number">0</span> && 
+           strcmp(matrix.entries[i].object, object) == <span class="number">0</span>) {
+            <span class="keyword">return</span> (matrix.entries[i].permissions & permission) == permission;
+        }
+    }
+    <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">// Access denied</span>
+}
+
+<span class="comment">// Role-Based Access Control Implementation</span>
+<span class="keyword">struct</span> role {
+    <span class="keyword">char</span> role_name[<span class="number">32</span>];
+    <span class="keyword">int</span> permissions;
+};
+
+<span class="keyword">struct</span> user {
+    <span class="keyword">char</span> username[<span class="number">32</span>];
+    <span class="keyword">char</span> roles[<span class="number">10</span>][<span class="number">32</span>];
+    <span class="keyword">int</span> role_count;
+};
+
+<span class="keyword">int</span> check_rbac_access(<span class="keyword">struct</span> user* user, <span class="keyword">char</span>* resource, <span class="keyword">int</span> permission) {
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < user->role_count; i++) {
+        <span class="keyword">if</span>(has_role_permission(user->roles[i], resource, permission)) {
+            <span class="keyword">return</span> <span class="number">1</span>;
+        }
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+            </div>
+
+            <h4>Authentication Mechanisms</h4>
+            <div class="definition-box">
+                <strong>Authentication:</strong> Authentication is the process of verifying the identity of a user, device, or system. It is a critical component of security that ensures only authorized entities can access protected resources. Authentication mechanisms use various factors including something you know (passwords), something you have (tokens), and something you are (biometrics) to establish identity with varying levels of security and convenience.
+            </div>
+            
+            <div class="important">
+                <strong>Authentication Methods and Their Characteristics:</strong>
+                <ul>
+                    <li><strong>Password-based Authentication:</strong> 
+                        <ul>
+                            <li>Traditional username/password combination</li>
+                            <li>Advantages: Simple to implement, widely supported, low cost</li>
+                            <li>Disadvantages: Vulnerable to brute force, phishing, and social engineering</li>
+                            <li>Security measures: Password complexity requirements, account lockout, encryption</li>
+                            <li>Best practices: Strong passwords, regular changes, secure storage</li>
+                        </ul>
+                    </li>
+                    <li><strong>Biometric Authentication:</strong> 
+                        <ul>
+                            <li>Uses unique physical or behavioral characteristics</li>
+                            <li>Types: Fingerprint, retina/iris scan, voice recognition, facial recognition, gait analysis</li>
+                            <li>Advantages: Difficult to forge, convenient, no need to remember credentials</li>
+                            <li>Disadvantages: Can be expensive, privacy concerns, false acceptance/rejection rates</li>
+                            <li>Applications: Mobile devices, secure facilities, financial transactions</li>
+                        </ul>
+                    </li>
+                    <li><strong>Token-based Authentication:</strong> 
+                        <ul>
+                            <li>Uses physical or digital tokens for authentication</li>
+                            <li>Types: Smart cards, security tokens, USB keys, mobile apps</li>
+                            <li>Advantages: High security, difficult to duplicate, time-based codes</li>
+                            <li>Disadvantages: Can be lost or stolen, additional hardware cost</li>
+                            <li>Examples: RSA SecurID, Google Authenticator, YubiKey</li>
+                        </ul>
+                    </li>
+                    <li><strong>Multi-factor Authentication (MFA):</strong> 
+                        <ul>
+                            <li>Combines multiple authentication methods for enhanced security</li>
+                            <li>Factors: Knowledge (password), possession (token), inherence (biometric)</li>
+                            <li>Advantages: Significantly higher security, defense in depth</li>
+                            <li>Disadvantages: More complex setup, potential user resistance</li>
+                            <li>Implementation: Two-factor (2FA), three-factor (3FA), adaptive authentication</li>
+                        </ul>
+                    </li>
+                    <li><strong>Certificate-based Authentication:</strong> 
+                        <ul>
+                            <li>Uses digital certificates for identity verification</li>
+                            <li>Components: Public key infrastructure (PKI), certificate authorities (CA)</li>
+                            <li>Advantages: Strong cryptographic security, non-repudiation</li>
+                            <li>Disadvantages: Complex infrastructure, certificate management overhead</li>
+                            <li>Applications: SSL/TLS, VPN, enterprise authentication</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="code-box">
+                <pre><code><span class="comment">// Password Authentication System</span>
+<span class="keyword">#include</span> &lt;stdio.h&gt;
+<span class="keyword">#include</span> &lt;string.h&gt;
+<span class="keyword">#include</span> &lt;openssl/sha.h&gt;
+
+<span class="keyword">struct</span> user_account {
+    <span class="keyword">char</span> username[<span class="number">32</span>];
+    <span class="keyword">char</span> password_hash[<span class="number">64</span>];
+    <span class="keyword">char</span> salt[<span class="number">16</span>];
+    <span class="keyword">int</span> failed_attempts;
+    <span class="keyword">time_t</span> lockout_time;
+};
+
+<span class="comment">// Hash password with salt</span>
+<span class="keyword">void</span> hash_password(<span class="keyword">const</span> <span class="keyword">char</span>* password, <span class="keyword">const</span> <span class="keyword">char</span>* salt, <span class="keyword">char</span>* hash) {
+    <span class="keyword">char</span> salted_password[<span class="number">256</span>];
+    sprintf(salted_password, <span class="string">"%s%s"</span>, password, salt);
+    
+    SHA256_CTX ctx;
+    SHA256_Init(&ctx);
+    SHA256_Update(&ctx, salted_password, strlen(salted_password));
+    SHA256_Final((<span class="keyword">unsigned</span> <span class="keyword">char</span>*)hash, &ctx);
+}
+
+<span class="comment">// Verify password</span>
+<span class="keyword">int</span> verify_password(<span class="keyword">struct</span> user_account* account, <span class="keyword">const</span> <span class="keyword">char</span>* password) {
+    <span class="keyword">char</span> computed_hash[<span class="number">64</span>];
+    hash_password(password, account->salt, computed_hash);
+    
+    <span class="keyword">return</span> strcmp(account->password_hash, computed_hash) == <span class="number">0</span>;
+}
+
+<span class="comment">// Two-Factor Authentication with TOTP</span>
+<span class="keyword">int</span> verify_totp(<span class="keyword">const</span> <span class="keyword">char</span>* secret, <span class="keyword">int</span> code) {
+    time_t current_time = time(NULL);
+    <span class="keyword">int</span> time_step = <span class="number">30</span>; <span class="comment">// 30-second window</span>
+    <span class="keyword">int</span> counter = current_time / time_step;
+    
+    <span class="comment">// Generate TOTP code (simplified)</span>
+    <span class="keyword">int</span> expected_code = generate_totp(secret, counter);
+    
+    <span class="comment">// Check current and adjacent windows for clock skew</span>
+    <span class="keyword">return</span> (code == expected_code || 
+            code == generate_totp(secret, counter - <span class="number">1</span>) || 
+            code == generate_totp(secret, counter + <span class="number">1</span>));
+}</code></pre>
+            </div>
+
+            <h3>5.2 Operating System Case Studies</h3>
+            
+            <h4>Unix/Linux Operating System</h4>
+            <div class="definition-box">
+                <strong>Unix/Linux:</strong> Unix is a family of multitasking, multiuser computer operating systems that derive from the original AT&T Unix, developed in the 1970s at the Bell Labs research center. Linux is a Unix-like operating system kernel that was created by Linus Torvalds in 1991. The combination of Linux kernel with GNU tools and other software forms what is commonly known as the Linux operating system.
+            </div>
+            
+            <div class="important">
+                <strong>Key Features and Architecture:</strong>
+                <ul>
+                    <li><strong>Monolithic Kernel Architecture:</strong> 
+                        <ul>
+                            <li>All operating system services run in kernel space</li>
+                            <li>Direct hardware access for better performance</li>
+                            <li>Loadable kernel modules for extensibility</li>
+                            <li>Efficient system calls and inter-process communication</li>
+                        </ul>
+                    </li>
+                    <li><strong>Process Management:</strong> 
+                        <ul>
+                            <li>Fork-exec model for process creation</li>
+                            <li>Process hierarchy with parent-child relationships</li>
+                            <li>Process states: running, ready, blocked, zombie</li>
+                            <li>Process scheduling with priority-based algorithms</li>
+                        </ul>
+                    </li>
+                    <li><strong>File System Philosophy:</strong> 
+                        <ul>
+                            <li>"Everything is a file" - devices, processes, network connections</li>
+                            <li>Hierarchical directory structure starting from root (/)</li>
+                            <li>Virtual file system (VFS) for multiple file system support</li>
+                            <li>File permissions: read, write, execute for owner, group, others</li>
+                        </ul>
+                    </li>
+                    <li><strong>Shell and Command Line:</strong> 
+                        <ul>
+                            <li>Command-line interface as primary user interface</li>
+                            <li>Shell scripting for automation and system administration</li>
+                            <li>Pipeline concept for command chaining</li>
+                            <li>Environment variables for configuration</li>
+                        </ul>
+                    </li>
+                    <li><strong>Multi-user and Multi-tasking:</strong> 
+                        <ul>
+                            <li>Multiple users can work simultaneously</li>
+                            <li>Preemptive multitasking with time-sharing</li>
+                            <li>User isolation and resource protection</li>
+                            <li>System administration through superuser (root) privileges</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <h4>Microsoft Windows Operating System</h4>
+            <div class="definition-box">
+                <strong>Microsoft Windows:</strong> Windows is a family of proprietary graphical operating systems developed by Microsoft. It was first introduced in 1985 and has evolved through multiple versions, becoming the dominant desktop operating system worldwide. Windows combines elements of both monolithic and microkernel architectures to provide a balance of performance and modularity.
+            </div>
+            
+            <div class="important">
+                <strong>Key Features and Architecture:</strong>
+                <ul>
+                    <li><strong>Hybrid Kernel Architecture:</strong> 
+                        <ul>
+                            <li>Combines monolithic and microkernel design principles</li>
+                            <li>Core services in kernel space for performance</li>
+                            <li>User-mode subsystems for stability and security</li>
+                            <li>Hardware abstraction layer (HAL) for device independence</li>
+                        </ul>
+                    </li>
+                    <li><strong>Process and Thread Management:</strong> 
+                        <ul>
+                            <li>Thread-based architecture with lightweight processes</li>
+                            <li>Symmetric multiprocessing (SMP) support</li>
+                            <li>Preemptive multitasking with priority-based scheduling</li>
+                            <li>Process isolation and memory protection</li>
+                        </ul>
+                    </li>
+                    <li><strong>Registry System:</strong> 
+                        <ul>
+                            <li>Centralized hierarchical database for system configuration</li>
+                            <li>Stores settings for hardware, software, and user preferences</li>
+                            <li>Registry hives for different system components</li>
+                            <li>Registry editing tools for system administration</li>
+                        </ul>
+                    </li>
+                    <li><strong>Graphical User Interface:</strong> 
+                        <ul>
+                            <li>GUI as primary user interface with desktop metaphor</li>
+                            <li>Window management and desktop environment</li>
+                            <li>Start menu and taskbar for application access</li>
+                            <li>Theme support and customization options</li>
+                        </ul>
+                    </li>
+                    <li><strong>Security and File System:</strong> 
+                        <ul>
+                            <li>NTFS file system with advanced permissions</li>
+                            <li>User Account Control (UAC) for privilege elevation</li>
+                            <li>Windows Defender for malware protection</li>
+                            <li>BitLocker for disk encryption</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <h4>Android Mobile Operating System</h4>
+            <div class="definition-box">
+                <strong>Android:</strong> Android is a mobile operating system based on a modified version of the Linux kernel and other open source software, designed primarily for touchscreen mobile devices such as smartphones and tablets. It was developed by Google and the Open Handset Alliance, with the first commercial version released in 2008.
+            </div>
+            
+            <div class="important">
+                <strong>Key Features and Architecture:</strong>
+                <ul>
+                    <li><strong>Linux Kernel Foundation:</strong> 
+                        <ul>
+                            <li>Based on modified Linux kernel for hardware abstraction</li>
+                            <li>Hardware drivers and system services in kernel space</li>
+                            <li>Memory management and process scheduling</li>
+                            <li>Security features and power management</li>
+                        </ul>
+                    </li>
+                    <li><strong>Application Runtime:</strong> 
+                        <ul>
+                            <li>Android Runtime (ART) for native Android apps</li>
+                            <li>Dalvik Virtual Machine for Java applications</li>
+                            <li>Just-In-Time (JIT) and Ahead-of-Time (AOT) compilation</li>
+                            <li>Garbage collection for memory management</li>
+                        </ul>
+                    </li>
+                    <li><strong>Application Framework:</strong> 
+                        <ul>
+                            <li>Rich set of APIs for application development</li>
+                            <li>Activity Manager for application lifecycle</li>
+                            <li>Content Providers for data sharing</li>
+                            <li>Notification Manager and Window Manager</li>
+                        </ul>
+                    </li>
+                    <li><strong>Security Model:</strong> 
+                        <ul>
+                            <li>Sandboxed applications with isolated processes</li>
+                            <li>Permission-based access control</li>
+                            <li>Application signing for authenticity</li>
+                            <li>SE Linux for mandatory access control</li>
+                        </ul>
+                    </li>
+                    <li><strong>User Interface:</strong> 
+                        <ul>
+                            <li>Touch-optimized interface design</li>
+                            <li>Gesture recognition and multi-touch support</li>
+                            <li>Adaptive layouts for different screen sizes</li>
+                            <li>Material Design principles for consistent UI</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Practical Component / Lab Work</h2>
+            
+            <h3>6.1 Process Management Programs</h3>
+            <div class="definition-box">
+                <strong>Process Management Programs:</strong> These programs demonstrate fundamental concepts in operating system process management, including process synchronization, inter-process communication, and resource sharing. The producer-consumer problem is a classic synchronization problem that illustrates the challenges of coordinating multiple processes that share a common resource.
+            </div>
+            
+            <div class="code-box">
+                <pre><code><span class="comment">// Producer-Consumer Problem Implementation</span>
+<span class="keyword">#include</span> &lt;stdio.h&gt;
+<span class="keyword">#include</span> &lt;pthread.h&gt;
+<span class="keyword">#include</span> &lt;semaphore.h&gt;
+<span class="keyword">#include</span> &lt;stdlib.h&gt;
+
+<span class="keyword">#define</span> BUFFER_SIZE <span class="number">5</span>
+<span class="keyword">#define</span> MAX_ITEMS <span class="number">10</span>
+
+<span class="comment">// Shared buffer and synchronization variables</span>
+<span class="keyword">int</span> buffer[BUFFER_SIZE];
+<span class="keyword">int</span> in = <span class="number">0</span>, out = <span class="number">0</span>;
+sem_t empty, full, mutex;
+
+<span class="comment">// Producer thread function</span>
+<span class="keyword">void</span>* producer(<span class="keyword">void</span>* arg) {
+    <span class="keyword">int</span> item;
+    
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < MAX_ITEMS; i++) {
+        item = i;
+        
+        <span class="comment">// Wait for empty slot in buffer</span>
+        sem_wait(&empty);
+        
+        <span class="comment">// Acquire mutex for critical section</span>
+        sem_wait(&mutex);
+        
+        <span class="comment">// Add item to buffer</span>
+        buffer[in] = item;
+        printf(<span class="string">"Producer: Produced item %d at position %d\n"</span>, item, in);
+        in = (in + <span class="number">1</span>) % BUFFER_SIZE;
+        
+        <span class="comment">// Release mutex and signal full slot</span>
+        sem_post(&mutex);
+        sem_post(&full);
+        
+        <span class="comment">// Simulate production time</span>
+        usleep(<span class="number">100000</span>);
+    }
+    
+    <span class="keyword">return</span> NULL;
+}
+
+<span class="comment">// Consumer thread function</span>
+<span class="keyword">void</span>* consumer(<span class="keyword">void</span>* arg) {
+    <span class="keyword">int</span> item;
+    
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < MAX_ITEMS; i++) {
+        <span class="comment">// Wait for item in buffer</span>
+        sem_wait(&full);
+        
+        <span class="comment">// Acquire mutex for critical section</span>
+        sem_wait(&mutex);
+        
+        <span class="comment">// Remove item from buffer</span>
+        item = buffer[out];
+        printf(<span class="string">"Consumer: Consumed item %d from position %d\n"</span>, item, out);
+        out = (out + <span class="number">1</span>) % BUFFER_SIZE;
+        
+        <span class="comment">// Release mutex and signal empty slot</span>
+        sem_post(&mutex);
+        sem_post(&empty);
+        
+        <span class="comment">// Simulate consumption time</span>
+        usleep(<span class="number">150000</span>);
+    }
+    
+    <span class="keyword">return</span> NULL;
+}
+
+<span class="comment">// Main function to demonstrate producer-consumer</span>
+<span class="keyword">int</span> main() {
+    pthread_t producer_thread, consumer_thread;
+    
+    <span class="comment">// Initialize semaphores</span>
+    sem_init(&empty, <span class="number">0</span>, BUFFER_SIZE); <span class="comment">// Buffer starts empty</span>
+    sem_init(&full, <span class="number">0</span>, <span class="number">0</span>);        <span class="comment">// No items initially</span>
+    sem_init(&mutex, <span class="number">0</span>, <span class="number">1</span>);       <span class="comment">// Binary semaphore for mutual exclusion</span>
+    
+    <span class="comment">// Create producer and consumer threads</span>
+    pthread_create(&producer_thread, NULL, producer, NULL);
+    pthread_create(&consumer_thread, NULL, consumer, NULL);
+    
+    <span class="comment">// Wait for threads to complete</span>
+    pthread_join(producer_thread, NULL);
+    pthread_join(consumer_thread, NULL);
+    
+    <span class="comment">// Clean up semaphores</span>
+    sem_destroy(&empty);
+    sem_destroy(&full);
+    sem_destroy(&mutex);
+    
+    printf(<span class="string">"Producer-Consumer demonstration completed.\n"</span>);
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+            </div>
+
+            <h3>6.2 File I/O Handling</h3>
+            <div class="definition-box">
+                <strong>File I/O Handling:</strong> File Input/Output operations are fundamental to operating systems, allowing programs to read from and write to persistent storage. These operations demonstrate how the operating system manages file access, error handling, and resource management. File I/O programs showcase concepts like file descriptors, buffering, error checking, and proper resource cleanup.
+            </div>
+            
+            <div class="code-box">
+                <pre><code><span class="comment">// Advanced File Copy Program with Error Handling</span>
+<span class="keyword">#include</span> &lt;stdio.h&gt;
+<span class="keyword">#include</span> &lt;stdlib.h&gt;
+<span class="keyword">#include</span> &lt;string.h&gt;
+<span class="keyword">#include</span> &lt;errno.h&gt;
+
+<span class="keyword">#define</span> BUFFER_SIZE <span class="number">4096</span>
+<span class="keyword">#define</span> MAX_PATH <span class="number">256</span>
+
+<span class="comment">// Function to copy file with progress tracking</span>
+<span class="keyword">int</span> copy_file(<span class="keyword">char</span>* source, <span class="keyword">char</span>* destination) {
+    FILE *src, *dst;
+    <span class="keyword">char</span> buffer[BUFFER_SIZE];
+    <span class="keyword">size_t</span> bytes_read, bytes_written;
+    <span class="keyword">long</span> total_bytes = <span class="number">0</span>;
+    <span class="keyword">long</span> file_size;
+    
+    <span class="comment">// Validate input parameters</span>
+    <span class="keyword">if</span>(source == NULL || destination == NULL) {
+        fprintf(stderr, <span class="string">"Error: Invalid file paths\n"</span>);
+        <span class="keyword">return</span> -<span class="number">1</span>;
+    }
+    
+    <span class="comment">// Check if source and destination are the same</span>
+    <span class="keyword">if</span>(strcmp(source, destination) == <span class="number">0</span>) {
+        fprintf(stderr, <span class="string">"Error: Source and destination are the same\n"</span>);
+        <span class="keyword">return</span> -<span class="number">1</span>;
+    }
+    
+    <span class="comment">// Open source file for reading</span>
+    src = fopen(source, <span class="string">"rb"</span>);
+    <span class="keyword">if</span>(src == NULL) {
+        fprintf(stderr, <span class="string">"Error opening source file '%s': %s\n"</span>, source, strerror(errno));
+        <span class="keyword">return</span> -<span class="number">1</span>;
+    }
+    
+    <span class="comment">// Get file size for progress tracking</span>
+    fseek(src, <span class="number">0</span>, SEEK_END);
+    file_size = ftell(src);
+    fseek(src, <span class="number">0</span>, SEEK_SET);
+    
+    <span class="comment">// Open destination file for writing</span>
+    dst = fopen(destination, <span class="string">"wb"</span>);
+    <span class="keyword">if</span>(dst == NULL) {
+        fprintf(stderr, <span class="string">"Error opening destination file '%s': %s\n"</span>, destination, strerror(errno));
+        fclose(src);
+        <span class="keyword">return</span> -<span class="number">1</span>;
+    }
+    
+    printf(<span class="string">"Starting file copy: %s -> %s\n"</span>, source, destination);
+    printf(<span class="string">"File size: %ld bytes\n"</span>, file_size);
+    
+    <span class="comment">// Copy file content in chunks</span>
+    <span class="keyword">while</span>((bytes_read = fread(buffer, <span class="number">1</span>, BUFFER_SIZE, src)) > <span class="number">0</span>) {
+        bytes_written = fwrite(buffer, <span class="number">1</span>, bytes_read, dst);
+        
+        <span class="keyword">if</span>(bytes_written != bytes_read) {
+            fprintf(stderr, <span class="string">"Error writing to destination file: %s\n"</span>, strerror(errno));
+            fclose(src);
+            fclose(dst);
+            <span class="keyword">return</span> -<span class="number">1</span>;
+        }
+        
+        total_bytes += bytes_written;
+        
+        <span class="comment">// Show progress</span>
+        <span class="keyword">if</span>(file_size > <span class="number">0</span>) {
+            <span class="keyword">int</span> progress = (<span class="keyword">int</span>)((total_bytes * <span class="number">100</span>) / file_size);
+            printf(<span class="string">"\rProgress: %d%% (%ld/%ld bytes)"</span>, progress, total_bytes, file_size);
+            fflush(stdout);
+        }
+    }
+    
+    <span class="comment">// Check for read errors</span>
+    <span class="keyword">if</span>(ferror(src)) {
+        fprintf(stderr, <span class="string">"\nError reading source file: %s\n"</span>, strerror(errno));
+        fclose(src);
+        fclose(dst);
+        <span class="keyword">return</span> -<span class="number">1</span>;
+    }
+    
+    <span class="comment">// Close files</span>
+    fclose(src);
+    fclose(dst);
+    
+    printf(<span class="string">"\nFile copied successfully: %ld bytes\n"</span>, total_bytes);
+    <span class="keyword">return</span> <span class="number">0</span>;
+}
+
+<span class="comment">// Function to create directory if it doesn't exist</span>
+<span class="keyword">int</span> ensure_directory(<span class="keyword">char</span>* path) {
+    <span class="keyword">char</span> temp_path[MAX_PATH];
+    <span class="keyword">char</span> *token;
+    
+    strcpy(temp_path, path);
+    token = strtok(temp_path, <span class="string">"/"</span>);
+    
+    <span class="keyword">while</span>(token != NULL) {
+        <span class="keyword">if</span>(mkdir(token, <span class="number">0755</span>) != <span class="number">0</span> && errno != EEXIST) {
+            fprintf(stderr, <span class="string">"Error creating directory '%s': %s\n"</span>, token, strerror(errno));
+            <span class="keyword">return</span> -<span class="number">1</span>;
+        }
+        token = strtok(NULL, <span class="string">"/"</span>);
+    }
+    
+    <span class="keyword">return</span> <span class="number">0</span>;
+}
+
+<span class="comment">// Main function demonstrating file operations</span>
+<span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[]) {
+    <span class="keyword">if</span>(argc != <span class="number">3</span>) {
+        printf(<span class="string">"Usage: %s &lt;source_file&gt; &lt;destination_file&gt;\n"</span>, argv[<span class="number">0</span>]);
+        <span class="keyword">return</span> <span class="number">1</span>;
+    }
+    
+    <span class="comment">// Ensure destination directory exists</span>
+    <span class="keyword">char</span> *last_slash = strrchr(argv[<span class="number">2</span>], <span class="string">'/'</span>);
+    <span class="keyword">if</span>(last_slash != NULL) {
+        *last_slash = <span class="string">'\0'</span>;
+        <span class="keyword">if</span>(ensure_directory(argv[<span class="number">2</span>]) != <span class="number">0</span>) {
+            <span class="keyword">return</span> <span class="number">1</span>;
+        }
+        *last_slash = <span class="string">'/'</span>;
+    }
+    
+    <span class="comment">// Perform file copy</span>
+    <span class="keyword">if</span>(copy_file(argv[<span class="number">1</span>], argv[<span class="number">2</span>]) == <span class="number">0</span>) {
+        printf(<span class="string">"File copy operation completed successfully.\n"</span>);
+        <span class="keyword">return</span> <span class="number">0</span>;
+    } <span class="keyword">else</span> {
+        printf(<span class="string">"File copy operation failed.\n"</span>);
+        <span class="keyword">return</span> <span class="number">1</span>;
+    }
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Recommended Reading</h2>
+            <div class="important">
+                <ul>
+                    <li><strong>Galvin & Gagne</strong> – Operating System Concepts</li>
+                    <li><strong>Tanenbaum</strong> – Modern Operating Systems</li>
+                    <li><strong>Silberschatz, Galvin, Gagne</strong> – Operating Systems Concepts</li>
+                    <li><strong>Stallings</strong> – Operating Systems: Internals and Design Principles</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Semester Schedule</h2>
+            <div class="important">
+                <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+                    <tr style="background: #667eea; color: white;">
+                        <th style="padding: 10px; border: 1px solid #ddd;">Unit</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Topics Covered</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Duration</th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;">I</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">OS basics, Services, System calls</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">3 weeks</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;">II</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Processes, Threads, Scheduling, IPC</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">4 weeks</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;">III</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Deadlock, Memory Management, Paging</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">4 weeks</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;">IV</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">File systems, I/O, Disk scheduling</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">3 weeks</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;">V</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Protection, Security, OS Case Studies</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">2 weeks</td>
+                    </tr>
+                </table>
+                <p><strong>Typical structure:</strong> 3 hrs lecture + 1 hr tutorial per week over 14–16 weeks</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 40px 0;">
+            <button class="download-btn" onclick="downloadPDF()">📥 Download PDF</button>
+            <button class="download-btn" onclick="window.print()">🖨️ Print Notes</button>
+            <button class="download-btn" onclick="testDownload()">🧪 Test Download</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        // Fallback to alternative CDN if first one fails
+        if (typeof html2pdf === 'undefined') {
+            const script = document.createElement('script');
+            script.src = 'https://unpkg.com/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js';
+            script.onload = function() {
+                console.log('html2pdf loaded from fallback CDN');
+            };
+            script.onerror = function() {
+                console.error('Both CDNs failed to load html2pdf');
+            };
+            document.head.appendChild(script);
+        }
+    </script>
+    <script>
+        // Check if html2pdf is loaded
+        function checkHtml2Pdf() {
+            if (typeof html2pdf === 'undefined') {
+                console.error('html2pdf library not loaded');
+                alert('PDF library not loaded. Please check your internet connection and try again.');
+                return false;
+            }
+            return true;
+        }
+
+        function downloadPDF() {
+            console.log('Download PDF function called');
+            
+            // Check if library is loaded
+            if (!checkHtml2Pdf()) {
+                return;
+            }
+
+            // Show loading message
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '⏳ Generating PDF...';
+            btn.disabled = true;
+
+            try {
+                // Configure PDF options
+                const opt = {
+                    margin: [10, 10, 10, 10],
+                    filename: 'Operating_System_Notes_PrepCampus.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { 
+                        scale: 2,
+                        useCORS: true,
+                        letterRendering: true,
+                        allowTaint: true
+                    },
+                    jsPDF: { 
+                        unit: 'mm', 
+                        format: 'a4', 
+                        orientation: 'portrait' 
+                    }
+                };
+
+                console.log('Starting PDF generation...');
+                
+                // Generate PDF
+                html2pdf()
+                    .set(opt)
+                    .from(document.querySelector('.container'))
+                    .save()
+                    .then(() => {
+                        console.log('PDF generated successfully');
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    })
+                    .catch(err => {
+                        console.error('PDF generation failed:', err);
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                        alert('PDF generation failed: ' + err.message + '. Please try again.');
+                    });
+            } catch (error) {
+                console.error('Error in downloadPDF function:', error);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                alert('Error generating PDF: ' + error.message);
+            }
+        }
+
+        // Test function to verify download functionality
+        function testDownload() {
+            console.log('Test download function called');
+            alert('Test function working! Check console for details.');
+            
+            // Test if html2pdf is available
+            if (typeof html2pdf !== 'undefined') {
+                console.log('html2pdf is available');
+                alert('html2pdf library is loaded successfully!');
+            } else {
+                console.log('html2pdf library is NOT loaded. Please check internet connection.');
+            }
+            
+            // Test if container element exists
+            const container = document.querySelector('.container');
+            if (container) {
+                console.log('Container element found:', container);
+            } else {
+                console.log('Container element NOT found');
+            }
+        }
+
+        // Add keyboard shortcut for download (Ctrl+D)
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'd') {
+                e.preventDefault();
+                downloadPDF();
+            }
+        });
+
+        // Check library loading on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                if (checkHtml2Pdf()) {
+                    console.log('html2pdf library loaded successfully');
+                } else {
+                    console.log('html2pdf library failed to load');
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

@@ -31,18 +31,18 @@ const FormulaPage: React.FC<FormulaPageProps> = ({
   onGoBack,
   sectionName
 }) => {
-  const { topic } = useParams<{ topic: string }>();
+  const { topicId } = useParams<{ topicId: string }>();
   const navigate = useNavigate();
 
   const handleStartPractice = () => {
-    onStartPractice(topic || '');
+    onStartPractice(topicId || '');
   };
 
   const handleGoBack = () => {
     onGoBack();
   };
 
-  const currentFormulas = formulas[topic || Object.keys(formulas)[0]] || formulas[Object.keys(formulas)[0]];
+  const currentFormulas = formulas[topicId || Object.keys(formulas)[0]] || formulas[Object.keys(formulas)[0]];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -58,9 +58,9 @@ const FormulaPage: React.FC<FormulaPageProps> = ({
                 <ArrowLeft className="h-5 w-5 text-gray-600" />
               </button>
               <div className="flex items-center space-x-3">
-                {getTopicIcon(topic || '')}
+                {getTopicIcon(topicId || '')}
                 <div>
-                  <h1 className="text-2xl font-bold text-gray-900">{getTopicTitle(topic || '')}</h1>
+                  <h1 className="text-2xl font-bold text-gray-900">{getTopicTitle(topicId || '')}</h1>
                   <p className="text-gray-600">Formulas and Quick Tricks</p>
                 </div>
               </div>
@@ -74,7 +74,7 @@ const FormulaPage: React.FC<FormulaPageProps> = ({
         <Card className="shadow-lg">
           <CardHeader>
             <CardTitle className="text-xl font-semibold text-gray-900">
-              {getTopicTitle(topic || '')} - Formulas and Tips
+              {getTopicTitle(topicId || '')} - Formulas and Tips
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-8">

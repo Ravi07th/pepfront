@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import SEO from "@/components/SEO";
 import { 
   BookOpen, 
   Users, 
@@ -91,12 +92,63 @@ import {
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import CompanyLogo from './components/common/CompanyLogo';
 
 const Index1 = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [typedText, setTypedText] = useState('');
   const [currentFeatureIndex, setCurrentFeatureIndex] = useState(0);
-  const [activeTab, setActiveTab] = useState('coding');
+
+  // SEO structured data for homepage
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "PrepCampus",
+    "description": "Your Ultimate Exam Preparation Platform with comprehensive practice tests, mock exams, and study materials for competitive exams.",
+    "url": "https://prepcampus.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://prepcampus.com/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "PrepCampus",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://prepcampus.com/images/mylogo.png"
+      }
+    },
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Practice Tests",
+          "description": "Comprehensive practice tests for competitive exams"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Mock Exams",
+          "description": "Real-time mock exams with detailed analysis"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Study Materials",
+          "description": "Expert-curated study materials and notes"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Company Preparation",
+          "description": "Company-specific exam patterns and preparation"
+        }
+      ]
+    }
+  };
 
   const heroTexts = [
     "Crack Top Company Interviews",
@@ -106,14 +158,14 @@ const Index1 = () => {
   ];
 
   const companies = [
-    { name: "TCS", logo: "🔵", color: "bg-blue-500", questions: 1500 },
-    { name: "Infosys", logo: "🟣", color: "bg-purple-500", questions: 1200 },
-    { name: "Wipro", logo: "🟢", color: "bg-green-500", questions: 1000 },
-    { name: "Cognizant", logo: "🔴", color: "bg-red-500", questions: 800 },
-    { name: "Amazon", logo: "🟡", color: "bg-yellow-500", questions: 2000 },
-    { name: "Google", logo: "🔵", color: "bg-blue-600", questions: 2500 },
-    { name: "Microsoft", logo: "🟢", color: "bg-green-600", questions: 1800 },
-    { name: "Accenture", logo: "🟣", color: "bg-purple-600", questions: 900 }
+    { name: "TCS", logo: "dummy", color: "bg-blue-500" },
+    { name: "Infosys", logo: "dummy", color: "bg-purple-500" },
+    { name: "Wipro", logo: "dummy", color: "bg-green-500" },
+    { name: "Cognizant", logo: "dummy", color: "bg-red-500" },
+    { name: "Amazon", logo: "dummy", color: "bg-yellow-500" },
+    { name: "Google", logo: "dummy", color: "bg-blue-600" },
+    { name: "Microsoft", logo: "dummy", color: "bg-green-600" },
+    { name: "Accenture", logo: "dummy", color: "bg-purple-600"   }
   ];
 
   const carouselSettings = {
@@ -143,7 +195,7 @@ const Index1 = () => {
   const features = [
     {
       icon: Code,
-      title: "5000+ Coding Questions",
+      title: "5000+ Questions",
       description: "Practice with questions from top companies like TCS, Amazon, Google",
       color: "text-blue-400",
       bgColor: "bg-blue-500/10"
@@ -151,21 +203,21 @@ const Index1 = () => {
     {
       icon: Target,
       title: "Company-Specific Prep",
-      description: "Tailored preparation for each company's interview pattern",
+      description: "Tailored preparation for each company's Mock Tests",
       color: "text-purple-400",
       bgColor: "bg-purple-500/10"
     },
     {
       icon: Brain,
       title: "Detailed Solutions",
-      description: "Multiple approaches with time & space complexity analysis",
+      description: "Step by step solutions to all the questions",
       color: "text-green-400",
       bgColor: "bg-green-500/10"
     },
     {
       icon: Clock,
       title: "Mock Tests",
-      description: "Timed practice tests simulating real interview conditions",
+      description: "Timed practice tests simulating real exam conditions",
       color: "text-orange-400",
       bgColor: "bg-orange-500/10"
     },
@@ -176,31 +228,31 @@ const Index1 = () => {
       color: "text-cyan-400",
       bgColor: "bg-cyan-500/10"
     },
-    {
-      icon: TrendingUp,
-      title: "Progress Tracking",
-      description: "Monitor your improvement with detailed analytics",
-      color: "text-pink-400",
-      bgColor: "bg-pink-500/10"
-    },
-    {
-      icon: Lightbulb,
-      title: "Smart Learning",
-      description: "AI-powered recommendations based on your performance",
-      color: "text-yellow-400",
-      bgColor: "bg-yellow-500/10"
-    },
-    {
-      icon: Shield,
-      title: "Quality Content",
-      description: "Curated questions by industry experts and professionals",
-      color: "text-indigo-400",
-      bgColor: "bg-indigo-500/10"
-    },
+    // {
+    //   icon: TrendingUp,
+    //   title: "Progress  ",
+    //   description: "Monitor your improvement with detailed analytics",
+    //   color: "text-pink-400",
+    //   bgColor: "bg-pink-500/10"
+    // },
+    // {
+    //   icon: Lightbulb,
+    //   title: "Smart Learning",
+    //   description: "AI-powered recommendations based on your performance",
+    //   color: "text-yellow-400",
+    //   bgColor: "bg-yellow-500/10"
+    // },
+    // {
+    //   icon: Shield,
+    //   title: "Quality Content",
+    //   description: "Curated questions by industry experts and professionals",
+    //   color: "text-indigo-400",
+    //   bgColor: "bg-indigo-500/10"
+    // },
     {
       icon: Users,
-      title: "Community Support",
-      description: "Connect with fellow aspirants and share knowledge",
+      title: "Top 30 Interview Questions for Fresher",
+      description: "Comprehensive interview guide with essential questions and tips for IT freshers",
       color: "text-teal-400",
       bgColor: "bg-teal-500/10"
     }
@@ -208,14 +260,14 @@ const Index1 = () => {
 
   const popularTopics = [
     {
-      title: "Data Structures",
+      title: "Data Structures & Algorithms",
       icon: "📊",
       questions: 850,
       difficulty: "Medium",
       color: "bg-blue-500"
     },
     {
-      title: "Algorithms",
+      title: "Verbal Aptitude",
       icon: "⚡",
       questions: 720,
       difficulty: "Hard",
@@ -280,9 +332,9 @@ const Index1 = () => {
 
   const studyResources = [
     {
-      title: "Video Tutorials",
-      description: "500+ hours of expert-led video content",
-      icon: Play,
+      title: "Coding Practice",
+      description: "500+ coding questions with detailed solutions",
+      icon: Code,
       count: "500+",
       color: "text-red-400",
       bgColor: "bg-red-500/10"
@@ -304,22 +356,21 @@ const Index1 = () => {
       bgColor: "bg-green-500/10"
     },
     {
-      title: "Live Sessions",
-      description: "Weekly live doubt clearing sessions",
-      icon: Users,
-      count: "50+",
+      title: "MNCs exam patterns",
+      description: "Exam patterns for famous MNCs",
+      icon: BookOpen,
+      count: "20+",
       color: "text-purple-400",
       bgColor: "bg-purple-500/10"
     }
   ];
 
   const quickStats = [
-    { number: '5000+', label: 'Coding Questions', icon: Code, color: "text-blue-400", bgColor: "bg-blue-500/10" },
+    { number: '5000+', label: 'Problem', icon: Code, color: "text-blue-400", bgColor: "bg-blue-500/10" },
     { number: '50K+', label: 'Students Helped', icon: Users, color: "text-green-400", bgColor: "bg-green-500/10" },
     { number: '95%', label: 'Success Rate', icon: Award, color: "text-yellow-400", bgColor: "bg-yellow-500/10" },
     { number: '24/7', label: 'Available', icon: Clock, color: "text-purple-400", bgColor: "bg-purple-500/10" },
-    { number: '100+', label: 'Expert Mentors', icon: GraduationCap, color: "text-red-400", bgColor: "bg-red-500/10" },
-    { number: '1000+', label: 'Mock Tests', icon: Timer, color: "text-cyan-400", bgColor: "bg-cyan-500/10" }
+    { number: '50+', label: 'Mock Tests', icon: Timer, color: "text-cyan-400", bgColor: "bg-cyan-500/10" }
   ];
 
   const stats = [
@@ -380,23 +431,23 @@ const Index1 = () => {
   const examPatterns = [
     {
       company: "TCS NQT",
-      duration: "180 mins",
-      questions: "65",
-      sections: "3",
+      duration: "190mins",
+      questions: "83",
+      sections: "2",
       difficulty: "Medium-Hard"
     },
     {
       company: "Infosys",
-      duration: "120 mins", 
-      questions: "45",
-      sections: "3",
+      duration: "100 mins", 
+      questions: "74",
+      sections: "5",
       difficulty: "Medium"
     },
     {
-      company: "Amazon",
-      duration: "90 mins",
-      questions: "28",
-      sections: "2", 
+      company: "Amazon SDE-1",
+      duration: "200 mins",
+      questions: "49",
+      sections: "5", 
       difficulty: "Hard"
     }
   ];
@@ -433,10 +484,18 @@ const Index1 = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <>
+      <SEO 
+        title="PrepCampus - Your Ultimate Exam Preparation Platform | Practice Tests, Mock Exams & Study Materials"
+        description="Master your competitive exams with PrepCampus! Access 5000+ practice questions, mock tests, and study materials for TCS, Infosys, Amazon, Google, and more. Start your preparation journey today!"
+        keywords="exam preparation, practice tests, mock exams, competitive exams, TCS, Infosys, Amazon, Google, coding practice, aptitude tests, reasoning, verbal ability, placement preparation"
+        url="/"
+        structuredData={structuredData}
+      />
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       
       {/* Hero Section */}
-      <section className="relative py-20 px-4 overflow-hidden">
+      <section className="relative py-10 create  px-4 overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
@@ -446,7 +505,7 @@ const Index1 = () => {
           <div className="text-center mb-16">
             <div className="inline-flex items-center space-x-2 bg-blue-500/20 text-blue-300 px-4 py-2 rounded-full mb-8 animate-fade-in">
                 <Sparkles className="h-4 w-4" />
-              <span className="text-sm font-medium">Your Gateway to Top Tech Companies</span>
+              <span className="text-sm font-medium">Beta Version if you find any issue please report to us in contact page</span>
               </div>
               
             <h1 className="text-5xl md:text-7xl text-white font-bold mb-6 animate-fade-in">
@@ -458,7 +517,7 @@ const Index1 = () => {
               </h1>
               
             <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed animate-slide-up">
-              Practice with 5000+ coding questions from top companies. 
+              Practice with 5000+ Aptitude, reasoning, verbal and coding questions from top companies. 
               Crack TCS, Infosys, Amazon, Google interviews with confidence.
             </p>
             
@@ -479,15 +538,15 @@ const Index1 = () => {
             </div>
                 </div>
                 
-          {/* Company Logos */}
+          {/* Company Logos (text-only dummy logos) */}
           <div className="grid grid-cols-4 md:grid-cols-8 gap-6 mt-16">
             {companies.map((company, index) => (
               <div key={index} className="flex flex-col items-center space-y-2 group">
-                <div className={`w-16 h-16 ${company.color} rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-200`}>
-                  {company.logo}
+                <div className={`w-16 h-16 ${company.color} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200 shadow-md`}>
+                  <CompanyLogo companyName={company.name} size={56} />
                 </div>
-                <span className="text-sm text-gray-400 text-center">{company.name}</span>
-                <span className="text-xs text-gray-500">{company.questions}+ Qs</span>
+                <span className="text-sm text-gray-300 text-center">{company.name}</span>
+                {/* <span className="text-xs text-gray-500">{company.questions}+ Qs</span> */}
               </div>
             ))}
           </div>
@@ -495,9 +554,9 @@ const Index1 = () => {
       </section>
 
       {/* Quick Stats Section */}
-      <section className="py-16 px-4 bg-gray-800/20">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+      <section className="py-10  bg-gray-800/20">
+        <div className="max-w-7xl mx-auto ">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {quickStats.map((stat, index) => (
               <div key={index} className="text-center group">
                 <div className={`w-12 h-12 ${stat.bgColor} rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform`}>
@@ -511,267 +570,132 @@ const Index1 = () => {
         </div>
       </section>
 
-      {/* Trending Tests Section */}
-      <section className="py-20 px-4">
+      {/* Trending Section – redesigned */}
+      <section className="py-10 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl text-white font-bold mb-4">
-              Trending Tests 🔥
-            </h2>
-            <p className="text-xl text-gray-300">
-              Most popular mock tests and practice sessions
-            </p>
+          <div className="text-center mb-5">
+            <h2 className="text-4xl md:text-5xl text-orange-500 font-bold mb-4">Trending Now</h2>
+            <p className="text-xl text-gray-300">Most searched topics by students in prepCampus</p>
           </div>
-          
-          <div className="border-2 border-gray-700 rounded-xl px-5 py-8">
-            <Slider {...carouselSettings} className="mb-8">
-              {/* TCS NQT Mock Test */}
-              <div className="px-2">
-                <Card className="bg-gray-800/50 border-gray-700 hover:bg-gray-800/70 transition-all duration-300 cursor-pointer h-full">
-                  <CardHeader className="flex flex-col items-center">
-                    <img
-                      src="images/tcs.jpg"
-                      alt="TCS NQT Mock Test"
-                      className="w-20 h-20 object-contain mb-2"
-                    />
-                    <CardTitle className="text-lg font-bold text-center text-white">
-                      TCS NQT Mock Test
-                    </CardTitle>
-                    <CardDescription className="text-center text-gray-400 mt-2">
-                      Attempt the latest TCS NQT pattern mock exam under real conditions.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex justify-center mt-auto">
-                    <Link to="/tcsExam">
-                      <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
-                        Start Test
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              </div>
 
-              {/* Cognizant Exam */}
-              <div className="px-2">
-                <Card className="bg-gray-800/50 border-gray-700 hover:bg-gray-800/70 transition-all duration-300 cursor-pointer h-full">
-                  <CardHeader className="flex flex-col items-center">
-                    <img
-                      src="amazon.jpg"
-                      alt="Cognizant Exam"
-                      className="w-10 h-10 object-contain mb-4"
-                    />
-                    <CardTitle className="text-lg font-bold text-center text-white">
-                      Cognizant
-                    </CardTitle>
-                    <CardDescription className="text-center text-gray-400 mt-2">
-                      Practice with Cognizant-specific questions and patterns.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex justify-center">
-                    <Link to="/cognizantExam">
-                      <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
-                        Start Test
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              </div>
+          {(() => {
+            const items = [
+              {
+                title: 'Microsoft Mock Test',
+                tag: 'Mock Test',
+                gradient: 'from-blue-500 to-cyan-500',
+                chips: ['Azure Fundamentals', 'SDE-I Coding', 'Cloud Basics'],
+                href: '/mock-test'
+              },
+              {
+                title: 'Student Notes',
+                tag: 'Notes',
+                gradient: 'from-purple-500 to-pink-500',
+                chips: ['DBMS', 'Operating Systems', 'DSA Notes'],
+                href: '/student-notes'
+              },
+              {
+                title: 'Student Syllabus',
+                tag: 'Syllabus',
+                gradient: 'from-indigo-500 to-violet-500',
+                chips: ['TCS NQT', 'Accenture', 'Infosys'],
+                href: '/exam-patterns'
+              },
+              {
+                title: 'TCS NQT Mock Test',
+                tag: 'Mock Test',
+                gradient: 'from-amber-500 to-orange-500',
+                chips: ['Foundation', 'Advanced', 'Coding'],
+                href: '/mock-test'
+              },
+              {
+                title: 'Coding Practice',
+                tag: 'Coding',
+                gradient: 'from-emerald-500 to-teal-500',
+                chips: ['C / Java / Python', 'Data Structures', 'Patterns'],
+                href: '/coding'
+              },
+              {
+                title: 'Company Exam Patterns',
+                tag: 'Syllabus',
+                gradient: 'from-slate-600 to-blue-600',
+                chips: ['Overview', 'Sections', 'Time & Qs'],
+                href: '/exam-patterns'
+              },
+            ];
 
-              {/* Placement Test */}
-              <div className="px-2">
-                <Card className="bg-gray-800/50 border-gray-700 hover:bg-gray-800/70 transition-all duration-300 cursor-pointer h-full">
-                  <CardHeader className="flex flex-col items-center">
-                    <img
-                      src="amazon.jpg"
-                      alt="Placement Test"
-                      className="w-10 h-10 object-contain mb-4"
-                    />
-                    <CardTitle className="text-lg font-bold text-center text-white">
-                      Placement Test
-                    </CardTitle>
-                    <CardDescription className="text-center text-gray-400 mt-2">
-                      Comprehensive placement preparation with real company questions.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex justify-center">
-                    <Link to="/studentExam">
-                      <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
-                        Start Test
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              </div>
+            const trendingCarouselSettings = {
+              dots: false,
+              infinite: true,
+              speed: 600,
+              slidesToShow: 3,
+              slidesToScroll: 1,
+              autoplay: true,
+              autoplaySpeed: 2500,
+              pauseOnHover: true,
+              centerMode: true,
+              centerPadding: '40px',
+              cssEase: 'ease-in-out',
+              responsive: [
+                { breakpoint: 1280, settings: { slidesToShow: 3, centerPadding: '24px' } },
+                { breakpoint: 1024, settings: { slidesToShow: 2, centerPadding: '24px' } },
+                { breakpoint: 640, settings: { slidesToShow: 1, centerPadding: '24px' } },
+              ],
+            } as const;
 
-              {/* College Notes */}
-              <div className="px-2">
-                <Card className="bg-gray-800/50 border-gray-700 hover:bg-gray-800/70 transition-all duration-300 cursor-pointer h-full">
-                  <CardHeader className="flex flex-col items-center">
-                    <img
-                      src="amazon.jpg"
-                      alt="College Notes"
-                      className="w-10 h-10 object-contain mb-4"
-                    />
-                    <CardTitle className="text-lg font-bold text-center text-white">
-                      College Notes
-                    </CardTitle>
-                    <CardDescription className="text-center text-gray-400 mt-2">
-                      Comprehensive study materials for college students.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex justify-center">
-                    <Link to="/studentExam">
-                      <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
-                        Start Test
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
+            return (
+              <div className="border-2 border-gray-700 rounded-xl px-4 py-8">
+                <Slider {...(trendingCarouselSettings as any)}>
+                  {items.map((item, idx) => (
+                    <div key={idx} className="px-2 h-full">
+                      <div className={`h-64 md:h-72 rounded-2xl bg-gradient-to-r ${item.gradient} relative overflow-hidden shadow-lg`}> 
+                        <div className="absolute inset-0 bg-black/25" />
+                        <div className="relative z-10 h-full p-5 flex flex-col justify-between">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-semibold text-white/90 bg-white/20 px-2 py-1 rounded-md">
+                              {item.tag}
+                            </span>
+                          </div>
+                          <div>
+                            <h3 className="text-2xl font-bold text-white mb-3">{item.title}</h3>
+                            <div className="flex flex-wrap gap-2">
+                              {item.chips.map((chip, cIdx) => (
+                                <span key={cIdx} className="text-xs text-white bg-white/15 px-2 py-1 rounded-full">
+                                  {chip}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="flex justify-end">
+                            <Link to={item.href}>
+                              <Button size="sm" className="bg-white/90 text-gray-900 hover:bg-white">
+                                Open
+                                <ArrowRight className="h-4 w-4 ml-2" />
+                              </Button>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </Slider>
               </div>
-            </Slider>
-          </div>
+            );
+          })()}
         </div>
       </section>
 
-      {/* Trending Tests Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl text-white font-bold mb-4">
-              Trending Tests 🔥
-            </h2>
-            <p className="text-xl text-gray-300">
-              Most popular mock tests and practice sessions
-            </p>
-          </div>
-          
-          <div className="border-2 border-gray-700 rounded-xl px-5 py-8">
-            <Slider {...carouselSettings} className="mb-8">
-              {/* TCS NQT Mock Test */}
-              <div className="px-2">
-                <Card className="bg-gray-800/50 border-gray-700 hover:bg-gray-800/70 transition-all duration-300 cursor-pointer h-full">
-                  <CardHeader className="flex flex-col items-center">
-                    <img
-                      src="images/tcs.jpg"
-                      alt="TCS NQT Mock Test"
-                      className="w-20 h-20 object-contain mb-2"
-                    />
-                    <CardTitle className="text-lg font-bold text-center text-white">
-                      TCS NQT Mock Test
-                    </CardTitle>
-                    <CardDescription className="text-center text-gray-400 mt-2">
-                      Attempt the latest TCS NQT pattern mock exam under real conditions.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex justify-center mt-auto">
-                    <Link to="/tcsExam">
-                      <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
-                        Start Test
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Cognizant Exam */}
-              <div className="px-2">
-                <Card className="bg-gray-800/50 border-gray-700 hover:bg-gray-800/70 transition-all duration-300 cursor-pointer h-full">
-                  <CardHeader className="flex flex-col items-center">
-                    <img
-                      src="amazon.jpg"
-                      alt="Cognizant Exam"
-                      className="w-10 h-10 object-contain mb-4"
-                    />
-                    <CardTitle className="text-lg font-bold text-center text-white">
-                      Cognizant
-                    </CardTitle>
-                    <CardDescription className="text-center text-gray-400 mt-2">
-                      Practice with Cognizant-specific questions and patterns.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex justify-center">
-                    <Link to="/cognizantExam">
-                      <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
-                        Start Test
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Placement Test */}
-              <div className="px-2">
-                <Card className="bg-gray-800/50 border-gray-700 hover:bg-gray-800/70 transition-all duration-300 cursor-pointer h-full">
-                  <CardHeader className="flex flex-col items-center">
-                    <img
-                      src="amazon.jpg"
-                      alt="Placement Test"
-                      className="w-10 h-10 object-contain mb-4"
-                    />
-                    <CardTitle className="text-lg font-bold text-center text-white">
-                      Placement Test
-                    </CardTitle>
-                    <CardDescription className="text-center text-gray-400 mt-2">
-                      Comprehensive placement preparation with real company questions.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex justify-center">
-                    <Link to="/studentExam">
-                      <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
-                        Start Test
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* College Notes */}
-              <div className="px-2">
-                <Card className="bg-gray-800/50 border-gray-700 hover:bg-gray-800/70 transition-all duration-300 cursor-pointer h-full">
-                  <CardHeader className="flex flex-col items-center">
-                    <img
-                      src="amazon.jpg"
-                      alt="College Notes"
-                      className="w-10 h-10 object-contain mb-4"
-                    />
-                    <CardTitle className="text-lg font-bold text-center text-white">
-                      College Notes
-                    </CardTitle>
-                    <CardDescription className="text-center text-gray-400 mt-2">
-                      Comprehensive study materials for college students.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex justify-center">
-                    <Link to="/studentExam">
-                      <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
-                        Start Test
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              </div>
-            </Slider>
-          </div>
-        </div>
-      </section>
+      {/* (Removed duplicate Trending section) */}
 
       {/* Features Section */}
-      <section className="py-20 px-4">
+      <section className="py-10 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl text-white font-bold mb-4">
-              Why Choose StudentHelper?
+              Why Choose <span className="text-orange-500">prepCampus?</span>
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Comprehensive preparation platform designed to help you succeed in technical interviews
+              Comprehensive preparation platform designed to help you succeed in technical interviews.
             </p>
           </div>
 
@@ -827,7 +751,7 @@ const Index1 = () => {
       </section>
 
       {/* Learning Paths Section */}
-      <section className="py-20 px-4">
+      {/* <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl text-white font-bold mb-4">
@@ -875,12 +799,12 @@ const Index1 = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Study Resources Section */}
-      <section className="py-20 px-4 bg-gray-800/30">
+      <section className="py-10 px-4 bg-gray-800/30">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-5">
             <h2 className="text-4xl md:text-5xl text-white font-bold mb-4">
               Study Resources
             </h2>
@@ -907,7 +831,7 @@ const Index1 = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 px-4">
+      {/* <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
@@ -918,12 +842,12 @@ const Index1 = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Exam Patterns Section */}
-      <section className="py-20 px-4 bg-gray-800/30">
+      <section className=" py-10  bg-gray-800/30">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-5">
             <h2 className="text-4xl md:text-5xl text-white font-bold mb-4">
               Latest Exam Patterns 2025
             </h2>
@@ -941,24 +865,24 @@ const Index1 = () => {
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
-                      <div className="text-gray-400">Duration</div>
+                      <div className="text-blue-400 text-lg">Duration</div>
                       <div className="text-white font-semibold">{pattern.duration}</div>
                     </div>
                     <div>
-                      <div className="text-gray-400">Questions</div>
+                      <div className="text-blue-400 text-lg">Questions</div>
                       <div className="text-white font-semibold">{pattern.questions}</div>
                     </div>
                     <div>
-                      <div className="text-gray-400">Sections</div>
+                      <div className="text-blue-400 text-lg">Sections</div>
                       <div className="text-white font-semibold">{pattern.sections}</div>
                     </div>
                     <div>
-                      <div className="text-gray-400">Difficulty</div>
+                      <div className="text-blue-400 text-lg">Difficulty</div>
                       <div className="text-white font-semibold">{pattern.difficulty}</div>
                     </div>
                   </div>
                   <Link to="/exam-patterns">
-                    <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
+                    <Button className="w-full mt-5 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
                       View Details
                       <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
@@ -971,7 +895,7 @@ const Index1 = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 px-4">
+      {/* <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl text-white font-bold mb-4">
@@ -1018,7 +942,7 @@ const Index1 = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
       <section className="py-20 px-4 bg-gray-800/30">
@@ -1046,6 +970,7 @@ const Index1 = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

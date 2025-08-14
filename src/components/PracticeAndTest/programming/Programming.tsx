@@ -1,5 +1,6 @@
 import React from 'react';
 import SectionPage from '@/components/common/SectionPage';
+import { useNavigate } from 'react-router-dom';
 import { 
   Code, 
   FileCode, 
@@ -13,6 +14,7 @@ import {
 } from 'lucide-react';
 
 const Programming: React.FC = () => {
+  const navigate = useNavigate();
   const programmingTopics = [
     {
       id: 'c-programming',
@@ -49,31 +51,11 @@ const Programming: React.FC = () => {
       icon: <Coffee className="text-red-600" />,
       totalQuestions: 60
     },
+   
     {
-      id: 'react',
-      name: 'React.js',
-      description: 'Learn React hooks, components, state management, and modern UI development.',
-      icon: <Zap className="text-cyan-600" />,
-      totalQuestions: 50
-    },
-    {
-      id: 'nodejs',
-      name: 'Node.js',
-      description: 'Master Node.js backend development, Express.js, and server-side programming.',
-      icon: <Server className="text-emerald-600" />,
-      totalQuestions: 45
-    },
-    {
-      id: 'html',
-      name: 'HTML',
-      description: 'Learn HTML5 semantic markup, forms, accessibility, and web standards.',
-      icon: <Globe className="text-purple-600" />,
-      totalQuestions: 40
-    },
-    {
-      id: 'css',
-      name: 'CSS',
-      description: 'Master CSS3 styling, layouts, animations, and responsive design.',
+      id: 'html-css',
+      name: 'Html & CSS',
+      description: 'Master Html & CSS styling, layouts, animations, and responsive design.',
       icon: <Palette className="text-pink-600" />,
       totalQuestions: 50
     }
@@ -81,7 +63,13 @@ const Programming: React.FC = () => {
 
   const handleStartTest = (topicId: string, type: 'practice' | 'test') => {
     console.log(`Starting ${type} for ${topicId}`);
-    // Add your test/practice logic here
+    if (type === 'test') {
+      // Navigate to instructions page first
+      navigate(`/programming/instructions/${topicId}`);
+    } else {
+      // For practice, navigate to practice page
+      navigate(`/programming/practice/${topicId}`);
+    }
   };
 
   return (

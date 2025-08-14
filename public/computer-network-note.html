@@ -1,0 +1,2480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Network Notes - PrepCampus</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .controls {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 6px 20px rgba(240, 147, 251, 0.6);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+        }
+
+        .btn-success:hover {
+            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.6);
+        }
+
+        .toc {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .toc h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            margin: 8px 0;
+            padding: 8px 15px;
+            background: white;
+            border-radius: 5px;
+            border-left: 3px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .toc li:hover {
+            background: #e3f2fd;
+            transform: translateX(5px);
+        }
+
+        .toc a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #fafafa;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+            padding-left: 15px;
+            border-left: 4px solid #764ba2;
+        }
+
+        .section h4 {
+            color: #f5576c;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+
+        .definition-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .important {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #ff9800;
+            font-weight: 500;
+        }
+
+        .code-box {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #4a5568;
+        }
+
+        .code-box pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        .code-box code {
+            color: #e2e8f0;
+        }
+
+        .keyword {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .comment {
+            color: #74b9ff;
+            font-style: italic;
+        }
+
+        .number {
+            color: #fd79a8;
+        }
+
+        .string {
+            color: #00b894;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .algorithm-steps {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .algorithm-steps ol {
+            padding-left: 20px;
+        }
+
+        .algorithm-steps li {
+            margin: 10px 0;
+            padding: 8px;
+            background: white;
+            border-radius: 5px;
+            border-left: 3px solid #28a745;
+        }
+
+        .complexity-table {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #4caf50;
+        }
+
+        .example-box {
+            background: #f0f8ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #2196f3;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        ul, ol {
+            padding-left: 25px;
+            margin: 15px 0;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 40px;
+            border-top: 3px solid #667eea;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+                margin: 0;
+                border-radius: 0;
+            }
+            .controls {
+                display: none;
+            }
+            .header {
+                background: #667eea;
+                color: white;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            .header h1 {
+                font-size: 2em;
+            }
+            .btn {
+                display: block;
+                margin: 10px auto;
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Computer Network Notes</h1>
+            <p>Comprehensive Guide to Computer Networking Concepts, Protocols, and Technologies</p>
+            <p>www.prepcampus.com</p>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="downloadPDF()">📥 Download PDF</button>
+            <button class="btn btn-secondary" onclick="printNotes()">🖨️ Print Notes</button>
+            <button class="btn btn-success" onclick="testPDF()">🧪 Test PDF</button>
+            <p style="margin-top: 10px; font-size: 14px; color: #666;">
+                💡 Tip: Use Ctrl+D to download PDF quickly
+            </p>
+        </div>
+
+        <div class="toc">
+            <h2>📋 Table of Contents</h2>
+            <ul>
+                <li><a href="#unit1">Unit I: Introduction to Computer Networks</a></li>
+                <li><a href="#unit2">Unit II: Physical Layer & Data Link Layer</a></li>
+                <li><a href="#unit3">Unit III: Network Layer & Transport Layer</a></li>
+                <li><a href="#unit4">Unit IV: Application Layer & Network Security</a></li>
+                <li><a href="#unit5">Unit V: Advanced Networking & Emerging Technologies</a></li>
+                <li><a href="#practical">Practical Component / Lab Work</a></li>
+                <li><a href="#schedule">Semester Schedule</a></li>
+                <li><a href="#reading">Recommended Reading</a></li>
+            </ul>
+        </div>
+
+        <div id="unit1" class="section">
+            <h2>Unit I: Introduction to Computer Networks</h2>
+            
+            <h3>1.1 What is a Computer Network?</h3>
+            <div class="definition-box">
+                <strong>Computer Network:</strong> A computer network is a sophisticated system of interconnected devices (computers, servers, routers, switches, printers, mobile devices, IoT sensors, etc.) that can communicate with each other and share resources through various transmission media. It serves as the backbone of modern digital communication, enabling seamless data transmission, resource sharing, and collaborative computing across multiple devices and locations.
+                
+                <h4>Detailed Explanation:</h4>
+                <p>A computer network functions as a digital ecosystem where multiple computing devices work together to achieve common goals. These networks can range from simple home networks connecting a few devices to complex enterprise networks spanning multiple continents. The fundamental purpose is to enable devices to exchange information, share resources, and provide services to users regardless of their physical location.</p>
+                
+                <h4>Key Characteristics:</h4>
+                <ul>
+                    <li><strong>Interconnection:</strong> Multiple devices connected through various transmission media including copper wires, fiber optic cables, wireless radio waves, and satellite links. This interconnection creates a web of communication pathways that allow data to flow between any two points in the network.</li>
+                    <li><strong>Resource Sharing:</strong> Hardware (printers, storage devices, processing power), software (applications, databases, services), and data (files, documents, multimedia content) can be shared among network users, reducing costs and improving efficiency through centralized management and distributed access.</li>
+                    <li><strong>Communication:</strong> Enables real-time exchange of information between devices through standardized protocols, supporting various forms of communication including text, voice, video, and data transfer with different quality of service requirements.</li>
+                    <li><strong>Scalability:</strong> Networks can be expanded to accommodate more devices, users, and services without significant redesign, allowing organizations to grow their infrastructure incrementally as needs evolve.</li>
+                    <li><strong>Reliability:</strong> Redundancy and fault tolerance mechanisms ensure continuous operation even when individual components fail, including backup systems, alternative routing paths, and automatic failover capabilities.</li>
+                    <li><strong>Security:</strong> Protection mechanisms for data and network resources including authentication, authorization, encryption, firewalls, and intrusion detection systems to safeguard against unauthorized access and cyber threats.</li>
+                </ul>
+                
+                <h4>Network Benefits:</h4>
+                <ul>
+                    <li><strong>Cost Efficiency:</strong> Shared resources reduce individual device costs and maintenance expenses</li>
+                    <li><strong>Improved Communication:</strong> Instant messaging, email, video conferencing, and collaborative tools</li>
+                    <li><strong>Centralized Management:</strong> Simplified administration, updates, and security policies</li>
+                    <li><strong>Data Backup:</strong> Centralized storage and automated backup systems</li>
+                    <li><strong>Remote Access:</strong> Ability to access network resources from anywhere</li>
+                    <li><strong>High Availability:</strong> Redundant systems ensure continuous service availability</li>
+                </ul>
+            </div>
+
+            <h3>1.2 Network Types and Classifications</h3>
+            
+            <h4>Based on Geographic Coverage:</h4>
+            <div class="definition-box">
+                <strong>Personal Area Network (PAN):</strong> A Personal Area Network is a specialized network that connects devices within a very small geographic area, typically within a person's immediate workspace, personal space, or body area. PANs are designed for personal use and typically cover a range of about 10 meters, creating a personal digital ecosystem around an individual.
+                
+                <h4>Detailed Explanation:</h4>
+                <p>A PAN represents the most intimate level of networking, where devices are connected to serve a single individual's needs. These networks are characterized by their close proximity to the user and their focus on personal productivity, entertainment, and health monitoring. PANs can be either wired or wireless, with wireless PANs (WPANs) being more common due to their convenience and mobility.</p>
+                
+                <p>The concept of PANs emerged with the proliferation of personal electronic devices and the need for seamless communication between them. Modern PANs often include smart devices that can communicate autonomously, creating an intelligent personal environment that adapts to user preferences and needs.</p>
+                
+                <h4>Characteristics:</h4>
+                <ul>
+                    <li><strong>Range:</strong> Up to 10 meters, with most practical applications working within 1-5 meters. This limited range ensures privacy and reduces interference with other networks while maintaining sufficient coverage for personal use scenarios.</li>
+                    <li><strong>Devices:</strong> Smartphones, laptops, tablets, wearable devices (smartwatches, fitness trackers), wireless headphones, smart glasses, medical devices, gaming controllers, and IoT sensors. These devices form a personal digital ecosystem.</li>
+                    <li><strong>Technology:</strong> Bluetooth (most common), Infrared (IR), USB, ZigBee, Near Field Communication (NFC), and proprietary wireless protocols. Each technology offers different trade-offs between power consumption, data rate, and range.</li>
+                    <li><strong>Use Cases:</strong> File sharing between devices, device synchronization (contacts, calendars, photos), wireless audio streaming, health monitoring, smart home control, mobile payments, and device tethering for internet access.</li>
+                    <li><strong>Advantages:</strong> Low power consumption (especially important for battery-powered devices), simple setup and configuration, cost-effective implementation, high security due to limited range, and automatic device discovery and pairing.</li>
+                    <li><strong>Limitations:</strong> Limited range restricts mobility, relatively low data transfer rates compared to larger networks, potential interference in crowded environments, and dependency on device compatibility and protocol support.</li>
+                </ul>
+                
+                <h4>PAN Applications:</h4>
+                <ul>
+                    <li><strong>Health Monitoring:</strong> Connecting medical devices, fitness trackers, and health sensors</li>
+                    <li><strong>Entertainment:</strong> Wireless audio systems, gaming peripherals, and media streaming</li>
+                    <li><strong>Productivity:</strong> Device synchronization, file transfer, and peripheral connectivity</li>
+                    <li><strong>Smart Home:</strong> Personal device control of home automation systems</li>
+                    <li><strong>Mobile Computing:</strong> Internet tethering and device interconnection</li>
+                </ul>
+            </div>
+
+            <div class="definition-box">
+                <strong>Local Area Network (LAN):</strong> A Local Area Network is a computer network that connects devices within a limited geographic area such as a home, office building, campus, or small group of buildings. LANs are typically owned, controlled, and managed by a single organization and provide high-speed data transmission with low latency, making them ideal for resource sharing and collaborative computing environments.
+                
+                <h4>Detailed Explanation:</h4>
+                <p>LANs represent the foundation of modern networking, providing the infrastructure for most organizational computing needs. These networks are characterized by their high performance, reliability, and centralized management capabilities. LANs can support both wired and wireless connections, with modern implementations often combining both technologies to provide maximum flexibility and coverage.</p>
+                
+                <p>The design of LANs focuses on optimizing performance for local communication while providing seamless connectivity to external networks through gateways and routers. LANs are the building blocks of larger network architectures and serve as the primary means of connecting end-user devices to organizational resources and services.</p>
+                
+                <h4>Characteristics:</h4>
+                <ul>
+                    <li><strong>Range:</strong> Up to 1-2 kilometers, with typical implementations covering areas from a single room to multiple buildings within a campus. This limited geographic scope allows for high-speed connections and centralized management.</li>
+                    <li><strong>Speed:</strong> 10 Mbps to 10 Gbps, with modern LANs typically operating at 100 Mbps to 1 Gbps. High-speed fiber connections can reach 10 Gbps or higher for backbone connections and high-performance computing applications.</li>
+                    <li><strong>Topology:</strong> Star (most common), Bus, Ring, Mesh, Tree, and hybrid topologies. The choice of topology depends on factors such as cost, performance requirements, fault tolerance needs, and management preferences.</li>
+                    <li><strong>Technology:</strong> Ethernet (wired), Wi-Fi (wireless), Power over Ethernet (PoE), and various networking protocols. Ethernet remains the dominant wired technology, while Wi-Fi provides wireless connectivity for mobile devices.</li>
+                    <li><strong>Use Cases:</strong> Office networks for business operations, home networks for personal computing, campus networks for educational institutions, industrial networks for manufacturing, and data center networks for server connectivity.</li>
+                    <li><strong>Advantages:</strong> High speed and low latency for real-time applications, centralized management and security control, cost-effective resource sharing, reliable connectivity, and support for both wired and wireless devices.</li>
+                    <li><strong>Limitations:</strong> Limited geographic coverage restricts mobility, requires physical infrastructure for wired connections, potential security vulnerabilities if not properly configured, and dependency on centralized equipment.</li>
+                </ul>
+                
+                <h4>LAN Components:</h4>
+                <ul>
+                    <li><strong>Network Interface Cards (NICs):</strong> Hardware components that connect devices to the network</li>
+                    <li><strong>Switches and Hubs:</strong> Central connectivity devices that manage data flow</li>
+                    <li><strong>Routers:</strong> Devices that connect LANs to other networks</li>
+                    <li><strong>Access Points:</strong> Wireless connectivity devices for Wi-Fi networks</li>
+                    <li><strong>Cabling:</strong> Physical transmission media (copper, fiber optic)</li>
+                    <li><strong>Network Software:</strong> Operating systems, protocols, and management tools</li>
+                </ul>
+                
+                <h4>LAN Applications:</h4>
+                <ul>
+                    <li><strong>File Sharing:</strong> Centralized storage and collaborative document access</li>
+                    <li><strong>Printing:</strong> Shared printer access and print job management</li>
+                    <li><strong>Email and Communication:</strong> Internal messaging and collaboration tools</li>
+                    <li><strong>Database Access:</strong> Shared database systems and applications</li>
+                    <li><strong>Internet Access:</strong> Gateway to external networks and services</li>
+                    <li><strong>Backup and Recovery:</strong> Centralized backup systems and disaster recovery</li>
+                </ul>
+            </div>
+
+            <div class="definition-box">
+                <strong>Metropolitan Area Network (MAN):</strong> A Metropolitan Area Network is a computer network that covers a larger geographic area than a Local Area Network (LAN) but smaller than a Wide Area Network (WAN), typically spanning a city, metropolitan area, or large campus. MANs are designed to interconnect multiple LANs within a metropolitan region, providing high-speed connectivity for organizations, government agencies, and service providers operating across a city.
+                
+                <h4>Detailed Explanation:</h4>
+                <p>MANs serve as the middle tier in the network hierarchy, bridging the gap between local networks and wide area networks. They are particularly important for organizations with multiple locations within a city, such as universities, hospitals, government agencies, and large corporations. MANs provide the infrastructure for city-wide services, including internet access, telephony, cable television, and emergency services.</p>
+                
+                <p>The design of MANs focuses on providing high bandwidth, reliability, and scalability while maintaining reasonable costs. Modern MANs often use fiber optic technology to achieve high speeds and support multiple services over a single infrastructure. They are typically owned and operated by telecommunications companies, municipalities, or large organizations.</p>
+                
+                <h4>Characteristics:</h4>
+                <ul>
+                    <li><strong>Range:</strong> 5-50 kilometers, covering metropolitan areas, cities, or large campuses. This range allows for city-wide connectivity while maintaining high performance and manageable complexity.</li>
+                    <li><strong>Speed:</strong> 100 Mbps to 10 Gbps, with modern MANs typically operating at 1 Gbps to 10 Gbps. High-speed connections support bandwidth-intensive applications and multiple simultaneous users.</li>
+                    <li><strong>Technology:</strong> Fiber optic cables (primary), microwave links, wireless broadband, and hybrid technologies. Fiber optics provide the backbone for most MANs due to their high bandwidth and reliability.</li>
+                    <li><strong>Use Cases:</strong> City-wide networks for government services, ISP backbone networks for internet connectivity, university campus networks, hospital networks, and corporate networks with multiple locations.</li>
+                    <li><strong>Advantages:</strong> High bandwidth supports multiple services and users, connects multiple LANs efficiently, provides redundancy and fault tolerance, supports both data and voice services, and enables centralized management of distributed resources.</li>
+                    <li><strong>Limitations:</strong> Higher cost than LANs due to infrastructure requirements, complex management and maintenance, dependency on service providers, potential regulatory restrictions, and vulnerability to natural disasters affecting the metropolitan area.</li>
+                </ul>
+                
+                <h4>MAN Technologies:</h4>
+                <ul>
+                    <li><strong>Fiber Optic Networks:</strong> High-speed backbone using light signals through glass fibers</li>
+                    <li><strong>Microwave Links:</strong> Wireless point-to-point connections for areas where fiber is impractical</li>
+                    <li><strong>Wireless MAN (WiMAX):</strong> Broadband wireless access for metropolitan areas</li>
+                    <li><strong>Ethernet MAN:</strong> Extended Ethernet technology for metropolitan connectivity</li>
+                    <li><strong>SONET/SDH:</strong> Synchronous optical networking for high-speed data transmission</li>
+                </ul>
+                
+                <h4>MAN Applications:</h4>
+                <ul>
+                    <li><strong>Government Services:</strong> City-wide administrative networks and emergency services</li>
+                    <li><strong>Education:</strong> University campus networks and school district connectivity</li>
+                    <li><strong>Healthcare:</strong> Hospital networks and medical information systems</li>
+                    <li><strong>Business:</strong> Corporate networks with multiple office locations</li>
+                    <li><strong>Entertainment:</strong> Cable television and streaming services</li>
+                    <li><strong>Transportation:</strong> Traffic management and public transportation systems</li>
+                </ul>
+                
+                <h4>MAN Architecture:</h4>
+                <ul>
+                    <li><strong>Core Network:</strong> High-speed backbone connecting major nodes</li>
+                    <li><strong>Distribution Network:</strong> Intermediate connections to smaller areas</li>
+                    <li><strong>Access Network:</strong> Final connections to end users and LANs</li>
+                    <li><strong>Management Systems:</strong> Network monitoring, security, and service management</li>
+                </ul>
+            </div>
+
+            <div class="definition-box">
+                <strong>Wide Area Network (WAN):</strong> A Wide Area Network is a computer network that spans large geographic areas, often covering multiple cities, states, countries, or even continents. WANs connect multiple Local Area Networks (LANs) and Metropolitan Area Networks (MANs) across vast distances, enabling global communication and resource sharing. These networks form the backbone of the Internet and are essential for international business, telecommunications, and global connectivity.
+                
+                <h4>Detailed Explanation:</h4>
+                <p>WANs represent the largest scale of computer networking, providing the infrastructure for global communication and commerce. They are characterized by their extensive geographic coverage, complex routing systems, and the ability to connect diverse networks operated by different organizations. WANs are the foundation of the modern Internet and enable worldwide access to information, services, and resources.</p>
+                
+                <p>The architecture of WANs is highly complex, involving multiple layers of networking equipment, diverse transmission media, sophisticated routing protocols, and extensive redundancy systems. WANs must handle varying network conditions, different regulatory environments, and the challenges of long-distance communication while maintaining reliability and performance.</p>
+                
+                <h4>Characteristics:</h4>
+                <ul>
+                    <li><strong>Range:</strong> Unlimited (global coverage), spanning from regional networks covering multiple cities to international networks connecting continents. WANs can extend across oceans and connect remote locations worldwide.</li>
+                    <li><strong>Speed:</strong> 56 Kbps to 100 Gbps, with typical speeds ranging from 1 Mbps to 10 Gbps depending on the technology and service level. High-speed backbone connections can reach 100 Gbps or higher for major network trunks.</li>
+                    <li><strong>Technology:</strong> Fiber optic cables (primary backbone), satellite communications, microwave links, undersea cables, and wireless technologies. Multiple technologies are often combined to provide comprehensive coverage and redundancy.</li>
+                    <li><strong>Use Cases:</strong> Internet backbone infrastructure, corporate networks with global offices, telecommunications networks, cloud computing services, international banking systems, and global e-commerce platforms.</li>
+                    <li><strong>Advantages:</strong> Global connectivity enables worldwide communication and commerce, connects distant locations efficiently, provides access to remote resources and services, supports international collaboration, and enables centralized management of distributed operations.</li>
+                    <li><strong>Limitations:</strong> High cost due to infrastructure and maintenance requirements, lower speed compared to local networks due to distance and routing complexity, dependency on multiple service providers, potential regulatory and political restrictions, and vulnerability to natural disasters and geopolitical events.</li>
+                </ul>
+                
+                <h4>WAN Technologies:</h4>
+                <ul>
+                    <li><strong>Fiber Optic Networks:</strong> High-speed backbone using light signals through glass fibers</li>
+                    <li><strong>Satellite Communications:</strong> Wireless connections via orbiting satellites</li>
+                    <li><strong>Undersea Cables:</strong> Submarine fiber optic cables connecting continents</li>
+                    <li><strong>Microwave Links:</strong> Terrestrial wireless point-to-point connections</li>
+                    <li><strong>Mobile Networks:</strong> Cellular and mobile broadband technologies</li>
+                    <li><strong>Leased Lines:</strong> Dedicated connections between locations</li>
+                </ul>
+                
+                <h4>WAN Applications:</h4>
+                <ul>
+                    <li><strong>Internet Access:</strong> Global connectivity to the World Wide Web</li>
+                    <li><strong>Corporate Networks:</strong> Multi-location business connectivity</li>
+                    <li><strong>Cloud Services:</strong> Access to distributed computing resources</li>
+                    <li><strong>Telecommunications:</strong> Voice, video, and data services</li>
+                    <li><strong>Financial Services:</strong> International banking and trading systems</li>
+                    <li><strong>E-commerce:</strong> Global online commerce platforms</li>
+                    <li><strong>Content Delivery:</strong> Streaming media and content distribution</li>
+                </ul>
+                
+                <h4>WAN Architecture:</h4>
+                <ul>
+                    <li><strong>Core Network:</strong> High-speed backbone connecting major regions</li>
+                    <li><strong>Regional Networks:</strong> Intermediate connections between areas</li>
+                    <li><strong>Access Networks:</strong> Final connections to end users</li>
+                    <li><strong>Peering Points:</strong> Interconnection points between networks</li>
+                    <li><strong>Data Centers:</strong> Centralized computing and storage facilities</li>
+                </ul>
+                
+                <h4>WAN Challenges:</h4>
+                <ul>
+                    <li><strong>Latency:</strong> Signal propagation delays over long distances</li>
+                    <li><strong>Bandwidth:</strong> Limited capacity compared to local networks</li>
+                    <li><strong>Reliability:</strong> Multiple points of failure across vast distances</li>
+                    <li><strong>Security:</strong> Vulnerabilities in complex, multi-owner networks</li>
+                    <li><strong>Cost:</strong> High infrastructure and maintenance expenses</li>
+                    <li><strong>Regulation:</strong> Different legal and regulatory environments</li>
+                </ul>
+            </div>
+
+            <h4>Based on Topology:</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Topology</th>
+                        <th>Description</th>
+                        <th>Advantages</th>
+                        <th>Disadvantages</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Bus</strong></td>
+                        <td>All devices connected to a single cable</td>
+                        <td>Simple, cost-effective</td>
+                        <td>Single point of failure, limited scalability</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Star</strong></td>
+                        <td>All devices connected to a central hub</td>
+                        <td>Easy management, fault isolation</td>
+                        <td>Central point of failure, more cabling</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ring</strong></td>
+                        <td>Devices connected in a circular arrangement</td>
+                        <td>Equal access, good performance</td>
+                        <td>Single point of failure, complex troubleshooting</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mesh</strong></td>
+                        <td>Every device connected to every other device</td>
+                        <td>High reliability, multiple paths</td>
+                        <td>High cost, complex cabling</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tree</strong></td>
+                        <td>Hierarchical structure with root and branches</td>
+                        <td>Scalable, organized structure</td>
+                        <td>Root dependency, complex management</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>1.3 Network Architecture Models</h3>
+            
+            <h4>OSI Reference Model (7-Layer Model)</h4>
+            <div class="definition-box">
+                <strong>Open Systems Interconnection (OSI) Model:</strong> The Open Systems Interconnection (OSI) Model is a conceptual framework developed by the International Organization for Standardization (ISO) to describe and standardize network interactions in seven distinct layers. Each layer has specific functions, protocols, and responsibilities, and provides services to the layer above it while receiving services from the layer below it. This layered approach enables modular design, easier troubleshooting, and interoperability between different network technologies and vendors.
+                
+                <h4>Detailed Explanation:</h4>
+                <p>The OSI Model serves as a reference model for understanding how data flows through a network from one application to another. It provides a systematic approach to network design and troubleshooting by breaking down complex network operations into manageable, well-defined layers. Each layer focuses on specific aspects of network communication, allowing developers and network engineers to work on individual layers without affecting others.</p>
+                
+                <p>The model follows the principle of encapsulation, where each layer adds its own header (and sometimes trailer) to the data received from the layer above. This process continues down the stack until the data reaches the physical layer for transmission. At the receiving end, the process is reversed as each layer removes its header and passes the data up to the next layer.</p>
+                
+                <h4>Layer Functions:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li><strong>Physical Layer (Layer 1):</strong> Transmits raw bits over physical medium, including electrical signals, light pulses, or radio waves. Handles physical connections, cable specifications, voltage levels, timing, and data rates. Examples: Ethernet cables, fiber optics, wireless signals.</li>
+                        <li><strong>Data Link Layer (Layer 2):</strong> Provides error-free transmission between nodes on the same network segment. Handles framing, error detection and correction, flow control, and media access control. Examples: Ethernet, Wi-Fi, PPP, ATM.</li>
+                        <li><strong>Network Layer (Layer 3):</strong> Routes packets across different networks using logical addressing. Handles packet forwarding, routing decisions, network addressing, and fragmentation. Examples: IP, ICMP, OSPF, BGP.</li>
+                        <li><strong>Transport Layer (Layer 4):</strong> Ensures end-to-end data delivery between applications. Handles segmentation, reassembly, flow control, error recovery, and connection management. Examples: TCP, UDP, SCTP.</li>
+                        <li><strong>Session Layer (Layer 5):</strong> Manages communication sessions between applications. Handles session establishment, maintenance, synchronization, and termination. Examples: NetBIOS, RPC, SQL.</li>
+                        <li><strong>Presentation Layer (Layer 6):</strong> Handles data format, encoding, compression, and encryption. Ensures data is presented in a format that the application layer can understand. Examples: SSL/TLS, JPEG, MPEG, ASCII.</li>
+                        <li><strong>Application Layer (Layer 7):</strong> Provides network services directly to end-user applications. Handles user interface, application protocols, and service access. Examples: HTTP, FTP, SMTP, DNS, SSH.</li>
+                    </ol>
+                </div>
+                
+                <h4>OSI Model Benefits:</h4>
+                <ul>
+                    <li><strong>Modularity:</strong> Each layer can be developed and modified independently</li>
+                    <li><strong>Interoperability:</strong> Different vendors can implement compatible layers</li>
+                    <li><strong>Troubleshooting:</strong> Problems can be isolated to specific layers</li>
+                    <li><strong>Standards:</strong> Provides a framework for network protocol development</li>
+                    <li><strong>Education:</strong> Helps understand network concepts systematically</li>
+                </ul>
+                
+                <h4>Data Flow in OSI Model:</h4>
+                <div class="code-box">
+                    <pre><code>Data Flow Process:
+
+Application Layer (7) → Data
+Presentation Layer (6) → Data + Header6
+Session Layer (5) → Data + Header6 + Header5
+Transport Layer (4) → Data + Header6 + Header5 + Header4
+Network Layer (3) → Data + Header6 + Header5 + Header4 + Header3
+Data Link Layer (2) → Data + Header6 + Header5 + Header4 + Header3 + Header2 + Trailer2
+Physical Layer (1) → Bits transmitted over medium
+
+At receiving end, process is reversed:
+Physical Layer (1) → Receives bits
+Data Link Layer (2) → Removes Header2 + Trailer2
+Network Layer (3) → Removes Header3
+Transport Layer (4) → Removes Header4
+Session Layer (5) → Removes Header5
+Presentation Layer (6) → Removes Header6
+Application Layer (7) → Receives original data</code></pre>
+                </div>
+                
+                <h4>OSI vs TCP/IP Model:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>OSI Model</th>
+                            <th>TCP/IP Model</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Application (7)</td>
+                            <td>Application</td>
+                            <td>User applications and services</td>
+                        </tr>
+                        <tr>
+                            <td>Presentation (6)</td>
+                            <td>Application</td>
+                            <td>Data formatting and encryption</td>
+                        </tr>
+                        <tr>
+                            <td>Session (5)</td>
+                            <td>Application</td>
+                            <td>Session management</td>
+                        </tr>
+                        <tr>
+                            <td>Transport (4)</td>
+                            <td>Transport</td>
+                            <td>End-to-end communication</td>
+                        </tr>
+                        <tr>
+                            <td>Network (3)</td>
+                            <td>Internet</td>
+                            <td>Routing and addressing</td>
+                        </tr>
+                        <tr>
+                            <td>Data Link (2)</td>
+                            <td>Network Access</td>
+                            <td>Local network communication</td>
+                        </tr>
+                        <tr>
+                            <td>Physical (1)</td>
+                            <td>Network Access</td>
+                            <td>Physical transmission</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>TCP/IP Model (4-Layer Model)</h4>
+            <div class="definition-box">
+                <strong>Transmission Control Protocol/Internet Protocol (TCP/IP) Model:</strong> A practical networking model that forms the basis for the Internet. It consists of four layers that correspond to the OSI model but are more focused on practical implementation.
+                
+                <h4>Layer Functions:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li><strong>Network Access Layer:</strong> Corresponds to OSI Physical and Data Link layers</li>
+                        <li><strong>Internet Layer:</strong> Corresponds to OSI Network layer, handles IP addressing and routing</li>
+                        <li><strong>Transport Layer:</strong> Corresponds to OSI Transport layer, provides TCP and UDP protocols</li>
+                        <li><strong>Application Layer:</strong> Corresponds to OSI Session, Presentation, and Application layers</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h3>1.4 Network Components and Devices</h3>
+            
+            <h4>End Devices</h4>
+            <div class="definition-box">
+                <strong>End Devices:</strong> Devices that are the source or destination of network communications. These devices generate, process, and consume network data.
+                
+                <h4>Types of End Devices:</h4>
+                <ul>
+                    <li><strong>Computers:</strong> Desktop computers, laptops, workstations</li>
+                    <li><strong>Mobile Devices:</strong> Smartphones, tablets, IoT devices</li>
+                    <li><strong>Servers:</strong> Web servers, file servers, database servers</li>
+                    <li><strong>Network Printers:</strong> Printers with network connectivity</li>
+                    <li><strong>Network Cameras:</strong> IP cameras and surveillance systems</li>
+                </ul>
+            </div>
+
+            <h4>Network Infrastructure Devices</h4>
+            <div class="definition-box">
+                <strong>Network Infrastructure Devices:</strong> Devices that facilitate network connectivity, data transmission, and network management. These devices form the backbone of network infrastructure.
+                
+                <h4>Types of Infrastructure Devices:</h4>
+                <ul>
+                    <li><strong>Hubs:</strong> Basic devices that connect multiple devices in a network</li>
+                    <li><strong>Switches:</strong> Intelligent devices that forward data based on MAC addresses</li>
+                    <li><strong>Routers:</strong> Devices that route data between different networks</li>
+                    <li><strong>Bridges:</strong> Devices that connect two network segments</li>
+                    <li><strong>Gateways:</strong> Devices that connect networks with different protocols</li>
+                    <li><strong>Modems:</strong> Devices that modulate/demodulate signals for transmission</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="unit2" class="section">
+            <h2>Unit II: Physical Layer & Data Link Layer</h2>
+            
+            <h3>2.1 Physical Layer Fundamentals</h3>
+            
+            <h4>Transmission Media</h4>
+            <div class="definition-box">
+                <strong>Transmission Media:</strong> The physical path through which data is transmitted from one device to another in a network. The choice of transmission media affects the network's performance, reliability, and cost.
+                
+                <h4>Types of Transmission Media:</h4>
+                <ul>
+                    <li><strong>Guided Media:</strong> Physical cables that guide the signal along a specific path</li>
+                    <li><strong>Unguided Media:</strong> Wireless transmission through air or space</li>
+                </ul>
+            </div>
+
+            <h4>Guided Media</h4>
+            <div class="definition-box">
+                <strong>Twisted Pair Cable:</strong> A type of cable in which two conductors are twisted together to reduce electromagnetic interference. It is the most common type of cable used in computer networks.
+                
+                <h4>Characteristics:</h4>
+                <ul>
+                    <li><strong>Types:</strong> Unshielded Twisted Pair (UTP) and Shielded Twisted Pair (STP)</li>
+                    <li><strong>Categories:</strong> Cat3, Cat5, Cat5e, Cat6, Cat6a, Cat7, Cat8</li>
+                    <li><strong>Speed:</strong> 10 Mbps to 40 Gbps depending on category</li>
+                    <li><strong>Distance:</strong> Up to 100 meters for most applications</li>
+                    <li><strong>Advantages:</strong> Low cost, easy installation, flexible</li>
+                    <li><strong>Disadvantages:</strong> Susceptible to interference, limited bandwidth</li>
+                </ul>
+            </div>
+
+            <div class="definition-box">
+                <strong>Coaxial Cable:</strong> A type of cable with a central conductor surrounded by an insulating layer, a metallic shield, and an outer insulating layer. It provides better shielding than twisted pair cables.
+                
+                <h4>Characteristics:</h4>
+                <ul>
+                    <li><strong>Types:</strong> RG-6, RG-8, RG-11, RG-58</li>
+                    <li><strong>Speed:</strong> Up to 10 Gbps</li>
+                    <li><strong>Distance:</strong> Up to 500 meters</li>
+                    <li><strong>Advantages:</strong> Better shielding, higher bandwidth, longer distance</li>
+                    <li><strong>Disadvantages:</strong> Higher cost, less flexible, difficult installation</li>
+                </ul>
+            </div>
+
+            <div class="definition-box">
+                <strong>Fiber Optic Cable:</strong> A type of cable that uses light signals to transmit data through glass or plastic fibers. It provides the highest bandwidth and longest transmission distances.
+                
+                <h4>Characteristics:</h4>
+                <ul>
+                    <li><strong>Types:</strong> Single-mode fiber (SMF) and Multi-mode fiber (MMF)</li>
+                    <li><strong>Speed:</strong> Up to 100 Tbps</li>
+                    <li><strong>Distance:</strong> Up to 100 kilometers</li>
+                    <li><strong>Advantages:</strong> Highest bandwidth, longest distance, immune to interference</li>
+                    <li><strong>Disadvantages:</strong> High cost, complex installation, fragile</li>
+                </ul>
+            </div>
+
+            <h4>Unguided Media</h4>
+            <div class="definition-box">
+                <strong>Radio Waves:</strong> Electromagnetic waves with frequencies between 3 kHz and 300 GHz. They are used for wireless communication over various distances.
+                
+                <h4>Characteristics:</h4>
+                <ul>
+                    <li><strong>Frequency Bands:</strong> AM, FM, Wi-Fi, Bluetooth, Cellular</li>
+                    <li><strong>Range:</strong> Short to long distance depending on frequency</li>
+                    <li><strong>Advantages:</strong> No physical connection, wide coverage</li>
+                    <li><strong>Disadvantages:</strong> Susceptible to interference, security concerns</li>
+                </ul>
+            </div>
+
+            <div class="definition-box">
+                <strong>Microwave:</strong> High-frequency radio waves (1-300 GHz) used for point-to-point communication. They are commonly used for satellite communication and long-distance links.
+                
+                <h4>Characteristics:</h4>
+                <ul>
+                    <li><strong>Frequency:</strong> 1-300 GHz</li>
+                    <li><strong>Range:</strong> Line of sight, up to 50 km</li>
+                    <li><strong>Advantages:</strong> High bandwidth, long distance</li>
+                    <li><strong>Disadvantages:</strong> Line of sight required, affected by weather</li>
+                </ul>
+            </div>
+
+            <div class="definition-box">
+                <strong>Infrared:</strong> Electromagnetic waves with frequencies just below visible light. They are used for short-range wireless communication.
+                
+                <h4>Characteristics:</h4>
+                <ul>
+                    <li><strong>Frequency:</strong> 300 GHz - 400 THz</li>
+                    <li><strong>Range:</strong> Up to 10 meters</li>
+                    <li><strong>Advantages:</strong> Secure, no interference with radio waves</li>
+                    <li><strong>Disadvantages:</strong> Line of sight required, short range</li>
+                </ul>
+            </div>
+
+            <h3>2.2 Data Link Layer Protocols</h3>
+            
+            <h4>Ethernet</h4>
+            <div class="definition-box">
+                <strong>Ethernet:</strong> A family of computer networking technologies commonly used in local area networks (LANs). It defines the physical and data link layer specifications for wired network connections.
+                
+                <h4>Ethernet Standards:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Standard</th>
+                            <th>Speed</th>
+                            <th>Media</th>
+                            <th>Distance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>10BASE-T</td>
+                            <td>10 Mbps</td>
+                            <td>UTP Cat3</td>
+                            <td>100m</td>
+                        </tr>
+                        <tr>
+                            <td>100BASE-TX</td>
+                            <td>100 Mbps</td>
+                            <td>UTP Cat5</td>
+                            <td>100m</td>
+                        </tr>
+                        <tr>
+                            <td>1000BASE-T</td>
+                            <td>1 Gbps</td>
+                            <td>UTP Cat5e</td>
+                            <td>100m</td>
+                        </tr>
+                        <tr>
+                            <td>10GBASE-T</td>
+                            <td>10 Gbps</td>
+                            <td>UTP Cat6a</td>
+                            <td>100m</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Wi-Fi Security Protocols</h4>
+            <div class="definition-box">
+                <strong>Wi-Fi Security:</strong> Methods and protocols used to secure wireless networks from unauthorized access and data interception.
+                
+                <h4>Security Standards:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li><strong>WEP (Wired Equivalent Privacy):</strong> First security standard (1997), now considered insecure</li>
+                        <li><strong>WPA (Wi-Fi Protected Access):</strong> Interim security standard (2003)</li>
+                        <li><strong>WPA2 (Wi-Fi Protected Access 2):</strong> Current standard using AES encryption</li>
+                        <li><strong>WPA3 (Wi-Fi Protected Access 3):</strong> Latest standard with enhanced security</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h4>Network Layer Protocols</h4>
+            <div class="definition-box">
+                <strong>Network Layer:</strong> The third layer of the OSI model responsible for logical addressing, routing, and packet forwarding across different networks.
+                
+                <h4>Key Functions:</h4>
+                <ul>
+                    <li><strong>Logical Addressing:</strong> Assigning IP addresses to devices</li>
+                    <li><strong>Routing:</strong> Determining the best path for data packets</li>
+                    <li><strong>Packet Forwarding:</strong> Moving packets between networks</li>
+                    <li><strong>Fragmentation:</strong> Breaking large packets into smaller ones</li>
+                </ul>
+            </div>
+
+            <h4>Internet Protocol (IP)</h4>
+            <div class="definition-box">
+                <strong>Internet Protocol (IP):</strong> A connectionless protocol that provides logical addressing and routing for data packets across networks. IP is the primary protocol of the Internet and enables communication between devices on different networks.
+                
+                <h4>IP Characteristics:</h4>
+                <ul>
+                    <li><strong>Connectionless:</strong> No prior connection establishment required</li>
+                    <li><strong>Best-effort delivery:</strong> No guarantee of packet delivery</li>
+                    <li><strong>Unreliable:</strong> No acknowledgment or retransmission</li>
+                    <li><strong>Fragmentation:</strong> Can break large packets into smaller ones</li>
+                </ul>
+            </div>
+
+            <h4>IPv4 Address Structure</h4>
+            <div class="code-box">
+                <pre><code>IPv4 Address Format: XXX.XXX.XXX.XXX
+Example: 192.168.1.100
+
+Address Classes:
+┌─────────────┬─────────────┬─────────────┬─────────────┬─────────────┐
+│    Class    │ First Bits  │   Range     │   Default   │   Network   │
+│             │             │             │   Subnet    │    Hosts    │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│     A       │    0xxx     │ 1.0.0.0 -   │   255.0.0.0 │  16,777,214 │
+│             │             │ 126.255.255.255 │           │             │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│     B       │   10xx      │ 128.0.0.0 - │ 255.255.0.0 │    65,534   │
+│             │             │ 191.255.255.255 │           │             │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│     C       │   110x      │ 192.0.0.0 - │255.255.255.0 │     254     │
+│             │             │ 223.255.255.255 │           │             │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│     D       │   1110      │ 224.0.0.0 - │     N/A     │   Multicast │
+│             │             │ 239.255.255.255 │           │             │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│     E       │   1111      │ 240.0.0.0 - │     N/A     │  Reserved   │
+│             │             │ 255.255.255.255 │           │             │
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘</code></pre>
+            </div>
+
+            <h4>IPv6 Address Structure</h4>
+            <div class="definition-box">
+                <strong>IPv6 (Internet Protocol Version 6):</strong> The most recent version of the Internet Protocol, designed to replace IPv4 and address its limitations, particularly the exhaustion of IPv4 addresses.
+                
+                <h4>IPv6 Features:</h4>
+                <ul>
+                    <li><strong>128-bit addresses:</strong> Provides 340 undecillion unique addresses</li>
+                    <li><strong>Built-in security:</strong> IPsec support is mandatory</li>
+                    <li><strong>Auto-configuration:</strong> Stateless address autoconfiguration</li>
+                    <li><strong>Better header format:</strong> Simplified and more efficient</li>
+                    <li><strong>Quality of Service:</strong> Better support for QoS</li>
+                </ul>
+            </div>
+
+            <div class="code-box">
+                <pre><code>IPv6 Address Format: XXXX:XXXX:XXXX:XXXX:XXXX:XXXX:XXXX:XXXX
+Example: 2001:0db8:85a3:0000:0000:8a2e:0370:7334
+
+Shortened form: 2001:db8:85a3::8a2e:370:7334
+
+Address Types:
+- Global Unicast: 2000::/3 (public addresses)
+- Unique Local: fc00::/7 (private addresses)
+- Link Local: fe80::/10 (local network only)
+- Multicast: ff00::/8 (group communication)</code></pre>
+            </div>
+
+            <h4>Routing Protocols</h4>
+            <div class="definition-box">
+                <strong>Routing Protocol:</strong> A protocol that enables routers to exchange routing information and build routing tables to determine the best path for forwarding packets across networks.
+                
+                <h4>Types of Routing Protocols:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li><strong>Distance Vector Protocols:</strong> RIP, EIGRP - share entire routing table with neighbors</li>
+                        <li><strong>Link State Protocols:</strong> OSPF, IS-IS - share link state information with all routers</li>
+                        <li><strong>Path Vector Protocols:</strong> BGP - share path information between autonomous systems</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h4>RIP (Routing Information Protocol)</h4>
+            <div class="definition-box">
+                <strong>RIP (Routing Information Protocol):</strong> A distance-vector routing protocol that uses hop count as its routing metric. RIP is one of the oldest routing protocols and is suitable for small networks.
+                
+                <h4>RIP Characteristics:</h4>
+                <ul>
+                    <li><strong>Maximum hop count:</strong> 15 hops (16 = unreachable)</li>
+                    <li><strong>Update interval:</strong> 30 seconds</li>
+                    <li><strong>Metric:</strong> Hop count</li>
+                    <li><strong>Administrative distance:</strong> 120</li>
+                    <li><strong>Convergence time:</strong> Slow (up to 180 seconds)</li>
+                </ul>
+            </div>
+
+            <div class="code-box">
+                <pre><code>RIP Configuration Example (Cisco):
+Router(config)# router rip
+Router(config-router)# version 2
+Router(config-router)# network 192.168.1.0
+Router(config-router)# network 10.0.0.0
+Router(config-router)# no auto-summary
+
+RIP Packet Structure:
+┌─────────────┬─────────────┬─────────────┬─────────────┬─────────────┐
+│   Command   │   Version   │   Reserved  │   Address   │   Metric    │
+│   (1 byte)  │   (1 byte)  │   (2 bytes) │ Family (2)  │   (4 bytes) │
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘
+
+Commands:
+- 1: Request
+- 2: Response</code></pre>
+            </div>
+
+            <h4>OSPF (Open Shortest Path First)</h4>
+            <div class="definition-box">
+                <strong>OSPF (Open Shortest Path First):</strong> A link-state routing protocol that uses Dijkstra's shortest path algorithm to calculate the best route to each destination. OSPF is widely used in enterprise networks.
+                
+                <h4>OSPF Features:</h4>
+                <ul>
+                    <li><strong>Fast convergence:</strong> Typically 10-30 seconds</li>
+                    <li><strong>Hierarchical design:</strong> Areas and backbone</li>
+                    <li><strong>Multiple metrics:</strong> Bandwidth, delay, reliability, cost</li>
+                    <li><strong>Authentication:</strong> Supports MD5 authentication</li>
+                    <li><strong>VLSM support:</strong> Variable Length Subnet Masking</li>
+                </ul>
+            </div>
+
+            <h4>Transport Layer Protocols</h4>
+            <div class="definition-box">
+                <strong>Transport Layer:</strong> The fourth layer of the OSI model responsible for end-to-end communication, error detection, flow control, and ensuring reliable data delivery between applications.
+                
+                <h4>Key Functions:</h4>
+                <ul>
+                    <li><strong>End-to-end delivery:</strong> Ensures data reaches the correct application</li>
+                    <li><strong>Error detection and recovery:</strong> Detects and corrects transmission errors</li>
+                    <li><strong>Flow control:</strong> Prevents overwhelming the receiver</li>
+                    <li><strong>Segmentation and reassembly:</strong> Breaks data into manageable pieces</li>
+                </ul>
+            </div>
+
+            <h4>TCP (Transmission Control Protocol)</h4>
+            <div class="definition-box">
+                <strong>TCP (Transmission Control Protocol):</strong> A connection-oriented, reliable transport protocol that provides ordered, error-checked delivery of data between applications running on hosts communicating via an IP network.
+                
+                <h4>TCP Characteristics:</h4>
+                <ul>
+                    <li><strong>Connection-oriented:</strong> Establishes connection before data transfer</li>
+                    <li><strong>Reliable:</strong> Guarantees delivery with acknowledgments</li>
+                    <li><strong>Ordered delivery:</strong> Maintains sequence of data</li>
+                    <li><strong>Flow control:</strong> Prevents buffer overflow</li>
+                    <li><strong>Error detection:</strong> Checksum for error detection</li>
+                </ul>
+            </div>
+
+            <h4>TCP Three-Way Handshake</h4>
+            <div class="code-box">
+                <pre><code>TCP Connection Establishment (Three-Way Handshake):
+
+Client                    Server
+  │                        │
+  │─── SYN (seq=x) ────────▶│
+  │                        │
+  │◀── SYN+ACK (seq=y, ack=x+1) ─│
+  │                        │
+  │─── ACK (ack=y+1) ──────▶│
+  │                        │
+
+Connection Established!
+
+TCP Header Structure:
+┌─────────────┬─────────────┬─────────────┬─────────────┬─────────────┐
+│   Source    │ Destination │  Sequence   │ Acknowledgment│   Flags    │
+│   Port (16) │   Port (16) │ Number (32) │  Number (32) │   (6 bits) │
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘
+│   Window    │   Checksum  │  Urgent     │   Options   │    Data    │
+│   Size (16) │    (16)     │  Pointer    │   (variable)│  (variable)│
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘
+
+Flags:
+- SYN: Synchronize sequence numbers
+- ACK: Acknowledgment field significant
+- FIN: Finish connection
+- RST: Reset connection
+- PSH: Push data immediately
+- URG: Urgent pointer field significant</code></pre>
+            </div>
+
+            <h4>UDP (User Datagram Protocol)</h4>
+            <div class="definition-box">
+                <strong>UDP (User Datagram Protocol):</strong> A connectionless, unreliable transport protocol that provides minimal overhead and fast transmission for applications that can tolerate packet loss and don't require guaranteed delivery.
+                
+                <h4>UDP Characteristics:</h4>
+                <ul>
+                    <li><strong>Connectionless:</strong> No connection establishment required</li>
+                    <li><strong>Unreliable:</strong> No acknowledgment or retransmission</li>
+                    <li><strong>Fast:</strong> Minimal overhead and processing</li>
+                    <li><strong>No flow control:</strong> Sender can overwhelm receiver</li>
+                    <li><strong>No ordering:</strong> Packets may arrive out of order</li>
+                </ul>
+            </div>
+
+            <div class="code-box">
+                <pre><code>UDP Header Structure:
+┌─────────────┬─────────────┬─────────────┬─────────────┐
+│   Source    │ Destination │   Length    │   Checksum  │
+│   Port (16) │   Port (16) │    (16)     │    (16)     │
+└─────────────┴─────────────┴─────────────┴─────────────┘
+
+UDP vs TCP Comparison:
+┌─────────────┬─────────────┬─────────────┬─────────────┬─────────────┐
+│   Feature   │     TCP     │     UDP     │   Use Case  │   Example   │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│ Connection  │  Oriented   │ Connectionless│ Reliable   │   HTTP      │
+│ Reliability │   Yes       │     No      │  Transfer   │             │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│ Ordering    │    Yes      │     No      │ Real-time   │   DNS       │
+│ Flow Control│    Yes      │     No      │ Streaming   │             │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│ Overhead    │    High     │     Low     │ Gaming      │   VoIP      │
+│ Speed       │    Slow     │    Fast     │             │             │
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘</code></pre>
+            </div>
+
+            <h4>Application Layer Protocols</h4>
+            <div class="definition-box">
+                <strong>Application Layer:</strong> The seventh and highest layer of the OSI model that provides network services directly to end-user applications and defines how applications communicate over the network.
+                
+                <h4>Common Application Protocols:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li><strong>HTTP/HTTPS:</strong> Web browsing and secure web communication</li>
+                        <li><strong>FTP/SFTP:</strong> File transfer and secure file transfer</li>
+                        <li><strong>SMTP/POP3/IMAP:</strong> Email sending and receiving</li>
+                        <li><strong>DNS:</strong> Domain name resolution</li>
+                        <li><strong>DHCP:</strong> Dynamic IP address assignment</li>
+                        <li><strong>SSH:</strong> Secure remote access</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h4>HTTP (Hypertext Transfer Protocol)</h4>
+            <div class="definition-box">
+                <strong>HTTP (Hypertext Transfer Protocol):</strong> An application-layer protocol for distributed, collaborative, hypermedia information systems. HTTP is the foundation of data communication for the World Wide Web.
+                
+                <h4>HTTP Methods:</h4>
+                <ul>
+                    <li><strong>GET:</strong> Retrieve data from server</li>
+                    <li><strong>POST:</strong> Submit data to server</li>
+                    <li><strong>PUT:</strong> Update existing resource</li>
+                    <li><strong>DELETE:</strong> Remove resource</li>
+                    <li><strong>PATCH:</strong> Partial update of resource</li>
+                </ul>
+            </div>
+
+            <div class="code-box">
+                <pre><code>HTTP Request Example:
+GET /index.html HTTP/1.1
+Host: www.example.com
+User-Agent: Mozilla/5.0
+Accept: text/html,application/xhtml+xml
+Accept-Language: en-US,en;q=0.9
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+HTTP Response Example:
+HTTP/1.1 200 OK
+Date: Mon, 23 May 2023 22:38:34 GMT
+Server: Apache/2.4.1 (Unix)
+Last-Modified: Wed, 08 Jan 2023 23:11:55 GMT
+Content-Length: 138
+Content-Type: text/html
+Connection: close
+
+&lt;html&gt;
+&lt;body&gt;
+&lt;h1&gt;Hello, World!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+HTTP Status Codes:
+- 1xx: Informational (100 Continue)
+- 2xx: Success (200 OK, 201 Created)
+- 3xx: Redirection (301 Moved, 304 Not Modified)
+- 4xx: Client Error (404 Not Found, 403 Forbidden)
+- 5xx: Server Error (500 Internal Server Error)</code></pre>
+            </div>
+
+            <h4>DNS (Domain Name System)</h4>
+            <div class="definition-box">
+                <strong>DNS (Domain Name System):</strong> A hierarchical, distributed database that translates human-readable domain names into IP addresses, enabling users to access websites using memorable names instead of numerical addresses.
+                
+                <h4>DNS Resolution Process:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li><strong>Local Cache:</strong> Check local DNS cache first</li>
+                        <li><strong>Recursive Resolver:</strong> Query ISP's DNS server</li>
+                        <li><strong>Root Servers:</strong> Query root DNS servers</li>
+                        <li><strong>TLD Servers:</strong> Query top-level domain servers</li>
+                        <li><strong>Authoritative Servers:</strong> Query domain's authoritative servers</li>
+                        <li><strong>Response:</strong> Return IP address to client</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="code-box">
+                <pre><code>DNS Record Types:
+┌─────────────┬─────────────┬─────────────┬─────────────┬─────────────┐
+│ Record Type │   Purpose   │   Example   │   TTL       │   Priority  │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│     A       │ IPv4 Address│ 192.168.1.1 │   3600      │     N/A     │
+│    AAAA     │ IPv6 Address│ ::1         │   3600      │     N/A     │
+│     CNAME   │   Alias     │ www.example │   3600      │     N/A     │
+│     MX      │ Mail Server │ mail.example│   3600      │     10      │
+│     NS      │ Name Server │ ns1.example │   86400     │     N/A     │
+│     TXT     │ Text Record │ SPF record  │   3600      │     N/A     │
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘
+
+DNS Query Example:
+nslookup www.google.com
+Server: 8.8.8.8
+Address: 8.8.8.8#53
+
+Non-authoritative answer:
+Name: www.google.com
+Address: 142.250.190.36</code></pre>
+            </div>
+
+            <h4>Network Security</h4>
+            <div class="definition-box">
+                <strong>Network Security:</strong> The practice of protecting computer networks from unauthorized access, misuse, modification, or denial of service attacks through various security measures and protocols.
+                
+                <h4>Common Security Threats:</h4>
+                <ul>
+                    <li><strong>Malware:</strong> Viruses, worms, trojans, ransomware</li>
+                    <li><strong>Phishing:</strong> Deceptive emails to steal credentials</li>
+                    <li><strong>DDoS Attacks:</strong> Distributed Denial of Service</li>
+                    <li><strong>Man-in-the-Middle:</strong> Intercepting communication</li>
+                    <li><strong>SQL Injection:</strong> Database attacks</li>
+                    <li><strong>Cross-Site Scripting (XSS):</strong> Web application attacks</li>
+                </ul>
+            </div>
+
+            <h4>Firewall</h4>
+            <div class="definition-box">
+                <strong>Firewall:</strong> A network security device that monitors and controls incoming and outgoing network traffic based on predetermined security rules, acting as a barrier between trusted and untrusted networks.
+                
+                <h4>Firewall Types:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li><strong>Packet Filtering:</strong> Examines packet headers</li>
+                        <li><strong>Stateful Inspection:</strong> Tracks connection state</li>
+                        <li><strong>Application Layer:</strong> Deep packet inspection</li>
+                        <li><strong>Next-Generation:</strong> Advanced threat protection</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="code-box">
+                <pre><code>Firewall Rule Example (iptables):
+# Allow HTTP traffic
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+
+# Allow HTTPS traffic
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+
+# Allow SSH from specific IP
+iptables -A INPUT -p tcp --dport 22 -s 192.168.1.100 -j ACCEPT
+
+# Block all other incoming traffic
+iptables -A INPUT -j DROP
+
+# Allow established connections
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+Firewall Rule Structure:
+┌─────────────┬─────────────┬─────────────┬─────────────┬─────────────┐
+│   Action    │  Protocol   │ Source IP   │ Dest Port   │   Comment   │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│   ACCEPT    │    TCP      │   ANY       │     80      │    HTTP     │
+│   ACCEPT    │    TCP      │   ANY       │    443      │    HTTPS    │
+│   ACCEPT    │    TCP      │ 192.168.1.0 │     22      │     SSH     │
+│   DROP      │    ANY      │   ANY       │    ANY      │   Default   │
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘</code></pre>
+            </div>
+
+            <h4>VPN (Virtual Private Network)</h4>
+            <div class="definition-box">
+                <strong>VPN (Virtual Private Network):</strong> A technology that creates a secure, encrypted connection over a public network, allowing users to access private networks remotely while maintaining privacy and security.
+                
+                <h4>VPN Benefits:</h4>
+                <ul>
+                    <li><strong>Security:</strong> Encrypted data transmission</li>
+                    <li><strong>Privacy:</strong> Anonymous browsing</li>
+                    <li><strong>Remote Access:</strong> Secure access to corporate networks</li>
+                    <li><strong>Bypass Restrictions:</strong> Access geo-blocked content</li>
+                    <li><strong>Cost Effective:</strong> Cheaper than leased lines</li>
+                </ul>
+            </div>
+
+            <h4>Network Troubleshooting</h4>
+            <div class="definition-box">
+                <strong>Network Troubleshooting:</strong> The systematic process of identifying, diagnosing, and resolving network problems to restore normal network operation and performance.
+                
+                <h4>Troubleshooting Steps:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li><strong>Identify the Problem:</strong> Gather information about the issue</li>
+                        <li><strong>Establish a Theory:</strong> Formulate possible causes</li>
+                        <li><strong>Test the Theory:</strong> Verify the hypothesis</li>
+                        <li><strong>Create an Action Plan:</strong> Plan the solution</li>
+                        <li><strong>Implement the Solution:</strong> Apply the fix</li>
+                        <li><strong>Verify Functionality:</strong> Test the resolution</li>
+                        <li><strong>Document the Solution:</strong> Record the fix</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="code-box">
+                <pre><code>Common Network Commands:
+
+# Check IP configuration
+ipconfig (Windows) / ifconfig (Linux)
+ip addr show (Linux)
+
+# Test connectivity
+ping google.com
+ping 8.8.8.8
+
+# Trace route
+tracert google.com (Windows)
+traceroute google.com (Linux)
+
+# Check DNS resolution
+nslookup google.com
+dig google.com
+
+# Check network interfaces
+netstat -i
+ip link show
+
+# Check routing table
+route print (Windows)
+ip route show (Linux)
+
+# Test port connectivity
+telnet google.com 80
+nc -zv google.com 80
+
+# Check active connections
+netstat -an
+ss -tuln</code></pre>
+            </div>
+
+            <h4>Network Performance Monitoring</h4>
+            <div class="definition-box">
+                <strong>Network Performance Monitoring:</strong> The continuous monitoring and analysis of network performance metrics to ensure optimal network operation, identify bottlenecks, and plan capacity.
+                
+                <h4>Key Performance Metrics:</h4>
+                <ul>
+                    <li><strong>Bandwidth:</strong> Data transfer capacity</li>
+                    <li><strong>Latency:</strong> Time for data to travel</li>
+                    <li><strong>Packet Loss:</strong> Percentage of lost packets</li>
+                    <li><strong>Jitter:</strong> Variation in packet arrival time</li>
+                    <li><strong>Throughput:</strong> Actual data transfer rate</li>
+                    <li><strong>Error Rate:</strong> Percentage of corrupted packets</li>
+                </ul>
+            </div>
+
+            <h4>Quality of Service (QoS)</h4>
+            <div class="definition-box">
+                <strong>Quality of Service (QoS):</strong> A set of technologies and mechanisms that manage network resources to ensure reliable delivery of applications with specific performance requirements.
+                
+                <h4>QoS Mechanisms:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li><strong>Classification:</strong> Identify and mark traffic</li>
+                        <li><strong>Marking:</strong> Set priority levels</li>
+                        <li><strong>Queuing:</strong> Prioritize traffic processing</li>
+                        <li><strong>Scheduling:</strong> Determine transmission order</li>
+                        <li><strong>Policing:</strong> Limit traffic rates</li>
+                        <li><strong>Shaping:</strong> Smooth traffic flow</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="code-box">
+                <pre><code>QoS Configuration Example (Cisco):
+# Define traffic classes
+class-map match-all VOICE
+ match dscp ef
+
+class-map match-all VIDEO
+ match dscp af41
+
+# Define policy
+policy-map QOS-POLICY
+ class VOICE
+  priority 100
+ class VIDEO
+  bandwidth 2000
+ class class-default
+  fair-queue
+
+# Apply policy to interface
+interface FastEthernet0/0
+ service-policy output QOS-POLICY
+
+QoS Priority Levels:
+┌─────────────┬─────────────┬─────────────┬─────────────┬─────────────┐
+│   Priority  │   Service   │   Example   │   DSCP      │   CoS       │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│   Critical  │   Voice     │    VoIP     │     EF      │     5       │
+│    High     │   Video     │  Streaming  │    AF41     │     4       │
+│   Medium    │   Data      │    Email    │    AF21     │     2       │
+│    Low      │   Bulk      │   Backup    │     BE      │     0       │
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘</code></pre>
+            </div>
+
+            <h4>Emerging Network Technologies</h4>
+            <div class="definition-box">
+                <strong>Emerging Network Technologies:</strong> New and evolving networking technologies that are shaping the future of computer networks and communication systems.
+                
+                <h4>Key Technologies:</h4>
+                <ul>
+                    <li><strong>5G Networks:</strong> Fifth-generation mobile networks</li>
+                    <li><strong>Software-Defined Networking (SDN):</strong> Centralized network control</li>
+                    <li><strong>Network Function Virtualization (NFV):</strong> Virtualized network services</li>
+                    <li><strong>Internet of Things (IoT):</strong> Connected devices and sensors</li>
+                    <li><strong>Edge Computing:</strong> Distributed computing at network edge</li>
+                    <li><strong>Blockchain Networks:</strong> Decentralized network architectures</li>
+                </ul>
+            </div>
+
+            <h4>Practice Problems</h4>
+            <div class="practice-section">
+                <h4>Problem 1: Subnetting</h4>
+                <p>Given the IP address 192.168.1.0/24, create 4 subnets with equal number of hosts.</p>
+                <div class="solution-box">
+                    <strong>Solution:</strong>
+                    <ul>
+                        <li>Original network: 192.168.1.0/24 (256 addresses)</li>
+                        <li>Subnet mask: 255.255.255.0</li>
+                        <li>4 subnets require 2 additional bits (2² = 4)</li>
+                        <li>New subnet mask: 255.255.255.192 (/26)</li>
+                        <li>Subnets: 192.168.1.0/26, 192.168.1.64/26, 192.168.1.128/26, 192.168.1.192/26</li>
+                        <li>Each subnet has 62 usable host addresses</li>
+                    </ul>
+                </div>
+
+                <h4>Problem 2: Routing</h4>
+                <p>Configure OSPF routing between three routers with the following networks:</p>
+                <ul>
+                    <li>Router A: 192.168.1.0/24, 10.0.0.0/8</li>
+                    <li>Router B: 192.168.1.0/24, 172.16.0.0/16</li>
+                    <li>Router C: 10.0.0.0/8, 172.16.0.0/16</li>
+                </ul>
+                <div class="solution-box">
+                    <strong>Solution:</strong>
+                    <pre><code>Router A Configuration:
+router ospf 1
+ network 192.168.1.0 0.0.0.255 area 0
+ network 10.0.0.0 0.255.255.255 area 0
+
+Router B Configuration:
+router ospf 1
+ network 192.168.1.0 0.0.0.255 area 0
+ network 172.16.0.0 0.0.255.255 area 0
+
+Router C Configuration:
+router ospf 1
+ network 10.0.0.0 0.255.255.255 area 0
+ network 172.16.0.0 0.0.255.255 area 0</code></pre>
+                </div>
+
+                <h4>Problem 3: Network Security</h4>
+                <p>Design a firewall rule set for a web server with the following requirements:</p>
+                <ul>
+                    <li>Allow HTTP (port 80) and HTTPS (port 443) from anywhere</li>
+                    <li>Allow SSH (port 22) only from 192.168.1.0/24</li>
+                    <li>Block all other incoming traffic</li>
+                    <li>Allow all outgoing traffic</li>
+                </ul>
+                <div class="solution-box">
+                    <strong>Solution:</strong>
+                    <pre><code># Clear existing rules
+iptables -F
+iptables -X
+
+# Set default policies
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+
+# Allow established connections
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# Allow HTTP and HTTPS
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+
+# Allow SSH from specific network
+iptables -A INPUT -p tcp --dport 22 -s 192.168.1.0/24 -j ACCEPT
+
+# Allow loopback traffic
+iptables -A INPUT -i lo -j ACCEPT</code></pre>
+                </div>
+            </div>
+
+            <h4>Recommended Reading</h4>
+            <div class="reading-section">
+                <ul>
+                    <li><strong>"Computer Networks"</strong> by Andrew S. Tanenbaum</li>
+                    <li><strong>"Computer Networking: A Top-Down Approach"</strong> by James F. Kurose</li>
+                    <li><strong>"TCP/IP Illustrated"</strong> by W. Richard Stevens</li>
+                    <li><strong>"Network Security Essentials"</strong> by William Stallings</li>
+                    <li><strong>"Routing TCP/IP"</strong> by Jeff Doyle</li>
+                </ul>
+            </div>
+
+            <h4>Online Resources</h4>
+            <div class="resources-section">
+                <ul>
+                    <li><strong>RFC Documents:</strong> <a href="https://tools.ietf.org/rfc/" target="_blank">https://tools.ietf.org/rfc/</a></li>
+                    <li><strong>Cisco Learning Network:</strong> <a href="https://learningnetwork.cisco.com/" target="_blank">https://learningnetwork.cisco.com/</a></li>
+                    <li><strong>Wireshark:</strong> <a href="https://www.wireshark.org/" target="_blank">https://www.wireshark.org/</a></li>
+                    <li><strong>Packet Tracer:</strong> <a href="https://www.netacad.com/courses/packet-tracer" target="_blank">https://www.netacad.com/courses/packet-tracer</a></li>
+                    <li><strong>GNS3:</strong> <a href="https://www.gns3.com/" target="_blank">https://www.gns3.com/</a></li>
+                </ul>
+            </div>
+        </div>
+            </div>
+
+            <h4>Ethernet Frame Structure</h4>
+            <div class="code-box">
+                <pre><code>Ethernet Frame Format:
+┌─────────────┬─────────────┬─────────────┬─────────────┬─────────────┬─────────────┐
+│   Preamble  │ SFD (Start) │ Destination │   Source    │   Length/   │     Data    │
+│   (7 bytes) │ (1 byte)    │   MAC (6)   │   MAC (6)   │   Type (2)  │ (46-1500)   │
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘
+                                                                        │
+                                                                        ▼
+                                                              ┌─────────────┐
+                                                              │    FCS      │
+                                                              │   (4 bytes) │
+                                                              └─────────────┘
+
+Field Descriptions:
+- Preamble: 7 bytes of alternating 1s and 0s for synchronization
+- SFD (Start Frame Delimiter): 1 byte (10101011) marking frame start
+- Destination MAC: 6-byte destination address
+- Source MAC: 6-byte source address  
+- Length/Type: 2 bytes indicating data length or protocol type
+- Data: Variable length payload (46-1500 bytes)
+- FCS (Frame Check Sequence): 4-byte CRC for error detection</code></pre>
+            </div>
+
+            <h4>MAC Address</h4>
+            <div class="definition-box">
+                <strong>Media Access Control (MAC) Address:</strong> A unique 48-bit identifier assigned to network interface controllers (NICs) for use as a network address in communications within a network segment.
+                
+                <h4>MAC Address Format:</h4>
+                <div class="example-box">
+                    <strong>Example:</strong> 00:1B:44:11:3A:B7
+                    <ul>
+                        <li><strong>First 6 digits (24 bits):</strong> Organizationally Unique Identifier (OUI)</li>
+                        <li><strong>Last 6 digits (24 bits):</strong> Network Interface Controller specific</li>
+                        <li><strong>Format:</strong> XX:XX:XX:XX:XX:XX (hexadecimal)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>CSMA/CD Protocol</h4>
+            <div class="definition-box">
+                <strong>Carrier Sense Multiple Access with Collision Detection (CSMA/CD):</strong> A media access control method used in Ethernet networks to handle collisions when multiple devices try to transmit simultaneously.
+                
+                <h4>CSMA/CD Algorithm:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li><strong>Carrier Sense:</strong> Listen to the medium before transmitting</li>
+                        <li><strong>Multiple Access:</strong> Multiple devices can access the medium</li>
+                        <li><strong>Collision Detection:</strong> Detect if collision occurs during transmission</li>
+                        <li><strong>Collision Resolution:</strong> Wait for random time and retransmit</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h4>Wireless LAN (Wi-Fi)</h4>
+            <div class="definition-box">
+                <strong>Wireless Local Area Network (WLAN):</strong> A wireless computer network that links two or more devices using wireless communication to form a local area network within a limited area.
+                
+                <h4>Wi-Fi Standards:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Standard</th>
+                            <th>Frequency</th>
+                            <th>Speed</th>
+                            <th>Range</th>
+                            <th>Year</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>802.11a</td>
+                            <td>5 GHz</td>
+                            <td>54 Mbps</td>
+                            <td>35m</td>
+                            <td>1999</td>
+                        </tr>
+                        <tr>
+                            <td>802.11b</td>
+                            <td>2.4 GHz</td>
+                            <td>11 Mbps</td>
+                            <td>38m</td>
+                            <td>1999</td>
+                        </tr>
+                        <tr>
+                            <td>802.11g</td>
+                            <td>2.4 GHz</td>
+                            <td>54 Mbps</td>
+                            <td>38m</td>
+                            <td>2003</td>
+                        </tr>
+                        <tr>
+                            <td>802.11n</td>
+                            <td>2.4/5 GHz</td>
+                            <td>600 Mbps</td>
+                            <td>70m</td>
+                            <td>2009</td>
+                        </tr>
+                        <tr>
+                            <td>802.11ac</td>
+                            <td>5 GHz</td>
+                            <td>6.9 Gbps</td>
+                            <td>35m</td>
+                            <td>2013</td>
+                        </tr>
+                        <tr>
+                            <td>802.11ax (Wi-Fi 6)</td>
+                            <td>2.4/5 GHz</td>
+                            <td>9.6 Gbps</td>
+                            <td>70m</td>
+                            <td>2019</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Wi-Fi Security Protocols</h4>
+            <div class="definition-box">
+                <strong>Wi-Fi Security:</strong> Methods and protocols used to secure wireless networks from unauthorized access and data interception.
+                
+                <h4>Security Standards:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li><strong>WEP (Wired Equivalent Privacy):</strong> First security standard (1997), now considered insecure</li>
+                        <li><strong>WPA (Wi-Fi Protected Access):</strong> Interim security standard (2003)</li>
+                        <li><strong>WPA2 (Wi-Fi Protected Access 2):</strong> Current standard using AES encryption</li>
+                        <li><strong>WPA3 (Wi-Fi Protected Access 3):</strong> Latest standard with enhanced security</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div id="unit3" class="section">
+            <h2>Unit III: Network Layer & Transport Layer</h2>
+            
+            <h3>3.1 Network Layer Protocols</h3>
+            
+            <h4>Internet Protocol (IP)</h4>
+            <div class="definition-box">
+                <strong>Internet Protocol (IP):</strong> A connectionless protocol that provides logical addressing and routing for data packets across networks. IP is the primary protocol of the Internet and enables communication between devices on different networks.
+                
+                <h4>IP Characteristics:</h4>
+                <ul>
+                    <li><strong>Connectionless:</strong> No prior connection establishment required</li>
+                    <li><strong>Best-effort delivery:</strong> No guarantee of packet delivery</li>
+                    <li><strong>Unreliable:</strong> No acknowledgment or retransmission</li>
+                    <li><strong>Fragmentation:</strong> Can break large packets into smaller ones</li>
+                </ul>
+            </div>
+
+            <h4>IPv4 Address Structure</h4>
+            <div class="code-box">
+                <pre><code>IPv4 Address Format: XXX.XXX.XXX.XXX
+Example: 192.168.1.100
+
+Address Classes:
+┌─────────────┬─────────────┬─────────────┬─────────────┬─────────────┐
+│    Class    │ First Bits  │   Range     │   Default   │   Network   │
+│             │             │             │   Subnet    │    Hosts    │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│     A       │    0xxx     │ 1.0.0.0 -   │   255.0.0.0 │  16,777,214 │
+│             │             │ 126.255.255.255 │           │             │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│     B       │   10xx      │ 128.0.0.0 - │ 255.255.0.0 │    65,534   │
+│             │             │ 191.255.255.255 │           │             │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│     C       │   110x      │ 192.0.0.0 - │255.255.255.0 │     254     │
+│             │             │ 223.255.255.255 │           │             │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│     D       │   1110      │ 224.0.0.0 - │     N/A     │   Multicast │
+│             │             │ 239.255.255.255 │           │             │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│     E       │   1111      │ 240.0.0.0 - │     N/A     │  Reserved   │
+│             │             │ 255.255.255.255 │           │             │
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘</code></pre>
+            </div>
+
+            <h4>IPv6 Address Structure</h4>
+            <div class="definition-box">
+                <strong>IPv6 (Internet Protocol Version 6):</strong> The most recent version of the Internet Protocol, designed to replace IPv4 and address its limitations, particularly the exhaustion of IPv4 addresses.
+                
+                <h4>IPv6 Features:</h4>
+                <ul>
+                    <li><strong>128-bit addresses:</strong> Provides 340 undecillion unique addresses</li>
+                    <li><strong>Built-in security:</strong> IPsec support is mandatory</li>
+                    <li><strong>Auto-configuration:</strong> Stateless address autoconfiguration</li>
+                    <li><strong>Better header format:</strong> Simplified and more efficient</li>
+                    <li><strong>Quality of Service:</strong> Better support for QoS</li>
+                </ul>
+            </div>
+
+            <div class="code-box">
+                <pre><code>IPv6 Address Format: XXXX:XXXX:XXXX:XXXX:XXXX:XXXX:XXXX:XXXX
+Example: 2001:0db8:85a3:0000:0000:8a2e:0370:7334
+
+Shortened form: 2001:db8:85a3::8a2e:370:7334
+
+Address Types:
+- Global Unicast: 2000::/3 (public addresses)
+- Unique Local: fc00::/7 (private addresses)
+- Link Local: fe80::/10 (local network only)
+- Multicast: ff00::/8 (group communication)</code></pre>
+            </div>
+
+            <h4>Routing Protocols</h4>
+            <div class="definition-box">
+                <strong>Routing Protocol:</strong> A protocol that enables routers to exchange routing information and build routing tables to determine the best path for forwarding packets across networks.
+                
+                <h4>Types of Routing Protocols:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li><strong>Distance Vector Protocols:</strong> RIP, EIGRP - share entire routing table with neighbors</li>
+                        <li><strong>Link State Protocols:</strong> OSPF, IS-IS - share link state information with all routers</li>
+                        <li><strong>Path Vector Protocols:</strong> BGP - share path information between autonomous systems</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h4>RIP (Routing Information Protocol)</h4>
+            <div class="definition-box">
+                <strong>RIP (Routing Information Protocol):</strong> A distance-vector routing protocol that uses hop count as its routing metric. RIP is one of the oldest routing protocols and is suitable for small networks.
+                
+                <h4>RIP Characteristics:</h4>
+                <ul>
+                    <li><strong>Maximum hop count:</strong> 15 hops (16 = unreachable)</li>
+                    <li><strong>Update interval:</strong> 30 seconds</li>
+                    <li><strong>Metric:</strong> Hop count</li>
+                    <li><strong>Administrative distance:</strong> 120</li>
+                    <li><strong>Convergence time:</strong> Slow (up to 180 seconds)</li>
+                </ul>
+            </div>
+
+            <div class="code-box">
+                <pre><code>RIP Configuration Example (Cisco):
+Router(config)# router rip
+Router(config-router)# version 2
+Router(config-router)# network 192.168.1.0
+Router(config-router)# network 10.0.0.0
+Router(config-router)# no auto-summary
+
+RIP Packet Structure:
+┌─────────────┬─────────────┬─────────────┬─────────────┬─────────────┐
+│   Command   │   Version   │   Reserved  │   Address   │   Metric    │
+│   (1 byte)  │   (1 byte)  │   (2 bytes) │ Family (2)  │   (4 bytes) │
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘
+
+Commands:
+- 1: Request
+- 2: Response</code></pre>
+            </div>
+
+            <h4>OSPF (Open Shortest Path First)</h4>
+            <div class="definition-box">
+                <strong>OSPF (Open Shortest Path First):</strong> A link-state routing protocol that uses Dijkstra's shortest path algorithm to calculate the best route to each destination. OSPF is widely used in enterprise networks.
+                
+                <h4>OSPF Features:</h4>
+                <ul>
+                    <li><strong>Fast convergence:</strong> Typically 10-30 seconds</li>
+                    <li><strong>Hierarchical design:</strong> Areas and backbone</li>
+                    <li><strong>Multiple metrics:</strong> Bandwidth, delay, reliability, cost</li>
+                    <li><strong>Authentication:</strong> Supports MD5 authentication</li>
+                    <li><strong>VLSM support:</strong> Variable Length Subnet Masking</li>
+                </ul>
+            </div>
+
+            <h3>3.2 Transport Layer Protocols</h3>
+            
+            <h4>TCP (Transmission Control Protocol)</h4>
+            <div class="definition-box">
+                <strong>TCP (Transmission Control Protocol):</strong> A connection-oriented, reliable transport protocol that provides ordered, error-checked delivery of data between applications running on hosts communicating via an IP network.
+                
+                <h4>TCP Characteristics:</h4>
+                <ul>
+                    <li><strong>Connection-oriented:</strong> Establishes connection before data transfer</li>
+                    <li><strong>Reliable:</strong> Guarantees delivery with acknowledgments</li>
+                    <li><strong>Ordered delivery:</strong> Maintains sequence of data</li>
+                    <li><strong>Flow control:</strong> Prevents buffer overflow</li>
+                    <li><strong>Error detection:</strong> Checksum for error detection</li>
+                </ul>
+            </div>
+
+            <h4>TCP Three-Way Handshake</h4>
+            <div class="code-box">
+                <pre><code>TCP Connection Establishment (Three-Way Handshake):
+
+Client                    Server
+  │                        │
+  │─── SYN (seq=x) ────────▶│
+  │                        │
+  │◀── SYN+ACK (seq=y, ack=x+1) ─│
+  │                        │
+  │─── ACK (ack=y+1) ──────▶│
+  │                        │
+
+Connection Established!
+
+TCP Header Structure:
+┌─────────────┬─────────────┬─────────────┬─────────────┬─────────────┐
+│   Source    │ Destination │  Sequence   │ Acknowledgment│   Flags    │
+│   Port (16) │   Port (16) │ Number (32) │  Number (32) │   (6 bits) │
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘
+│   Window    │   Checksum  │  Urgent     │   Options   │    Data    │
+│   Size (16) │    (16)     │  Pointer    │   (variable)│  (variable)│
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘
+
+Flags:
+- SYN: Synchronize sequence numbers
+- ACK: Acknowledgment field significant
+- FIN: Finish connection
+- RST: Reset connection
+- PSH: Push data immediately
+- URG: Urgent pointer field significant</code></pre>
+            </div>
+
+            <h4>UDP (User Datagram Protocol)</h4>
+            <div class="definition-box">
+                <strong>UDP (User Datagram Protocol):</strong> A connectionless, unreliable transport protocol that provides minimal overhead and fast transmission for applications that can tolerate packet loss and don't require guaranteed delivery.
+                
+                <h4>UDP Characteristics:</h4>
+                <ul>
+                    <li><strong>Connectionless:</strong> No connection establishment required</li>
+                    <li><strong>Unreliable:</strong> No acknowledgment or retransmission</li>
+                    <li><strong>Fast:</strong> Minimal overhead and processing</li>
+                    <li><strong>No flow control:</strong> Sender can overwhelm receiver</li>
+                    <li><strong>No ordering:</strong> Packets may arrive out of order</li>
+                </ul>
+            </div>
+
+            <div class="code-box">
+                <pre><code>UDP Header Structure:
+┌─────────────┬─────────────┬─────────────┬─────────────┐
+│   Source    │ Destination │   Length    │   Checksum  │
+│   Port (16) │   Port (16) │    (16)     │    (16)     │
+└─────────────┴─────────────┴─────────────┴─────────────┘
+
+UDP vs TCP Comparison:
+┌─────────────┬─────────────┬─────────────┬─────────────┬─────────────┐
+│   Feature   │     TCP     │     UDP     │   Use Case  │   Example   │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│ Connection  │  Oriented   │ Connectionless│ Reliable   │   HTTP      │
+│ Reliability │   Yes       │     No      │  Transfer   │             │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│ Ordering    │    Yes      │     No      │ Real-time   │   DNS       │
+│ Flow Control│    Yes      │     No      │ Streaming   │             │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│ Overhead    │    High     │     Low     │ Gaming      │   VoIP      │
+│ Speed       │    Slow     │    Fast     │             │             │
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘</code></pre>
+            </div>
+        </div>
+
+        <div id="unit4" class="section">
+            <h2>Unit IV: Application Layer & Network Security</h2>
+            
+            <h3>4.1 Application Layer Protocols</h3>
+            
+            <h4>HTTP (Hypertext Transfer Protocol)</h4>
+            <div class="definition-box">
+                <strong>HTTP (Hypertext Transfer Protocol):</strong> An application-layer protocol for distributed, collaborative, hypermedia information systems. HTTP is the foundation of data communication for the World Wide Web.
+                
+                <h4>HTTP Methods:</h4>
+                <ul>
+                    <li><strong>GET:</strong> Retrieve data from server</li>
+                    <li><strong>POST:</strong> Submit data to server</li>
+                    <li><strong>PUT:</strong> Update existing resource</li>
+                    <li><strong>DELETE:</strong> Remove resource</li>
+                    <li><strong>PATCH:</strong> Partial update of resource</li>
+                </ul>
+            </div>
+
+            <div class="code-box">
+                <pre><code>HTTP Request Example:
+GET /index.html HTTP/1.1
+Host: www.example.com
+User-Agent: Mozilla/5.0
+Accept: text/html,application/xhtml+xml
+Accept-Language: en-US,en;q=0.9
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+HTTP Response Example:
+HTTP/1.1 200 OK
+Date: Mon, 23 May 2023 22:38:34 GMT
+Server: Apache/2.4.1 (Unix)
+Last-Modified: Wed, 08 Jan 2023 23:11:55 GMT
+Content-Length: 138
+Content-Type: text/html
+Connection: close
+
+&lt;html&gt;
+&lt;body&gt;
+&lt;h1&gt;Hello, World!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+HTTP Status Codes:
+- 1xx: Informational (100 Continue)
+- 2xx: Success (200 OK, 201 Created)
+- 3xx: Redirection (301 Moved, 304 Not Modified)
+- 4xx: Client Error (404 Not Found, 403 Forbidden)
+- 5xx: Server Error (500 Internal Server Error)</code></pre>
+            </div>
+
+            <h4>DNS (Domain Name System)</h4>
+            <div class="definition-box">
+                <strong>DNS (Domain Name System):</strong> A hierarchical, distributed database that translates human-readable domain names into IP addresses, enabling users to access websites using memorable names instead of numerical addresses.
+                
+                <h4>DNS Resolution Process:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li><strong>Local Cache:</strong> Check local DNS cache first</li>
+                        <li><strong>Recursive Resolver:</strong> Query ISP's DNS server</li>
+                        <li><strong>Root Servers:</strong> Query root DNS servers</li>
+                        <li><strong>TLD Servers:</strong> Query top-level domain servers</li>
+                        <li><strong>Authoritative Servers:</strong> Query domain's authoritative servers</li>
+                        <li><strong>Response:</strong> Return IP address to client</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="code-box">
+                <pre><code>DNS Record Types:
+┌─────────────┬─────────────┬─────────────┬─────────────┬─────────────┐
+│ Record Type │   Purpose   │   Example   │   TTL       │   Priority  │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│     A       │ IPv4 Address│ 192.168.1.1 │   3600      │     N/A     │
+│    AAAA     │ IPv6 Address│ ::1         │   3600      │     N/A     │
+│     CNAME   │   Alias     │ www.example │   3600      │     N/A     │
+│     MX      │ Mail Server │ mail.example│   3600      │     10      │
+│     NS      │ Name Server │ ns1.example │   86400     │     N/A     │
+│     TXT     │ Text Record │ SPF record  │   3600      │     N/A     │
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘
+
+DNS Query Example:
+nslookup www.google.com
+Server: 8.8.8.8
+Address: 8.8.8.8#53
+
+Non-authoritative answer:
+Name: www.google.com
+Address: 142.250.190.36</code></pre>
+            </div>
+
+            <h3>4.2 Network Security</h3>
+            
+            <h4>Common Security Threats</h4>
+            <div class="definition-box">
+                <strong>Network Security:</strong> The practice of protecting computer networks from unauthorized access, misuse, modification, or denial of service attacks through various security measures and protocols.
+                
+                <h4>Common Security Threats:</h4>
+                <ul>
+                    <li><strong>Malware:</strong> Viruses, worms, trojans, ransomware</li>
+                    <li><strong>Phishing:</strong> Deceptive emails to steal credentials</li>
+                    <li><strong>DDoS Attacks:</strong> Distributed Denial of Service</li>
+                    <li><strong>Man-in-the-Middle:</strong> Intercepting communication</li>
+                    <li><strong>SQL Injection:</strong> Database attacks</li>
+                    <li><strong>Cross-Site Scripting (XSS):</strong> Web application attacks</li>
+                </ul>
+            </div>
+
+            <h4>Firewall</h4>
+            <div class="definition-box">
+                <strong>Firewall:</strong> A network security device that monitors and controls incoming and outgoing network traffic based on predetermined security rules, acting as a barrier between trusted and untrusted networks.
+                
+                <h4>Firewall Types:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li><strong>Packet Filtering:</strong> Examines packet headers</li>
+                        <li><strong>Stateful Inspection:</strong> Tracks connection state</li>
+                        <li><strong>Application Layer:</strong> Deep packet inspection</li>
+                        <li><strong>Next-Generation:</strong> Advanced threat protection</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="code-box">
+                <pre><code>Firewall Rule Example (iptables):
+# Allow HTTP traffic
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+
+# Allow HTTPS traffic
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+
+# Allow SSH from specific IP
+iptables -A INPUT -p tcp --dport 22 -s 192.168.1.100 -j ACCEPT
+
+# Block all other incoming traffic
+iptables -A INPUT -j DROP
+
+# Allow established connections
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+Firewall Rule Structure:
+┌─────────────┬─────────────┬─────────────┬─────────────┬─────────────┐
+│   Action    │  Protocol   │ Source IP   │ Dest Port   │   Comment   │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│   ACCEPT    │    TCP      │   ANY       │     80      │    HTTP     │
+│   ACCEPT    │    TCP      │   ANY       │    443      │    HTTPS    │
+│   ACCEPT    │    TCP      │ 192.168.1.0 │     22      │     SSH     │
+│   DROP      │    ANY      │   ANY       │    ANY      │   Default   │
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘</code></pre>
+            </div>
+
+            <h4>VPN (Virtual Private Network)</h4>
+            <div class="definition-box">
+                <strong>VPN (Virtual Private Network):</strong> A technology that creates a secure, encrypted connection over a public network, allowing users to access private networks remotely while maintaining privacy and security.
+                
+                <h4>VPN Benefits:</h4>
+                <ul>
+                    <li><strong>Security:</strong> Encrypted data transmission</li>
+                    <li><strong>Privacy:</strong> Anonymous browsing</li>
+                    <li><strong>Remote Access:</strong> Secure access to corporate networks</li>
+                    <li><strong>Bypass Restrictions:</strong> Access geo-blocked content</li>
+                    <li><strong>Cost Effective:</strong> Cheaper than leased lines</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="unit5" class="section">
+            <h2>Unit V: Advanced Networking & Emerging Technologies</h2>
+            
+            <h3>5.1 Network Troubleshooting</h3>
+            
+            <h4>Troubleshooting Methodology</h4>
+            <div class="definition-box">
+                <strong>Network Troubleshooting:</strong> The systematic process of identifying, diagnosing, and resolving network problems to restore normal network operation and performance.
+                
+                <h4>Troubleshooting Steps:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li><strong>Identify the Problem:</strong> Gather information about the issue</li>
+                        <li><strong>Establish a Theory:</strong> Formulate possible causes</li>
+                        <li><strong>Test the Theory:</strong> Verify the hypothesis</li>
+                        <li><strong>Create an Action Plan:</strong> Plan the solution</li>
+                        <li><strong>Implement the Solution:</strong> Apply the fix</li>
+                        <li><strong>Verify Functionality:</strong> Test the resolution</li>
+                        <li><strong>Document the Solution:</strong> Record the fix</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="code-box">
+                <pre><code>Common Network Commands:
+
+# Check IP configuration
+ipconfig (Windows) / ifconfig (Linux)
+ip addr show (Linux)
+
+# Test connectivity
+ping google.com
+ping 8.8.8.8
+
+# Trace route
+tracert google.com (Windows)
+traceroute google.com (Linux)
+
+# Check DNS resolution
+nslookup google.com
+dig google.com
+
+# Check network interfaces
+netstat -i
+ip link show
+
+# Check routing table
+route print (Windows)
+ip route show (Linux)
+
+# Test port connectivity
+telnet google.com 80
+nc -zv google.com 80
+
+# Check active connections
+netstat -an
+ss -tuln</code></pre>
+            </div>
+
+            <h3>5.2 Network Performance Monitoring</h3>
+            
+            <h4>Performance Metrics</h4>
+            <div class="definition-box">
+                <strong>Network Performance Monitoring:</strong> The continuous monitoring and analysis of network performance metrics to ensure optimal network operation, identify bottlenecks, and plan capacity.
+                
+                <h4>Key Performance Metrics:</h4>
+                <ul>
+                    <li><strong>Bandwidth:</strong> Data transfer capacity</li>
+                    <li><strong>Latency:</strong> Time for data to travel</li>
+                    <li><strong>Packet Loss:</strong> Percentage of lost packets</li>
+                    <li><strong>Jitter:</strong> Variation in packet arrival time</li>
+                    <li><strong>Throughput:</strong> Actual data transfer rate</li>
+                    <li><strong>Error Rate:</strong> Percentage of corrupted packets</li>
+                </ul>
+            </div>
+
+            <h4>Quality of Service (QoS)</h4>
+            <div class="definition-box">
+                <strong>Quality of Service (QoS):</strong> A set of technologies and mechanisms that manage network resources to ensure reliable delivery of applications with specific performance requirements.
+                
+                <h4>QoS Mechanisms:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li><strong>Classification:</strong> Identify and mark traffic</li>
+                        <li><strong>Marking:</strong> Set priority levels</li>
+                        <li><strong>Queuing:</strong> Prioritize traffic processing</li>
+                        <li><strong>Scheduling:</strong> Determine transmission order</li>
+                        <li><strong>Policing:</strong> Limit traffic rates</li>
+                        <li><strong>Shaping:</strong> Smooth traffic flow</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="code-box">
+                <pre><code>QoS Configuration Example (Cisco):
+# Define traffic classes
+class-map match-all VOICE
+ match dscp ef
+
+class-map match-all VIDEO
+ match dscp af41
+
+# Define policy
+policy-map QOS-POLICY
+ class VOICE
+  priority 100
+ class VIDEO
+  bandwidth 2000
+ class class-default
+  fair-queue
+
+# Apply policy to interface
+interface FastEthernet0/0
+ service-policy output QOS-POLICY
+
+QoS Priority Levels:
+┌─────────────┬─────────────┬─────────────┬─────────────┬─────────────┐
+│   Priority  │   Service   │   Example   │   DSCP      │   CoS       │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+│   Critical  │   Voice     │    VoIP     │     EF      │     5       │
+│    High     │   Video     │  Streaming  │    AF41     │     4       │
+│   Medium    │   Data      │    Email    │    AF21     │     2       │
+│    Low      │   Bulk      │   Backup    │     BE      │     0       │
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘</code></pre>
+            </div>
+
+            <h3>5.3 Emerging Network Technologies</h3>
+            
+            <h4>5G Networks</h4>
+            <div class="definition-box">
+                <strong>5G Networks:</strong> Fifth-generation mobile networks that provide significantly higher data rates, lower latency, and greater capacity compared to previous generations.
+                
+                <h4>5G Features:</h4>
+                <ul>
+                    <li><strong>High Speed:</strong> Up to 10 Gbps download speeds</li>
+                    <li><strong>Low Latency:</strong> 1-10 milliseconds</li>
+                    <li><strong>High Capacity:</strong> Support for massive IoT deployments</li>
+                    <li><strong>Network Slicing:</strong> Virtual networks for different services</li>
+                    <li><strong>Edge Computing:</strong> Processing closer to users</li>
+                </ul>
+            </div>
+
+            <h4>Software-Defined Networking (SDN)</h4>
+            <div class="definition-box">
+                <strong>Software-Defined Networking (SDN):</strong> A network architecture approach that separates the control plane from the data plane, enabling centralized network management and programmability.
+                
+                <h4>SDN Benefits:</h4>
+                <ul>
+                    <li><strong>Centralized Control:</strong> Simplified network management</li>
+                    <li><strong>Programmability:</strong> Custom network policies</li>
+                    <li><strong>Flexibility:</strong> Dynamic network configuration</li>
+                    <li><strong>Cost Reduction:</strong> Lower operational costs</li>
+                    <li><strong>Innovation:</strong> Faster deployment of new services</li>
+                </ul>
+            </div>
+
+            <h4>Internet of Things (IoT)</h4>
+            <div class="definition-box">
+                <strong>Internet of Things (IoT):</strong> A network of interconnected devices, sensors, and systems that can collect, exchange, and process data to provide intelligent services and automation.
+                
+                <h4>IoT Applications:</h4>
+                <ul>
+                    <li><strong>Smart Homes:</strong> Home automation and security</li>
+                    <li><strong>Industrial IoT:</strong> Manufacturing and process control</li>
+                    <li><strong>Healthcare:</strong> Medical monitoring and telemedicine</li>
+                    <li><strong>Transportation:</strong> Connected vehicles and traffic management</li>
+                    <li><strong>Agriculture:</strong> Precision farming and crop monitoring</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="practical" class="section">
+            <h2>Practical Component / Lab Work</h2>
+            
+            <h3>Lab 1: Network Configuration</h3>
+            <div class="definition-box">
+                <strong>Objective:</strong> Configure a basic network with multiple devices and test connectivity.
+                
+                <h4>Equipment Required:</h4>
+                <ul>
+                    <li>2-3 computers or virtual machines</li>
+                    <li>Network switch or hub</li>
+                    <li>Ethernet cables</li>
+                    <li>Network configuration tools</li>
+                </ul>
+                
+                <h4>Steps:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li>Configure IP addresses on all devices</li>
+                        <li>Test connectivity using ping command</li>
+                        <li>Configure subnet masks and gateways</li>
+                        <li>Test network performance</li>
+                        <li>Document network topology</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h3>Lab 2: Routing Configuration</h3>
+            <div class="definition-box">
+                <strong>Objective:</strong> Configure static and dynamic routing between networks.
+                
+                <h4>Equipment Required:</h4>
+                <ul>
+                    <li>3 routers (physical or virtual)</li>
+                    <li>Network cables</li>
+                    <li>Configuration software</li>
+                </ul>
+                
+                <h4>Steps:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li>Configure basic router settings</li>
+                        <li>Set up static routes</li>
+                        <li>Configure dynamic routing (RIP/OSPF)</li>
+                        <li>Test route propagation</li>
+                        <li>Verify routing tables</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h3>Lab 3: Network Security</h3>
+            <div class="definition-box">
+                <strong>Objective:</strong> Implement basic network security measures.
+                
+                <h4>Equipment Required:</h4>
+                <ul>
+                    <li>Firewall software or hardware</li>
+                    <li>Network monitoring tools</li>
+                    <li>Security testing tools</li>
+                </ul>
+                
+                <h4>Steps:</h4>
+                <div class="algorithm-steps">
+                    <ol>
+                        <li>Configure firewall rules</li>
+                        <li>Set up VPN connections</li>
+                        <li>Implement access control</li>
+                        <li>Test security measures</li>
+                        <li>Monitor network traffic</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div id="schedule" class="section">
+            <h2>Semester Schedule</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Week</th>
+                        <th>Topic</th>
+                        <th>Lab Work</th>
+                        <th>Assessment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1-2</td>
+                        <td>Introduction to Computer Networks</td>
+                        <td>Network Basics</td>
+                        <td>Quiz 1</td>
+                    </tr>
+                    <tr>
+                        <td>3-4</td>
+                        <td>Physical Layer & Data Link Layer</td>
+                        <td>Cable Testing</td>
+                        <td>Lab Report 1</td>
+                    </tr>
+                    <tr>
+                        <td>5-6</td>
+                        <td>Network Layer & IP Addressing</td>
+                        <td>IP Configuration</td>
+                        <td>Midterm Exam</td>
+                    </tr>
+                    <tr>
+                        <td>7-8</td>
+                        <td>Transport Layer Protocols</td>
+                        <td>Protocol Analysis</td>
+                        <td>Lab Report 2</td>
+                    </tr>
+                    <tr>
+                        <td>9-10</td>
+                        <td>Application Layer & DNS</td>
+                        <td>DNS Configuration</td>
+                        <td>Quiz 2</td>
+                    </tr>
+                    <tr>
+                        <td>11-12</td>
+                        <td>Network Security</td>
+                        <td>Security Implementation</td>
+                        <td>Lab Report 3</td>
+                    </tr>
+                    <tr>
+                        <td>13-14</td>
+                        <td>Network Troubleshooting</td>
+                        <td>Problem Solving</td>
+                        <td>Final Project</td>
+                    </tr>
+                    <tr>
+                        <td>15-16</td>
+                        <td>Emerging Technologies</td>
+                        <td>Research Project</td>
+                        <td>Final Exam</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="reading" class="section">
+            <h2>Recommended Reading</h2>
+            
+            <div class="reading-section">
+                <ul>
+                    <li><strong>"Computer Networks"</strong> by Andrew S. Tanenbaum</li>
+                    <li><strong>"Computer Networking: A Top-Down Approach"</strong> by James F. Kurose</li>
+                    <li><strong>"TCP/IP Illustrated"</strong> by W. Richard Stevens</li>
+                    <li><strong>"Network Security Essentials"</strong> by William Stallings</li>
+                    <li><strong>"Routing TCP/IP"</strong> by Jeff Doyle</li>
+                </ul>
+            </div>
+
+            <h3>Online Resources</h3>
+            <div class="resources-section">
+                <ul>
+                    <li><strong>RFC Documents:</strong> <a href="https://tools.ietf.org/rfc/" target="_blank">https://tools.ietf.org/rfc/</a></li>
+                    <li><strong>Cisco Learning Network:</strong> <a href="https://learningnetwork.cisco.com/" target="_blank">https://learningnetwork.cisco.com/</a></li>
+                    <li><strong>Wireshark:</strong> <a href="https://www.wireshark.org/" target="_blank">https://www.wireshark.org/</a></li>
+                    <li><strong>Packet Tracer:</strong> <a href="https://www.netacad.com/courses/packet-tracer" target="_blank">https://www.netacad.com/courses/packet-tracer</a></li>
+                    <li><strong>GNS3:</strong> <a href="https://www.gns3.com/" target="_blank">https://www.gns3.com/</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 PrepCampus. All rights reserved. | www.prepcampus.com</p>
+            <p>Computer Network Notes - Comprehensive Guide for Students</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        function downloadPDF() {
+            const element = document.querySelector('.container');
+            const opt = {
+                margin: 1,
+                filename: 'computer-network-notes.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+            
+            html2pdf().set(opt).from(element).save();
+        }
+
+        function printNotes() {
+            window.print();
+        }
+
+        function testPDF() {
+            alert('PDF generation test successful! Click OK to proceed with download.');
+            downloadPDF();
+        }
+
+        // Keyboard shortcut for download (Ctrl+D)
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'd') {
+                e.preventDefault();
+                downloadPDF();
+            }
+        });
+
+        // Fallback if html2pdf.js fails to load
+        if (typeof html2pdf === 'undefined') {
+            console.log('html2pdf.js not loaded, using fallback');
+            function downloadPDF() {
+                alert('PDF generation library not available. Please use the print function instead.');
+                window.print();
+            }
+        }
+    </script>
+</body>
+</html>

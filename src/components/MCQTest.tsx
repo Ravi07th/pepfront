@@ -151,6 +151,10 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
 
   const handleQuestionNavigation = (index: number) => {
     setCurrentQuestionIndex(index);
+    // Scroll to top when navigating between questions
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
   };
 
   const toggleHint = (questionIndex: number) => {
@@ -506,7 +510,13 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
               {/* Page Navigation */}
               <div className="flex items-center justify-center gap-4 py-6">
                 <Button
-                  onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
+                  onClick={() => {
+                    setCurrentPage(Math.max(0, currentPage - 1));
+                    // Scroll to top when changing pages
+                    setTimeout(() => {
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }, 100);
+                  }}
                   disabled={currentPage === 0}
                   variant="outline"
                   size="sm"
@@ -519,7 +529,13 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
                   {Array.from({ length: totalPages }, (_, i) => (
                     <Button
                       key={i}
-                      onClick={() => setCurrentPage(i)}
+                      onClick={() => {
+                        setCurrentPage(i);
+                        // Scroll to top when changing pages
+                        setTimeout(() => {
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }, 100);
+                      }}
                       variant={currentPage === i ? "default" : "outline"}
                       size="sm"
                       className="w-10 h-10"
@@ -530,7 +546,13 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
                 </div>
 
                 <Button
-                  onClick={() => setCurrentPage(Math.min(totalPages - 1, currentPage + 1))}
+                  onClick={() => {
+                    setCurrentPage(Math.min(totalPages - 1, currentPage + 1));
+                    // Scroll to top when changing pages
+                    setTimeout(() => {
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }, 100);
+                  }}
                   disabled={currentPage === totalPages - 1}
                   variant="outline"
                   size="sm"
@@ -655,3 +677,5 @@ export const MCQTest = ({ categoryId, mode, onBack }: MCQTestProps) => {
     </div>
   );
 };
+
+export default MCQTest;

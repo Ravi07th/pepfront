@@ -1,0 +1,2085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Programming - Complete Guide | PrepCampus</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .toc {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .toc h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            margin: 8px 0;
+            padding: 5px 0;
+        }
+
+        .toc a {
+            color: #333;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .toc a:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #555;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+            padding-left: 15px;
+            border-left: 3px solid #667eea;
+        }
+
+        .section h4 {
+            color: #666;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+
+        .definition-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #2196f3;
+        }
+
+        .example-box {
+            background: #f1f8e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #4caf50;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .code-box {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            line-height: 1.4;
+            border: none;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .code-box pre {
+            margin: 0;
+            border: none;
+            background: none;
+        }
+
+        .code-box code {
+            font-family: 'Courier New', monospace;
+            border: none;
+            background: none;
+        }
+
+        .keyword {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .string {
+            color: #51cf66;
+        }
+
+        .comment {
+            color: #868e96;
+            font-style: italic;
+        }
+
+        .number {
+            color: #ffd43b;
+        }
+
+        .function {
+            color: #74c0fc;
+        }
+
+        .class {
+            color: #ffd43b;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        .complexity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .complexity-table th,
+        .complexity-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .complexity-table th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .complexity-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .complexity-table tr:hover {
+            background: #e3f2fd;
+        }
+
+        .algorithm-steps {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #6c757d;
+        }
+
+        .algorithm-steps ol {
+            padding-left: 20px;
+        }
+
+        .algorithm-steps li {
+            margin: 10px 0;
+            padding: 5px 0;
+        }
+
+        .practice-section {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #e53e3e;
+        }
+
+        .solution-box {
+            background: #f0fff4;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #38a169;
+        }
+
+        .reading-section {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #4a5568;
+        }
+
+        .resources-section {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #0284c7;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 0 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #333;
+            color: white;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+                margin: 0;
+                padding: 10px;
+            }
+            .btn-container {
+                display: none;
+            }
+            .header {
+                background: #667eea !important;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .tip {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .note {
+            background: #e2e3e5;
+            border: 1px solid #d6d8db;
+            color: #383d41;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐍 Python Programming</h1>
+            <p>Complete Guide to Python Programming Language</p>
+            <p>From Basics to Advanced Concepts</p>
+        </div>
+
+        <div class="toc">
+            <h2>📋 Table of Contents</h2>
+            <ul>
+                <li><a href="#introduction">1. Introduction to Python</a></li>
+                <li><a href="#basics">2. Python Basics</a></li>
+                <li><a href="#data-types">3. Data Types and Variables</a></li>
+                <li><a href="#control-flow">4. Control Flow</a></li>
+                <li><a href="#functions">5. Functions</a></li>
+                <li><a href="#data-structures">6. Data Structures</a></li>
+                <li><a href="#oop">7. Object-Oriented Programming</a></li>
+                <li><a href="#modules">8. Modules and Packages</a></li>
+                <li><a href="#file-handling">9. File Handling</a></li>
+                <li><a href="#exceptions">10. Exception Handling</a></li>
+                <li><a href="#advanced">11. Advanced Python Concepts</a></li>
+                <li><a href="#practice">12. Practice Problems</a></li>
+                <li><a href="#resources">13. Resources and References</a></li>
+            </ul>
+        </div>
+
+        <div id="introduction" class="section">
+            <h2>1. Introduction to Python</h2>
+            
+            <div class="definition-box">
+                <h3>What is Python?</h3>
+                <p><strong>Python</strong> is a high-level, interpreted, general-purpose programming language created by Guido van Rossum and first released in 1991. It emphasizes code readability with its notable use of significant whitespace and simple syntax that allows programmers to express concepts in fewer lines of code than would be possible in languages such as C++ or Java.</p>
+                
+                <h4>Key Characteristics:</h4>
+                <ul>
+                    <li><strong>Interpreted:</strong> Python code is executed line by line by the Python interpreter, which means you don't need to compile your code before running it. This makes development faster and more interactive.</li>
+                    <li><strong>High-level:</strong> Provides strong abstraction from machine details, allowing you to focus on solving problems rather than managing memory or dealing with low-level operations.</li>
+                    <li><strong>Dynamic typing:</strong> Variable types are determined at runtime, meaning you don't need to declare the type of a variable when you create it. Python automatically infers the type based on the value you assign.</li>
+                    <li><strong>Garbage collected:</strong> Automatic memory management means Python automatically handles memory allocation and deallocation, preventing memory leaks and making programming easier.</li>
+                    <li><strong>Multi-paradigm:</strong> Supports procedural, object-oriented, and functional programming styles, giving you flexibility in how you approach problem-solving.</li>
+                    <li><strong>Extensive Standard Library:</strong> Comes with a rich set of built-in modules and packages that provide ready-to-use functionality for common tasks.</li>
+                    <li><strong>Cross-platform:</strong> Python code can run on Windows, macOS, Linux, and other operating systems without modification.</li>
+                </ul>
+
+                <h4>Python's Philosophy (The Zen of Python):</h4>
+                <p>Python follows a set of guiding principles that emphasize:</p>
+                <ul>
+                    <li><strong>Readability:</strong> Code should be easy to read and understand</li>
+                    <li><strong>Simplicity:</strong> Simple is better than complex</li>
+                    <li><strong>Explicit:</strong> Explicit is better than implicit</li>
+                    <li><strong>Practicality:</strong> Practicality beats purity</li>
+                    <li><strong>Beautiful:</strong> Beautiful is better than ugly</li>
+                </ul>
+
+                <h4>Python Versions and History:</h4>
+                <p>Python has evolved through several major versions:</p>
+                <ul>
+                    <li><strong>Python 1.x (1994-2000):</strong> Early versions with basic features</li>
+                    <li><strong>Python 2.x (2000-2020):</strong> Major version with widespread adoption</li>
+                    <li><strong>Python 3.x (2008-present):</strong> Current version with improved features and syntax</li>
+                </ul>
+                <p><strong>Note:</strong> Python 2 reached end-of-life in 2020. All new development should use Python 3.</p>
+            </div>
+
+            <div class="highlight">
+                <h3>Why Learn Python?</h3>
+                <ul>
+                    <li><strong>Easy to Learn:</strong> Simple and readable syntax</li>
+                    <li><strong>Versatile:</strong> Web development, data science, AI, automation, and more</li>
+                    <li><strong>Large Community:</strong> Extensive libraries and frameworks</li>
+                    <li><strong>High Demand:</strong> One of the most sought-after programming skills</li>
+                    <li><strong>Rapid Development:</strong> Faster development cycle compared to compiled languages</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h3>Your First Python Program</h3>
+                <p>This example demonstrates the fundamental concepts of Python programming, including comments, the print function, variables, and string formatting.</p>
+                
+                <h4>What This Example Shows:</h4>
+                <ul>
+                    <li><strong>Comments:</strong> Lines starting with # are comments that explain the code</li>
+                    <li><strong>Print Function:</strong> The print() function displays output to the console</li>
+                    <li><strong>Variables:</strong> Store data that can be used throughout the program</li>
+                    <li><strong>String Formatting:</strong> f-strings allow embedding variables directly in strings</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># This is your first Python program</span>
+<span class="keyword">print</span>(<span class="string">"Hello, World!"</span>)
+
+<span class="comment"># Variables and basic operations</span>
+name = <span class="string">"Python Learner"</span>
+age = <span class="number">25</span>
+<span class="keyword">print</span>(<span class="string">f"My name is {name} and I am {age} years old"</span>)</code></pre>
+                </div>
+                
+                <h4>Expected Output:</h4>
+                <div class="code-box">
+<pre><code>Hello, World!
+My name is Python Learner and I am 25 years old</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div id="basics" class="section">
+            <h2>2. Python Basics</h2>
+
+            <div class="definition-box">
+                <h3>Python Syntax Fundamentals</h3>
+                <p>Python uses indentation to define code blocks, making it unique among programming languages. This enforced indentation makes Python code more readable and forces programmers to write clean, well-structured code.</p>
+                
+                <h4>Indentation and Code Blocks:</h4>
+                <p>In Python, indentation is not just for readability—it's part of the syntax. Code blocks are defined by their indentation level:</p>
+                <ul>
+                    <li><strong>Consistent Indentation:</strong> Use 4 spaces for each indentation level (PEP 8 standard)</li>
+                    <li><strong>Code Blocks:</strong> Functions, loops, conditionals, and classes use indentation to define their scope</li>
+                    <li><strong>Nested Blocks:</strong> Each nested level adds another 4 spaces of indentation</li>
+                    <li><strong>Mixed Indentation:</strong> Never mix tabs and spaces—use only spaces for consistency</li>
+                </ul>
+
+                <h4>Python Syntax Rules:</h4>
+                <ul>
+                    <li><strong>Case Sensitivity:</strong> Python is case-sensitive. <code>variable</code> and <code>Variable</code> are different names.</li>
+                    <li><strong>Naming Conventions:</strong> Use snake_case for variables and functions, PascalCase for classes, UPPER_CASE for constants.</li>
+                    <li><strong>Line Continuation:</strong> Use backslash (\) or parentheses for long lines.</li>
+                    <li><strong>Comments:</strong> Use # for single-line comments and triple quotes for multi-line comments.</li>
+                    <li><strong>Statements:</strong> Each statement typically ends with a newline, but you can use semicolons to separate statements on the same line.</li>
+                </ul>
+
+                <h4>Python's Readability Features:</h4>
+                <ul>
+                    <li><strong>Clear Keywords:</strong> Python uses descriptive keywords like <code>if</code>, <code>else</code>, <code>for</code>, <code>while</code>, <code>def</code>, <code>class</code>.</li>
+                    <li><strong>Natural Language:</strong> Many Python constructs read like natural English.</li>
+                    <li><strong>Consistent Structure:</strong> Similar operations follow consistent patterns throughout the language.</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h3>Basic Syntax Examples</h3>
+                <p>This example covers essential Python syntax elements including comments, variables, data types, and the print function.</p>
+                
+                <h4>Key Concepts Demonstrated:</h4>
+                <ul>
+                    <li><strong>Single-line Comments:</strong> Use # for brief explanations</li>
+                    <li><strong>Multi-line Comments:</strong> Triple quotes for longer documentation</li>
+                    <li><strong>Variable Assignment:</strong> No type declaration needed</li>
+                    <li><strong>Multiple Assignment:</strong> Assign multiple variables in one line</li>
+                    <li><strong>Print Function:</strong> Display multiple values with commas</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># Comments start with #</span>
+<span class="comment"># Multi-line comments use triple quotes</span>
+
+<span class="string">"""This is a multi-line comment
+that can span multiple lines
+and is often used for documentation"""</span>
+
+<span class="comment"># Variables don't need type declaration</span>
+x = <span class="number">10</span>
+y = <span class="string">"Hello"</span>
+z = <span class="keyword">True</span>
+
+<span class="comment"># Multiple assignment</span>
+a, b, c = <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>
+
+<span class="comment"># Print function</span>
+<span class="keyword">print</span>(<span class="string">"Hello World"</span>)
+<span class="keyword">print</span>(x, y, z)  <span class="comment"># Multiple values</span></code></pre>
+                </div>
+                
+                <h4>Expected Output:</h4>
+                <div class="code-box">
+<pre><code>Hello World
+10 Hello True</code></pre>
+                </div>
+            </div>
+
+            <div class="tip">
+                <h3>💡 Python Style Guide (PEP 8)</h3>
+                <ul>
+                    <li>Use 4 spaces for indentation (not tabs)</li>
+                    <li>Use snake_case for variable and function names</li>
+                    <li>Use PascalCase for class names</li>
+                    <li>Use UPPER_CASE for constants</li>
+                    <li>Maximum line length of 79 characters</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="data-types" class="section">
+            <h2>3. Data Types and Variables</h2>
+
+            <div class="definition-box">
+                <h3>Python Data Types</h3>
+                <p>Python has several built-in data types that are used to define the operations possible on them and the storage method for each of them. Python's data types are classes, and variables are instances (objects) of these classes.</p>
+                
+                <h4>Understanding Data Types in Python:</h4>
+                <p>Data types in Python are fundamental concepts that determine how data is stored, processed, and manipulated. Every value in Python has a data type, and understanding these types is crucial for effective programming.</p>
+                
+                <h4>Key Concepts:</h4>
+                <ul>
+                    <li><strong>Dynamic Typing:</strong> Python automatically determines the type of a variable based on the value assigned to it. You don't need to declare the type explicitly.</li>
+                    <li><strong>Type Checking:</strong> You can check the type of any object using the <code>type()</code> function or <code>isinstance()</code> function.</li>
+                    <li><strong>Type Conversion:</strong> Python provides built-in functions to convert between different data types (e.g., <code>int()</code>, <code>float()</code>, <code>str()</code>).</li>
+                    <li><strong>Mutable vs Immutable:</strong> Some data types can be changed after creation (mutable), while others cannot (immutable).</li>
+                </ul>
+
+                <h4>Data Type Categories:</h4>
+                <ul>
+                    <li><strong>Numeric Types:</strong> int, float, complex - for mathematical operations</li>
+                    <li><strong>Sequence Types:</strong> list, tuple, str - for ordered collections</li>
+                    <li><strong>Mapping Types:</strong> dict - for key-value pairs</li>
+                    <li><strong>Set Types:</strong> set, frozenset - for unordered collections of unique elements</li>
+                    <li><strong>Boolean Type:</strong> bool - for logical operations</li>
+                    <li><strong>None Type:</strong> None - represents absence of value</li>
+                </ul>
+
+                <h4>Memory Management:</h4>
+                <p>Python automatically manages memory for all data types. When you create a variable, Python allocates memory for it. When the variable goes out of scope or is reassigned, Python's garbage collector frees the memory.</p>
+            </div>
+
+            <div class="example-box">
+                <h3>Numeric Types</h3>
+                <p>This example demonstrates Python's three numeric data types: integers, floating-point numbers, and complex numbers.</p>
+                
+                <h4>Numeric Types Explained:</h4>
+                <ul>
+                    <li><strong>Integers (int):</strong> Whole numbers without decimal points</li>
+                    <li><strong>Floats (float):</strong> Numbers with decimal points for precision</li>
+                    <li><strong>Complex Numbers:</strong> Numbers with real and imaginary parts</li>
+                    <li><strong>Type Checking:</strong> Use type() function to determine data type</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># Integer (int)</span>
+age = <span class="number">25</span>
+year = <span class="number">2024</span>
+
+<span class="comment"># Float (floating point)</span>
+height = <span class="number">5.9</span>
+pi = <span class="number">3.14159</span>
+
+<span class="comment"># Complex numbers</span>
+complex_num = <span class="number">3</span> + <span class="number">4j</span>
+
+<span class="comment"># Type checking</span>
+<span class="keyword">print</span>(<span class="function">type</span>(age))      <span class="comment"># &lt;class 'int'&gt;</span>
+<span class="keyword">print</span>(<span class="function">type</span>(height))    <span class="comment"># &lt;class 'float'&gt;</span>
+<span class="keyword">print</span>(<span class="function">type</span>(complex_num)) <span class="comment"># &lt;class 'complex'&gt;</span></code></pre>
+                </div>
+                
+                <h4>Expected Output:</h4>
+                <div class="code-box">
+<pre><code>&lt;class 'int'&gt;
+&lt;class 'float'&gt;
+&lt;class 'complex'&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>String Type</h3>
+                <p>This example demonstrates string creation, manipulation, and various formatting methods in Python.</p>
+                
+                <h4>String Concepts Covered:</h4>
+                <ul>
+                    <li><strong>String Creation:</strong> Using single quotes, double quotes, or triple quotes</li>
+                    <li><strong>String Methods:</strong> Built-in functions for string manipulation</li>
+                    <li><strong>String Length:</strong> Using len() to get string length</li>
+                    <li><strong>String Formatting:</strong> Three different ways to format strings</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># String creation</span>
+name = <span class="string">"John Doe"</span>
+message = <span class="string">'Hello World'</span>
+multi_line = <span class="string">"""This is a
+multi-line string"""</span>
+
+<span class="comment"># String operations</span>
+<span class="keyword">print</span>(name.upper())        <span class="comment"># JOHN DOE</span>
+<span class="keyword">print</span>(name.lower())        <span class="comment"># john doe</span>
+<span class="keyword">print</span>(name.split())        <span class="comment"># ['John', 'Doe']</span>
+<span class="keyword">print</span>(len(name))           <span class="comment"># 8</span>
+
+<span class="comment"># String formatting</span>
+age = <span class="number">25</span>
+<span class="keyword">print</span>(<span class="string">f"I am {age} years old"</span>)  <span class="comment"># f-string (Python 3.6+)</span>
+<span class="keyword">print</span>(<span class="string">"I am {} years old"</span>.format(age))  <span class="comment"># .format()</span>
+<span class="keyword">print</span>(<span class="string">"I am %d years old"</span> % age)  <span class="comment"># % formatting</span></code></pre>
+                </div>
+                
+                <h4>Expected Output:</h4>
+                <div class="code-box">
+<pre><code>JOHN DOE
+john doe
+['John', 'Doe']
+8
+I am 25 years old
+I am 25 years old
+I am 25 years old</code></pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>Boolean Type</h3>
+                <p>This example demonstrates boolean values, logical operations, and truthy/falsy values in Python.</p>
+                
+                <h4>Boolean Concepts Explained:</h4>
+                <ul>
+                    <li><strong>Boolean Values:</strong> True and False are the two boolean literals</li>
+                    <li><strong>Logical Operators:</strong> and, or, not for combining boolean values</li>
+                    <li><strong>Truthy Values:</strong> Non-zero numbers, non-empty strings, non-empty collections</li>
+                    <li><strong>Falsy Values:</strong> Zero, empty strings, empty collections, None</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># Boolean values</span>
+is_student = <span class="keyword">True</span>
+is_working = <span class="keyword">False</span>
+
+<span class="comment"># Boolean operations</span>
+<span class="keyword">print</span>(<span class="keyword">True</span> and <span class="keyword">False</span>)  <span class="comment"># False</span>
+<span class="keyword">print</span>(<span class="keyword">True</span> or <span class="keyword">False</span>)   <span class="comment"># True</span>
+<span class="keyword">print</span>(not <span class="keyword">True</span>)           <span class="comment"># False</span>
+
+<span class="comment"># Truthy and Falsy values</span>
+<span class="keyword">print</span>(bool(<span class="number">0</span>))      <span class="comment"># False</span>
+<span class="keyword">print</span>(bool(<span class="string">""</span>))     <span class="comment"># False</span>
+<span class="keyword">print</span>(bool([]))     <span class="comment"># False</span>
+<span class="keyword">print</span>(bool(<span class="number">1</span>))      <span class="comment"># True</span>
+<span class="keyword">print</span>(bool(<span class="string">"hello"</span>)) <span class="comment"># True</span></code></pre>
+                </div>
+                
+                <h4>Expected Output:</h4>
+                <div class="code-box">
+<pre><code>False
+True
+False
+False
+False
+False
+True
+True</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div id="control-flow" class="section">
+            <h2>4. Control Flow</h2>
+
+            <div class="definition-box">
+                <h3>Control Flow Statements</h3>
+                <p>Control flow statements determine the order in which program statements are executed. Python provides several control flow statements including conditional statements (if, elif, else), loops (for, while), and control statements (break, continue, pass).</p>
+                
+                <h4>Understanding Control Flow:</h4>
+                <p>Control flow is the order in which individual statements, instructions, or function calls are executed or evaluated in a program. It determines how your program responds to different conditions and how it repeats operations.</p>
+                
+                <h4>Types of Control Flow:</h4>
+                <ul>
+                    <li><strong>Sequential Flow:</strong> Statements are executed in the order they appear in the code.</li>
+                    <li><strong>Conditional Flow:</strong> Different code blocks are executed based on whether certain conditions are true or false.</li>
+                    <li><strong>Iterative Flow:</strong> Code blocks are executed repeatedly while certain conditions remain true.</li>
+                    <li><strong>Exception Flow:</strong> Special handling for errors and exceptional situations.</li>
+                </ul>
+
+                <h4>Control Flow Benefits:</h4>
+                <ul>
+                    <li><strong>Decision Making:</strong> Allows programs to make decisions based on conditions.</li>
+                    <li><strong>Repetition:</strong> Enables efficient execution of the same code multiple times.</li>
+                    <li><strong>Error Handling:</strong> Provides mechanisms to handle unexpected situations gracefully.</li>
+                    <li><strong>Code Organization:</strong> Helps structure code logically and make it more readable.</li>
+                </ul>
+
+                <h4>Python Control Flow Features:</h4>
+                <ul>
+                    <li><strong>Indentation-based:</strong> Uses indentation to define code blocks, making the structure clear and readable.</li>
+                    <li><strong>Expressive:</strong> Control flow statements are designed to be readable and intuitive.</li>
+                    <li><strong>Flexible:</strong> Multiple ways to achieve the same control flow patterns.</li>
+                    <li><strong>Safe:</strong> Built-in safeguards prevent common control flow errors.</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h3>Conditional Statements (if, elif, else)</h3>
+                <p>This example demonstrates how to use conditional statements to make decisions in your code based on different conditions.</p>
+                
+                <h4>Conditional Statement Concepts:</h4>
+                <ul>
+                    <li><strong>if Statement:</strong> Executes code block if condition is True</li>
+                    <li><strong>elif Statement:</strong> Checks additional conditions if previous conditions are False</li>
+                    <li><strong>else Statement:</strong> Executes when all previous conditions are False</li>
+                    <li><strong>Comparison Operators:</strong> >=, <=, ==, !=, >, < for comparing values</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># Basic if statement</span>
+age = <span class="number">18</span>
+
+<span class="keyword">if</span> age >= <span class="number">18</span>:
+    <span class="keyword">print</span>(<span class="string">"You are an adult"</span>)
+<span class="keyword">else</span>:
+    <span class="keyword">print</span>(<span class="string">"You are a minor"</span>)
+
+<span class="comment"># if-elif-else chain</span>
+score = <span class="number">85</span>
+
+<span class="keyword">if</span> score >= <span class="number">90</span>:
+    grade = <span class="string">"A"</span>
+<span class="keyword">elif</span> score >= <span class="number">80</span>:
+    grade = <span class="string">"B"</span>
+<span class="keyword">elif</span> score >= <span class="number">70</span>:
+    grade = <span class="string">"C"</span>
+<span class="keyword">elif</span> score >= <span class="number">60</span>:
+    grade = <span class="string">"D"</span>
+<span class="keyword">else</span>:
+    grade = <span class="string">"F"</span>
+
+<span class="keyword">print</span>(<span class="string">f"Your grade is {grade}"</span>)</code></pre>
+                </div>
+                
+                <h4>Expected Output:</h4>
+                <div class="code-box">
+<pre><code>You are an adult
+Your grade is B</code></pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>For Loops</h3>
+                <p>This example demonstrates different ways to use for loops for iterating over sequences like ranges, lists, and dictionaries.</p>
+                
+                <h4>For Loop Concepts:</h4>
+                <ul>
+                    <li><strong>Range Iteration:</strong> Using range() to iterate over numbers</li>
+                    <li><strong>List Iteration:</strong> Looping through each element in a list</li>
+                    <li><strong>Enumerate:</strong> Getting both index and value while iterating</li>
+                    <li><strong>Dictionary Iteration:</strong> Looping through keys or key-value pairs</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># Iterating over a range</span>
+<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):
+    <span class="keyword">print</span>(i)  <span class="comment"># 0, 1, 2, 3, 4</span>
+
+<span class="comment"># Iterating over a list</span>
+fruits = [<span class="string">"apple"</span>, <span class="string">"banana"</span>, <span class="string">"cherry"</span>]
+<span class="keyword">for</span> fruit <span class="keyword">in</span> fruits:
+    <span class="keyword">print</span>(fruit)
+
+<span class="comment"># Iterating with enumerate</span>
+<span class="keyword">for</span> index, fruit <span class="keyword">in</span> enumerate(fruits):
+    <span class="keyword">print</span>(<span class="string">f"{index}: {fruit}"</span>)
+
+<span class="comment"># Iterating over a dictionary</span>
+person = {<span class="string">"name"</span>: <span class="string">"John"</span>, <span class="string">"age"</span>: <span class="number">30</span>, <span class="string">"city"</span>: <span class="string">"New York"</span>}
+
+<span class="keyword">for</span> key <span class="keyword">in</span> person:
+    <span class="keyword">print</span>(<span class="string">f"{key}: {person[key]}"</span>)
+
+<span class="keyword">for</span> key, value <span class="keyword">in</span> person.items():
+    <span class="keyword">print</span>(<span class="string">f"{key}: {value}"</span>)</code></pre>
+                </div>
+                
+                <h4>Expected Output:</h4>
+                <div class="code-box">
+<pre><code>0
+1
+2
+3
+4
+apple
+banana
+cherry
+0: apple
+1: banana
+2: cherry
+name: John
+age: 30
+city: New York
+name: John
+age: 30
+city: New York</code></pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>While Loops</h3>
+                <p>This example demonstrates while loops and control statements like break and continue for controlling loop execution.</p>
+                
+                <h4>While Loop Concepts:</h4>
+                <ul>
+                    <li><strong>Basic While Loop:</strong> Repeats code block while condition is True</li>
+                    <li><strong>Break Statement:</strong> Exits the loop immediately when encountered</li>
+                    <li><strong>Continue Statement:</strong> Skips current iteration and continues with next</li>
+                    <li><strong>Infinite Loops:</strong> Using while True with break for controlled infinite loops</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># Basic while loop</span>
+count = <span class="number">0</span>
+<span class="keyword">while</span> count < <span class="number">5</span>:
+    <span class="keyword">print</span>(count)
+    count += <span class="number">1</span>
+
+<span class="comment"># While loop with break</span>
+number = <span class="number">0</span>
+<span class="keyword">while</span> <span class="keyword">True</span>:
+    <span class="keyword">if</span> number == <span class="number">5</span>:
+        <span class="keyword">break</span>
+    <span class="keyword">print</span>(number)
+    number += <span class="number">1</span>
+
+<span class="comment"># While loop with continue</span>
+i = <span class="number">0</span>
+<span class="keyword">while</span> i < <span class="number">10</span>:
+    i += <span class="number">1</span>
+    <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">0</span>:
+        <span class="keyword">continue</span>  <span class="comment"># Skip even numbers</span>
+    <span class="keyword">print</span>(i)  <span class="comment"># Print only odd numbers</span></code></pre>
+                </div>
+                
+                <h4>Expected Output:</h4>
+                <div class="code-box">
+<pre><code>0
+1
+2
+3
+4
+0
+1
+2
+3
+4
+1
+3
+5
+7
+9</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div id="functions" class="section">
+            <h2>5. Functions</h2>
+
+            <div class="definition-box">
+                <h3>Functions in Python</h3>
+                <p>A function is a block of organized, reusable code that is used to perform a single, related action. Functions provide better modularity for your application and a high degree of code reusing. Python has many built-in functions, but you can also create your own functions.</p>
+                
+                <h4>Understanding Functions:</h4>
+                <p>Functions are fundamental building blocks in Python programming. They allow you to encapsulate code into reusable units, making your programs more organized, maintainable, and efficient.</p>
+                
+                <h4>Function Benefits:</h4>
+                <ul>
+                    <li><strong>Code Reusability:</strong> Write code once and use it multiple times throughout your program.</li>
+                    <li><strong>Modularity:</strong> Break complex problems into smaller, manageable pieces.</li>
+                    <li><strong>Maintainability:</strong> Easier to update and fix code when it's organized into functions.</li>
+                    <li><strong>Readability:</strong> Functions with descriptive names make code self-documenting.</li>
+                    <li><strong>Testing:</strong> Individual functions can be tested independently.</li>
+                    <li><strong>Abstraction:</strong> Hide complex implementation details behind simple interfaces.</li>
+                </ul>
+
+                <h4>Function Components:</h4>
+                <ul>
+                    <li><strong>Function Definition:</strong> The <code>def</code> keyword followed by the function name and parameters.</li>
+                    <li><strong>Parameters:</strong> Input values that the function receives (also called arguments).</li>
+                    <li><strong>Function Body:</strong> The code that performs the function's task.</li>
+                    <li><strong>Return Statement:</strong> Specifies what value the function sends back to the caller.</li>
+                    <li><strong>Function Call:</strong> How you invoke the function to execute its code.</li>
+                </ul>
+
+                <h4>Function Types in Python:</h4>
+                <ul>
+                    <li><strong>Built-in Functions:</strong> Pre-defined functions that come with Python (e.g., <code>print()</code>, <code>len()</code>, <code>type()</code>).</li>
+                    <li><strong>User-defined Functions:</strong> Functions that you create to solve specific problems.</li>
+                    <li><strong>Lambda Functions:</strong> Small, anonymous functions defined with the <code>lambda</code> keyword.</li>
+                    <li><strong>Methods:</strong> Functions that belong to objects or classes.</li>
+                </ul>
+
+                <h4>Function Design Principles:</h4>
+                <ul>
+                    <li><strong>Single Responsibility:</strong> Each function should do one thing well.</li>
+                    <li><strong>Descriptive Names:</strong> Function names should clearly indicate what the function does.</li>
+                    <li><strong>Appropriate Size:</strong> Functions should be neither too long nor too short.</li>
+                    <li><strong>Clear Parameters:</strong> Parameter names should be descriptive and meaningful.</li>
+                    <li><strong>Documentation:</strong> Use docstrings to explain what the function does.</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h3>Basic Function Definition</h3>
+                <p>This example demonstrates how to define and use functions with different types of parameters and return values.</p>
+                
+                <h4>Function Concepts Covered:</h4>
+                <ul>
+                    <li><strong>Function Definition:</strong> Using def keyword to create functions</li>
+                    <li><strong>Parameters:</strong> Input values that functions receive</li>
+                    <li><strong>Return Statement:</strong> Sending values back from functions</li>
+                    <li><strong>Default Parameters:</strong> Parameters with predefined values</li>
+                    <li><strong>Function Calls:</strong> How to invoke functions with arguments</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># Simple function</span>
+<span class="keyword">def</span> greet():
+    <span class="keyword">print</span>(<span class="string">"Hello, World!"</span>)
+
+<span class="comment"># Function call</span>
+greet()
+
+<span class="comment"># Function with parameters</span>
+<span class="keyword">def</span> greet_person(name):
+    <span class="keyword">print</span>(<span class="string">f"Hello, {name}!"</span>)
+
+greet_person(<span class="string">"Alice"</span>)
+
+<span class="comment"># Function with multiple parameters</span>
+<span class="keyword">def</span> add_numbers(a, b):
+    <span class="keyword">return</span> a + b
+
+result = add_numbers(<span class="number">5</span>, <span class="number">3</span>)
+<span class="keyword">print</span>(result)  <span class="comment"># 8</span>
+
+<span class="comment"># Function with default parameters</span>
+<span class="keyword">def</span> greet_with_title(name, title=<span class="string">"Mr."</span>):
+    <span class="keyword">return</span> <span class="string">f"Hello, {title} {name}!"</span>
+
+<span class="keyword">print</span>(greet_with_title(<span class="string">"Smith"</span>))  <span class="comment"># Hello, Mr. Smith!</span>
+<span class="keyword">print</span>(greet_with_title(<span class="string">"Johnson"</span>, <span class="string">"Dr."</span>))  <span class="comment"># Hello, Dr. Johnson!</span></code></pre>
+                </div>
+                
+                <h4>Expected Output:</h4>
+                <div class="code-box">
+<pre><code>Hello, World!
+Hello, Alice!
+8
+Hello, Mr. Smith!
+Hello, Dr. Johnson!</code></pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>Lambda Functions (Anonymous Functions)</h3>
+                <p>This example demonstrates lambda functions, which are small anonymous functions that can be defined in a single line.</p>
+                
+                <h4>Lambda Function Concepts:</h4>
+                <ul>
+                    <li><strong>Lambda Syntax:</strong> lambda arguments: expression</li>
+                    <li><strong>Single Expression:</strong> Lambda functions can only contain one expression</li>
+                    <li><strong>Map Function:</strong> Applying lambda to each element in a sequence</li>
+                    <li><strong>Filter Function:</strong> Using lambda to filter elements based on condition</li>
+                    <li><strong>Anonymous Functions:</strong> Functions without names, used for simple operations</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># Lambda function syntax: lambda arguments: expression</span>
+square = lambda x: x ** <span class="number">2</span>
+<span class="keyword">print</span>(square(<span class="number">5</span>))  <span class="comment"># 25</span>
+
+<span class="comment"># Lambda with multiple arguments</span>
+add = lambda x, y: x + y
+<span class="keyword">print</span>(add(<span class="number">3</span>, <span class="number">4</span>))  <span class="comment"># 7</span>
+
+<span class="comment"># Lambda in built-in functions</span>
+numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]
+squared = list(map(lambda x: x**<span class="number">2</span>, numbers))
+<span class="keyword">print</span>(squared)  <span class="comment"># [1, 4, 9, 16, 25]</span>
+
+<span class="comment"># Lambda with filter</span>
+even_numbers = list(filter(lambda x: x % <span class="number">2</span> == <span class="number">0</span>, numbers))
+<span class="keyword">print</span>(even_numbers)  <span class="comment"># [2, 4]</span></code></pre>
+                </div>
+                
+                <h4>Expected Output:</h4>
+                <div class="code-box">
+<pre><code>25
+7
+[1, 4, 9, 16, 25]
+[2, 4]</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div id="data-structures" class="section">
+            <h2>6. Data Structures</h2>
+
+            <div class="definition-box">
+                <h3>Python Data Structures</h3>
+                <p>Data structures are fundamental concepts in programming that help organize and store data efficiently. Python provides several built-in data structures including lists, tuples, dictionaries, and sets, each with their own characteristics and use cases.</p>
+                
+                <h4>Understanding Data Structures:</h4>
+                <p>Data structures are specialized formats for organizing, processing, retrieving, and storing data. They provide a way to manage large amounts of data efficiently for uses such as large databases and internet indexing services.</p>
+                
+                <h4>Why Data Structures Matter:</h4>
+                <ul>
+                    <li><strong>Efficiency:</strong> Different data structures are optimized for different types of operations.</li>
+                    <li><strong>Organization:</strong> Help organize data in a logical and meaningful way.</li>
+                    <li><strong>Performance:</strong> Choosing the right data structure can significantly impact program performance.</li>
+                    <li><strong>Problem Solving:</strong> Many algorithms require specific data structures to work effectively.</li>
+                    <li><strong>Memory Usage:</strong> Different structures use memory differently, affecting overall program efficiency.</li>
+                </ul>
+
+                <h4>Data Structure Categories:</h4>
+                <ul>
+                    <li><strong>Linear Structures:</strong> Data elements are arranged in a sequential manner (lists, tuples, strings).</li>
+                    <li><strong>Non-linear Structures:</strong> Data elements are not arranged in a sequential manner (trees, graphs).</li>
+                    <li><strong>Homogeneous Structures:</strong> All elements are of the same type (arrays in some languages).</li>
+                    <li><strong>Heterogeneous Structures:</strong> Elements can be of different types (Python lists, dictionaries).</li>
+                </ul>
+
+                <h4>Python's Built-in Data Structures:</h4>
+                <ul>
+                    <li><strong>Lists:</strong> Mutable, ordered sequences of elements.</li>
+                    <li><strong>Tuples:</strong> Immutable, ordered sequences of elements.</li>
+                    <li><strong>Dictionaries:</strong> Mutable, unordered collections of key-value pairs.</li>
+                    <li><strong>Sets:</strong> Mutable, unordered collections of unique elements.</li>
+                    <li><strong>Strings:</strong> Immutable sequences of characters.</li>
+                </ul>
+
+                <h4>Choosing the Right Data Structure:</h4>
+                <ul>
+                    <li><strong>Access Patterns:</strong> How frequently you need to access, insert, or delete elements.</li>
+                    <li><strong>Data Relationships:</strong> Whether data has hierarchical, network, or simple relationships.</li>
+                    <li><strong>Memory Constraints:</strong> How much memory your application can use.</li>
+                    <li><strong>Performance Requirements:</strong> Speed requirements for different operations.</li>
+                    <li><strong>Data Size:</strong> Whether you're working with small or large datasets.</li>
+                </ul>
+
+                <h4>Time Complexity Considerations:</h4>
+                <p>Different operations on different data structures have varying time complexities:</p>
+                <ul>
+                    <li><strong>Access:</strong> How quickly you can retrieve an element.</li>
+                    <li><strong>Search:</strong> How quickly you can find an element.</li>
+                    <li><strong>Insertion:</strong> How quickly you can add new elements.</li>
+                    <li><strong>Deletion:</strong> How quickly you can remove elements.</li>
+                    <li><strong>Traversal:</strong> How quickly you can visit all elements.</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h3>Lists</h3>
+                <div class="code-box">
+<pre><code><span class="comment"># Creating lists</span>
+fruits = [<span class="string">"apple"</span>, <span class="string">"banana"</span>, <span class="string">"cherry"</span>]
+numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]
+mixed = [<span class="number">1</span>, <span class="string">"hello"</span>, <span class="keyword">True</span>, <span class="number">3.14</span>]
+
+<span class="comment"># Accessing elements</span>
+<span class="keyword">print</span>(fruits[<span class="number">0</span>])  <span class="comment"># apple</span>
+<span class="keyword">print</span>(fruits[-<span class="number">1</span>])  <span class="comment"># cherry (last element)</span>
+
+<span class="comment"># Slicing</span>
+<span class="keyword">print</span>(numbers[<span class="number">1</span>:<span class="number">4</span>])  <span class="comment"># [2, 3, 4]</span>
+<span class="keyword">print</span>(numbers[:<span class="number">3</span>])  <span class="comment"># [1, 2, 3]</span>
+<span class="keyword">print</span>(numbers[<span class="number">2</span>:])  <span class="comment"># [3, 4, 5]</span>
+
+<span class="comment"># List methods</span>
+fruits.append(<span class="string">"orange"</span>)  <span class="comment"># Add to end</span>
+fruits.insert(<span class="number">1</span>, <span class="string">"grape"</span>)  <span class="comment"># Insert at index</span>
+fruits.remove(<span class="string">"banana"</span>)  <span class="comment"># Remove by value</span>
+popped = fruits.pop()  <span class="comment"># Remove and return last element</span>
+fruits.sort()  <span class="comment"># Sort in place</span>
+fruits.reverse()  <span class="comment"># Reverse in place</span>
+
+<span class="comment"># List comprehension</span>
+squares = [x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">5</span>)]
+<span class="keyword">print</span>(squares)  <span class="comment"># [0, 1, 4, 9, 16]</span></code></pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>Dictionaries</h3>
+                <div class="code-box">
+<pre><code><span class="comment"># Creating dictionaries</span>
+person = {
+    <span class="string">"name"</span>: <span class="string">"John Doe"</span>,
+    <span class="string">"age"</span>: <span class="number">30</span>,
+    <span class="string">"city"</span>: <span class="string">"New York"</span>,
+    <span class="string">"skills"</span>: [<span class="string">"Python"</span>, <span class="string">"JavaScript"</span>, <span class="string">"SQL"</span>]
+}
+
+<span class="comment"># Accessing values</span>
+<span class="keyword">print</span>(person[<span class="string">"name"</span>])  <span class="comment"># John Doe</span>
+<span class="keyword">print</span>(person.get(<span class="string">"age"</span>))  <span class="comment"># 30</span>
+<span class="keyword">print</span>(person.get(<span class="string">"email"</span>, <span class="string">"Not found"</span>))  <span class="comment"># Not found</span>
+
+<span class="comment"># Adding/updating items</span>
+person[<span class="string">"email"</span>] = <span class="string">"john@example.com"</span>
+person.update({<span class="string">"phone"</span>: <span class="string">"123-456-7890"</span>})
+
+<span class="comment"># Dictionary methods</span>
+<span class="keyword">print</span>(person.keys())  <span class="comment"># dict_keys(['name', 'age', 'city', 'skills', 'email', 'phone'])</span>
+<span class="keyword">print</span>(person.values())  <span class="comment"># dict_values(['John Doe', 30, 'New York', ...])</span>
+<span class="keyword">print</span>(person.items())  <span class="comment"># dict_items([('name', 'John Doe'), ('age', 30), ...])</span>
+
+<span class="comment"># Dictionary comprehension</span>
+squares = {x: x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">5</span>)}
+<span class="keyword">print</span>(squares)  <span class="comment"># {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}</span></code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div id="oop" class="section">
+            <h2>7. Object-Oriented Programming</h2>
+
+            <div class="definition-box">
+                <h3>Object-Oriented Programming in Python</h3>
+                <p>Object-Oriented Programming (OOP) is a programming paradigm that uses objects to design applications and computer programs. It provides a clear modular structure for programs which makes it good for defining abstract data types, implementing code reusability, and protecting information through encapsulation.</p>
+                
+                <h4>Understanding Object-Oriented Programming:</h4>
+                <p>OOP is a programming paradigm based on the concept of "objects," which can contain data and code. Data in the form of fields (often known as attributes or properties), and code, in the form of procedures (often known as methods).</p>
+                
+                <h4>Core OOP Concepts:</h4>
+                <ul>
+                    <li><strong>Objects:</strong> Instances of classes that contain both data and methods to work with that data.</li>
+                    <li><strong>Classes:</strong> Blueprints or templates for creating objects. They define the structure and behavior of objects.</li>
+                    <li><strong>Attributes:</strong> Data stored within objects (also called properties or fields).</li>
+                    <li><strong>Methods:</strong> Functions that belong to objects and can access and modify the object's data.</li>
+                    <li><strong>Encapsulation:</strong> Bundling data and methods that work on that data within a single unit (class).</li>
+                    <li><strong>Inheritance:</strong> Mechanism that allows a class to inherit properties and methods from another class.</li>
+                    <li><strong>Polymorphism:</strong> Ability to present the same interface for different underlying forms (data types or classes).</li>
+                    <li><strong>Abstraction:</strong> Hiding complex implementation details and showing only necessary features.</li>
+                </ul>
+
+                <h4>Benefits of OOP:</h4>
+                <ul>
+                    <li><strong>Modularity:</strong> Code can be organized into logical, reusable components.</li>
+                    <li><strong>Reusability:</strong> Classes can be reused across different parts of an application.</li>
+                    <li><strong>Maintainability:</strong> Changes to one part of the code don't affect other parts.</li>
+                    <li><strong>Scalability:</strong> Easy to extend and modify existing code.</li>
+                    <li><strong>Security:</strong> Data can be protected through encapsulation and access control.</li>
+                    <li><strong>Code Organization:</strong> Related data and functions are grouped together.</li>
+                </ul>
+
+                <h4>OOP in Python:</h4>
+                <ul>
+                    <li><strong>Everything is an Object:</strong> In Python, everything (numbers, strings, functions, modules) is an object.</li>
+                    <li><strong>Dynamic Typing:</strong> Python's dynamic nature makes OOP very flexible.</li>
+                    <li><strong>Multiple Inheritance:</strong> Python supports inheriting from multiple parent classes.</li>
+                    <li><strong>Magic Methods:</strong> Special methods (like <code>__init__</code>, <code>__str__</code>) provide powerful customization.</li>
+                    <li><strong>Property Decorators:</strong> Allow controlled access to class attributes.</li>
+                </ul>
+
+                <h4>Design Principles:</h4>
+                <ul>
+                    <li><strong>Single Responsibility Principle:</strong> A class should have only one reason to change.</li>
+                    <li><strong>Open/Closed Principle:</strong> Open for extension, closed for modification.</li>
+                    <li><strong>Liskov Substitution Principle:</strong> Derived classes must be substitutable for their base classes.</li>
+                    <li><strong>Interface Segregation Principle:</strong> Many specific interfaces are better than one general-purpose interface.</li>
+                    <li><strong>Dependency Inversion Principle:</strong> Depend on abstractions, not on concretions.</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h3>Classes and Objects</h3>
+                <p>This example demonstrates the fundamental concepts of Object-Oriented Programming in Python, including class definition, object creation, and method usage.</p>
+                
+                <h4>OOP Concepts Demonstrated:</h4>
+                <ul>
+                    <li><strong>Class Definition:</strong> Using the class keyword to create a blueprint for objects</li>
+                    <li><strong>Constructor Method:</strong> __init__ method that initializes object attributes</li>
+                    <li><strong>Instance Methods:</strong> Functions that belong to objects and can access object data</li>
+                    <li><strong>Object Creation:</strong> Creating instances of a class using the class name</li>
+                    <li><strong>Attribute Access:</strong> Accessing object properties using dot notation</li>
+                    <li><strong>Method Calls:</strong> Invoking object methods to perform actions</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># Defining a class</span>
+<span class="keyword">class</span> <span class="class">Person</span>:
+    <span class="comment"># Constructor method</span>
+    <span class="keyword">def</span> __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    <span class="comment"># Instance method</span>
+    <span class="keyword">def</span> introduce(self):
+        <span class="keyword">return</span> <span class="string">f"Hi, I'm {self.name} and I'm {self.age} years old"</span>
+    
+    <span class="comment"># Method to update age</span>
+    <span class="keyword">def</span> have_birthday(self):
+        self.age += <span class="number">1</span>
+        <span class="keyword">return</span> <span class="string">f"Happy birthday! I'm now {self.age} years old"</span>
+
+<span class="comment"># Creating objects (instances)</span>
+person1 = Person(<span class="string">"Alice"</span>, <span class="number">25</span>)
+person2 = Person(<span class="string">"Bob"</span>, <span class="number">30</span>)
+
+<span class="comment"># Accessing attributes and methods</span>
+<span class="keyword">print</span>(person1.name)  <span class="comment"># Alice</span>
+<span class="keyword">print</span>(person1.introduce())  <span class="comment"># Hi, I'm Alice and I'm 25 years old</span>
+<span class="keyword">print</span>(person2.have_birthday())  <span class="comment"># Happy birthday! I'm now 31 years old</span></code></pre>
+                </div>
+                
+                <h4>Expected Output:</h4>
+                <div class="code-box">
+<pre><code>Alice
+Hi, I'm Alice and I'm 25 years old
+Happy birthday! I'm now 31 years old</code></pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>Inheritance</h3>
+                <p>This example demonstrates inheritance in Python, showing how a child class can inherit properties and methods from a parent class while adding its own unique features.</p>
+                
+                <h4>Inheritance Concepts:</h4>
+                <ul>
+                    <li><strong>Base Class (Parent):</strong> The class that provides common attributes and methods</li>
+                    <li><strong>Derived Class (Child):</strong> The class that inherits from the parent class</li>
+                    <li><strong>Method Overriding:</strong> Child class can redefine parent methods</li>
+                    <li><strong>Super() Function:</strong> Calls parent class methods from child class</li>
+                    <li><strong>Code Reusability:</strong> Inherit common functionality without rewriting</li>
+                    <li><strong>Polymorphism:</strong> Same method name can behave differently in different classes</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># Base class (parent class)</span>
+<span class="keyword">class</span> <span class="class">Animal</span>:
+    <span class="keyword">def</span> __init__(self, name, species):
+        self.name = name
+        self.species = species
+    
+    <span class="keyword">def</span> make_sound(self):
+        <span class="keyword">return</span> <span class="string">"Some animal sound"</span>
+    
+    <span class="keyword">def</span> get_info(self):
+        <span class="keyword">return</span> <span class="string">f"{self.name} is a {self.species}"</span>
+
+<span class="comment"># Derived class (child class)</span>
+<span class="keyword">class</span> <span class="class">Dog</span>(Animal):
+    <span class="keyword">def</span> __init__(self, name, breed):
+        <span class="comment"># Call parent constructor</span>
+        super().__init__(name, <span class="string">"Dog"</span>)
+        self.breed = breed
+    
+    <span class="keyword">def</span> make_sound(self):
+        <span class="keyword">return</span> <span class="string">"Woof! Woof!"</span>
+    
+    <span class="keyword">def</span> fetch(self):
+        <span class="keyword">return</span> <span class="string">f"{self.name} is fetching the ball"</span>
+
+<span class="comment"># Creating instances</span>
+my_dog = Dog(<span class="string">"Buddy"</span>, <span class="string">"Golden Retriever"</span>)
+<span class="keyword">print</span>(my_dog.get_info())  <span class="comment"># Buddy is a Dog</span>
+<span class="keyword">print</span>(my_dog.make_sound())  <span class="comment"># Woof! Woof!</span>
+<span class="keyword">print</span>(my_dog.fetch())  <span class="comment"># Buddy is fetching the ball</span></code></pre>
+                </div>
+                
+                <h4>Expected Output:</h4>
+                <div class="code-box">
+<pre><code>Buddy is a Dog
+Woof! Woof!
+Buddy is fetching the ball</code></pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>Encapsulation</h3>
+                <p>This example demonstrates encapsulation, one of the fundamental principles of Object-Oriented Programming, showing how to control access to object attributes and methods.</p>
+                
+                <h4>Encapsulation Concepts:</h4>
+                <ul>
+                    <li><strong>Data Hiding:</strong> Protecting object attributes from direct external access</li>
+                    <li><strong>Protected Attributes:</strong> Using single underscore (_) to indicate internal use</li>
+                    <li><strong>Private Attributes:</strong> Using double underscore (__) to make attributes truly private</li>
+                    <li><strong>Getter Methods:</strong> Controlled access to read object data</li>
+                    <li><strong>Setter Methods:</strong> Controlled access to modify object data</li>
+                    <li><strong>Validation:</strong> Ensuring data integrity through method checks</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># Encapsulation example</span>
+<span class="keyword">class</span> <span class="class">BankAccount</span>:
+    <span class="keyword">def</span> __init__(self, account_holder, initial_balance):
+        self.account_holder = account_holder
+        self._balance = initial_balance  <span class="comment"># Protected attribute</span>
+        self.__account_number = <span class="string">"ACC"</span> + str(hash(account_holder))  <span class="comment"># Private attribute</span>
+    
+    <span class="keyword">def</span> get_balance(self):
+        <span class="keyword">return</span> self._balance
+    
+    <span class="keyword">def</span> deposit(self, amount):
+        <span class="keyword">if</span> amount > <span class="number">0</span>:
+            self._balance += amount
+            <span class="keyword">return</span> <span class="string">f"Deposited ${amount}. New balance: ${self._balance}"</span>
+        <span class="keyword">else</span>:
+            <span class="keyword">return</span> <span class="string">"Invalid amount"</span>
+    
+    <span class="keyword">def</span> withdraw(self, amount):
+        <span class="keyword">if</span> <span class="number">0</span> < amount <= self._balance:
+            self._balance -= amount
+            <span class="keyword">return</span> <span class="string">f"Withdrew ${amount}. New balance: ${self._balance}"</span>
+        <span class="keyword">else</span>:
+            <span class="keyword">return</span> <span class="string">"Insufficient funds or invalid amount"</span>
+
+<span class="comment"># Using the class</span>
+account = BankAccount(<span class="string">"John Doe"</span>, <span class="number">1000</span>)
+<span class="keyword">print</span>(account.deposit(<span class="number">500</span>))  <span class="comment"># Deposited $500. New balance: $1500</span>
+<span class="keyword">print</span>(account.withdraw(<span class="number">200</span>))  <span class="comment"># Withdrew $200. New balance: $1300</span>
+<span class="keyword">print</span>(account.get_balance())  <span class="comment"># 1300</span></code></pre>
+                </div>
+                
+                <h4>Expected Output:</h4>
+                <div class="code-box">
+<pre><code>Deposited $500. New balance: $1500
+Withdrew $200. New balance: $1300
+1300</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div id="modules" class="section">
+            <h2>8. Modules and Packages</h2>
+
+            <div class="definition-box">
+                <h3>Python Modules</h3>
+                <p>A module is a file containing Python definitions and statements. The file name is the module name with the suffix .py appended. Modules can be imported and used in other Python files, allowing for code organization and reusability.</p>
+                
+                <h4>Understanding Modules:</h4>
+                <p>Modules are a way to organize Python code into logical units. They help break down large programs into smaller, manageable pieces and promote code reuse across different projects.</p>
+                
+                <h4>Module Benefits:</h4>
+                <ul>
+                    <li><strong>Code Organization:</strong> Group related functions, classes, and variables together.</li>
+                    <li><strong>Reusability:</strong> Write code once and use it in multiple projects.</li>
+                    <li><strong>Namespace Management:</strong> Avoid naming conflicts by organizing code into separate namespaces.</li>
+                    <li><strong>Maintainability:</strong> Easier to maintain and update code when it's organized into modules.</li>
+                    <li><strong>Collaboration:</strong> Multiple developers can work on different modules simultaneously.</li>
+                    <li><strong>Testing:</strong> Individual modules can be tested independently.</li>
+                </ul>
+
+                <h4>Types of Modules:</h4>
+                <ul>
+                    <li><strong>Built-in Modules:</strong> Pre-installed modules that come with Python (e.g., <code>math</code>, <code>os</code>, <code>sys</code>).</li>
+                    <li><strong>Standard Library Modules:</strong> Additional modules included with Python installation (e.g., <code>datetime</code>, <code>json</code>, <code>re</code>).</li>
+                    <li><strong>Third-party Modules:</strong> Modules created by the community and installed separately (e.g., <code>numpy</code>, <code>pandas</code>, <code>requests</code>).</li>
+                    <li><strong>Custom Modules:</strong> Modules you create for your own projects.</li>
+                </ul>
+
+                <h4>Module Structure:</h4>
+                <ul>
+                    <li><strong>Module Name:</strong> The filename without the .py extension becomes the module name.</li>
+                    <li><strong>Module Content:</strong> Can contain functions, classes, variables, and executable code.</li>
+                    <li><strong>Module Documentation:</strong> Docstrings at the beginning of the module describe its purpose.</li>
+                    <li><strong>Module Variables:</strong> Variables defined at the module level are accessible when the module is imported.</li>
+                </ul>
+
+                <h4>Import Mechanisms:</h4>
+                <ul>
+                    <li><strong>Import Statement:</strong> <code>import module_name</code> - imports the entire module.</li>
+                    <li><strong>From Import:</strong> <code>from module_name import item</code> - imports specific items from a module.</li>
+                    <li><strong>Import As:</strong> <code>import module_name as alias</code> - imports with an alias name.</li>
+                    <li><strong>Import All:</strong> <code>from module_name import *</code> - imports all public items (not recommended).</li>
+                </ul>
+
+                <h4>Module Search Path:</h4>
+                <p>Python searches for modules in the following order:</p>
+                <ul>
+                    <li><strong>Current Directory:</strong> The directory containing the script being executed.</li>
+                    <li><strong>PYTHONPATH:</strong> Environment variable containing directories to search.</li>
+                    <li><strong>Standard Library:</strong> Built-in modules and standard library modules.</li>
+                    <li><strong>Site-packages:</strong> Third-party modules installed via pip or other package managers.</li>
+                </ul>
+
+                <h4>Packages vs Modules:</h4>
+                <ul>
+                    <li><strong>Module:</strong> A single Python file containing code.</li>
+                    <li><strong>Package:</strong> A directory containing multiple modules and an <code>__init__.py</code> file.</li>
+                    <li><strong>Subpackages:</strong> Packages within packages, creating a hierarchical structure.</li>
+                    <li><strong>Namespace Packages:</strong> Packages that can be split across multiple directories.</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h3>Creating and Using Modules</h3>
+                <p>This example demonstrates how to create custom modules and import them in Python, showing different import methods and module organization.</p>
+                
+                <h4>Module Concepts:</h4>
+                <ul>
+                    <li><strong>Module Creation:</strong> Creating separate Python files with functions and classes</li>
+                    <li><strong>Import Statement:</strong> Importing entire modules using import keyword</li>
+                    <li><strong>From Import:</strong> Importing specific functions from modules</li>
+                    <li><strong>Import Alias:</strong> Using 'as' keyword to give modules custom names</li>
+                    <li><strong>Module Organization:</strong> Grouping related functions in separate files</li>
+                    <li><strong>Error Handling:</strong> Using exceptions in module functions</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># math_operations.py (module file)</span>
+<span class="keyword">def</span> add(a, b):
+    <span class="keyword">return</span> a + b
+
+<span class="keyword">def</span> subtract(a, b):
+    <span class="keyword">return</span> a - b
+
+<span class="keyword">def</span> multiply(a, b):
+    <span class="keyword">return</span> a * b
+
+<span class="keyword">def</span> divide(a, b):
+    <span class="keyword">if</span> b != <span class="number">0</span>:
+        <span class="keyword">return</span> a / b
+    <span class="keyword">else</span>:
+        <span class="keyword">raise</span> ValueError(<span class="string">"Cannot divide by zero"</span>)
+
+<span class="comment"># main.py (using the module)</span>
+<span class="keyword">import</span> math_operations
+
+<span class="keyword">print</span>(math_operations.add(<span class="number">5</span>, <span class="number">3</span>))  <span class="comment"># 8</span>
+<span class="keyword">print</span>(math_operations.multiply(<span class="number">4</span>, <span class="number">6</span>))  <span class="comment"># 24</span>
+
+<span class="comment"># Import specific functions</span>
+<span class="keyword">from</span> math_operations <span class="keyword">import</span> add, subtract
+
+<span class="keyword">print</span>(add(<span class="number">10</span>, <span class="number">5</span>))  <span class="comment"># 15</span>
+<span class="keyword">print</span>(subtract(<span class="number">10</span>, <span class="number">5</span>))  <span class="comment"># 5</span>
+
+<span class="comment"># Import with alias</span>
+<span class="keyword">import</span> math_operations <span class="keyword">as</span> math_ops
+
+<span class="keyword">print</span>(math_ops.divide(<span class="number">15</span>, <span class="number">3</span>))  <span class="comment"># 5.0</span></code></pre>
+                </div>
+                
+                <h4>Expected Output:</h4>
+                <div class="code-box">
+<pre><code>8
+24
+15
+5
+5.0</code></pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>Built-in Modules</h3>
+                <p>This example demonstrates how to use Python's built-in modules for mathematical operations, random number generation, and date/time manipulation.</p>
+                
+                <h4>Built-in Module Concepts:</h4>
+                <ul>
+                    <li><strong>Math Module:</strong> Mathematical constants and functions</li>
+                    <li><strong>Random Module:</strong> Random number generation and sequence manipulation</li>
+                    <li><strong>Datetime Module:</strong> Date and time handling and manipulation</li>
+                    <li><strong>Module Import:</strong> Different ways to import modules and their functions</li>
+                    <li><strong>Constants:</strong> Predefined values like math.pi</li>
+                    <li><strong>Function Usage:</strong> How to call module functions with parameters</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># Math module</span>
+<span class="keyword">import</span> math
+
+<span class="keyword">print</span>(math.pi)  <span class="comment"># 3.141592653589793</span>
+<span class="keyword">print</span>(math.sqrt(<span class="number">16</span>))  <span class="comment"># 4.0</span>
+<span class="keyword">print</span>(math.ceil(<span class="number">3.7</span>))  <span class="comment"># 4</span>
+<span class="keyword">print</span>(math.floor(<span class="number">3.7</span>))  <span class="comment"># 3</span>
+
+<span class="comment"># Random module</span>
+<span class="keyword">import</span> random
+
+<span class="keyword">print</span>(random.randint(<span class="number">1</span>, <span class="number">10</span>))  <span class="comment"># Random integer between 1 and 10</span>
+<span class="keyword">print</span>(random.choice([<span class="string">"apple"</span>, <span class="string">"banana"</span>, <span class="string">"cherry"</span>]))  <span class="comment"># Random choice</span>
+random.shuffle([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])  <span class="comment"># Shuffle list</span>
+
+<span class="comment"># Datetime module</span>
+<span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, timedelta
+
+now = datetime.now()
+<span class="keyword">print</span>(now)  <span class="comment"># Current date and time</span>
+<span class="keyword">print</span>(now.strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>))  <span class="comment"># Formatted date</span>
+
+tomorrow = now + timedelta(days=<span class="number">1</span>)
+<span class="keyword">print</span>(tomorrow)  <span class="comment"># Tomorrow's date</span></code></pre>
+                </div>
+                
+                <h4>Expected Output (Example):</h4>
+                <div class="code-box">
+<pre><code>3.141592653589793
+4.0
+4
+3
+7
+banana
+2024-01-15 14:30:25.123456
+2024-01-15 14:30:25
+2024-01-16 14:30:25.123456</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div id="file-handling" class="section">
+            <h2>9. File Handling</h2>
+
+            <div class="definition-box">
+                <h3>File Operations in Python</h3>
+                <p>Python provides built-in functions and methods to handle files. File handling is an important part of any web application. Python has several functions for creating, reading, updating, and deleting files.</p>
+                
+                <h4>Understanding File Handling:</h4>
+                <p>File handling is the process of working with files stored on a computer's file system. Python provides a simple and efficient way to read from and write to files, making it easy to persist data and work with external files.</p>
+                
+                <h4>File Handling Benefits:</h4>
+                <ul>
+                    <li><strong>Data Persistence:</strong> Store data permanently on disk for later use.</li>
+                    <li><strong>Data Exchange:</strong> Share data between different programs and systems.</li>
+                    <li><strong>Configuration Management:</strong> Store application settings and configurations.</li>
+                    <li><strong>Logging:</strong> Record application events and debugging information.</li>
+                    <li><strong>Data Processing:</strong> Read and process large datasets from files.</li>
+                    <li><strong>Backup and Recovery:</strong> Create backups of important data.</li>
+                </ul>
+
+                <h4>File Operations:</h4>
+                <ul>
+                    <li><strong>Opening Files:</strong> Use the <code>open()</code> function to create a file object.</li>
+                    <li><strong>Reading Files:</strong> Extract data from existing files.</li>
+                    <li><strong>Writing Files:</strong> Create new files or overwrite existing ones.</li>
+                    <li><strong>Appending Files:</strong> Add data to the end of existing files.</li>
+                    <li><strong>Closing Files:</strong> Properly close files to free system resources.</li>
+                    <li><strong>File Positioning:</strong> Move the file pointer to specific positions.</li>
+                </ul>
+
+                <h4>File Access Modes:</h4>
+                <ul>
+                    <li><strong>'r' (Read):</strong> Default mode, opens file for reading only.</li>
+                    <li><strong>'w' (Write):</strong> Opens file for writing, truncates the file if it exists.</li>
+                    <li><strong>'a' (Append):</strong> Opens file for appending, creates file if it doesn't exist.</li>
+                    <li><strong>'x' (Exclusive):</strong> Opens file for exclusive creation, fails if file exists.</li>
+                    <li><strong>'b' (Binary):</strong> Opens file in binary mode (use with 'r', 'w', 'a').</li>
+                    <li><strong>'t' (Text):</strong> Opens file in text mode (default).</li>
+                    <li><strong>'+' (Read/Write):</strong> Opens file for both reading and writing.</li>
+                </ul>
+
+                <h4>File Handling Best Practices:</h4>
+                <ul>
+                    <li><strong>Use Context Managers:</strong> Always use <code>with</code> statements to ensure proper file closure.</li>
+                    <li><strong>Handle Exceptions:</strong> Use try-except blocks to handle file operation errors.</li>
+                    <li><strong>Check File Existence:</strong> Verify files exist before attempting to read them.</li>
+                    <li><strong>Use Appropriate Modes:</strong> Choose the right access mode for your operation.</li>
+                    <li><strong>Close Files Properly:</strong> Always close files when done to free resources.</li>
+                    <li><strong>Use Absolute Paths:</strong> Use absolute paths for production applications.</li>
+                </ul>
+
+                <h4>Common File Formats:</h4>
+                <ul>
+                    <li><strong>Text Files:</strong> Plain text files (.txt, .csv, .json, .xml).</li>
+                    <li><strong>Binary Files:</strong> Files containing non-text data (.jpg, .png, .pdf, .exe).</li>
+                    <li><strong>Structured Files:</strong> Files with specific formats (.csv, .json, .xml).</li>
+                    <li><strong>Configuration Files:</strong> Files containing settings (.ini, .cfg, .yaml).</li>
+                </ul>
+
+                <h4>File System Operations:</h4>
+                <ul>
+                    <li><strong>Directory Operations:</strong> Create, list, and navigate directories.</li>
+                    <li><strong>File Information:</strong> Get file size, modification time, and permissions.</li>
+                    <li><strong>File Movement:</strong> Rename, move, and copy files.</li>
+                    <li><strong>File Deletion:</strong> Remove files and directories.</li>
+                    <li><strong>Path Operations:</strong> Work with file and directory paths.</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h3>Reading Files</h3>
+                <p>This example demonstrates different methods for reading files in Python, including reading entire content, line-by-line processing, and handling different encodings.</p>
+                
+                <h4>File Reading Concepts:</h4>
+                <ul>
+                    <li><strong>Context Manager:</strong> Using 'with' statement for automatic file handling</li>
+                    <li><strong>Read Methods:</strong> read(), readlines(), and line-by-line iteration</li>
+                    <li><strong>File Modes:</strong> 'r' mode for reading files</li>
+                    <li><strong>String Processing:</strong> Using strip() to remove whitespace</li>
+                    <li><strong>Encoding:</strong> Specifying character encoding for proper text handling</li>
+                    <li><strong>Memory Efficiency:</strong> Line-by-line reading for large files</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># Reading a file</span>
+<span class="keyword">with</span> open(<span class="string">"sample.txt"</span>, <span class="string">"r"</span>) <span class="keyword">as</span> file:
+    content = file.read()
+    <span class="keyword">print</span>(content)
+
+<span class="comment"># Reading line by line</span>
+<span class="keyword">with</span> open(<span class="string">"sample.txt"</span>, <span class="string">"r"</span>) <span class="keyword">as</span> file:
+    <span class="keyword">for</span> line <span class="keyword">in</span> file:
+        <span class="keyword">print</span>(line.strip())
+
+<span class="comment"># Reading all lines into a list</span>
+<span class="keyword">with</span> open(<span class="string">"sample.txt"</span>, <span class="string">"r"</span>) <span class="keyword">as</span> file:
+    lines = file.readlines()
+    <span class="keyword">print</span>(lines)
+
+<span class="comment"># Reading with encoding</span>
+<span class="keyword">with</span> open(<span class="string">"sample.txt"</span>, <span class="string">"r"</span>, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> file:
+    content = file.read()</code></pre>
+                </div>
+                
+                <h4>Expected Output (if sample.txt contains "Hello\nWorld\nPython"):</h4>
+                <div class="code-box">
+<pre><code>Hello
+World
+Python
+Hello
+World
+Python
+['Hello\n', 'World\n', 'Python\n']</code></pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>Writing Files</h3>
+                <p>This example demonstrates different methods for writing to files in Python, including writing, appending, and error handling for file operations.</p>
+                
+                <h4>File Writing Concepts:</h4>
+                <ul>
+                    <li><strong>Write Mode ('w'):</strong> Overwrites existing file content</li>
+                    <li><strong>Append Mode ('a'):</strong> Adds content to end of existing file</li>
+                    <li><strong>Write Methods:</strong> write() for single strings, writelines() for multiple lines</li>
+                    <li><strong>Error Handling:</strong> Using try-except blocks for file operations</li>
+                    <li><strong>Context Manager:</strong> Automatic file closing with 'with' statement</li>
+                    <li><strong>Newline Characters:</strong> Using \n for line breaks in files</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># Writing to a file (overwrites existing content)</span>
+<span class="keyword">with</span> open(<span class="string">"output.txt"</span>, <span class="string">"w"</span>) <span class="keyword">as</span> file:
+    file.write(<span class="string">"Hello, World!\n"</span>)
+    file.write(<span class="string">"This is a new line.\n"</span>)
+
+<span class="comment"># Appending to a file</span>
+<span class="keyword">with</span> open(<span class="string">"output.txt"</span>, <span class="string">"a"</span>) <span class="keyword">as</span> file:
+    file.write(<span class="string">"This line is appended.\n"</span>)
+
+<span class="comment"># Writing multiple lines</span>
+lines = [<span class="string">"Line 1\n"</span>, <span class="string">"Line 2\n"</span>, <span class="string">"Line 3\n"</span>]
+<span class="keyword">with</span> open(<span class="string">"output.txt"</span>, <span class="string">"w"</span>) <span class="keyword">as</span> file:
+    file.writelines(lines)
+
+<span class="comment"># Writing with context manager</span>
+<span class="keyword">try</span>:
+    <span class="keyword">with</span> open(<span class="string">"data.txt"</span>, <span class="string">"w"</span>) <span class="keyword">as</span> file:
+        file.write(<span class="string">"Some data"</span>)
+<span class="keyword">except</span> IOError <span class="keyword">as</span> e:
+    <span class="keyword">print</span>(<span class="string">f"Error writing file: {e}"</span>)</code></pre>
+                </div>
+                
+                <h4>File Content After Operations:</h4>
+                <div class="code-box">
+<pre><code># After first write operation:
+Hello, World!
+This is a new line.
+
+# After append operation:
+Hello, World!
+This is a new line.
+This line is appended.
+
+# After writelines operation:
+Line 1
+Line 2
+Line 3</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div id="exceptions" class="section">
+            <h2>10. Exception Handling</h2>
+
+            <div class="definition-box">
+                <h3>Exception Handling in Python</h3>
+                <p>Exceptions are events that occur during the execution of a program that disrupt the normal flow of the program's instructions. Python provides a way to handle these exceptions using try-except blocks, allowing the program to continue running even when errors occur.</p>
+                
+                <h4>Understanding Exceptions:</h4>
+                <p>Exceptions are Python's way of handling errors and exceptional situations that occur during program execution. They provide a mechanism to detect and respond to errors gracefully, preventing program crashes and allowing for proper error recovery.</p>
+                
+                <h4>Exception Handling Benefits:</h4>
+                <ul>
+                    <li><strong>Program Stability:</strong> Prevents programs from crashing due to unexpected errors.</li>
+                    <li><strong>Error Recovery:</strong> Allows programs to recover from errors and continue execution.</li>
+                    <li><strong>User Experience:</strong> Provides meaningful error messages to users instead of crashes.</li>
+                    <li><strong>Debugging:</strong> Helps identify and locate the source of problems.</li>
+                    <li><strong>Resource Management:</strong> Ensures proper cleanup of resources even when errors occur.</li>
+                    <li><strong>Robust Code:</strong> Makes code more reliable and maintainable.</li>
+                </ul>
+
+                <h4>Types of Exceptions:</h4>
+                <ul>
+                    <li><strong>Built-in Exceptions:</strong> Pre-defined exceptions that Python raises for common errors.</li>
+                    <li><strong>Custom Exceptions:</strong> User-defined exceptions for specific application needs.</li>
+                    <li><strong>System Exceptions:</strong> Exceptions raised by the Python interpreter or system.</li>
+                    <li><strong>Application Exceptions:</strong> Exceptions specific to your application's domain.</li>
+                </ul>
+
+                <h4>Common Built-in Exceptions:</h4>
+                <ul>
+                    <li><strong>ValueError:</strong> Raised when a function receives an argument of the correct type but inappropriate value.</li>
+                    <li><strong>TypeError:</strong> Raised when an operation is performed on an inappropriate type.</li>
+                    <li><strong>IndexError:</strong> Raised when a sequence subscript is out of range.</li>
+                    <li><strong>KeyError:</strong> Raised when a dictionary key is not found.</li>
+                    <li><strong>FileNotFoundError:</strong> Raised when a file or directory is requested but cannot be found.</li>
+                    <li><strong>ZeroDivisionError:</strong> Raised when division or modulo by zero is encountered.</li>
+                    <li><strong>AttributeError:</strong> Raised when attribute reference or assignment fails.</li>
+                    <li><strong>ImportError:</strong> Raised when an import statement fails.</li>
+                </ul>
+
+                <h4>Exception Handling Mechanisms:</h4>
+                <ul>
+                    <li><strong>Try-Except Blocks:</strong> The primary mechanism for catching and handling exceptions.</li>
+                    <li><strong>Try-Except-Else:</strong> Execute code only if no exception occurs.</li>
+                    <li><strong>Try-Except-Finally:</strong> Execute cleanup code regardless of whether an exception occurs.</li>
+                    <li><strong>Try-Except-Else-Finally:</strong> Combine all exception handling features.</li>
+                    <li><strong>Raise Statement:</strong> Manually raise exceptions when needed.</li>
+                    <li><strong>Assert Statement:</strong> Raise AssertionError if a condition is false.</li>
+                </ul>
+
+                <h4>Exception Handling Best Practices:</h4>
+                <ul>
+                    <li><strong>Be Specific:</strong> Catch specific exceptions rather than using bare except clauses.</li>
+                    <li><strong>Handle Locally:</strong> Handle exceptions at the appropriate level in your code.</li>
+                    <li><strong>Clean Up Resources:</strong> Use finally blocks to ensure proper resource cleanup.</li>
+                    <li><strong>Log Exceptions:</strong> Log exception details for debugging purposes.</li>
+                    <li><strong>Don't Suppress:</strong> Avoid silently ignoring exceptions unless absolutely necessary.</li>
+                    <li><strong>Provide Context:</strong> Include relevant information in error messages.</li>
+                    <li><strong>Use Custom Exceptions:</strong> Create domain-specific exceptions for your application.</li>
+                </ul>
+
+                <h4>Exception Hierarchy:</h4>
+                <p>Python exceptions form a hierarchy, with more specific exceptions inheriting from more general ones:</p>
+                <ul>
+                    <li><strong>BaseException:</strong> The root class for all exceptions.</li>
+                    <li><strong>Exception:</strong> Base class for all built-in exceptions.</li>
+                    <li><strong>SystemExit:</strong> Raised when sys.exit() is called.</li>
+                    <li><strong>KeyboardInterrupt:</strong> Raised when the user interrupts the program.</li>
+                    <li><strong>GeneratorExit:</strong> Raised when a generator is closed.</li>
+                </ul>
+
+                <h4>Context Managers and Exceptions:</h4>
+                <ul>
+                    <li><strong>With Statement:</strong> Automatically handles exceptions and resource cleanup.</li>
+                    <li><strong>Context Manager Protocol:</strong> Objects that support the with statement.</li>
+                    <li><strong>Custom Context Managers:</strong> Create your own context managers for specific needs.</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h3>Basic Exception Handling</h3>
+                <p>This example demonstrates basic exception handling in Python using try-except blocks to catch and handle different types of errors gracefully.</p>
+                
+                <h4>Exception Handling Concepts:</h4>
+                <ul>
+                    <li><strong>Try-Except Block:</strong> Basic structure for catching exceptions</li>
+                    <li><strong>Specific Exceptions:</strong> Catching specific exception types (ValueError, ZeroDivisionError)</li>
+                    <li><strong>Multiple Except Blocks:</strong> Handling different types of exceptions separately</li>
+                    <li><strong>General Exception:</strong> Catching all exceptions with Exception class</li>
+                    <li><strong>Exception Variables:</strong> Using 'as' to capture exception details</li>
+                    <li><strong>Error Prevention:</strong> Preventing program crashes with proper error handling</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># Basic try-except block</span>
+<span class="keyword">try</span>:
+    number = int(<span class="string">"abc"</span>)
+<span class="keyword">except</span> ValueError:
+    <span class="keyword">print</span>(<span class="string">"Invalid number format"</span>)
+
+<span class="comment"># Multiple except blocks</span>
+<span class="keyword">try</span>:
+    result = <span class="number">10</span> / <span class="number">0</span>
+<span class="keyword">except</span> ZeroDivisionError:
+    <span class="keyword">print</span>(<span class="string">"Cannot divide by zero"</span>)
+<span class="keyword">except</span> TypeError:
+    <span class="keyword">print</span>(<span class="string">"Invalid type for operation"</span>)
+
+<span class="comment"># Catching all exceptions</span>
+<span class="keyword">try</span>:
+    <span class="comment"># Some risky operation</span>
+    pass
+<span class="keyword">except</span> Exception <span class="keyword">as</span> e:
+    <span class="keyword">print</span>(<span class="string">f"An error occurred: {e}"</span>)</code></pre>
+                </div>
+                
+                <h4>Expected Output:</h4>
+                <div class="code-box">
+<pre><code>Invalid number format
+Cannot divide by zero</code></pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>Advanced Exception Handling</h3>
+                <p>This example demonstrates advanced exception handling techniques including try-except-else-finally blocks, raising exceptions, and creating custom exception classes.</p>
+                
+                <h4>Advanced Exception Concepts:</h4>
+                <ul>
+                    <li><strong>Try-Except-Else-Finally:</strong> Complete exception handling structure</li>
+                    <li><strong>Else Block:</strong> Executes only when no exception occurs</li>
+                    <li><strong>Finally Block:</strong> Always executes regardless of exceptions</li>
+                    <li><strong>Raising Exceptions:</strong> Manually triggering exceptions with raise</li>
+                    <li><strong>Custom Exceptions:</strong> Creating user-defined exception classes</li>
+                    <li><strong>Exception Inheritance:</strong> Custom exceptions inheriting from Exception</li>
+                </ul>
+                
+                <div class="code-box">
+<pre><code><span class="comment"># Try-except-else-finally</span>
+<span class="keyword">try</span>:
+    number = int(<span class="string">"123"</span>)
+<span class="keyword">except</span> ValueError:
+    <span class="keyword">print</span>(<span class="string">"Invalid number"</span>)
+<span class="keyword">else</span>:
+    <span class="keyword">print</span>(<span class="string">f"Successfully converted: {number}"</span>)
+<span class="keyword">finally</span>:
+    <span class="keyword">print</span>(<span class="string">"This always executes"</span>)
+
+<span class="comment"># Raising exceptions</span>
+<span class="keyword">def</span> divide_numbers(a, b):
+    <span class="keyword">if</span> b == <span class="number">0</span>:
+        <span class="keyword">raise</span> ValueError(<span class="string">"Cannot divide by zero"</span>)
+    <span class="keyword">return</span> a / b
+
+<span class="keyword">try</span>:
+    result = divide_numbers(<span class="number">10</span>, <span class="number">0</span>)
+<span class="keyword">except</span> ValueError <span class="keyword">as</span> e:
+    <span class="keyword">print</span>(e)  <span class="comment"># Cannot divide by zero</span>
+
+<span class="comment"># Custom exceptions</span>
+<span class="keyword">class</span> <span class="class">CustomError</span>(Exception):
+    <span class="keyword">def</span> __init__(self, message):
+        self.message = message
+        super().__init__(self.message)
+
+<span class="keyword">try</span>:
+    <span class="keyword">raise</span> CustomError(<span class="string">"This is a custom error"</span>)
+<span class="keyword">except</span> CustomError <span class="keyword">as</span> e:
+    <span class="keyword">print</span>(e.message)</code></pre>
+                </div>
+                
+                <h4>Expected Output:</h4>
+                <div class="code-box">
+<pre><code>Successfully converted: 123
+This always executes
+Cannot divide by zero
+This is a custom error</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div id="practice" class="section">
+            <h2>11. Practice Problems</h2>
+
+            <div class="practice-section">
+                <h3>Problem 1: Find the Maximum Number</h3>
+                <p>Write a function that finds the maximum number in a list without using the built-in max() function.</p>
+                
+                <div class="solution-box">
+                    <h4>Solution:</h4>
+                    <div class="code-box">
+<pre><code><span class="keyword">def</span> find_max(numbers):
+    <span class="keyword">if</span> <span class="keyword">not</span> numbers:
+        <span class="keyword">return</span> <span class="keyword">None</span>
+    
+    max_num = numbers[<span class="number">0</span>]
+    <span class="keyword">for</span> num <span class="keyword">in</span> numbers[<span class="number">1</span>:]:
+        <span class="keyword">if</span> num > max_num:
+            max_num = num
+    
+    <span class="keyword">return</span> max_num
+
+<span class="comment"># Test</span>
+numbers = [<span class="number">3</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="number">1</span>, <span class="number">5</span>]
+<span class="keyword">print</span>(find_max(numbers))  <span class="comment"># 9</span></code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-section">
+                <h3>Problem 2: Reverse a String</h3>
+                <p>Write a function to reverse a string without using the built-in reverse() method.</p>
+                
+                <div class="solution-box">
+                    <h4>Solution:</h4>
+                    <div class="code-box">
+<pre><code><span class="keyword">def</span> reverse_string(text):
+    reversed_text = <span class="string">""</span>
+    <span class="keyword">for</span> char <span class="keyword">in</span> text:
+        reversed_text = char + reversed_text
+    <span class="keyword">return</span> reversed_text
+
+<span class="comment"># Alternative solution using slicing</span>
+<span class="keyword">def</span> reverse_string_slice(text):
+    <span class="keyword">return</span> text[::-<span class="number">1</span>]
+
+<span class="comment"># Test</span>
+text = <span class="string">"Hello, World!"</span>
+<span class="keyword">print</span>(reverse_string(text))  <span class="comment"># !dlroW ,olleH</span>
+<span class="keyword">print</span>(reverse_string_slice(text))  <span class="comment"># !dlroW ,olleH</span></code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-section">
+                <h3>Problem 3: Check Palindrome</h3>
+                <p>Write a function to check if a string is a palindrome (reads the same forwards and backwards).</p>
+                
+                <div class="solution-box">
+                    <h4>Solution:</h4>
+                    <div class="code-box">
+<pre><code><span class="keyword">def</span> is_palindrome(text):
+    <span class="comment"># Remove spaces and convert to lowercase</span>
+    cleaned_text = <span class="string">""</span>.join(text.lower().split())
+    <span class="keyword">return</span> cleaned_text == cleaned_text[::-<span class="number">1</span>]
+
+<span class="comment"># Test</span>
+<span class="keyword">print</span>(is_palindrome(<span class="string">"racecar"</span>))  <span class="comment"># True</span>
+<span class="keyword">print</span>(is_palindrome(<span class="string">"A man a plan a canal Panama"</span>))  <span class="comment"># True</span>
+<span class="keyword">print</span>(is_palindrome(<span class="string">"hello"</span>))  <span class="comment"># False</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="resources" class="section">
+            <h2>12. Resources and References</h2>
+
+            <div class="resources-section">
+                <h3>Official Documentation</h3>
+                <ul>
+                    <li><a href="https://docs.python.org/3/" target="_blank">Python Official Documentation</a></li>
+                    <li><a href="https://docs.python.org/3/tutorial/" target="_blank">Python Tutorial</a></li>
+                    <li><a href="https://peps.python.org/" target="_blank">Python Enhancement Proposals (PEPs)</a></li>
+                </ul>
+            </div>
+
+            <div class="resources-section">
+                <h3>Recommended Books</h3>
+                <ul>
+                    <li>"Python Crash Course" by Eric Matthes</li>
+                    <li>"Automate the Boring Stuff with Python" by Al Sweigart</li>
+                    <li>"Fluent Python" by Luciano Ramalho</li>
+                    <li>"Effective Python" by Brett Slatkin</li>
+                </ul>
+            </div>
+
+            <div class="resources-section">
+                <h3>Online Learning Platforms</h3>
+                <ul>
+                    <li><a href="https://www.codecademy.com/learn/learn-python-3" target="_blank">Codecademy Python Course</a></li>
+                    <li><a href="https://www.udemy.com/topic/python/" target="_blank">Udemy Python Courses</a></li>
+                    <li><a href="https://www.coursera.org/courses?query=python" target="_blank">Coursera Python Courses</a></li>
+                    <li><a href="https://www.freecodecamp.org/learn/scientific-computing-with-python/" target="_blank">freeCodeCamp Python Course</a></li>
+                </ul>
+            </div>
+
+            <div class="resources-section">
+                <h3>Practice Platforms</h3>
+                <ul>
+                    <li><a href="https://leetcode.com/" target="_blank">LeetCode</a></li>
+                    <li><a href="https://www.hackerrank.com/domains/python" target="_blank">HackerRank Python</a></li>
+                    <li><a href="https://www.codewars.com/" target="_blank">Codewars</a></li>
+                    <li><a href="https://exercism.org/tracks/python" target="_blank">Exercism Python Track</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <button class="btn" onclick="downloadPDF()">📥 Download PDF</button>
+            <button class="btn btn-secondary" onclick="window.print()">🖨️ Print</button>
+            <button class="btn btn-success" onclick="testPDF()">🧪 Test PDF</button>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 PrepCampus. All rights reserved.</p>
+            <p>Python Programming Guide - Complete Reference</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        function downloadPDF() {
+            const element = document.querySelector('.container');
+            const opt = {
+                margin: 1,
+                filename: 'python-programming-guide.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save().catch(err => {
+                console.error('PDF generation failed:', err);
+                alert('PDF generation failed. Please try again or use the print option.');
+            });
+        }
+
+        function testPDF() {
+            const element = document.querySelector('.container');
+            const opt = {
+                margin: 1,
+                filename: 'python-test.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                alert('PDF test successful! Check your downloads folder.');
+            }).catch(err => {
+                console.error('PDF test failed:', err);
+                alert('PDF test failed. Please check console for details.');
+            });
+        }
+
+        // Keyboard shortcut for PDF download (Ctrl+D)
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'd') {
+                e.preventDefault();
+                downloadPDF();
+            }
+        });
+    </script>
+</body>
+</html>

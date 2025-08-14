@@ -1,0 +1,928 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PrepCampus — IT Fresher Interview Guide</title>
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --accent-1:#154360;   /* deep blue */
+      --accent-2:#117864;   /* teal */
+      --accent-3:#6C3483;   /* purple */
+      --muted:#6b7280;
+      --card:#ffffff;
+      --bg:#f6fbff;
+      --tip-bg:#e8f8f5;
+      --gold:#D4AF37;
+      --max-width:900px;
+    }
+
+    html,body{
+      margin:0;
+      padding:0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,var(--bg), #ffffff 40%);
+      color:#111827;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .container{
+      max-width:var(--max-width);
+      margin:2px auto;
+      padding:2px;
+    }
+
+    header.brand{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      margin-bottom:18px;
+    }
+
+    header.brand img{
+      width:120px;
+      height:120px;
+      object-fit:contain;
+      border-radius:16px;
+      box-shadow:0 6px 18px rgba(21,67,96,0.12);
+      background:linear-gradient(135deg, rgba(212,175,55,0.08), rgba(17,120,100,0.03));
+      padding:8px;
+    }
+
+    header .title{
+      display:block;
+    }
+
+    header h1{
+      font-size:28px;
+      margin:0;
+      color:var(--accent-1);
+      letter-spacing:0.2px;
+    }
+
+    header p.lead{
+      margin:6px 0 0 0;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .meta{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-top:12px;
+      margin-bottom:20px;
+    }
+
+    .toc{
+      background:linear-gradient(90deg, rgba(21,67,96,0.03), transparent);
+      border-left:6px solid var(--accent-2);
+      padding:12px;
+      border-radius:8px;
+      margin-bottom:18px;
+    }
+
+    .page{
+      background:var(--card);
+      border-radius:12px;
+      padding:10px;
+      margin-bottom:10px;
+      box-shadow: 0 8px 20px rgba(12, 36, 63, 0.06);
+      /* Ensure page breaks for print */
+      page-break-inside: avoid;
+      page-break-after: always;
+    }
+
+    .q-head{
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+      margin-bottom:12px;
+    }
+
+    .q-number{
+      min-width:54px;
+      height:54px;
+      background:linear-gradient(135deg,var(--accent-3),var(--accent-1));
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      font-size:18px;
+      border-radius:10px;
+      box-shadow:0 6px 18px rgba(108,52,131,0.12);
+    }
+
+    .q-title{
+      margin:0;
+      font-size:18px;
+      color:var(--accent-3);
+      font-weight:600;
+    }
+
+    .section{
+      margin-top:10px;
+      line-height:1.55;
+    }
+
+    .label{
+      display:inline-block;
+      font-weight:600;
+      color:var(--accent-1);
+      margin-bottom:6px;
+      font-size:13px;
+    }
+
+    p.small{
+      margin:6px 0 12px 0;
+      font-size:13px;
+      color:#1f2937;
+    }
+
+    .example{
+      background: linear-gradient(90deg, rgba(17,120,100,0.03), rgba(108,52,131,0.02));
+      border-left:4px solid var(--accent-2);
+      padding:10px 12px;
+      border-radius:8px;
+      font-size:13px;
+      color:#0b3b35;
+      margin-bottom:12px;
+    }
+
+    .tips{
+      background:var(--tip-bg);
+      border-radius:8px;
+      padding:10px 12px;
+      font-size:13px;
+      color:var(--accent-2);
+      line-height:1.5;
+      margin-top:8px;
+    }
+
+    footer.note{
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+      margin-top:18px;
+      padding-top:6px;
+      border-top:1px dashed rgba(16,24,40,0.04);
+    }
+
+    /* Print styling: enhanced for better PDF output */
+    @media print{
+      body{ 
+        background:white; 
+        margin: 0;
+        padding: 0;
+      }
+      
+      .container{ 
+        margin: 0; 
+        padding: 8mm 5mm; /* Reduced left/right padding from 12mm to 5mm */
+        max-width: none; 
+      }
+      
+      header.brand img{ 
+        width:80px; /* Slightly smaller for better fit */
+        height:80px; 
+      }
+      
+      .page{ 
+        box-shadow:none; 
+        border-radius:0; 
+        padding: 8mm 6mm; /* Reduced from 14mm padding */
+        margin-bottom: 8mm; /* Reduced from 28mm to 8mm for less space between pages */
+        page-break-inside: avoid;
+        page-break-after: always;
+        border-bottom: 1px solid #eee; /* Subtle separator */
+      }
+      
+      .meta, .toc { 
+        page-break-inside: avoid; 
+      }
+      
+      /* Optimize page usage */
+      @page { 
+        size: A4; 
+        margin: 8mm 5mm; /* Reduced margins from 12mm */
+      }
+      
+      /* Ensure content fits well */
+      .q-head {
+        margin-bottom: 8mm;
+      }
+      
+      .section {
+        margin-top: 6mm;
+      }
+      
+      /* Reduce excessive spacing in print */
+
+    /* small screens */
+    @media (max-width:640px){
+      .container{ padding:16px; }
+      header h1{ font-size:20px; }
+      .q-title{ font-size:16px; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="brand">
+      <!-- Replace the image path below with your logo file path if different -->
+      <img src="mylogo.png" alt="PrepCampus logo">
+      <div class="title">
+        <h1>PrepCampus</h1>
+        <p class="lead">IT Fresher Interview Guide — Top 30 Questions with tailored IT-focused answers & tips</p>
+        <div class="meta">
+          <div style="color:var(--muted);font-size:13px">Prepared for IT Freshers • B.Tech / BCA / MCA • Updated: 2025</div>
+          <div style="font-weight:600;color:var(--muted);font-size:13px">PrepCampus • Interview Masterclass</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="toc">
+      <strong style="color:var(--accent-1)">Contents</strong>
+      <div style="margin-top:8px;font-size:13px;color:var(--muted)">
+        1. Tell me about yourself.<br/> &nbsp; &nbsp; 2. Why do you want to work for our company? &nbsp; &nbsp; 3. What are your strengths? <br>
+        4. What are your weaknesses? &nbsp; 5. Where do you see yourself in 5 years? &nbsp; 6. Why should we hire you? <br>
+        7. Tell me about a challenge you faced... &nbsp; 8. Describe a time you worked in a team. &nbsp; 9. How do you handle pressure? <br>
+        10. What do you know about our products/services? &nbsp; 11. Are you willing to relocate? &nbsp; 12. What motivates you? <br>
+        13. Describe your ideal work environment. &nbsp; 14. How do you prioritize tasks? &nbsp; 15. Give an example of leadership. <br>
+        16. What is your greatest achievement? &nbsp; 17. How do you handle criticism? &nbsp; 18. Tell me about a time you failed. <br>
+        19. What do you know about our competitors? &nbsp; 20. How do you stay updated in your field? &nbsp; 21. Why choose your field? <br>
+        22. How do you manage deadlines? &nbsp; 23. Salary expectations? &nbsp; 24. Preferred working style? <br>
+        25. Describe going above & beyond. &nbsp; 26. Hobbies? &nbsp; 27. Adapting to new technologies? <br>
+        28. Alone or team? &nbsp; 29. Dealing with conflicts? &nbsp; 30. Any questions for us?
+      </div>
+    </div>
+
+    <!-- Repeated pages for each question. -->
+    <!-- For printing each .page will become a distinct block with space between pages. -->
+    <!-- 1 -->
+    <section class="page" id="q1">
+      <div class="q-head">
+        <div class="q-number">1</div>
+        <div>
+          <h3 class="q-title">Tell me about yourself.</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Give a 60–90 second summary focusing on your education, key IT projects, internships, and what you want to do next.</p>
+
+            <div class="label">Detailed Answer</div>
+            <p class="small">Start with your current academic status (degree, college), mention 1–2 technical projects (what you built, tech stack, outcome), any internship or part-time role (what you learned), and end with what you want to contribute to the role (example: build scalable backend services or improve frontend UX).</p>
+
+            <div class="label">Example</div>
+            <div class="example">“I’m a final-year B.Tech CSE student from XYZ University. My final-year project was a realtime chat app using React, Node.js, and WebSocket which supported 200+ concurrent users. I interned at ABC where I wrote automation scripts in Python to reduce manual testing effort by 40%. I’m excited to apply my full-stack and automation skills to entry-level engineering challenges.”</div>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Mention measurable project outcomes (users, speedups, reduced bugs).<br>
+              • Name exact technologies (React/Node/Mongo/Python).<br>
+              • Keep it under 90 seconds — practice and record yourself.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="page" id="q2">
+      <div class="q-head">
+        <div class="q-number">2</div>
+        <div>
+          <h3 class="q-title">Why do you want to work for our company?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Show company-specific research + a match between your skills/values and the role.</p>
+
+            <div class="label">Detailed Answer</div>
+            <p class="small">Mention one or two things about the company — product, culture, recent initiative — and connect them to your background. Example: interest in their cloud offerings because you built cloud-hosted projects or took related courses.</p>
+
+            <div class="label">Example</div>
+            <div class="example">“I admire [Company]'s focus on developer tools. During my internship I worked on API design and I’m excited to work at a company building scalable APIs where I can apply and learn modern cloud practices.”</div>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Reference a specific product, blog post, or tech stack used by the company.<br>
+              • Explain how your recent project/internship prepared you to contribute.<br>
+              • Avoid generic praise — be specific and factual.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="page" id="q3">
+      <div class="q-head">
+        <div class="q-number">3</div>
+        <div>
+          <h3 class="q-title">What are your strengths?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Pick 2–3 strengths relevant to IT (problem-solving, debugging, quick learner) and back them with short examples.</p>
+
+            <div class="label">Detailed Answer</div>
+            <p class="small">Explain each strength briefly and attach an example (project/internship/hackathon). For example, “problem-solving — used algorithms to optimize search time by X%” or “teamwork — led 3-person project using agile sprints.”</p>
+
+            <div class="label">Example</div>
+            <div class="example">“I’m strong at debugging and optimization — I reduced query time in my project by indexing DB columns and caching responses, improving latency by 2×.”</div>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Use tech-specific evidence: frameworks, performance gains, PRs merged.<br>
+              • Avoid one-word answers — show the context and impact.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="page" id="q4">
+      <div class="q-head">
+        <div class="q-number">4</div>
+        <div>
+          <h3 class="q-title">What are your weaknesses?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Pick a real (non-critical) weakness and show steps you took to improve it.</p>
+
+            <div class="label">Detailed Answer</div>
+            <p class="small">Example: “I used to avoid detailed documentation. I now allocate time each sprint to write clear README and API docs and use inline comments to help teammates.” This shows growth and responsibility.</p>
+
+            <div class="label">Example</div>
+            <div class="example">“Weakness: I was uncomfortable with public speaking. Action: I joined college tech clubs and presented twice; now I can demo projects confidently.”</div>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Don’t say something essential to the job (e.g., “I’m bad at coding”).<br>
+              • Show measurable improvement or a concrete plan to improve.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="page" id="q5">
+      <div class="q-head">
+        <div class="q-number">5</div>
+        <div>
+          <h3 class="q-title">Where do you see yourself in 5 years?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Show realistic growth: technical contributor → senior / specialist → mentor; align with company career paths.</p>
+
+            <div class="label">Detailed Answer</div>
+            <p class="small">Mention learning goals (cloud certifications, full-stack mastery, domain expertise). Express willingness to grow into roles that add more ownership (lead developer, tech lead).</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Be specific but flexible: mention technologies and roles you want to master.<br>
+              • Avoid overly-ambitious titles (CEO) — show a growth mindset instead.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="page" id="q6">
+      <div class="q-head">
+        <div class="q-number">6</div>
+        <div>
+          <h3 class="q-title">Why should we hire you?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Summarize top skills, projects, and eagerness to learn — tailored to the job description.</p>
+
+            <div class="label">Detailed Answer</div>
+            <p class="small">Mention 2–3 strengths that match the role; give a quick project that shows you delivered results. Emphasize culture fit and coachability.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Mirror keywords from the job description (e.g., REST APIs, React, unit tests).<br>
+              • Use a recent project/internship as proof of capability.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="page" id="q7">
+      <div class="q-head">
+        <div class="q-number">7</div>
+        <div>
+          <h3 class="q-title">Tell me about a challenge you faced and how you overcame it.</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Describe the technical challenge, your specific actions, and measurable outcome.</p>
+
+            <div class="label">Detailed Answer</div>
+            <p class="small">E.g., debugging a memory leak in a Java app: how you profiled, identified the leak, fixed resource handling, and validated the fix with load tests.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Focus on steps you personally owned and the technical tools used (profilers, logs, tests).<br>
+              • Quantify impact (reduced crashes, improved CPU/memory usage).<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="page" id="q8">
+      <div class="q-head">
+        <div class="q-number">8</div>
+        <div>
+          <h3 class="q-title">Describe a time you worked in a team.</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Explain your role, how you collaborated, and the result.</p>
+
+            <div class="label">Detailed Answer</div>
+            <p class="small">Mention communication tools (Git, Jira, Slack), how you split tasks, resolved conflicts, and integrated code (PRs, code reviews) to deliver the project.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Focus on concrete collaboration actions: code reviews, CI pipeline set-up, testing responsibilities.<br>
+              • Explain any mentorship or leadership you provided, even informally.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section class="page" id="q9">
+      <div class="q-head">
+        <div class="q-number">9</div>
+        <div>
+          <h3 class="q-title">How do you handle pressure?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Describe organization and prioritization techniques and give an example of delivering under a deadline.</p>
+
+            <div class="label">Detailed Answer</div>
+            <p class="small">Use examples such as triaging bugs, creating small deliverables, using version control to keep work safe, and communicating timelines to stakeholders.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Mention task breakdown, timeboxing, and automated tests to reduce risk.<br>
+              • Demonstrate calm, methodical problem solving in the example.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section class="page" id="q10">
+      <div class="q-head">
+        <div class="q-number">10</div>
+        <div>
+          <h3 class="q-title">What do you know about our products/services?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Mention core product lines, target customers, and a technical detail if possible (APIs, platform, stack).</p>
+
+            <div class="label">Detailed Answer</div>
+            <p class="small">Show you researched: cite a product/feature, public blog, or GitHub repo. Relate it to your skills (e.g., “You use Kubernetes; I completed a mini-project deploying services to k8s”).</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Check company blog, careers page, and product docs.<br>
+              • If possible, try a demo or signup to experience the product firsthand.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section class="page" id="q11">
+      <div class="q-head">
+        <div class="q-number">11</div>
+        <div>
+          <h3 class="q-title">Are you willing to relocate?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Be honest; if yes, show flexibility; if not, explain constraints.</p>
+
+            <div class="label">Detailed Answer</div>
+            <p class="small">If willing, mention timeline and willingness to manage logistics. If remote-first, ask about hybrid opportunities and relocation support.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • If unsure, ask about remote/hybrid roles and relocation assistance.<br>
+              • Keep the answer crisp — logistical details can be discussed later.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12 -->
+    <section class="page" id="q12">
+      <div class="q-head">
+        <div class="q-number">12</div>
+        <div>
+          <h3 class="q-title">What motivates you?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Frame motivation around learning, solving technical problems, and building impact for users.</p>
+
+            <div class="label">Detailed Answer</div>
+            <p class="small">Give examples: debugging tricky issues, improving performance, shipping a feature that users love, or learning new frameworks/certifications.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Tie motivation to day-to-day tasks relevant to the role (coding, design, testing).<br>
+              • Avoid cliched answers — personalize with a recent example of what drove you.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13 -->
+    <section class="page" id="q13">
+      <div class="q-head">
+        <div class="q-number">13</div>
+        <div>
+          <h3 class="q-title">Describe your ideal work environment.</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Mention collaboration, mentorship, clear processes, and focus on learning.</p>
+
+            <div class="label">Detailed Answer</div>
+            <p class="small">Example: small cross-functional teams, code reviews, CI/CD pipelines, and frequent feedback cycles that help you learn and ship code safely.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Align your answer with signals in the company's culture (startup vs enterprise).<br>
+              • Show eagerness for mentorship and growth opportunities.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14 -->
+    <section class="page" id="q14">
+      <div class="q-head">
+        <div class="q-number">14</div>
+        <div>
+          <h3 class="q-title">How do you prioritize tasks?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Use impact vs effort, deadlines, and stakeholder needs to prioritize tasks.</p>
+
+            <div class="label">Detailed Answer</div>
+            <p class="small">Explain simple techniques: create a task list, estimate effort, pick high-impact tasks first, and keep teammates updated. Use tools like Trello/Jira and small iterations.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Mention any agile practice you used (sprints, standups).<br>
+              • Emphasize communication when priorities change.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15 -->
+    <section class="page" id="q15">
+      <div class="q-head">
+        <div class="q-number">15</div>
+        <div>
+          <h3 class="q-title">Give an example of a time you showed leadership.</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Leadership can be informal: leading a mini-team, organizing sprints, or mentoring juniors.</p>
+
+            <div class="label">Detailed Answer</div>
+            <p class="small">Describe the situation, your actions (delegation, planning, review), and positive outcomes (on-time delivery, improved code quality).</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Use project examples where you coordinated work, set deadlines, or led demos.<br>
+              • Highlight soft skills alongside technical contributions.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16 -->
+    <section class="page" id="q16">
+      <div class="q-head">
+        <div class="q-number">16</div>
+        <div>
+          <h3 class="q-title">What is your greatest achievement?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Pick an achievement that demonstrates technical skill and impact.</p>
+
+            <div class="label">Detailed Answer</div>
+            <p class="small">Describe the problem, your role, technologies used, and measurable result (performance gains, user adoption, awards, hackathon wins).</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Prefer outcomes with numbers (users, speed improvements, etc.).<br>
+              • Link how this achievement prepares you for the role.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17 -->
+    <section class="page" id="q17">
+      <div class="q-head">
+        <div class="q-number">17</div>
+        <div>
+          <h3 class="q-title">How do you handle criticism?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Accept feedback, analyze it, and apply improvements; show example of change after feedback.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Give an example where code reviews improved your code.<br>
+              • Demonstrate openness to learning and iteration.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 18 -->
+    <section class="page" id="q18">
+      <div class="q-head">
+        <div class="q-number">18</div>
+        <div>
+          <h3 class="q-title">Tell me about a time you failed.</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Be honest, explain learnings and how you avoided repeat mistakes.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Choose a failure in process or scope, not integrity. Show concrete steps you took to improve.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 19 -->
+    <section class="page" id="q19">
+      <div class="q-head">
+        <div class="q-number">19</div>
+        <div>
+          <h3 class="q-title">What do you know about our competitors?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Show awareness of the landscape and where the company stands technically or in product features.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Focus on product/technical differentiators rather than opinions.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 20 -->
+    <section class="page" id="q20">
+      <div class="q-head">
+        <div class="q-number">20</div>
+        <div>
+          <h3 class="q-title">How do you stay updated in your field?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Mention blogs, newsletters, GitHub, courses, coding practice, and meetups.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Mention specifics: Hacker News, freeCodeCamp, MDN, Coursera, GitHub stars, weekly coding on LeetCode.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 21 -->
+    <section class="page" id="q21">
+      <div class="q-head">
+        <div class="q-number">21</div>
+        <div>
+          <h3 class="q-title">Why did you choose your field of study?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Share curiosity or specific experiences that motivated you toward IT (projects, mentors, competitions).</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Add a short anecdote: first project, first code that excited you, or a mentor influence.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 22 -->
+    <section class="page" id="q22">
+      <div class="q-head">
+        <div class="q-number">22</div>
+        <div>
+          <h3 class="q-title">How do you manage deadlines?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Plan backwards from the deadline, prioritize, and communicate blockers early.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Mention version control best practices (feature branches, incremental commits) and CI tests to avoid last-minute regressions.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 23 -->
+    <section class="page" id="q23">
+      <div class="q-head">
+        <div class="q-number">23</div>
+        <div>
+          <h3 class="q-title">What are your salary expectations?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Give a range based on research and show flexibility for a good role/learning opportunities.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Research market rates for freshers in your city; mention willingness to discuss after understanding role and growth.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 24 -->
+    <section class="page" id="q24">
+      <div class="q-head">
+        <div class="q-number">24</div>
+        <div>
+          <h3 class="q-title">What is your preferred working style?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Be flexible: comfortable with both independent deep work and collaborative environments.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Give examples: individual tasks (feature coding) vs collaborative tasks (pair programming, design reviews).<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 25 -->
+    <section class="page" id="q25">
+      <div class="q-head">
+        <div class="q-number">25</div>
+        <div>
+          <h3 class="q-title">Describe a time you went above and beyond.</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Show initiative: added tests, improved docs, automated deployments, or helped teammates after hours.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Concrete technical examples are best: quick prototype, automated CI, or debugging a production issue during crunch time.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 26 -->
+    <section class="page" id="q26">
+      <div class="q-head">
+        <div class="q-number">26</div>
+        <div>
+          <h3 class="q-title">What are your hobbies?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Prefer hobbies that show helpful soft skills (problem solving, creativity) — but any genuine hobby is fine.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • If you have tech-related hobbies (open-source contributions, side projects), mention them and link GitHub if asked.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 27 -->
+    <section class="page" id="q27">
+      <div class="q-head">
+        <div class="q-number">27</div>
+        <div>
+          <h3 class="q-title">How do you adapt to new technologies?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Talk about structured learning: documentation → tutorials → small projects → apply in a real project.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Mention a quick learning example: learned Docker/Kubernetes and deployed a sample service within a week.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 28 -->
+    <section class="page" id="q28">
+      <div class="q-head">
+        <div class="q-number">28</div>
+        <div>
+          <h3 class="q-title">Do you prefer working alone or in a team?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Say you can do both and prefer the one that best suits the task; give examples for each.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Give examples: individual tasks (feature dev) and team tasks (release, architecture design).<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 29 -->
+    <section class="page" id="q29">
+      <div class="q-head">
+        <div class="q-number">29</div>
+        <div>
+          <h3 class="q-title">How do you deal with conflicts at work?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Listen, clarify facts, propose solutions, and escalate when needed.</p>
+
+            <div class="label">Tips (IT fresher)</div>
+            <div class="tips">
+              • Show an example where you mediated a technical disagreement by proposing an experiment or a small POC.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 30 -->
+    <section class="page" id="q30">
+      <div class="q-head">
+        <div class="q-number">30</div>
+        <div>
+          <h3 class="q-title">Any questions for us?</h3>
+          <div class="section">
+            <div class="label">Short Answer</div>
+            <p class="small">Always ask — it shows interest. Ask about onboarding, tech stack, mentorship, or a recent product decision.</p>
+
+            <div class="label">Suggested Questions</div>
+            <div class="tips">
+              • What would a typical first 3 months look like for this role?<br>
+              • What are your expectations for the first project I’d work on?<br>
+              • How does the team handle code reviews and testing?<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="note">
+      PrepCampus — tailored interview guidance for IT freshers. Save or print as PDF (Recommended: Chrome/Edge — Print → Save as PDF).  
+      Replace <code>mylogo.png</code> with your company logo file in the same folder for best results.
+    </footer>
+
+  </div>
+</body>
+</html>

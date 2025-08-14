@@ -22,35 +22,35 @@ const LogicalReasoning: React.FC = () => {
       name: 'Coding-Decoding',
       description: 'Master the art of pattern recognition and code interpretation.',
       icon: <Code className="text-blue-600" />,
-      totalQuestions: 45
+      totalQuestions: 60
     },
     {
       id: 'blood-relations',
       name: 'Blood Relations',
       description: 'Solve complex family tree and relationship problems.',
       icon: <Users className="text-green-600" />,
-      totalQuestions: 40
+      totalQuestions: 60
     },
     {
-      id: 'directions-distance',
-      name: 'Directions & Distance',
+      id: 'directions-sense',
+      name: 'Directions Sense',
       description: 'Navigate through direction and distance-based problems.',
       icon: <Navigation className="text-purple-600" />,
-      totalQuestions: 35
+      totalQuestions: 60
     },
     {
       id: 'seating-arrangements',
       name: 'Seating Arrangements',
       description: 'Solve linear and circular seating arrangement puzzles.',
       icon: <Grid3X3 className="text-orange-600" />,
-      totalQuestions: 50
+      totalQuestions: 60
     },
     {
       id: 'puzzles',
       name: 'Puzzles',
       description: 'Tackle various types of logical puzzles and brain teasers.',
       icon: <Puzzle className="text-red-600" />,
-      totalQuestions: 55
+      totalQuestions: 60
     },
     {
       id: 'series',
@@ -60,32 +60,32 @@ const LogicalReasoning: React.FC = () => {
       totalQuestions: 60
     },
     {
-      id: 'syllogisms-venn',
-      name: 'Syllogisms & Venn Diagrams',
+      id: 'syllogisms',
+      name: 'Syllogisms',
       description: 'Master logical reasoning with syllogisms and Venn diagrams.',
       icon: <Brain className="text-teal-600" />,
-      totalQuestions: 45
+      totalQuestions: 60
     },
     {
       id: 'statement-assumption',
-      name: 'Statement & Assumption',
+      name: 'Statement and Assumption',
       description: 'Analyze statements, assumptions, and conclusions.',
       icon: <FileText className="text-pink-600" />,
-      totalQuestions: 40
+      totalQuestions: 60
     },
     {
       id: 'ranking-order',
-      name: 'Ranking & Order',
+      name: 'Ranking and Order',
       description: 'Solve ranking and ordering problems efficiently.',
       icon: <TrendingUp className="text-cyan-600" />,
-      totalQuestions: 35
+      totalQuestions: 60
     },
     {
-      id: 'analogies-odd',
-      name: 'Analogies & Odd One Out',
+      id: 'analogies',
+      name: 'Analogies',
       description: 'Find analogies and identify the odd element in groups.',
       icon: <Target className="text-yellow-600" />,
-      totalQuestions: 50
+      totalQuestions: 60
     }
   ];
 

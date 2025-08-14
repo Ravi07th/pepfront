@@ -32,6 +32,8 @@ export const getQuestionsByCompanyAndExam = (companyId: string, examTypeId: stri
   switch (`${companyId}-${examTypeId}`) {
     case 'tcs-nqt-nqt':
       return tcsNqtQuestions;
+    case 'tcs-nqt':
+      return tcsNqtQuestions;
 
 
     case 'cognizant-genc':

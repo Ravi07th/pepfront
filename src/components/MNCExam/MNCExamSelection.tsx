@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import CompanySelection from './CompanySelection';
-
+import { getRouteId } from './utils/routingUtils';
 import { Company, ExamType } from './types';
 
 const MNCExamSelection: React.FC = () => {
@@ -9,7 +9,8 @@ const MNCExamSelection: React.FC = () => {
 
   const handleCompanySelect = (company: Company, examType: ExamType) => {
     // Navigate to instructions page with company ID and exam type ID
-    navigate(`/mock-test/${company.id}-${examType.id}`, { 
+    const routeId = getRouteId(company, examType);
+    navigate(`/mock-test/${routeId}`, { 
       state: { 
         company, 
         examType 

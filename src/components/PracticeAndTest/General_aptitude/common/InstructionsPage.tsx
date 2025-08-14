@@ -17,13 +17,15 @@ const InstructionsPage: React.FC<InstructionsPageProps> = ({
   onStartTest,
   onGoBack
 }) => {
-  const { topic } = useParams<{ topic: string }>();
+  const { topicId } = useParams<{ topicId: string }>();
   const navigate = useNavigate();
 
-  const topicName = topic ? topic.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : 'Default Topic';
+  const topicName = topicId ? topicId.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : 'Default Topic';
 
   const handleStartTest = () => {
-    onStartTest(topic || '');
+    // Ensure we have a valid topic, fallback to 'number-system' if none provided
+    const validTopic = topicId || 'number-system';
+    onStartTest(validTopic);
   };
 
   const handleGoBack = () => {
@@ -157,11 +159,11 @@ const InstructionsPage: React.FC<InstructionsPageProps> = ({
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Duration:</span>
-                    <span className="font-medium">20 minutes</span>
+                    <span className="font-medium">60 minutes</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Questions:</span>
-                    <span className="font-medium">15</span>
+                    <span className="font-medium">60</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Section:</span>

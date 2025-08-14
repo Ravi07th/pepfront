@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import ExamPrepNav from '@/components/ExamPrepNav';
-import { BookOpen, Trophy, ArrowLeft } from 'lucide-react';
+import { BookOpen, Trophy, ArrowLeft, Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface Topic {
@@ -37,38 +37,51 @@ const SectionPage: React.FC<SectionPageProps> = ({
   ];
 
   const handleStartTest = (topicId: string, type: 'practice' | 'test') => {
-    onStartTest(topicId, type);
+    // Only call onStartTest for actual topic IDs, not category IDs from sidebar
+    if (topics.some(topic => topic.id === topicId)) {
+      onStartTest(topicId, type);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen ">
       {/* Header */}
       
-      <div className="bg-gradient-to-r align-center from-purple-600 to-indigo-600 text-white ">
-        <div className="max-w-7xl align-center flex justify-between mx-2">
-      <Button 
-              variant="outline" 
-              className="bg-white/10 border-white/20   align-center   text-white hover:bg-white/20"
+      <div className="bg-gradient-to-r from-[#0b1220] to-[#121a2a] text-white shadow-md">
+        <div className="max-w-7xl mx-auto grid grid-cols-12 items-center py-4 sm:py-6 px-3 sm:px-6">
+          {/* Left section with back button and mobile menu */}
+          <div className="col-span-12 sm:col-span-3 flex justify-start items-center space-x-3">
+            <Link to="/exam-prep">
+              <Button
+                variant="outline"
+                className="border-amber-400 text-amber-200 bg-transparent hover:bg-amber-400/10 text-xs sm:text-sm"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                <span className="hidden sm:inline">Exam Preparation</span>
+                <span className="sm:hidden">Back</span>
+              </Button>
+            </Link>
+            {/* Mobile Menu Toggle */}
+            <Button
+              variant="outline"
+              className="lg:hidden border-amber-400 text-amber-200 bg-transparent hover:bg-amber-400/10"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
             >
-              {/* {title} Section */}
-              Exam Prepration
+              <Menu className="w-4 h-4" />
             </Button>
-            </div>
-        
-          {/* <div className="flex items-center justify-between"> */}
-            
-           
-          {/* </div> */}
-          <div className=" text-center py-5 -mt-10">
-            <h1 className="text-4xl  font-bold mb-2">{title}</h1>
-            <p className="text-xl text-white/80 ">{subtitle}</p>
           </div>
-        
+          {/* Centered title */}
+          <div className="col-span-12 sm:col-span-6 text-center">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1">{title}</h1>
+            <p className="text-xs sm:text-sm md:text-base text-white/80">{subtitle}</p>
+          </div>
+          <div className="col-span-12 sm:col-span-3" />
+        </div>
       </div>
 
       {/* Main Content */}
       <div className="">
-        <div className="flex flex-col lg:flex-row gap-4">
+        <div className="flex flex-col lg:flex-row gap-2 sm:gap-4">
           {/* Left Sidebar - ExamPrepNav */}
           <div className="lg:w-64 flex-shrink-0 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
             <ExamPrepNav 
@@ -82,56 +95,56 @@ const SectionPage: React.FC<SectionPageProps> = ({
           </div>
 
           {/* Right Content Area */}
-          <div className="flex-1 lg:ml-4 py-5">
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold text-foreground mb-2">Choose Your Topic</h2>
-              <p className="text-muted-foreground">
+          <div className="flex-1 py-4 sm:py-6 lg:py-8 px-4 sm:px-6 lg:px-8">
+            <div className="mb-6 sm:mb-8">
+              <h2 className="text-xl sm:text-2xl font-bold mb-2">Choose Your Topic</h2>
+              <p className="text-sm sm:text-base text-gray-600">
                 Select from our comprehensive range of {title.toLowerCase()} topics.
               </p>
             </div>
 
-            {/* Topics Grid - 3 cards per row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mr-4">
+            {/* Topics Grid - Responsive cards per row */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mr-4">
               {topics.map((topic, index) => (
                 <Card 
                   key={topic.id} 
-                  className="group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg animate-fadeIn"
+                  className="group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg animate-fadeIn bg-white border border-slate-200 hover:border-amber-300"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <CardHeader className="pb-4">
                     <div className="flex items-center justify-between">
-                      <div className="text-3xl mb-2 group-hover:animate-bounce-soft">
+                      <div className="text-2xl sm:text-3xl mb-2 group-hover:animate-bounce-soft">
                         {topic.icon}
                       </div>
-                      <Badge variant="secondary" className="text-xs">
+                      <Badge variant="secondary" className="text-xs bg-amber-100 text-amber-700">
                         {topic.totalQuestions} Questions
                       </Badge>
                     </div>
-                    <CardTitle className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                    <CardTitle className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors">
                       {topic.name}
                     </CardTitle>
-                    <CardDescription className="text-muted-foreground leading-relaxed">
+                    <CardDescription className="text-sm sm:text-base text-slate-600 leading-relaxed">
                       {topic.description}
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="pt-0">
-                    <div className="flex space-x-2">
+                    <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                       <Button 
                         onClick={() => handleStartTest(topic.id, 'practice')}
-                        className="flex-1 bg-secondary hover:bg-secondary/80 text-secondary-foreground transition-all duration-300"
+                        className="flex-1 border border-slate-300 text-slate-700 hover:bg-slate-50 transition-all duration-300 py-3 sm:py-2"
                         size="sm"
                         variant="secondary"
                       >
-                        <BookOpen className="w-4 h-4 mr-2" />
-                        Practice
+                        <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                        <span className="text-xs sm:text-sm">Practice</span>
                       </Button>
                       <Button 
                         onClick={() => handleStartTest(topic.id, 'test')}
-                        className="flex-1 bg-gradient-primary hover:shadow-medium transition-all duration-300"
+                        className="flex-1 bg-blue-900 hover:shadow-medium transition-all duration-300 text-white py-3 sm:py-2"
                         size="sm"
                       >
-                        <Trophy className="w-4 h-4 mr-2" />
-                        Mock Test
+                        <Trophy className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                        <span className="text-xs sm:text-sm">Mock Test</span>
                       </Button>
                     </div>
                   </CardContent>

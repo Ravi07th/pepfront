@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Bookmark, Heart, Download, Eye, Star, Clock, Trash2, BookOpen } from "lucide-react";
 import { SearchAndFilter } from './components';
+import CompanyLogo from '../common/CompanyLogo';
 
 // Mock data for bookmarks and favorites
 const bookmarkedNotes = [
@@ -41,16 +42,16 @@ const bookmarkedNotes = [
   },
   {
     id: "id6",
-    title: "C++ Advanced Concepts",
-    category: "Programming",
-    description: "Advanced C++ concepts including STL, templates, memory management, and modern C++ features for competitive programming.",
-    tags: ["c++", "stl", "templates", "competitive"],
-    duration: "7 hours",
+    title: "Top 30 Interview Questions for Fresher",
+    category: "Interview Prep",
+    description: "Comprehensive guide with top 30 interview questions specifically tailored for IT freshers with detailed answers and tips.",
+    tags: ["interview", "fresher", "it", "career", "preparation"],
+    duration: "45 min",
     downloads: 1200,
     rating: 4.8,
     views: 2800,
     lastUpdated: "2024-01-14",
-    author: "CPP Master",
+    author: "Interview Expert",
     icon: "/images/accenture.png",
     color: "bg-blue-600"
   },
@@ -104,16 +105,16 @@ const favoriteNotes = [
   },
   {
     id: "id6",
-    title: "C++ Advanced Concepts",
-    category: "Programming",
-    description: "Advanced C++ concepts including STL, templates, memory management, and modern C++ features for competitive programming.",
-    tags: ["c++", "stl", "templates", "competitive"],
-    duration: "7 hours",
+    title: "Top 30 Interview Questions for Fresher",
+    category: "Interview Prep",
+    description: "Comprehensive guide with top 30 interview questions specifically tailored for IT freshers with detailed answers and tips.",
+    tags: ["interview", "fresher", "it", "career", "preparation"],
+    duration: "45 min",
     downloads: 1200,
     rating: 4.8,
     views: 2800,
     lastUpdated: "2024-01-14",
-    author: "CPP Master",
+    author: "Interview Expert",
     icon: "/images/accenture.png",
     color: "bg-blue-600"
   },
@@ -296,16 +297,17 @@ export default function BookmarksPage() {
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-3">
                         <div className={`w-10 h-10 ${note.color} rounded-lg flex items-center justify-center overflow-hidden`}>
-                          <img 
-                            src={note.icon} 
-                            alt={note.title}
+                          <CompanyLogo 
+                            companyName={note.icon.includes('infosys') ? 'Infosys' : 
+                                       note.icon.includes('cognizant') ? 'Cognizant' :
+                                       note.icon.includes('accenture') ? 'Accenture' :
+                                       note.icon.includes('tcs') ? 'TCS' :
+                                       note.icon.includes('wipro') ? 'Wipro' :
+                                       note.icon.includes('google') ? 'Google' :
+                                       note.icon.includes('capgemini') ? 'Capgemini' : 'Company'}
+                            size={40}
                             className="w-full h-full object-cover"
-                            onError={(e) => {
-                              e.currentTarget.style.display = 'none';
-                              e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                            }}
                           />
-                          <BookOpen className="h-5 w-5 text-white hidden" />
                         </div>
                         <div>
                           <CardTitle className="text-lg group-hover:text-blue-600 transition-colors">
@@ -394,16 +396,17 @@ export default function BookmarksPage() {
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-3">
                         <div className={`w-10 h-10 ${note.color} rounded-lg flex items-center justify-center overflow-hidden`}>
-                          <img 
-                            src={note.icon} 
-                            alt={note.title}
+                          <CompanyLogo 
+                            companyName={note.icon.includes('infosys') ? 'Infosys' : 
+                                       note.icon.includes('cognizant') ? 'Cognizant' :
+                                       note.icon.includes('accenture') ? 'Accenture' :
+                                       note.icon.includes('tcs') ? 'TCS' :
+                                       note.icon.includes('wipro') ? 'Wipro' :
+                                       note.icon.includes('google') ? 'Google' :
+                                       note.icon.includes('capgemini') ? 'Capgemini' : 'Company'}
+                            size={40}
                             className="w-full h-full object-cover"
-                            onError={(e) => {
-                              e.currentTarget.style.display = 'none';
-                              e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                            }}
                           />
-                          <BookOpen className="h-5 w-5 text-white hidden" />
                         </div>
                         <div>
                           <CardTitle className="text-lg group-hover:text-blue-600 transition-colors">

@@ -56,9 +56,9 @@ const Timer: React.FC<TimerProps> = ({ timeLeft, onTimeUp, isActive, onTimeUpdat
   };
 
   return (
-    <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md">
-      <Clock className="w-4 h-4 text-gray-600" />
-      <span className={`font-mono font-semibold ${getTimeColor()}`}>
+    <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 sm:py-2 bg-gray-100 rounded-md">
+      <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-gray-600" />
+      <span className={`font-mono font-semibold text-xs sm:text-sm ${getTimeColor()}`}>
         {formatTime(displayTime)}
       </span>
     </div>

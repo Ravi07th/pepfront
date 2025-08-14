@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automata Theory Notes - PrepCampus</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .download-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .download-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .section {
+            margin: 30px 0;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin: 20px 0 10px 0;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #e17055;
+        }
+
+        .code-box {
+            background: #2d3436;
+            color: #dfe6e9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            border-left: 4px solid #00b894;
+        }
+
+        .code-box pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .code-box .keyword { color: #74b9ff; }
+        .code-box .comment { color: #636e72; }
+        .code-box .string { color: #00b894; }
+        .code-box .number { color: #fd79a8; }
+
+        .complexity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .complexity-table th,
+        .complexity-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .complexity-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: bold;
+        }
+
+        .complexity-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .complexity-table tr:hover {
+            background: #e3f2fd;
+        }
+
+        .algorithm-steps {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #00b894;
+        }
+
+        .algorithm-steps ol {
+            margin-left: 20px;
+        }
+
+        .algorithm-steps li {
+            margin: 8px 0;
+            padding: 5px 0;
+        }
+
+        .example-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .example-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .definition-box {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .definition-box h4 {
+            color: #0c5460;
+            margin-bottom: 10px;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 30px;
+            color: #666;
+        }
+
+        @media print {
+            .download-btn {
+                display: none;
+            }
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Automata Theory Notes</h1>
+            <p>Comprehensive Guide to Finite Automata, Regular Expressions, and Formal Languages</p>
+            <button class="download-btn" onclick="downloadPDF()">📥 Download PDF</button>
+            <button class="download-btn" onclick="downloadAsPrint()">🖨️ Print PDF</button>
+            <button class="download-btn" onclick="testDownload()">🔧 Test Download</button>
+        </div>
+
+        <div class="section">
+            <h2>1. Introduction to Automata Theory</h2>
+            
+            <div class="definition-box">
+                <h4>What is Automata Theory?</h4>
+                <p><strong>Automata Theory</strong> is a fundamental branch of theoretical computer science that studies abstract mathematical models of computation and computational processes. It provides rigorous mathematical frameworks for understanding how machines process information, recognize patterns, and solve computational problems. The theory establishes the theoretical foundations for what can and cannot be computed by different types of computational devices, from simple finite state machines to complex Turing machines.</p>
+                
+                <p><strong>Key Aspects:</strong></p>
+                <ul>
+                    <li><strong>Abstract Machines:</strong> Mathematical models that represent computational processes without being tied to specific hardware implementations</li>
+                    <li><strong>Formal Languages:</strong> Sets of strings defined by specific rules and patterns that machines can recognize or generate</li>
+                    <li><strong>Computational Models:</strong> Different levels of computational power, from simple pattern matching to universal computation</li>
+                    <li><strong>Complexity Analysis:</strong> Understanding the time and space requirements for different computational tasks</li>
+                    <li><strong>Decidability:</strong> Determining which problems can be solved algorithmically and which cannot</li>
+                </ul>
+            </div>
+
+            <h3>1.1 Key Concepts</h3>
+            <ul>
+                <li><strong>Automaton:</strong> An abstract mathematical model of a computational device that processes input according to predefined rules and transitions between states</li>
+                <li><strong>Language:</strong> A set of strings over a given alphabet that follows specific patterns or rules</li>
+                <li><strong>Grammar:</strong> A formal system of rules that defines how to generate valid strings in a language</li>
+                <li><strong>Regular Expression:</strong> A pattern that describes a set of strings using special syntax and operators</li>
+                <li><strong>Alphabet:</strong> A finite set of symbols from which strings are constructed</li>
+                <li><strong>String:</strong> A finite sequence of symbols from an alphabet</li>
+                <li><strong>State:</strong> A configuration that represents the current condition of an automaton</li>
+                <li><strong>Transition:</strong> A rule that defines how an automaton moves from one state to another based on input</li>
+                <li><strong>Acceptance:</strong> The process by which an automaton determines whether an input string belongs to the language it recognizes</li>
+                <li><strong>Recognition:</strong> The ability of an automaton to determine if a given string is valid according to its rules</li>
+            </ul>
+
+            <h3>1.2 Historical Development</h3>
+            <div class="highlight">
+                <p><strong>Timeline of Automata Theory Development:</strong></p>
+                <ul>
+                    <li><strong>1936:</strong> Alan Turing introduces the Turing Machine, establishing the foundation of computability theory</li>
+                    <li><strong>1943:</strong> Warren McCulloch and Walter Pitts develop mathematical models of neural networks</li>
+                    <li><strong>1951:</strong> Stephen Kleene introduces regular expressions and proves their equivalence to finite automata</li>
+                    <li><strong>1956:</strong> Noam Chomsky publishes his hierarchy of formal grammars</li>
+                    <li><strong>1959:</strong> Michael Rabin and Dana Scott introduce non-deterministic finite automata</li>
+                    <li><strong>1960s:</strong> Development of pushdown automata and context-free grammars</li>
+                    <li><strong>1970s:</strong> Emergence of computational complexity theory</li>
+                    <li><strong>1980s-present:</strong> Applications in compiler design, natural language processing, and artificial intelligence</li>
+                </ul>
+            </div>
+
+            <h3>1.3 Mathematical Foundations</h3>
+            <div class="definition-box">
+                <h4>Set Theory and Automata</h4>
+                <p>Automata theory is built upon fundamental concepts from set theory, including:</p>
+                <ul>
+                    <li><strong>Sets:</strong> Collections of distinct elements (states, symbols, strings)</li>
+                    <li><strong>Relations:</strong> Connections between elements (transitions between states)</li>
+                    <li><strong>Functions:</strong> Mappings from one set to another (transition functions)</li>
+                    <li><strong>Closure Properties:</strong> Operations that preserve language membership</li>
+                    <li><strong>Equivalence Relations:</strong> Ways to classify automata and languages</li>
+                </ul>
+            </div>
+
+            <div class="definition-box">
+                <h4>Formal Language Theory</h4>
+                <p>Formal language theory provides the mathematical framework for studying languages:</p>
+                <ul>
+                    <li><strong>Alphabets:</strong> Finite sets of symbols (Σ)</li>
+                    <li><strong>Strings:</strong> Finite sequences of symbols from an alphabet</li>
+                    <li><strong>Languages:</strong> Sets of strings over an alphabet</li>
+                    <li><strong>Operations:</strong> Union, concatenation, Kleene star, intersection, complement</li>
+                    <li><strong>Closure Properties:</strong> Which operations preserve language class membership</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <strong>Why Study Automata Theory?</strong>
+                <ul>
+                    <li>Foundation for compiler design and parsing</li>
+                    <li>Essential for understanding computational complexity</li>
+                    <li>Basis for formal language theory</li>
+                    <li>Critical for software verification and validation</li>
+                    <li>Fundamental for artificial intelligence and pattern recognition</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. Finite Automata (FA)</h2>
+            
+            <div class="definition-box">
+                <h4>Finite Automaton Definition</h4>
+                <p>A <strong>Finite Automaton (FA)</strong> is a mathematical model of a computational system that operates with a finite amount of memory represented by a finite set of internal states. It processes input strings symbol by symbol, transitioning between states based on the current state and the input symbol being read. The automaton makes decisions about accepting or rejecting input strings based on whether it ends in an accepting state after processing the entire input.</p>
+                
+                <p><strong>Core Characteristics:</strong></p>
+                <ul>
+                    <li><strong>Finite Memory:</strong> The automaton can only remember a finite amount of information through its states</li>
+                    <li><strong>Sequential Processing:</strong> Input is processed one symbol at a time from left to right</li>
+                    <li><strong>State-Based Computation:</strong> The current state completely determines the automaton's behavior</li>
+                    <li><strong>Deterministic or Non-deterministic:</strong> Can be either deterministic (exactly one next state) or non-deterministic (multiple possible next states)</li>
+                    <li><strong>Language Recognition:</strong> Accepts or rejects strings based on whether they belong to a specific language</li>
+                </ul>
+                
+                <p><strong>Mathematical Foundation:</strong> Finite automata are the simplest computational models that can recognize regular languages, which are languages that can be described by regular expressions. They form the theoretical basis for lexical analysis in compilers, pattern matching algorithms, and many text processing applications.</p>
+            </div>
+
+            <h3>2.1 Components of Finite Automaton</h3>
+            <div class="code-box">
+                <pre><code>FA = (Q, Σ, δ, q₀, F)
+
+Where:
+Q = Finite set of states
+Σ = Input alphabet (finite set of symbols)
+δ = Transition function (Q × Σ → Q)
+q₀ = Initial state (q₀ ∈ Q)
+F = Set of accepting/final states (F ⊆ Q)</code></pre>
+            </div>
+
+            <h3>2.2 Detailed Component Analysis</h3>
+            <div class="definition-box">
+                <h4>States (Q)</h4>
+                <p>The set of states represents all possible configurations of the automaton:</p>
+                <ul>
+                    <li><strong>Initial State (q₀):</strong> The starting configuration when processing begins</li>
+                    <li><strong>Intermediate States:</strong> States reached during processing but not accepting</li>
+                    <li><strong>Accepting States (F):</strong> States that indicate successful recognition</li>
+                    <li><strong>Rejecting States:</strong> States that indicate failure (implicit in most definitions)</li>
+                    <li><strong>Trap States:</strong> States from which no further progress is possible</li>
+                </ul>
+            </div>
+
+            <div class="definition-box">
+                <h4>Alphabet (Σ)</h4>
+                <p>The input alphabet defines the symbols that can be processed:</p>
+                <ul>
+                    <li><strong>Binary Alphabet:</strong> {0, 1} for binary strings</li>
+                    <li><strong>Decimal Alphabet:</strong> {0, 1, 2, ..., 9} for decimal numbers</li>
+                    <li><strong>ASCII Alphabet:</strong> All printable ASCII characters</li>
+                    <li><strong>Unicode Alphabet:</strong> Extended character sets</li>
+                    <li><strong>Custom Alphabets:</strong> Domain-specific symbol sets</li>
+                </ul>
+            </div>
+
+            <div class="definition-box">
+                <h4>Transition Function (δ)</h4>
+                <p>The transition function defines the automaton's behavior:</p>
+                <ul>
+                    <li><strong>Domain:</strong> Q × Σ (state-symbol pairs)</li>
+                    <li><strong>Range:</strong> Q (next state)</li>
+                    <li><strong>Deterministic:</strong> Exactly one next state for each input</li>
+                    <li><strong>Complete:</strong> Defined for all state-symbol combinations</li>
+                    <li><strong>Partial:</strong> Some transitions may be undefined</li>
+                </ul>
+            </div>
+
+            <h3>2.3 State Diagrams and Visual Representation</h3>
+            <div class="example-box">
+                <h4>Visual Elements in State Diagrams</h4>
+                <ul>
+                    <li><strong>Circles/Ovals:</strong> Represent states</li>
+                    <li><strong>Double Circles:</strong> Represent accepting states</li>
+                    <li><strong>Arrows:</strong> Represent transitions</li>
+                    <li><strong>Labels on Arrows:</strong> Input symbols that trigger transitions</li>
+                    <li><strong>Start Arrow:</strong> Points to the initial state</li>
+                </ul>
+            </div>
+
+            <div class="code-box">
+                <pre><code><span class="comment">// Example: DFA for recognizing strings ending with '01'</span>
+<span class="comment">// State Diagram Representation:</span>
+
+q₀ --0--> q₁ --1--> q₂ (accepting)
+q₀ --1--> q₀
+q₁ --0--> q₁
+q₂ --0--> q₁
+q₂ --1--> q₀
+
+<span class="comment">// Formal Definition:</span>
+Q = {q₀, q₁, q₂}
+Σ = {0, 1}
+q₀ = q₀
+F = {q₂}
+
+δ(q₀, 0) = q₁    δ(q₀, 1) = q₀
+δ(q₁, 0) = q₁    δ(q₁, 1) = q₂
+δ(q₂, 0) = q₁    δ(q₂, 1) = q₀</code></pre>
+            </div>
+
+            <h3>2.4 Types of Finite Automata</h3>
+            
+            <div class="example-box">
+                <h4>Deterministic Finite Automaton (DFA)</h4>
+                <p>A DFA is a finite automaton where for each state and input symbol, there is exactly one next state. The transition function is deterministic.</p>
+                
+                <div class="code-box">
+                    <pre><code><span class="comment">// DFA Example: Accepts strings ending with '01'</span>
+States: {q₀, q₁, q₂}
+Alphabet: {0, 1}
+Initial State: q₀
+Accepting States: {q₂}
+
+Transition Function:
+δ(q₀, 0) = q₁
+δ(q₀, 1) = q₀
+δ(q₁, 0) = q₁
+δ(q₁, 1) = q₂
+δ(q₂, 0) = q₁
+δ(q₂, 1) = q₀</code></pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>Non-Deterministic Finite Automaton (NFA)</h4>
+                <p>An NFA is a finite automaton where for a given state and input symbol, there can be multiple possible next states. The transition function is non-deterministic.</p>
+                
+                <div class="code-box">
+                    <pre><code><span class="comment">// NFA Example: Accepts strings containing '01'</span>
+States: {q₀, q₁, q₂}
+Alphabet: {0, 1}
+Initial State: q₀
+Accepting States: {q₂}
+
+Transition Function:
+δ(q₀, 0) = {q₀, q₁}
+δ(q₀, 1) = {q₀}
+δ(q₁, 0) = {q₁}
+δ(q₁, 1) = {q₂}
+δ(q₂, 0) = {q₂}
+δ(q₂, 1) = {q₂}</code></pre>
+                </div>
+            </div>
+
+            <h3>2.5 DFA vs NFA Comparison</h3>
+            <table class="complexity-table">
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>DFA</th>
+                        <th>NFA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Transition Function</td>
+                        <td>Deterministic (Q × Σ → Q)</td>
+                        <td>Non-deterministic (Q × Σ → 2^Q)</td>
+                    </tr>
+                    <tr>
+                        <td>Number of Transitions</td>
+                        <td>Exactly one per state-input pair</td>
+                        <td>Zero or more per state-input pair</td>
+                    </tr>
+                    <tr>
+                        <td>Epsilon Transitions</td>
+                        <td>Not allowed</td>
+                        <td>Allowed</td>
+                    </tr>
+                    <tr>
+                        <td>Implementation</td>
+                        <td>Easier to implement</td>
+                        <td>More complex to implement</td>
+                    </tr>
+                    <tr>
+                        <td>Computational Power</td>
+                        <td>Same as NFA</td>
+                        <td>Same as DFA</td>
+                    </tr>
+                    <tr>
+                        <td>Memory Usage</td>
+                        <td>Constant (single state)</td>
+                        <td>Variable (set of states)</td>
+                    </tr>
+                    <tr>
+                        <td>Simulation Complexity</td>
+                        <td>O(n) time, O(1) space</td>
+                        <td>O(n) time, O(n) space</td>
+                    </tr>
+                    <tr>
+                        <td>Construction from RE</td>
+                        <td>More complex</td>
+                        <td>Direct (Thompson construction)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>2.6 Advanced Finite Automata Concepts</h3>
+            <div class="definition-box">
+                <h4>Epsilon-NFA (ε-NFA)</h4>
+                <p>An extension of NFA that allows transitions on the empty string (ε):</p>
+                <ul>
+                    <li><strong>ε-Transitions:</strong> State changes without consuming input</li>
+                    <li><strong>Closure Computation:</strong> Finding all states reachable via ε-transitions</li>
+                    <li><strong>Equivalence:</strong> Every ε-NFA can be converted to an equivalent DFA</li>
+                    <li><strong>Applications:</strong> Useful for constructing automata from regular expressions</li>
+                </ul>
+            </div>
+
+            <div class="definition-box">
+                <h4>Minimization of DFA</h4>
+                <p>The process of creating the smallest DFA equivalent to a given DFA:</p>
+                <ul>
+                    <li><strong>State Equivalence:</strong> Two states are equivalent if they behave identically</li>
+                    <li><strong>Partitioning Algorithm:</strong> Iteratively refine state partitions</li>
+                    <li><strong>Myhill-Nerode Theorem:</strong> Provides theoretical foundation for minimization</li>
+                    <li><strong>Benefits:</strong> Reduced memory usage and faster execution</li>
+                </ul>
+            </div>
+
+            <div class="definition-box">
+                <h4>Pumping Lemma for Regular Languages</h4>
+                <p>A powerful tool for proving that languages are not regular:</p>
+                <ul>
+                    <li><strong>Statement:</strong> For any regular language L, there exists a constant p such that any string w in L with |w| ≥ p can be written as w = xyz where |xy| ≤ p, |y| ≥ 1, and xyⁱz ∈ L for all i ≥ 0</li>
+                    <li><strong>Applications:</strong> Proving languages like {aⁿbⁿ | n ≥ 0} are not regular</li>
+                    <li><strong>Limitations:</strong> Cannot prove that a language is regular</li>
+                    <li><strong>Method:</strong> Proof by contradiction using the pumping property</li>
+                </ul>
+            </div>
+
+            <h3>2.7 Practical Applications of Finite Automata</h3>
+            <div class="algorithm-steps">
+                <h4>Lexical Analysis in Compilers</h4>
+                <ol>
+                    <li><strong>Token Recognition:</strong> Finite automata recognize lexical tokens (identifiers, keywords, literals)</li>
+                    <li><strong>Pattern Matching:</strong> Efficiently match patterns in source code</li>
+                    <li><strong>Error Detection:</strong> Identify malformed tokens and report errors</li>
+                    <li><strong>Performance:</strong> O(n) time complexity for processing input</li>
+                </ol>
+            </div>
+
+            <div class="algorithm-steps">
+                <h4>Text Processing and Search</h4>
+                <ol>
+                    <li><strong>String Matching:</strong> Find patterns in text efficiently</li>
+                    <li><strong>Regular Expression Engines:</strong> Convert regex to finite automata</li>
+                    <li><strong>Spell Checkers:</strong> Validate word spellings</li>
+                    <li><strong>Data Validation:</strong> Check format compliance</li>
+                </ol>
+            </div>
+
+            <div class="algorithm-steps">
+                <h4>Hardware Design</h4>
+                <ol>
+                    <li><strong>Digital Circuits:</strong> Model sequential circuits as finite automata</li>
+                    <li><strong>Protocol Implementation:</strong> Implement communication protocols</li>
+                    <li><strong>State Machines:</strong> Design control systems</li>
+                    <li><strong>Verification:</strong> Verify circuit behavior</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. Regular Expressions</h2>
+            
+            <div class="definition-box">
+                <h4>Regular Expression Definition</h4>
+                <p>A <strong>Regular Expression (Regex)</strong> is a formal mathematical notation that describes a set of strings through a pattern-based syntax. It provides a concise and powerful way to specify search patterns, validate input formats, and perform text processing operations. Regular expressions are built using a combination of literal characters, metacharacters, and operators that define the structure and constraints of acceptable strings.</p>
+                
+                <p><strong>Fundamental Concepts:</strong></p>
+                <ul>
+                    <li><strong>Pattern Matching:</strong> Defines rules for identifying strings that follow specific patterns</li>
+                    <li><strong>Language Description:</strong> Provides a compact way to describe potentially infinite sets of strings</li>
+                    <li><strong>Syntax Rules:</strong> Follows precise grammatical rules for constructing valid expressions</li>
+                    <li><strong>Operators:</strong> Uses special operators like concatenation, alternation, and repetition</li>
+                    <li><strong>Equivalence:</strong> Every regular expression can be converted to an equivalent finite automaton and vice versa</li>
+                </ul>
+                
+                <p><strong>Mathematical Significance:</strong> Regular expressions represent the algebraic notation for regular languages, which are the simplest class of formal languages in the Chomsky hierarchy. They are closed under union, concatenation, and Kleene star operations, making them a fundamental tool in theoretical computer science and practical applications like text processing, data validation, and lexical analysis.</p>
+                
+                <p><strong>Practical Applications:</strong> Regular expressions are extensively used in programming languages, text editors, search engines, data validation, parsing, and many other areas where pattern matching and string processing are required.</p>
+            </div>
+
+            <h3>3.1 Basic Regular Expression Operators</h3>
+            <table class="complexity-table">
+                <thead>
+                    <tr>
+                        <th>Operator</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                        <th>Language</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Concatenation</td>
+                        <td>Strings are concatenated</td>
+                        <td>ab matches "ab"</td>
+                        <td>{ab}</td>
+                    </tr>
+                    <tr>
+                        <td>Union (|)</td>
+                        <td>Either one pattern or another</td>
+                        <td>a|b matches "a" or "b"</td>
+                        <td>{a, b}</td>
+                    </tr>
+                    <tr>
+                        <td>Kleene Star (*)</td>
+                        <td>Zero or more repetitions</td>
+                        <td>a* matches "", "a", "aa", "aaa", ...</td>
+                        <td>{ε, a, aa, aaa, ...}</td>
+                    </tr>
+                    <tr>
+                        <td>Kleene Plus (+)</td>
+                        <td>One or more repetitions</td>
+                        <td>a+ matches "a", "aa", "aaa", ...</td>
+                        <td>{a, aa, aaa, ...}</td>
+                    </tr>
+                    <tr>
+                        <td>Question Mark (?)</td>
+                        <td>Zero or one occurrence</td>
+                        <td>a? matches "" or "a"</td>
+                        <td>{ε, a}</td>
+                    </tr>
+                    <tr>
+                        <td>Character Classes [abc]</td>
+                        <td>Any single character from set</td>
+                        <td>[abc] matches "a", "b", or "c"</td>
+                        <td>{a, b, c}</td>
+                    </tr>
+                    <tr>
+                        <td>Negation [^abc]</td>
+                        <td>Any character not in set</td>
+                        <td>[^abc] matches any char except a,b,c</td>
+                        <td>Σ - {a, b, c}</td>
+                    </tr>
+                    <tr>
+                        <td>Range [a-z]</td>
+                        <td>Any character in range</td>
+                        <td>[a-z] matches lowercase letters</td>
+                        <td>{a, b, ..., z}</td>
+                    </tr>
+                    <tr>
+                        <td>Anchors ^ and $</td>
+                        <td>Start and end of string</td>
+                        <td>^abc$ matches exactly "abc"</td>
+                        <td>{abc}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>3.2 Advanced Regular Expression Features</h3>
+            <div class="definition-box">
+                <h4>Quantifiers and Greediness</h4>
+                <p>Regular expressions support various quantifiers for controlling repetition:</p>
+                <ul>
+                    <li><strong>Greedy Quantifiers:</strong> Match as much as possible (*, +, ?, {n,m})</li>
+                    <li><strong>Lazy Quantifiers:</strong> Match as little as possible (*?, +?, ??, {n,m}?)</li>
+                    <li><strong>Possessive Quantifiers:</strong> Match and don't backtrack (*+, ++, ?+, {n,m}+)</li>
+                    <li><strong>Exact Quantifiers:</strong> Match exactly n times ({n})</li>
+                    <li><strong>Range Quantifiers:</strong> Match between n and m times ({n,m})</li>
+                </ul>
+            </div>
+
+            <div class="definition-box">
+                <h4>Groups and Capturing</h4>
+                <p>Regular expressions support grouping for complex patterns:</p>
+                <ul>
+                    <li><strong>Capturing Groups:</strong> (pattern) - captures matched text</li>
+                    <li><strong>Non-capturing Groups:</strong> (?:pattern) - groups without capturing</li>
+                    <li><strong>Named Groups:</strong> (?<name>pattern) - captures with name</li>
+                    <li><strong>Backreferences:</strong> \1, \2, etc. - reference captured groups</li>
+                    <li><strong>Lookahead/Lookbehind:</strong> (?=pattern), (?<=pattern) - zero-width assertions</li>
+                </ul>
+            </div>
+
+            <div class="definition-box">
+                <h4>Special Characters and Escaping</h4>
+                <p>Understanding special characters and escaping in regular expressions:</p>
+                <ul>
+                    <li><strong>Metacharacters:</strong> . * + ? ^ $ [ ] ( ) { } | \</li>
+                    <li><strong>Escaping:</strong> Use \ to treat metacharacters as literals</li>
+                    <li><strong>Predefined Classes:</strong> \d (digits), \w (word chars), \s (whitespace)</li>
+                    <li><strong>Negated Classes:</strong> \D (non-digits), \W (non-word), \S (non-whitespace)</li>
+                    <li><strong>Word Boundaries:</strong> \b (word boundary), \B (non-word boundary)</li>
+                </ul>
+            </div>
+
+            <h3>3.3 Common Regular Expression Patterns</h3>
+            <div class="code-box">
+                <pre><code><span class="comment">// Email validation pattern</span>
+^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$
+
+<span class="comment">// Phone number pattern (US format)</span>
+^\(\d{3}\) \d{3}-\d{4}$
+
+<span class="comment">// URL pattern</span>
+^https?://[^\s/$.?#].[^\s]*$
+
+<span class="comment">// Date pattern (MM/DD/YYYY)</span>
+^(0[1-9]|1[0-2])/(0[1-9]|[12]\d|3[01])/\d{4}$</code></pre>
+            </div>
+
+            <h3>3.4 Regular Expression to NFA Conversion</h3>
+            <div class="algorithm-steps">
+                <h4>Thompson Construction Algorithm</h4>
+                <ol>
+                    <li><strong>Base Cases:</strong>
+                        <ul>
+                            <li>ε (epsilon): Single state with no transitions</li>
+                            <li>a (symbol): Two states connected by transition labeled 'a'</li>
+                        </ul>
+                    </li>
+                    <li><strong>Concatenation (RS):</strong> Connect final state of R to initial state of S</li>
+                    <li><strong>Union (R|S):</strong> Create new initial and final states with ε-transitions</li>
+                    <li><strong>Kleene Star (R*):</strong> Add ε-transitions from final to initial state</li>
+                </ol>
+            </div>
+
+            <h3>3.5 Regular Expression Optimization</h3>
+            <div class="definition-box">
+                <h4>Optimization Techniques</h4>
+                <p>Various techniques to optimize regular expressions for better performance:</p>
+                <ul>
+                    <li><strong>Character Class Optimization:</strong> Use [a-z] instead of (a|b|c|...|z)</li>
+                    <li><strong>Quantifier Optimization:</strong> Use {n,m} instead of repeated patterns</li>
+                    <li><strong>Anchoring:</strong> Use ^ and $ to avoid unnecessary backtracking</li>
+                    <li><strong>Possessive Quantifiers:</strong> Use *+ and ++ to prevent backtracking</li>
+                    <li><strong>Atomic Groups:</strong> Use (?>pattern) for atomic matching</li>
+                </ul>
+            </div>
+
+            <div class="definition-box">
+                <h4>Common Pitfalls and Best Practices</h4>
+                <p>Important considerations when working with regular expressions:</p>
+                <ul>
+                    <li><strong>Catastrophic Backtracking:</strong> Avoid nested quantifiers that can cause exponential time complexity</li>
+                    <li><strong>Greedy vs Lazy:</strong> Choose appropriate quantifiers for the intended behavior</li>
+                    <li><strong>Character Escaping:</strong> Properly escape special characters in different contexts</li>
+                    <li><strong>Performance Testing:</strong> Test regex performance with various input sizes</li>
+                    <li><strong>Readability:</strong> Use comments and formatting for complex patterns</li>
+                </ul>
+            </div>
+
+            <h3>3.6 Regular Expression in Programming Languages</h3>
+            <div class="code-box">
+                <pre><code><span class="comment">// JavaScript Regular Expressions</span>
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const phoneRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
+
+<span class="comment">// Python Regular Expressions</span>
+import re
+email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+phone_pattern = r'^\(\d{3}\) \d{3}-\d{4}$'
+
+<span class="comment">// Java Regular Expressions</span>
+String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+String phoneRegex = "^\\(\\d{3}\\) \\d{3}-\\d{4}$";
+
+<span class="comment">// Common Flags and Modifiers</span>
+// i - case insensitive
+// g - global match
+// m - multiline
+// s - dot matches newline
+// x - extended (ignore whitespace and comments)</code></pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. Context-Free Grammars (CFG)</h2>
+            
+            <h3>4.1 Chomsky Hierarchy and Language Classification</h3>
+            <div class="definition-box">
+                <h4>The Chomsky Hierarchy</h4>
+                <p>The Chomsky hierarchy classifies formal grammars and languages by their generative power:</p>
+                <ul>
+                    <li><strong>Type 0 (Unrestricted):</strong> Turing machines, recursively enumerable languages</li>
+                    <li><strong>Type 1 (Context-Sensitive):</strong> Linear-bounded automata, context-sensitive languages</li>
+                    <li><strong>Type 2 (Context-Free):</strong> Pushdown automata, context-free languages</li>
+                    <li><strong>Type 3 (Regular):</strong> Finite automata, regular languages</li>
+                </ul>
+                <p><strong>Inclusion Relationship:</strong> Regular ⊆ Context-Free ⊆ Context-Sensitive ⊆ Recursively Enumerable</p>
+            </div>
+
+            <div class="definition-box">
+                <h4>Language Classification Examples</h4>
+                <ul>
+                    <li><strong>Regular Languages:</strong> {aⁿ | n ≥ 0}, {strings ending with '01'}</li>
+                    <li><strong>Context-Free Languages:</strong> {aⁿbⁿ | n ≥ 0}, {balanced parentheses}</li>
+                    <li><strong>Context-Sensitive Languages:</strong> {aⁿbⁿcⁿ | n ≥ 0}, {ww | w ∈ {a,b}*}</li>
+                    <li><strong>Recursively Enumerable:</strong> Halting problem, any computable language</li>
+                </ul>
+            </div>
+            
+            <div class="definition-box">
+                <h4>Context-Free Grammar Definition</h4>
+                <p>A <strong>Context-Free Grammar (CFG)</strong> is a formal grammar system that generates context-free languages through a set of production rules. It is a mathematical model used to describe the syntax of programming languages, natural languages, and other structured text formats. CFGs are more powerful than regular expressions and can handle nested structures, balanced parentheses, and hierarchical relationships that regular expressions cannot express.</p>
+                
+                <p><strong>Key Characteristics:</strong></p>
+                <ul>
+                    <li><strong>Production Rules:</strong> Each rule has the form A → α, where A is a single non-terminal and α is any string of terminals and non-terminals</li>
+                    <li><strong>Context Independence:</strong> The replacement of a non-terminal depends only on the non-terminal itself, not on its surrounding context</li>
+                    <li><strong>Recursive Structure:</strong> Can describe nested and recursive patterns like balanced parentheses, arithmetic expressions, and programming language syntax</li>
+                    <li><strong>Hierarchical Organization:</strong> Naturally represents the hierarchical structure of complex languages</li>
+                    <li><strong>Parsing Algorithms:</strong> Supports efficient parsing algorithms like top-down and bottom-up parsing</li>
+                </ul>
+                
+                <p><strong>Mathematical Foundation:</strong> Context-free grammars generate context-free languages, which form the second level in the Chomsky hierarchy. They are more powerful than regular languages but less powerful than context-sensitive languages. CFGs are closed under union, concatenation, and Kleene star operations, and they can be recognized by pushdown automata.</p>
+                
+                <p><strong>Applications:</strong> Context-free grammars are fundamental to compiler design, natural language processing, XML/HTML parsing, mathematical expression parsing, and the formal specification of programming language syntax. They provide the theoretical foundation for understanding how complex structured languages can be parsed and processed by computers.</p>
+            </div>
+
+            <h3>4.2 Components of CFG</h3>
+            <div class="code-box">
+                <pre><code>CFG = (V, Σ, P, S)
+
+Where:
+V = Set of non-terminal symbols (variables)
+Σ = Set of terminal symbols (alphabet)
+P = Set of production rules
+S = Start symbol (S ∈ V)</code></pre>
+            </div>
+
+            <h3>4.3 Example CFG: Arithmetic Expressions</h3>
+            <div class="code-box">
+                <pre><code><span class="comment">// Grammar for simple arithmetic expressions</span>
+S → E
+E → E + T | E - T | T
+T → T * F | T / F | F
+F → (E) | number
+
+<span class="comment">// Example derivation for: 2 + 3 * 4</span>
+S → E
+  → E + T
+  → T + T
+  → F + T
+  → 2 + T
+  → 2 + T * F
+  → 2 + F * F
+  → 2 + 3 * F
+  → 2 + 3 * 4</code></pre>
+            </div>
+
+            <h3>4.4 Types of CFG Derivations</h3>
+            
+            <div class="example-box">
+                <h4>Leftmost Derivation</h4>
+                <p>Always replace the leftmost non-terminal in each step.</p>
+                <div class="code-box">
+                    <pre><code>S → E → E + T → T + T → F + T → 2 + T → 2 + T * F → 2 + F * F → 2 + 3 * F → 2 + 3 * 4</code></pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>Rightmost Derivation</h4>
+                <p>Always replace the rightmost non-terminal in each step.</p>
+                <div class="code-box">
+                    <pre><code>S → E → E + T → E + T * F → E + T * 4 → E + F * 4 → E + 3 * 4 → T + 3 * 4 → F + 3 * 4 → 2 + 3 * 4</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. Pushdown Automata (PDA)</h2>
+            
+            <div class="definition-box">
+                <h4>Pushdown Automaton Definition</h4>
+                <p>A <strong>Pushdown Automaton (PDA)</strong> is an extension of a finite automaton that includes an unbounded stack memory. It is a mathematical model of computation that can recognize context-free languages, making it more powerful than finite automata. The stack provides the PDA with the ability to remember an unbounded amount of information, which is essential for processing nested structures and maintaining context during computation.</p>
+                
+                <p><strong>Core Components:</strong></p>
+                <ul>
+                    <li><strong>Finite Control:</strong> Similar to finite automata, maintains the current state and processes input symbols</li>
+                    <li><strong>Input Tape:</strong> Contains the input string to be processed, read from left to right</li>
+                    <li><strong>Stack Memory:</strong> An unbounded LIFO (Last-In-First-Out) data structure that can store symbols</li>
+                    <li><strong>Transition Function:</strong> Defines how the automaton changes state, reads input, and manipulates the stack</li>
+                    <li><strong>Acceptance Criteria:</strong> Can accept by final state, empty stack, or both</li>
+                </ul>
+                
+                <p><strong>Key Features:</strong></p>
+                <ul>
+                    <li><strong>Unbounded Memory:</strong> The stack can grow arbitrarily large, providing unlimited memory capacity</li>
+                    <li><strong>LIFO Access:</strong> Only the top element of the stack can be accessed and modified</li>
+                    <li><strong>Context-Free Recognition:</strong> Can recognize all context-free languages and some context-sensitive languages</li>
+                    <li><strong>Nested Structure Processing:</strong> Naturally handles nested patterns like balanced parentheses and programming language constructs</li>
+                    <li><strong>Deterministic and Non-deterministic Variants:</strong> Both deterministic and non-deterministic PDAs exist</li>
+                </ul>
+                
+                <p><strong>Mathematical Significance:</strong> Pushdown automata are equivalent to context-free grammars in terms of language recognition capability. They represent the computational model for context-free languages in the Chomsky hierarchy. The stack provides the additional memory needed to process the recursive and nested structures that characterize context-free languages.</p>
+                
+                <p><strong>Applications:</strong> PDAs are fundamental to compiler design, particularly in the parsing phase where they are used to build parse trees for programming language constructs. They are also used in natural language processing, XML processing, and other applications that require parsing of structured text with nested elements.</p>
+            </div>
+
+            <h3>5.1 Components of PDA</h3>
+            <div class="code-box">
+                <pre><code>PDA = (Q, Σ, Γ, δ, q₀, Z₀, F)
+
+Where:
+Q = Finite set of states
+Σ = Input alphabet
+Γ = Stack alphabet
+δ = Transition function (Q × Σ × Γ → 2^(Q × Γ*))
+q₀ = Initial state
+Z₀ = Initial stack symbol
+F = Set of accepting states</code></pre>
+            </div>
+
+            <h3>5.2 PDA Example: Balanced Parentheses</h3>
+            <div class="code-box">
+                <pre><code><span class="comment">// PDA for language of balanced parentheses</span>
+States: {q₀, q₁}
+Input Alphabet: {(, )}
+Stack Alphabet: {Z₀, X}
+Initial State: q₀
+Initial Stack Symbol: Z₀
+Accepting States: {q₁}
+
+Transitions:
+δ(q₀, (, Z₀) = {(q₀, XZ₀)}
+δ(q₀, (, X) = {(q₀, XX)}
+δ(q₀, ), X) = {(q₀, ε)}
+δ(q₀, ε, Z₀) = {(q₁, Z₀)}</code></pre>
+            </div>
+
+            <h3>5.3 PDA vs Finite Automata</h3>
+            <table class="complexity-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Finite Automata</th>
+                        <th>Pushdown Automata</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Memory</td>
+                        <td>Finite state memory</td>
+                        <td>Unbounded stack memory</td>
+                    </tr>
+                    <tr>
+                        <td>Language Class</td>
+                        <td>Regular Languages</td>
+                        <td>Context-Free Languages</td>
+                    </tr>
+                    <tr>
+                        <td>Power</td>
+                        <td>Less powerful</td>
+                        <td>More powerful</td>
+                    </tr>
+                    <tr>
+                        <td>Applications</td>
+                        <td>Lexical analysis</td>
+                        <td>Syntactic analysis</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>6. Turing Machines</h2>
+            
+            <div class="definition-box">
+                <h4>Turing Machine Definition</h4>
+                <p>A <strong>Turing Machine (TM)</strong> is the most powerful and fundamental model of computation in theoretical computer science. It is an abstract mathematical device that can simulate any computer algorithm and represents the theoretical foundation for understanding what can and cannot be computed. The Turing Machine consists of an infinite tape divided into cells, a read/write head that can move left or right, and a finite control unit that manages the computation process.</p>
+                
+                <p><strong>Core Components:</strong></p>
+                <ul>
+                    <li><strong>Infinite Tape:</strong> A one-dimensional array of cells, each containing a symbol from a finite alphabet, extending infinitely in both directions</li>
+                    <li><strong>Read/Write Head:</strong> A mechanism that can read the symbol in the current cell, write a new symbol, and move left or right on the tape</li>
+                    <li><strong>Finite Control:</strong> A finite state machine that determines the next action based on the current state and the symbol read from the tape</li>
+                    <li><strong>Transition Function:</strong> Defines how the machine changes state, writes symbols, and moves the head based on current state and input</li>
+                    <li><strong>Acceptance Criteria:</strong> Accepts input by reaching an accepting state or rejects by reaching a rejecting state or running indefinitely</li>
+                </ul>
+                
+                <p><strong>Key Characteristics:</strong></p>
+                <ul>
+                    <li><strong>Universal Computation:</strong> Can simulate any computer algorithm and solve any computable problem</li>
+                    <li><strong>Infinite Memory:</strong> The tape provides unlimited storage capacity</li>
+                    <li><strong>Sequential Access:</strong> The head can only access one cell at a time and must move sequentially</li>
+                    <li><strong>Deterministic and Non-deterministic Variants:</strong> Both deterministic and non-deterministic Turing machines exist</li>
+                    <li><strong>Halting Problem:</strong> Cannot determine in general whether a given Turing machine will halt on a given input</li>
+                </ul>
+                
+                <p><strong>Mathematical Significance:</strong> The Turing Machine is the foundation of the Church-Turing thesis, which states that any function that can be computed by an algorithm can be computed by a Turing Machine. It represents the most powerful computational model in the Chomsky hierarchy and can recognize recursively enumerable languages. The concept of Turing completeness is based on the ability to simulate a Turing Machine.</p>
+                
+                <p><strong>Theoretical and Practical Impact:</strong> Turing Machines provide the theoretical foundation for understanding computational complexity, decidability, and the limits of computation. They are used to define complexity classes like P, NP, and PSPACE. While not directly implemented in hardware, the principles of Turing Machines influence the design of programming languages, algorithms, and computational systems.</p>
+            </div>
+
+            <h3>6.1 Components of Turing Machine</h3>
+            <div class="code-box">
+                <pre><code>TM = (Q, Σ, Γ, δ, q₀, B, F)
+
+Where:
+Q = Finite set of states
+Σ = Input alphabet
+Γ = Tape alphabet (Σ ⊆ Γ)
+δ = Transition function (Q × Γ → Q × Γ × {L, R})
+q₀ = Initial state
+B = Blank symbol (B ∈ Γ - Σ)
+F = Set of accepting states</code></pre>
+            </div>
+
+            <h3>6.2 Turing Machine Example: Palindrome Checker</h3>
+            <div class="code-box">
+                <pre><code><span class="comment">// TM to check if a string is a palindrome</span>
+States: {q₀, q₁, q₂, q₃, q₄, q_accept, q_reject}
+Input Alphabet: {0, 1}
+Tape Alphabet: {0, 1, B, X, Y}
+Initial State: q₀
+Blank Symbol: B
+Accepting States: {q_accept}
+
+Transitions:
+δ(q₀, 0) = (q₁, X, R)  <span class="comment">// Mark first 0</span>
+δ(q₀, 1) = (q₂, Y, R)  <span class="comment">// Mark first 1</span>
+δ(q₀, B) = (q_accept, B, R)  <span class="comment">// Empty string is palindrome</span>
+δ(q₁, 0) = (q₁, 0, R)  <span class="comment">// Move right</span>
+δ(q₁, 1) = (q₁, 1, R)
+δ(q₁, B) = (q₃, B, L)  <span class="comment">// Go back</span>
+δ(q₂, 0) = (q₂, 0, R)  <span class="comment">// Move right</span>
+δ(q₂, 1) = (q₂, 1, R)
+δ(q₂, B) = (q₄, B, L)  <span class="comment">// Go back</span>
+δ(q₃, 0) = (q_accept, X, L)  <span class="comment">// Check if last is 0</span>
+δ(q₃, 1) = (q_reject, 1, L)
+δ(q₄, 0) = (q_reject, 0, L)
+δ(q₄, 1) = (q_accept, Y, L)  <span class="comment">// Check if last is 1</span></code></pre>
+            </div>
+
+            <h3>6.3 Church-Turing Thesis</h3>
+            <div class="highlight">
+                <p><strong>The Church-Turing Thesis</strong> states that any function that can be computed by an algorithm can be computed by a Turing Machine. This is not a mathematical theorem but a hypothesis about the nature of computation.</p>
+            </div>
+
+            <h3>6.4 Types of Turing Machines</h3>
+            <ul>
+                <li><strong>Deterministic Turing Machine (DTM):</strong> At each step, there is exactly one possible transition</li>
+                <li><strong>Non-Deterministic Turing Machine (NTM):</strong> At each step, there can be multiple possible transitions</li>
+                <li><strong>Multi-Tape Turing Machine:</strong> Has multiple tapes, each with its own read/write head</li>
+                <li><strong>Universal Turing Machine:</strong> Can simulate any other Turing Machine</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>7. Computational Complexity</h2>
+            
+            <h3>7.1 Time Complexity Classes</h3>
+            <table class="complexity-table">
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                        <th>Example Problems</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>P</td>
+                        <td>Problems solvable in polynomial time</td>
+                        <td>Sorting, Shortest path</td>
+                    </tr>
+                    <tr>
+                        <td>NP</td>
+                        <td>Problems verifiable in polynomial time</td>
+                        <td>SAT, Traveling Salesman</td>
+                    </tr>
+                    <tr>
+                        <td>NP-Complete</td>
+                        <td>Hardest problems in NP</td>
+                        <td>3-SAT, Graph Coloring</td>
+                    </tr>
+                    <tr>
+                        <td>NP-Hard</td>
+                        <td>At least as hard as NP-Complete</td>
+                        <td>Halting Problem</td>
+                    </tr>
+                    <tr>
+                        <td>EXPTIME</td>
+                        <td>Problems solvable in exponential time</td>
+                        <td>Chess, Go</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>7.2 Space Complexity Classes</h3>
+            <table class="complexity-table">
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                        <th>Example Problems</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>L</td>
+                        <td>Logarithmic space</td>
+                        <td>Reachability in trees</td>
+                    </tr>
+                    <tr>
+                        <td>NL</td>
+                        <td>Non-deterministic logarithmic space</td>
+                        <td>Reachability in graphs</td>
+                    </tr>
+                    <tr>
+                        <td>PSPACE</td>
+                        <td>Polynomial space</td>
+                        <td>QBF, Geography</td>
+                    </tr>
+                    <tr>
+                        <td>EXPSPACE</td>
+                        <td>Exponential space</td>
+                        <td>Generalized Chess</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>8. Applications of Automata Theory</h2>
+            
+            <h3>8.1 Compiler Design</h3>
+            <div class="algorithm-steps">
+                <h4>Lexical Analysis (Scanner)</h4>
+                <ol>
+                    <li>Uses Finite Automata to recognize tokens</li>
+                    <li>Converts input stream into token stream</li>
+                    <li>Removes whitespace and comments</li>
+                    <li>Handles identifiers, keywords, literals</li>
+                </ol>
+            </div>
+
+            <div class="algorithm-steps">
+                <h4>Syntactic Analysis (Parser)</h4>
+                <ol>
+                    <li>Uses Context-Free Grammars and Pushdown Automata</li>
+                    <li>Builds parse trees from token streams</li>
+                    <li>Checks syntax correctness</li>
+                    <li>Handles operator precedence and associativity</li>
+                </ol>
+            </div>
+
+            <h3>8.2 Pattern Matching and Text Processing</h3>
+            <ul>
+                <li><strong>Regular Expressions:</strong> Used in search engines, text editors, and programming languages</li>
+                <li><strong>String Matching:</strong> Algorithms like KMP, Boyer-Moore use automata concepts</li>
+                <li><strong>Natural Language Processing:</strong> Finite state transducers for morphological analysis</li>
+            </ul>
+
+            <h3>8.3 Software Verification</h3>
+            <ul>
+                <li><strong>Model Checking:</strong> Uses automata to verify system properties</li>
+                <li><strong>Protocol Verification:</strong> Ensures communication protocols work correctly</li>
+                <li><strong>Hardware Verification:</strong> Verifies circuit designs and digital systems</li>
+            </ul>
+
+            <h3>8.4 Artificial Intelligence</h3>
+            <ul>
+                <li><strong>Speech Recognition:</strong> Hidden Markov Models (HMMs) are based on automata</li>
+                <li><strong>Natural Language Understanding:</strong> Parsing and semantic analysis</li>
+                <li><strong>Machine Learning:</strong> Finite state machines for sequence modeling</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>9. Important Theorems and Results</h2>
+            
+            <h3>9.1 Pumping Lemma for Regular Languages</h3>
+            <div class="highlight">
+                <p><strong>Theorem:</strong> For any regular language L, there exists a constant p (pumping length) such that any string w in L with |w| ≥ p can be written as w = xyz where:</p>
+                <ul>
+                    <li>|xy| ≤ p</li>
+                    <li>|y| ≥ 1</li>
+                    <li>xyⁱz ∈ L for all i ≥ 0</li>
+                </ul>
+            </div>
+
+            <h3>9.2 Pumping Lemma for Context-Free Languages</h3>
+            <div class="highlight">
+                <p><strong>Theorem:</strong> For any context-free language L, there exists a constant p such that any string w in L with |w| ≥ p can be written as w = uvxyz where:</p>
+                <ul>
+                    <li>|vxy| ≤ p</li>
+                    <li>|vy| ≥ 1</li>
+                    <li>uvⁱxyⁱz ∈ L for all i ≥ 0</li>
+                </ul>
+            </div>
+
+            <h3>9.3 Myhill-Nerode Theorem</h3>
+            <div class="highlight">
+                <p><strong>Theorem:</strong> A language L is regular if and only if the number of equivalence classes of the indistinguishability relation is finite.</p>
+            </div>
+
+            <h3>9.4 Rice's Theorem</h3>
+            <div class="highlight">
+                <p><strong>Theorem:</strong> Any non-trivial property of recursively enumerable languages is undecidable.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>10. Advanced Topics in Automata Theory</h2>
+            
+            <h3>10.1 Two-Way Finite Automata</h3>
+            <div class="definition-box">
+                <h4>Two-Way DFA and NFA</h4>
+                <p>Two-way automata can move both left and right on the input tape:</p>
+                <ul>
+                    <li><strong>Movement:</strong> Head can move left (L), right (R), or stay (S)</li>
+                    <li><strong>Power:</strong> Two-way DFA has the same power as one-way DFA</li>
+                    <li><strong>Complexity:</strong> Can be more efficient for certain problems</li>
+                    <li><strong>Applications:</strong> Pattern matching, string processing</li>
+                </ul>
+            </div>
+
+            <h3>10.2 Probabilistic Automata</h3>
+            <div class="definition-box">
+                <h4>Probabilistic Finite Automata (PFA)</h4>
+                <p>Automata that make probabilistic transitions:</p>
+                <ul>
+                    <li><strong>Transition Probabilities:</strong> Each transition has an associated probability</li>
+                    <li><strong>Acceptance Probability:</strong> Language membership is probabilistic</li>
+                    <li><strong>Applications:</strong> Machine learning, pattern recognition, natural language processing</li>
+                    <li><strong>Learning:</strong> Can be trained from examples</li>
+                </ul>
+            </div>
+
+            <h3>10.3 Weighted Automata</h3>
+            <div class="definition-box">
+                <h4>Weighted Finite Automata (WFA)</h4>
+                <p>Automata with weights on transitions and states:</p>
+                <ul>
+                    <li><strong>Weights:</strong> Numerical values associated with transitions</li>
+                    <li><strong>Semiring Operations:</strong> Addition and multiplication for weight computation</li>
+                    <li><strong>Applications:</strong> Speech recognition, image processing, computational biology</li>
+                    <li><strong>Equivalence:</strong> Can represent various mathematical structures</li>
+                </ul>
+            </div>
+
+            <h3>10.4 Tree Automata</h3>
+            <div class="definition-box">
+                <h4>Tree Automata and Tree Languages</h4>
+                <p>Automata that process tree structures instead of linear strings:</p>
+                <ul>
+                    <li><strong>Tree Structure:</strong> Hierarchical data with parent-child relationships</li>
+                    <li><strong>Bottom-Up Processing:</strong> Start from leaves and work towards root</li>
+                    <li><strong>Top-Down Processing:</strong> Start from root and work towards leaves</li>
+                    <li><strong>Applications:</strong> XML processing, program analysis, natural language parsing</li>
+                </ul>
+            </div>
+
+            <h3>10.5 Büchi Automata</h3>
+            <div class="definition-box">
+                <h4>Büchi Automata for Infinite Words</h4>
+                <p>Automata that process infinite sequences:</p>
+                <ul>
+                    <li><strong>Infinite Words:</strong> Sequences that continue indefinitely</li>
+                    <li><strong>Acceptance Condition:</strong> Must visit accepting states infinitely often</li>
+                    <li><strong>Applications:</strong> Model checking, verification of reactive systems</li>
+                    <li><strong>ω-Regular Languages:</strong> Languages of infinite words</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>11. Practice Problems and Examples</h2>
+            
+            <h3>11.1 Finite Automata Problems</h3>
+            
+            <div class="example-box">
+                <h4>Problem 1: Design a DFA for strings ending with '101'</h4>
+                <div class="code-box">
+                    <pre><code><span class="comment">// States: q₀, q₁, q₂, q₃</span>
+<span class="comment">// Initial: q₀</span>
+<span class="comment">// Accepting: q₃</span>
+
+Transitions:
+δ(q₀, 0) = q₀, δ(q₀, 1) = q₁
+δ(q₁, 0) = q₂, δ(q₁, 1) = q₁
+δ(q₂, 0) = q₀, δ(q₂, 1) = q₃
+δ(q₃, 0) = q₂, δ(q₃, 1) = q₁</code></pre>
+                </div>
+                <p><strong>Solution:</strong> This DFA tracks the last three symbols read. State q₀ represents no progress, q₁ represents ending with '1', q₂ represents ending with '10', and q₃ represents ending with '101'.</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Problem 2: Convert NFA to DFA</h4>
+                <p>Convert the NFA with transitions δ(q₀, a) = {q₀, q₁}, δ(q₀, b) = {q₁}, δ(q₁, a) = {q₂}, δ(q₁, b) = {q₂} to an equivalent DFA.</p>
+                <div class="code-box">
+                    <pre><code><span class="comment">// Solution: Subset Construction</span>
+<span class="comment">// DFA States: {q₀}, {q₀,q₁}, {q₁}, {q₂}</span>
+
+<span class="comment">// Initial state: {q₀}</span>
+<span class="comment">// Accepting states: {q₂}</span>
+
+<span class="comment">// Transitions:</span>
+δ({q₀}, a) = {q₀, q₁}
+δ({q₀}, b) = {q₁}
+δ({q₀,q₁}, a) = {q₀, q₁, q₂}
+δ({q₀,q₁}, b) = {q₁, q₂}
+δ({q₁}, a) = {q₂}
+δ({q₁}, b) = {q₂}
+δ({q₂}, a) = ∅
+δ({q₂}, b) = ∅</code></pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>Problem 3: Minimize DFA</h4>
+                <p>Minimize the DFA with states {A, B, C, D}, alphabet {0, 1}, initial state A, accepting states {C, D}, and transitions:</p>
+                <div class="code-box">
+                    <pre><code>δ(A, 0) = B, δ(A, 1) = C
+δ(B, 0) = A, δ(B, 1) = D
+δ(C, 0) = D, δ(C, 1) = A
+δ(D, 0) = C, δ(D, 1) = B</code></pre>
+                </div>
+                <p><strong>Solution:</strong> States C and D are equivalent (both accepting and behave identically), so they can be merged. The minimized DFA has states {A, B, {C,D}}.</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Problem 4: Prove Language is Not Regular</h4>
+                <p>Prove that the language L = {aⁿbⁿ | n ≥ 0} is not regular using the pumping lemma.</p>
+                <div class="code-box">
+                    <pre><code><span class="comment">// Proof by contradiction:</span>
+<span class="comment">// Assume L is regular with pumping length p</span>
+<span class="comment">// Consider string w = a^p b^p</span>
+<span class="comment">// By pumping lemma: w = xyz where |xy| ≤ p, |y| ≥ 1</span>
+<span class="comment">// Since |xy| ≤ p, y consists only of a's</span>
+<span class="comment">// Pumping y gives a^(p+|y|) b^p, which is not in L</span>
+<span class="comment">// Contradiction! Therefore L is not regular.</span></code></pre>
+                </div>
+            </div>
+
+            <h3>11.2 Regular Expression Problems</h3>
+            
+            <div class="example-box">
+                <h4>Problem 5: Write RE for valid email addresses</h4>
+                <div class="code-box">
+                    <pre><code>^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$</code></pre>
+                </div>
+                <p><strong>Explanation:</strong></p>
+                <ul>
+                    <li><strong>^</strong>: Start of string</li>
+                    <li><strong>[a-zA-Z0-9._%+-]+</strong>: One or more alphanumeric characters, dots, underscores, percent signs, plus signs, or hyphens</li>
+                    <li><strong>@</strong>: Literal @ symbol</li>
+                    <li><strong>[a-zA-Z0-9.-]+</strong>: Domain name (alphanumeric, dots, hyphens)</li>
+                    <li><strong>\.</strong>: Literal dot</li>
+                    <li><strong>[a-zA-Z]{2,}</strong>: Top-level domain (2 or more letters)</li>
+                    <li><strong>$</strong>: End of string</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4>Problem 6: Design RE for Phone Numbers</h4>
+                <p>Create regular expressions for different phone number formats:</p>
+                <div class="code-box">
+                    <pre><code><span class="comment">// US Format: (123) 456-7890</span>
+^\(\d{3}\) \d{3}-\d{4}$
+
+<span class="comment">// International Format: +1-123-456-7890</span>
+^\+\d{1,3}-\d{3}-\d{3}-\d{4}$
+
+<span class="comment">// Flexible Format: Accepts various separators</span>
+^(\+\d{1,3}[-. ]?)?\(?(\d{3})\)?[-. ]?(\d{3})[-. ]?(\d{4})$</code></pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>Problem 7: RE for Password Validation</h4>
+                <p>Create a regular expression for password validation with specific requirements:</p>
+                <div class="code-box">
+                    <pre><code><span class="comment">// Password: 8+ chars, at least one uppercase, one lowercase, one digit</span>
+^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$
+
+<span class="comment">// Breakdown:</span>
+<span class="comment">// (?=.*[a-z]) - positive lookahead for lowercase</span>
+<span class="comment">// (?=.*[A-Z]) - positive lookahead for uppercase</span>
+<span class="comment">// (?=.*\d) - positive lookahead for digit</span>
+<span class="comment">// [a-zA-Z\d@$!%*?&]{8,} - 8+ allowed characters</span></code></pre>
+                </div>
+            </div>
+
+            <h3>11.3 Context-Free Grammar Problems</h3>
+            
+            <div class="example-box">
+                <h4>Problem 8: Design CFG for palindrome strings</h4>
+                <div class="code-box">
+                    <pre><code>S → aSa | bSb | a | b | ε</code></pre>
+                </div>
+                <p><strong>Explanation:</strong> This grammar generates palindromes by recursively adding matching symbols on both sides. The base cases are single symbols (a, b) and the empty string (ε).</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Problem 9: CFG for Balanced Parentheses</h4>
+                <p>Design a context-free grammar for the language of balanced parentheses:</p>
+                <div class="code-box">
+                    <pre><code>S → (S) | SS | ε</code></pre>
+                </div>
+                <p><strong>Explanation:</strong></p>
+                <ul>
+                    <li><strong>S → (S)</strong>: Generates nested parentheses</li>
+                    <li><strong>S → SS</strong>: Generates concatenated balanced strings</li>
+                    <li><strong>S → ε</strong>: Base case for empty string</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4>Problem 10: CFG for Arithmetic Expressions</h4>
+                <p>Design a context-free grammar for simple arithmetic expressions:</p>
+                <div class="code-box">
+                    <pre><code>E → E + T | E - T | T
+T → T * F | T / F | F
+F → (E) | number
+
+<span class="comment">// Where 'number' represents any numeric literal</span>
+<span class="comment">// This grammar handles operator precedence correctly</span></code></pre>
+                </div>
+                <p><strong>Features:</strong></p>
+                <ul>
+                    <li><strong>Operator Precedence:</strong> Multiplication/division have higher precedence than addition/subtraction</li>
+                    <li><strong>Left Associativity:</strong> Operators of the same precedence are left-associative</li>
+                    <li><strong>Parentheses:</strong> Allow grouping and overriding precedence</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4>Problem 11: CFG for Programming Language Constructs</h4>
+                <p>Design a context-free grammar for simple programming language constructs:</p>
+                <div class="code-box">
+                    <pre><code><span class="comment">// Variable declarations</span>
+declaration → type identifier = expression ;
+
+<span class="comment">// If statements</span>
+if_statement → if ( condition ) statement [else statement]
+
+<span class="comment">// While loops</span>
+while_statement → while ( condition ) statement
+
+<span class="comment">// Function definitions</span>
+function → type identifier ( parameters ) { statements }
+
+<span class="comment">// Expressions</span>
+expression → expression + term | expression - term | term
+term → term * factor | term / factor | factor
+factor → ( expression ) | identifier | number</code></pre>
+                </div>
+            </div>
+
+            <h3>11.4 Turing Machine Problems</h3>
+            
+            <div class="example-box">
+                <h4>Problem 12: Design TM to add two binary numbers</h4>
+                <p>Design a Turing Machine that takes two binary numbers separated by '+' and outputs their sum in binary.</p>
+                <div class="code-box">
+                    <pre><code><span class="comment">// High-level algorithm:</span>
+<span class="comment">// 1. Move to the end of the first number</span>
+<span class="comment">// 2. Move to the end of the second number</span>
+<span class="comment">// 3. Add digits from right to left, handling carry</span>
+<span class="comment">// 4. Write result in reverse order</span>
+
+<span class="comment">// States: q₀ (start), q₁ (reading first), q₂ (reading second),</span>
+<span class="comment">//         q₃ (adding), q₄ (carry), q_accept</span>
+
+<span class="comment">// Example: 101+110=1011</span>
+<span class="comment">// Tape: ...101+110...</span>
+<span class="comment">// Result: ...1011...</span></code></pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>Problem 13: TM for Palindrome Recognition</h4>
+                <p>Design a Turing Machine to recognize palindromes over the alphabet {a, b}:</p>
+                <div class="code-box">
+                    <pre><code><span class="comment">// Algorithm:</span>
+<span class="comment">// 1. Mark the first symbol</span>
+<span class="comment">// 2. Move to the end and check if it matches</span>
+<span class="comment">// 3. Mark both symbols and repeat</span>
+<span class="comment">// 4. Accept if all symbols are marked</span>
+
+<span class="comment">// States: q₀ (start), q₁ (mark first), q₂ (move right),</span>
+<span class="comment">//         q₃ (check last), q₄ (move left), q_accept, q_reject</span>
+
+<span class="comment">// Example: "abba" - accept, "abab" - reject</span></code></pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>Problem 14: TM for Binary Multiplication</h4>
+                <p>Design a Turing Machine to multiply two binary numbers:</p>
+                <div class="code-box">
+                    <pre><code><span class="comment">// Algorithm (using repeated addition):</span>
+<span class="comment">// 1. Copy the first number to a work area</span>
+<span class="comment">// 2. For each '1' in the second number, add the first number</span>
+<span class="comment">// 3. Shift the result appropriately</span>
+<span class="comment">// 4. Output the final result</span>
+
+<span class="comment">// This is a complex multi-tape TM implementation</span>
+<span class="comment">// Example: 11 × 10 = 110 (3 × 2 = 6)</span></code></pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>Problem 15: Universal Turing Machine</h4>
+                <p>Explain the concept of a Universal Turing Machine:</p>
+                <div class="code-box">
+                    <pre><code><span class="comment">// A Universal Turing Machine (UTM) can simulate any other TM</span>
+<span class="comment">// Input: Description of TM M + input string w</span>
+<span class="comment">// Output: Same as M would produce on input w</span>
+
+<span class="comment">// Key Components:</span>
+<span class="comment">// 1. State table representation</span>
+<span class="comment">// 2. Tape management</span>
+<span class="comment">// 3. State transition simulation</span>
+<span class="comment">// 4. Input/output handling</span>
+
+<span class="comment">// Significance: Foundation of stored-program computers</span></code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>📚 <strong>PrepCampus</strong> - Comprehensive Automata Theory Notes</p>
+            <p>🌐 www.prepcampus.com | 📧 prepcampus.info@gmail.com</p>
+            <p>© 2024 PrepCampus. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        // Fallback to alternative CDN if first one fails
+        if (typeof html2pdf === 'undefined') {
+            const script = document.createElement('script');
+            script.src = 'https://unpkg.com/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js';
+            script.onload = function() {
+                console.log('html2pdf loaded from fallback CDN');
+            };
+            script.onerror = function() {
+                console.error('Both CDNs failed to load html2pdf');
+            };
+            document.head.appendChild(script);
+        }
+    </script>
+    <script>
+        // Check if html2pdf is loaded
+        function checkHtml2Pdf() {
+            if (typeof html2pdf === 'undefined') {
+                console.error('html2pdf library not loaded');
+                alert('PDF library not loaded. Please check your internet connection and try again.');
+                return false;
+            }
+            return true;
+        }
+
+        function downloadPDF() {
+            console.log('Download PDF function called');
+            
+            // Check if library is loaded
+            if (!checkHtml2Pdf()) {
+                return;
+            }
+
+            // Show loading message
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '⏳ Generating PDF...';
+            btn.disabled = true;
+
+            try {
+                // Configure PDF options
+                const opt = {
+                    margin: [10, 10, 10, 10],
+                    filename: 'Automata_Theory_Notes_PrepCampus.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { 
+                        scale: 2,
+                        useCORS: true,
+                        letterRendering: true,
+                        allowTaint: true
+                    },
+                    jsPDF: { 
+                        unit: 'mm', 
+                        format: 'a4', 
+                        orientation: 'portrait' 
+                    }
+                };
+
+                console.log('Starting PDF generation...');
+                
+                // Generate PDF
+                html2pdf()
+                    .set(opt)
+                    .from(document.querySelector('.container'))
+                    .save()
+                    .then(() => {
+                        console.log('PDF generated successfully');
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    })
+                    .catch(err => {
+                        console.error('PDF generation failed:', err);
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                        alert('PDF generation failed: ' + err.message + '. Please try again.');
+                    });
+            } catch (error) {
+                console.error('Error in downloadPDF function:', error);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                alert('Error generating PDF: ' + error.message);
+            }
+        }
+
+        // Alternative download method using print
+        function downloadAsPrint() {
+            console.log('Using print method for PDF');
+            window.print();
+        }
+
+        // Test function to verify download functionality
+        function testDownload() {
+            console.log('Test download function called');
+            alert('Test function working! Check console for details.');
+            
+            // Test if html2pdf is available
+            if (typeof html2pdf !== 'undefined') {
+                console.log('html2pdf is available');
+                alert('html2pdf library is loaded successfully!');
+            } else {
+                console.log('html2pdf is NOT available');
+                alert('html2pdf library is NOT loaded. Please check internet connection.');
+            }
+            
+            // Test if container element exists
+            const container = document.querySelector('.container');
+            if (container) {
+                console.log('Container element found:', container);
+            } else {
+                console.log('Container element NOT found');
+            }
+        }
+
+        // Add keyboard shortcut for download (Ctrl+D)
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'd') {
+                e.preventDefault();
+                downloadPDF();
+            }
+        });
+
+        // Check library loading on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                if (checkHtml2Pdf()) {
+                    console.log('html2pdf library loaded successfully');
+                } else {
+                    console.log('html2pdf library failed to load');
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

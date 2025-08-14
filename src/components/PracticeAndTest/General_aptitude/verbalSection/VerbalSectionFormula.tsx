@@ -81,7 +81,7 @@ const VerbalSectionFormula: React.FC = () => {
         ]
       }
     ],
-    'error-identification': [
+    'spotting-error': [
       {
         title: 'Common Grammar Errors',
         description: 'Identifying and correcting frequent grammatical mistakes.',
@@ -145,7 +145,7 @@ const VerbalSectionFormula: React.FC = () => {
         ]
       }
     ],
-    'vocabulary': [
+    'idioms-phrases': [
       {
         title: 'Context Clues',
         description: 'Using surrounding information to understand word meanings.',
@@ -209,6 +209,73 @@ const VerbalSectionFormula: React.FC = () => {
         ]
       }
     ],
+    'tenses-subject-verb-agreement': [
+      {
+        title: 'Verb Tenses',
+        description: 'Understanding and using correct verb tenses.',
+        examples: [
+          'Present Simple: for habits, facts, and general truths',
+          'Present Continuous: for actions happening now',
+          'Past Simple: for completed actions in the past',
+          'Past Continuous: for actions in progress in the past',
+          'Present Perfect: for actions completed recently or with present relevance',
+          'Future Simple: for predictions and planned actions'
+        ]
+      },
+      {
+        title: 'Subject-Verb Agreement',
+        description: 'Ensuring verbs match their subjects in number and person.',
+        examples: [
+          'Singular subjects take singular verbs (he runs)',
+          'Plural subjects take plural verbs (they run)',
+          'Collective nouns can be singular or plural depending on context',
+          'Compound subjects joined by "and" take plural verbs',
+          'Compound subjects joined by "or" or "nor" match the nearest subject'
+        ]
+      },
+      {
+        title: 'Common Agreement Errors',
+        description: 'Frequent mistakes to avoid in subject-verb agreement.',
+        examples: [
+          'Intervening phrases don\'t affect agreement (The book on the table is mine)',
+          'Indefinite pronouns like "everyone" take singular verbs',
+          'Fractions and percentages agree with the noun they modify',
+          'Titles and names take singular verbs even if they end in -s'
+        ]
+      }
+    ],
+    'active-passive-voice': [
+      {
+        title: 'Active Voice',
+        description: 'When the subject performs the action.',
+        examples: [
+          'The cat chased the mouse (subject: cat, action: chased)',
+          'She wrote the letter (subject: she, action: wrote)',
+          'They built the house (subject: they, action: built)',
+          'Active voice is usually more direct and engaging'
+        ]
+      },
+      {
+        title: 'Passive Voice',
+        description: 'When the subject receives the action.',
+        examples: [
+          'The mouse was chased by the cat (subject: mouse, receives action)',
+          'The letter was written by her (subject: letter, receives action)',
+          'The house was built by them (subject: house, receives action)',
+          'Passive voice emphasizes the result rather than the doer'
+        ]
+      },
+      {
+        title: 'When to Use Each',
+        description: 'Choosing between active and passive voice.',
+        examples: [
+          'Use active voice for clarity and directness',
+          'Use passive voice when the doer is unknown or unimportant',
+          'Use passive voice in scientific writing to emphasize results',
+          'Avoid passive voice when you want to emphasize who did the action'
+        ]
+      }
+    ],
     'grammar-usage': [
       {
         title: 'Parts of Speech',
@@ -246,12 +313,12 @@ const VerbalSectionFormula: React.FC = () => {
   const getTopicTitle = (topic: string): string => {
     const topicMap: { [key: string]: string } = {
       'reading-comprehension': 'Reading Comprehension',
-      'sentence-completion': 'Sentence Completion',
-      'error-identification': 'Error Identification & Correction',
+      'tenses-subject-verb-agreement': 'Tenses, Subject and Verb Agreement',
+      'spotting-error': 'Spotting Error',
       'para-jumbles': 'Para Jumbles',
-      'vocabulary': 'Vocabulary-based Questions',
-      'sentence-improvement': 'Sentence Improvement',
-      'grammar-usage': 'Grammar Usage'
+      'idioms-phrases': 'Idioms and Phrases',
+      'sentence-completion': 'Sentence Completion',
+      'active-passive-voice': 'Active and Passive Voice'
     };
     
     return topicMap[topic] || 'Verbal Topic';
@@ -260,12 +327,12 @@ const VerbalSectionFormula: React.FC = () => {
   const getTopicIcon = (topic: string): React.ReactNode => {
     const iconMap: { [key: string]: React.ReactNode } = {
       'reading-comprehension': <BookOpen className="text-blue-600" />,
-      'sentence-completion': <Link className="text-green-600" />,
-      'error-identification': <CheckCircle className="text-purple-600" />,
+      'tenses-subject-verb-agreement': <Link className="text-green-600" />,
+      'spotting-error': <CheckCircle className="text-purple-600" />,
       'para-jumbles': <Puzzle className="text-orange-600" />,
-      'vocabulary': <MessageSquare className="text-red-600" />,
-      'sentence-improvement': <FileText className="text-indigo-600" />,
-      'grammar-usage': <BookMarked className="text-teal-600" />
+      'idioms-phrases': <MessageSquare className="text-red-600" />,
+      'sentence-completion': <FileText className="text-indigo-600" />,
+      'active-passive-voice': <BookMarked className="text-teal-600" />
     };
     
     return iconMap[topic] || <BookOpen className="text-blue-600" />;

@@ -1,0 +1,2311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C Programming Notes - PrepCampus</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; color: #333; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .container { max-width: 1200px; margin: 20px auto; padding: 20px; background: white; box-shadow: 0 0 20px rgba(0,0,0,0.1); border-radius: 10px; }
+        .header { text-align: center; padding: 30px 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; margin-bottom: 30px; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .section { margin-bottom: 40px; padding: 25px; background: #f8f9fa; border-radius: 8px; border-left: 5px solid #667eea; }
+        .section h2 { color: #667eea; font-size: 1.8em; margin-bottom: 15px; border-bottom: 2px solid #667eea; padding-bottom: 10px; }
+        .code-box { background: #2d3748; color: #e2e8f0; padding: 20px; border-radius: 8px; margin: 15px 0; overflow-x: auto; font-family: 'Courier New', monospace; }
+        .highlight { background: #fff3cd; border: 1px solid #ffeaa7; padding: 20px; border-radius: 5px; margin: 10px 0; }
+        .keyword { color: #ff6b6b; font-weight: bold; }
+        .comment { color: #74b9ff; font-style: italic; }
+        .number { color: #00b894; }
+        .string { color: #fdcb6e; }
+        .footer { text-align: center; padding: 20px; background: #2d3748; color: white; border-radius: 8px; margin-top: 30px; }
+        .download-btn { 
+            background: linear-gradient(135deg, #00b894 0%, #00a085 100%); 
+            color: white; 
+            border: none; 
+            padding: 12px 24px; 
+            border-radius: 25px; 
+            font-size: 16px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            margin: 10px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+            transition: all 0.3s ease; 
+        }
+        .download-btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3); 
+        }
+        .download-btn:active { 
+            transform: translateY(0); 
+        }
+        @media print {
+            .download-btn { display: none; }
+            body { background: white; }
+            .container { box-shadow: none; margin: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>C Programming Notes</h1>
+            <p>Complete Guide to C Programming Language</p>
+            <p>www.prepcampus.com</p>
+            <button class="download-btn" onclick="downloadPDF()">📥 Download PDF</button>
+            <button class="download-btn" onclick="downloadAsPrint()" style="background: linear-gradient(135deg, #e17055 0%, #d63031 100%);">🖨️ Print PDF</button>
+            <button class="download-btn" onclick="testDownload()" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">🧪 Test Download</button>
+        </div>
+
+        <div class="section">
+            <h2>1. Introduction to C Programming</h2>
+            <p>C is a powerful general-purpose programming language created by Dennis Ritchie at Bell Labs in 1972. It is one of the most widely used programming languages and serves as the foundation for many other languages like C++, Java, Python, and JavaScript. C was originally developed to write the UNIX operating system, and its design philosophy emphasizes simplicity, efficiency, and close-to-hardware programming capabilities.</p>
+            
+            <div class="highlight">
+                <h3>Key Characteristics and Detailed Explanations:</h3>
+                <ul>
+                    <li><strong>Procedural Language:</strong> C follows a top-down, structured programming approach where programs are organized into functions and procedures. This means the program execution flows from top to bottom, with code organized into logical blocks called functions. Each function performs a specific task and can be called from other parts of the program, promoting code reusability and maintainability.</li>
+                    
+                    <li><strong>Low-level Access:</strong> C provides direct access to memory and hardware through pointers and memory manipulation functions. This allows programmers to work directly with memory addresses, manipulate individual bits, and control hardware registers. This low-level control makes C ideal for system programming, device drivers, and embedded systems where hardware interaction is crucial.</li>
+                    
+                    <li><strong>Portable:</strong> C programs can run on different platforms (Windows, Linux, macOS, embedded systems) with minimal modifications. This portability is achieved through the use of standard libraries and the fact that C compilers are available for virtually every platform. A C program written on one system can be compiled and run on another system with the same architecture.</li>
+                    
+                    <li><strong>Fast and Efficient:</strong> C is compiled directly to machine code, making it one of the fastest programming languages available. The compiler translates C code into native machine instructions, eliminating the overhead of interpretation. This efficiency makes C the preferred choice for performance-critical applications like operating systems, real-time systems, and high-performance computing.</li>
+                    
+                    <li><strong>Structured Language:</strong> C supports structured programming constructs like functions, loops, and conditional statements. This allows for organized, readable, and maintainable code. The language enforces good programming practices through its syntax and structure.</li>
+                    
+                    <li><strong>Rich Library Support:</strong> C comes with a comprehensive standard library that provides functions for input/output, string manipulation, memory management, mathematical operations, and more. These libraries are part of the C standard and are available on all C implementations.</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>Why Learn C Programming?</h3>
+                <ul>
+                    <li><strong>Foundation for Other Languages:</strong> Understanding C helps learn other programming languages like C++, Java, and Python, as many concepts and syntax elements are derived from C.</li>
+                    <li><strong>System Programming:</strong> C is extensively used in operating systems (Linux, Windows kernel components), device drivers, and embedded systems where direct hardware control is needed.</li>
+                    <li><strong>Performance Critical Applications:</strong> Games, real-time systems, and applications requiring maximum performance often use C for its speed and efficiency.</li>
+                    <li><strong>Memory Management Skills:</strong> C teaches manual memory management, helping developers understand how memory works and how to write efficient, memory-conscious code.</li>
+                    <li><strong>Industry Standard:</strong> C remains widely used in software development, especially in systems programming, embedded systems, and performance-critical applications.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. Basic Structure of a C Program</h2>
+            <p>Every C program follows a specific structure that consists of several essential components. Understanding this structure is fundamental to writing C programs. The structure ensures that the program is organized, readable, and follows C language conventions.</p>
+            
+            <div class="highlight">
+                <h3>Components of a C Program:</h3>
+                <ol>
+                    <li><strong>Header Files (#include):</strong> These are preprocessor directives that tell the compiler to include external libraries and their functions. Header files contain function declarations, macro definitions, and other declarations that your program needs. The most common header file is &lt;stdio.h&gt; which contains input/output functions like printf() and scanf().</li>
+                    
+                    <li><strong>Main Function:</strong> Every C program must have exactly one main() function. This is the entry point of the program - execution begins here when the program starts. The main function can return an integer value (typically 0 for success, non-zero for error) and can accept command-line arguments.</li>
+                    
+                    <li><strong>Variables:</strong> These are named storage locations in memory that hold data. Variables must be declared before use, specifying their data type and name. C is a statically-typed language, meaning variable types are checked at compile time.</li>
+                    
+                    <li><strong>Statements:</strong> These are individual instructions that perform specific actions. Each statement ends with a semicolon (;). Statements can include function calls, assignments, control structures, and other operations.</li>
+                    
+                    <li><strong>Return Statement:</strong> The return statement exits the function and optionally returns a value to the calling function. In main(), returning 0 typically indicates successful program execution.</li>
+                </ol>
+            </div>
+
+            <h3>Hello World Program with Detailed Explanation:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Include the standard input/output library</span>
+<span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span>
+
+<span class="comment">// Main function - program entry point</span>
+<span class="keyword">int</span> <span class="keyword">main</span>() {
+    <span class="comment">// Print "Hello, World!" to the console</span>
+    <span class="keyword">printf</span>(<span class="string">"Hello, World!\n"</span>);
+    
+    <span class="comment">// Return 0 to indicate successful execution</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+            </div>
+
+            <div class="highlight">
+                <h3>Program Structure Explanation:</h3>
+                <ul>
+                    <li><strong>#include &lt;stdio.h&gt;:</strong> This preprocessor directive includes the standard input/output library, which contains the printf() function. Without this, the compiler wouldn't know about printf() and would give an error.</li>
+                    
+                    <li><strong>int main():</strong> This declares the main function that returns an integer. The parentheses () indicate it's a function, and the empty parentheses mean it takes no parameters.</li>
+                    
+                    <li><strong>printf("Hello, World!\n"):</strong> This function call prints text to the console. The \n is an escape sequence that creates a new line. The text is enclosed in double quotes, making it a string literal.</li>
+                    
+                    <li><strong>return 0:</strong> This statement exits the main function and returns the value 0 to the operating system, indicating successful program completion.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. Data Types in C</h2>
+            <p>Data types in C define the type of data that a variable can hold and how much memory space it will occupy. C is a statically-typed language, which means you must declare the data type of a variable before using it. Understanding data types is crucial for efficient memory usage and preventing data loss.</p>
+            
+            <div class="highlight">
+                <h3>Basic Data Types with Detailed Explanations:</h3>
+                <ul>
+                    <li><strong>char:</strong> Occupies 1 byte (8 bits) of memory. Used to store single characters like letters, digits, or special symbols. Characters are stored as their ASCII values (0-127). Range: -128 to 127 (signed) or 0 to 255 (unsigned). Example: 'A', '5', '@'.</li>
+                    
+                    <li><strong>int:</strong> Typically occupies 4 bytes (32 bits) on most systems. Used to store whole numbers (integers) without decimal points. Range: -2,147,483,648 to 2,147,483,647. The exact size may vary depending on the system architecture and compiler.</li>
+                    
+                    <li><strong>float:</strong> Occupies 4 bytes (32 bits). Used to store single-precision floating-point numbers (decimal numbers). Provides approximately 6-7 decimal digits of precision. Range: 3.4E-38 to 3.4E+38. Suitable for most general-purpose floating-point calculations.</li>
+                    
+                    <li><strong>double:</strong> Occupies 8 bytes (64 bits). Used to store double-precision floating-point numbers. Provides approximately 15-17 decimal digits of precision. Range: 1.7E-308 to 1.7E+308. Used when higher precision is required, such as in scientific calculations.</li>
+                    
+                    <li><strong>void:</strong> Represents the absence of a value. Used in three contexts: (1) Function return type when a function doesn't return any value, (2) Function parameters when a function takes no parameters, (3) Generic pointer type (void*) that can point to any data type.</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>Type Modifiers:</h3>
+                <ul>
+                    <li><strong>signed/unsigned:</strong> These modifiers can be applied to char and int types. signed allows both positive and negative values, while unsigned allows only non-negative values, effectively doubling the positive range.</li>
+                    
+                    <li><strong>short/long:</strong> These modifiers change the size of int. short int is typically 2 bytes, long int is typically 4 or 8 bytes depending on the system.</li>
+                    
+                    <li><strong>const:</strong> Makes a variable read-only. The value cannot be changed after initialization.</li>
+                </ul>
+            </div>
+
+            <div class="code-box">
+<pre><code><span class="comment">// Variable declaration and initialization with different data types</span>
+<span class="keyword">int</span> age = <span class="number">25</span>;                    <span class="comment">// Integer variable</span>
+<span class="keyword">float</span> salary = <span class="number">50000.50</span>;         <span class="comment">// Single precision float</span>
+<span class="keyword">double</span> pi = <span class="number">3.14159265359</span>;      <span class="comment">// Double precision for accuracy</span>
+<span class="keyword">char</span> grade = <span class="string">'A'</span>;                <span class="comment">// Character variable</span>
+<span class="keyword">unsigned</span> <span class="keyword">int</span> count = <span class="number">1000</span>;     <span class="comment">// Unsigned integer (only positive)</span>
+<span class="keyword">const</span> <span class="keyword">int</span> MAX_SIZE = <span class="number">100</span>;      <span class="comment">// Constant (read-only)</span></code></pre>
+            </div>
+
+            <div class="highlight">
+                <h3>Memory Layout and Size Considerations:</h3>
+                <ul>
+                    <li><strong>Memory Efficiency:</strong> Choose the smallest data type that can accommodate your data. For example, use char for single characters instead of int, and use short int for small numbers instead of int.</li>
+                    
+                    <li><strong>Platform Dependencies:</strong> The exact size of data types can vary between different systems and compilers. Use sizeof() operator to check the size of data types on your system.</li>
+                    
+                    <li><strong>Type Conversion:</strong> C automatically converts between compatible types, but this can lead to data loss. Be explicit about type conversions when precision is important.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. Control Structures</h2>
+            <p>Control structures in C allow you to control the flow of program execution based on conditions and create repetitive operations. They are fundamental building blocks that enable programs to make decisions and perform tasks repeatedly. Understanding control structures is essential for writing dynamic and interactive programs.</p>
+            
+            <div class="highlight">
+                <h3>Types of Control Structures:</h3>
+                <ul>
+                    <li><strong>Conditional Statements:</strong> Allow the program to execute different code blocks based on whether certain conditions are true or false. These include if, if-else, and switch statements.</li>
+                    
+                    <li><strong>Looping Statements:</strong> Enable the program to execute a block of code multiple times. These include for, while, and do-while loops.</li>
+                    
+                    <li><strong>Jump Statements:</strong> Allow the program to transfer control to different parts of the code. These include break, continue, and goto statements.</li>
+                </ul>
+            </div>
+
+            <h3>If-Else Statement with Detailed Explanation:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Example of if-else statement with multiple conditions</span>
+<span class="keyword">int</span> age = <span class="number">18</span>;
+<span class="keyword">int</span> income = <span class="number">50000</span>;
+
+<span class="keyword">if</span> (age >= <span class="number">18</span> && income >= <span class="number">30000</span>) {
+    <span class="keyword">printf</span>(<span class="string">"You are eligible for a loan\n"</span>);
+} <span class="keyword">else</span> <span class="keyword">if</span> (age >= <span class="number">18</span>) {
+    <span class="keyword">printf</span>(<span class="string">"You are an adult but income is too low\n"</span>);
+} <span class="keyword">else</span> {
+    <span class="keyword">printf</span>(<span class="string">"You are a minor\n"</span>);
+}</code></pre>
+            </div>
+
+            <div class="highlight">
+                <h3>If-Else Statement Explanation:</h3>
+                <ul>
+                    <li><strong>Condition Evaluation:</strong> The expression inside the parentheses (age >= 18) is evaluated first. If it's true, the code inside the first block executes.</li>
+                    
+                    <li><strong>Logical Operators:</strong> && (AND) requires both conditions to be true, || (OR) requires at least one condition to be true, ! (NOT) inverts the condition.</li>
+                    
+                    <li><strong>Else If:</strong> If the first condition is false, the program checks the else if condition. This allows for multiple conditions to be checked in sequence.</li>
+                    
+                    <li><strong>Else:</strong> If none of the previous conditions are true, the code in the else block executes. This serves as a default case.</li>
+                </ul>
+            </div>
+
+            <h3>Switch Statement:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Switch statement for menu selection</span>
+<span class="keyword">int</span> choice = <span class="number">2</span>;
+
+<span class="keyword">switch</span> (choice) {
+    <span class="keyword">case</span> <span class="number">1</span>:
+        <span class="keyword">printf</span>(<span class="string">"Option 1 selected\n"</span>);
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="number">2</span>:
+        <span class="keyword">printf</span>(<span class="string">"Option 2 selected\n"</span>);
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="number">3</span>:
+        <span class="keyword">printf</span>(<span class="string">"Option 3 selected\n"</span>);
+        <span class="keyword">break</span>;
+    <span class="keyword">default</span>:
+        <span class="keyword">printf</span>(<span class="string">"Invalid option\n"</span>);
+}</code></pre>
+            </div>
+
+            <h3>Loops with Detailed Explanations:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// For loop - when you know the number of iterations</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">5</span>; i++) {
+    <span class="keyword">printf</span>(<span class="string">"Iteration %d\n"</span>, i);
+}
+
+<span class="comment">// While loop - when you don't know the number of iterations</span>
+<span class="keyword">int</span> j = <span class="number">0</span>;
+<span class="keyword">while</span> (j < <span class="number">5</span>) {
+    <span class="keyword">printf</span>(<span class="string">"While iteration %d\n"</span>, j);
+    j++;
+}
+
+<span class="comment">// Do-while loop - executes at least once</span>
+<span class="keyword">int</span> k = <span class="number">0</span>;
+<span class="keyword">do</span> {
+    <span class="keyword">printf</span>(<span class="string">"Do-while iteration %d\n"</span>, k);
+    k++;
+} <span class="keyword">while</span> (k < <span class="number">3</span>);</code></pre>
+            </div>
+
+            <div class="highlight">
+                <h3>Loop Types and When to Use Them:</h3>
+                <ul>
+                    <li><strong>For Loop:</strong> Use when you know the exact number of iterations. The loop variable is initialized, tested, and incremented in one line. Ideal for iterating through arrays or performing a task a specific number of times.</li>
+                    
+                    <li><strong>While Loop:</strong> Use when you don't know the number of iterations beforehand. The condition is checked before each iteration. Good for reading data until a sentinel value is encountered.</li>
+                    
+                    <li><strong>Do-While Loop:</strong> Use when you want the loop body to execute at least once, regardless of the condition. The condition is checked after the first execution. Useful for menu-driven programs.</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>Loop Control Statements:</h3>
+                <ul>
+                    <li><strong>break:</strong> Immediately exits the innermost loop or switch statement. Useful for terminating loops early when a condition is met.</li>
+                    
+                    <li><strong>continue:</strong> Skips the rest of the current iteration and continues with the next iteration. Useful for skipping certain values or conditions within a loop.</li>
+                    
+                    <li><strong>goto:</strong> Transfers control to a labeled statement. Generally avoided in modern programming due to its potential to create confusing code flow.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. Functions</h2>
+            <p>Functions in C are blocks of code that perform specific tasks and can be called from other parts of the program. They are fundamental to structured programming and help in organizing code, reducing redundancy, and improving maintainability. Functions allow you to break down complex problems into smaller, manageable pieces.</p>
+            
+            <div class="highlight">
+                <h3>Function Components and Concepts:</h3>
+                <ul>
+                    <li><strong>Function Declaration (Prototype):</strong> Tells the compiler about the function's name, return type, and parameters before the function is defined. This allows the function to be called before its definition appears in the code.</li>
+                    
+                    <li><strong>Function Definition:</strong> Contains the actual code that will be executed when the function is called. It includes the function body with all the statements and logic.</li>
+                    
+                    <li><strong>Function Call:</strong> Invokes the function to execute its code. When called, the program transfers control to the function, executes its code, and then returns to the calling point.</li>
+                    
+                    <li><strong>Parameters:</strong> Values passed to the function when it's called. They allow the function to work with different data without changing the function code.</li>
+                    
+                    <li><strong>Return Value:</strong> The value that the function sends back to the calling function. It can be used in expressions or assigned to variables.</li>
+                </ul>
+            </div>
+
+            <div class="code-box">
+<pre><code><span class="comment">// Function declaration (prototype)</span>
+<span class="keyword">int</span> <span class="keyword">add</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b);
+<span class="keyword">void</span> <span class="keyword">printMessage</span>(<span class="keyword">char</span> message[]);
+
+<span class="comment">// Function definition</span>
+<span class="keyword">int</span> <span class="keyword">add</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+    <span class="keyword">int</span> result = a + b;
+    <span class="keyword">return</span> result;
+}
+
+<span class="keyword">void</span> <span class="keyword">printMessage</span>(<span class="keyword">char</span> message[]) {
+    <span class="keyword">printf</span>(<span class="string">"Message: %s\n"</span>, message);
+}
+
+<span class="comment">// Function calls</span>
+<span class="keyword">int</span> result = <span class="keyword">add</span>(<span class="number">5</span>, <span class="number">3</span>);
+<span class="keyword">printMessage</span>(<span class="string">"Hello from function!"</span>);</code></pre>
+            </div>
+
+            <div class="highlight">
+                <h3>Function Types and Categories:</h3>
+                <ul>
+                    <li><strong>Functions with Arguments and Return Value:</strong> Most common type. Takes parameters, performs operations, and returns a result. Example: mathematical functions like add(), multiply(), calculateArea().</li>
+                    
+                    <li><strong>Functions with Arguments but No Return Value:</strong> Takes parameters but doesn't return anything (void return type). Used for operations like printing, updating variables, or performing actions. Example: printMessage(), updateDisplay().</li>
+                    
+                    <li><strong>Functions without Arguments but with Return Value:</strong> Doesn't take parameters but returns a value. Often used for getting user input or generating values. Example: getRandomNumber(), getUserChoice().</li>
+                    
+                    <li><strong>Functions without Arguments and No Return Value:</strong> Neither takes parameters nor returns a value. Used for simple operations or displaying fixed information. Example: displayMenu(), showInstructions().</li>
+                </ul>
+            </div>
+
+            <div class="code-box">
+<pre><code><span class="comment">// Example of different function types</span>
+
+<span class="comment">// Function with arguments and return value</span>
+<span class="keyword">int</span> <span class="keyword">multiply</span>(<span class="keyword">int</span> x, <span class="keyword">int</span> y) {
+    <span class="keyword">return</span> x * y;
+}
+
+<span class="comment">// Function with arguments but no return value</span>
+<span class="keyword">void</span> <span class="keyword">printResult</span>(<span class="keyword">int</span> value) {
+    <span class="keyword">printf</span>(<span class="string">"Result: %d\n"</span>, value);
+}
+
+<span class="comment">// Function without arguments but with return value</span>
+<span class="keyword">int</span> <span class="keyword">getRandomNumber</span>() {
+    <span class="keyword">return</span> <span class="number">rand</span>() % <span class="number">100</span>;
+}
+
+<span class="comment">// Function without arguments and no return value</span>
+<span class="keyword">void</span> <span class="keyword">displayMenu</span>() {
+    <span class="keyword">printf</span>(<span class="string">"1. Add\n2. Subtract\n3. Multiply\n4. Exit\n"</span>);
+}</code></pre>
+            </div>
+
+            <div class="highlight">
+                <h3>Function Parameters and Arguments:</h3>
+                <ul>
+                    <li><strong>Parameters:</strong> Variables declared in the function definition that receive values from the calling function. They act as placeholders for the actual data.</li>
+                    
+                    <li><strong>Arguments:</strong> Actual values passed to the function when it's called. They are assigned to the corresponding parameters.</li>
+                    
+                    <li><strong>Pass by Value:</strong> In C, arguments are passed by value, meaning a copy of the argument is made and passed to the function. Changes to parameters don't affect the original variables.</li>
+                    
+                    <li><strong>Pass by Reference:</strong> Achieved using pointers. The address of the variable is passed, allowing the function to modify the original variable.</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>Function Scope and Lifetime:</h3>
+                <ul>
+                    <li><strong>Local Variables:</strong> Variables declared inside a function are local to that function. They exist only while the function is executing and are destroyed when the function returns.</li>
+                    
+                    <li><strong>Global Variables:</strong> Variables declared outside all functions are global and can be accessed by any function in the program. They exist throughout the program's execution.</li>
+                    
+                    <li><strong>Static Variables:</strong> Local variables declared with the static keyword retain their values between function calls. They are initialized only once.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>6. Arrays</h2>
+            <p>Arrays in C are collections of elements of the same data type stored in contiguous memory locations. They are one of the most fundamental and widely used data structures in C programming. Arrays provide an efficient way to store and access multiple values using a single variable name and an index.</p>
+            
+            <div class="highlight">
+                <h3>Key Characteristics of Arrays:</h3>
+                <ul>
+                    <li><strong>Homogeneous Data:</strong> All elements in an array must be of the same data type (int, float, char, etc.). This ensures consistent memory allocation and efficient access patterns.</li>
+                    
+                    <li><strong>Contiguous Memory:</strong> Array elements are stored in consecutive memory locations. This means if the first element is at address 1000, the second element will be at address 1004 (for int), the third at 1008, and so on.</li>
+                    
+                    <li><strong>Fixed Size:</strong> Once declared, the size of an array cannot be changed during program execution. The size must be specified at declaration time.</li>
+                    
+                    <li><strong>Indexed Access:</strong> Elements are accessed using indices (subscripts) starting from 0. The first element is at index 0, second at index 1, and so on.</li>
+                    
+                    <li><strong>Random Access:</strong> Due to contiguous memory storage, any element can be accessed directly using its index, making array access very fast (O(1) time complexity).</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>Memory Layout and Storage:</h3>
+                <p>Arrays are stored in memory as a continuous block. For example, if we have an integer array of size 5:</p>
+                <ul>
+                    <li><strong>Memory Addresses:</strong> If the array starts at address 1000, the elements will be stored at: 1000, 1004, 1008, 1012, 1016 (assuming 4 bytes per int).</li>
+                    
+                    <li><strong>Address Calculation:</strong> The address of any element can be calculated as: base_address + (index × size_of_data_type).</li>
+                    
+                    <li><strong>Cache Efficiency:</strong> Contiguous storage makes arrays cache-friendly, as accessing consecutive elements results in fewer cache misses.</li>
+                </ul>
+            </div>
+
+            <h3>Array Declaration and Initialization:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Method 1: Declaration with size, then assignment</span>
+<span class="keyword">int</span> numbers[<span class="number">5</span>];  <span class="comment">// Declares array of 5 integers (uninitialized)</span>
+numbers[<span class="number">0</span>] = <span class="number">10</span>;
+numbers[<span class="number">1</span>] = <span class="number">20</span>;
+numbers[<span class="number">2</span>] = <span class="number">30</span>;
+numbers[<span class="number">3</span>] = <span class="number">40</span>;
+numbers[<span class="number">4</span>] = <span class="number">50</span>;
+
+<span class="comment">// Method 2: Declaration with initialization</span>
+<span class="keyword">int</span> scores[<span class="number">5</span>] = {<span class="number">85</span>, <span class="number">92</span>, <span class="number">78</span>, <span class="number">96</span>, <span class="number">88</span>};
+
+<span class="comment">// Method 3: Size determined by initializer list</span>
+<span class="keyword">int</span> values[] = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>};  <span class="comment">// Size is 5</span>
+
+<span class="comment">// Method 4: Partial initialization (remaining elements are 0)</span>
+<span class="keyword">int</span> data[<span class="number">10</span>] = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>};  <span class="comment">// First 3 elements set, rest are 0</span>
+
+<span class="comment">// Method 5: Character arrays (strings)</span>
+<span class="keyword">char</span> name[<span class="number">20</span>] = <span class="string">"John Doe"</span>;  <span class="comment">// String literal initialization</span>
+<span class="keyword">char</span> letters[] = {<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'\0'</span>};  <span class="comment">// Character array</span></code></pre>
+            </div>
+
+            <div class="highlight">
+                <h3>Array Access and Manipulation:</h3>
+                <ul>
+                    <li><strong>Indexing:</strong> Array elements are accessed using square brackets with the index: array_name[index]. The index must be within the valid range (0 to size-1).</li>
+                    
+                    <li><strong>Bounds Checking:</strong> C does not perform automatic bounds checking. Accessing elements outside the valid range can cause undefined behavior, including program crashes or data corruption.</li>
+                    
+                    <li><strong>Element Modification:</strong> Array elements can be modified by assigning new values: array_name[index] = new_value.</li>
+                    
+                    <li><strong>Address Arithmetic:</strong> Since arrays are stored contiguously, pointer arithmetic can be used to access elements: *(array_name + index) is equivalent to array_name[index].</li>
+                </ul>
+            </div>
+
+            <h3>Array Traversal and Operations:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Basic array traversal using for loop</span>
+<span class="keyword">int</span> numbers[<span class="number">5</span>] = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>};
+
+<span class="comment">// Forward traversal (index 0 to size-1)</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">5</span>; i++) {
+    <span class="keyword">printf</span>(<span class="string">"Element %d: %d\n"</span>, i, numbers[i]);
+}
+
+<span class="comment">// Backward traversal (index size-1 to 0)</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">4</span>; i >= <span class="number">0</span>; i--) {
+    <span class="keyword">printf</span>(<span class="string">"Element %d: %d\n"</span>, i, numbers[i]);
+}
+
+<span class="comment">// Finding maximum value in array</span>
+<span class="keyword">int</span> max = numbers[<span class="number">0</span>];  <span class="comment">// Assume first element is maximum</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i < <span class="number">5</span>; i++) {
+    <span class="keyword">if</span> (numbers[i] > max) {
+        max = numbers[i];
+    }
+}
+<span class="keyword">printf</span>(<span class="string">"Maximum value: %d\n"</span>, max);
+
+<span class="comment">// Calculating sum of array elements</span>
+<span class="keyword">int</span> sum = <span class="number">0</span>;
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">5</span>; i++) {
+    sum += numbers[i];
+}
+<span class="keyword">printf</span>(<span class="string">"Sum of elements: %d\n"</span>, sum);
+
+<span class="comment">// Searching for an element</span>
+<span class="keyword">int</span> searchValue = <span class="number">30</span>;
+<span class="keyword">int</span> found = <span class="number">0</span>;  <span class="comment">// Flag to indicate if found</span>
+<span class="keyword">int</span> position = -<span class="number">1</span>;  <span class="comment">// Position where element is found</span>
+
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">5</span>; i++) {
+    <span class="keyword">if</span> (numbers[i] == searchValue) {
+        found = <span class="number">1</span>;
+        position = i;
+        <span class="keyword">break</span>;  <span class="comment">// Exit loop once found</span>
+    }
+}
+
+<span class="keyword">if</span> (found) {
+    <span class="keyword">printf</span>(<span class="string">"Element %d found at position %d\n"</span>, searchValue, position);
+} <span class="keyword">else</span> {
+    <span class="keyword">printf</span>(<span class="string">"Element %d not found\n"</span>, searchValue);
+}</code></pre>
+            </div>
+
+            <h3>Two-Dimensional Arrays (2D Arrays):</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// 2D array declaration and initialization</span>
+<span class="keyword">int</span> matrix[<span class="number">3</span>][<span class="number">4</span>] = {
+    {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>},    <span class="comment">// Row 0</span>
+    {<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>},    <span class="comment">// Row 1</span>
+    {<span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>}  <span class="comment">// Row 2</span>
+};
+
+<span class="comment">// Accessing 2D array elements</span>
+<span class="keyword">printf</span>(<span class="string">"Element at [1][2]: %d\n"</span>, matrix[<span class="number">1</span>][<span class="number">2</span>]);  <span class="comment">// Prints 7</span>
+
+<span class="comment">// Traversing 2D array (row by row)</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">3</span>; i++) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j < <span class="number">4</span>; j++) {
+        <span class="keyword">printf</span>(<span class="string">"%d "</span>, matrix[i][j]);
+    }
+    <span class="keyword">printf</span>(<span class="string">"\n"</span>);  <span class="comment">// New line after each row</span>
+}
+
+<span class="comment">// Traversing 2D array (column by column)</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j < <span class="number">4</span>; j++) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">3</span>; i++) {
+        <span class="keyword">printf</span>(<span class="string">"%d "</span>, matrix[i][j]);
+    }
+    <span class="keyword">printf</span>(<span class="string">"\n"</span>);  <span class="comment">// New line after each column</span>
+}</code></pre>
+            </div>
+
+            <div class="highlight">
+                <h3>2D Array Memory Layout:</h3>
+                <ul>
+                    <li><strong>Row-Major Order:</strong> In C, 2D arrays are stored in row-major order, meaning all elements of the first row are stored first, then all elements of the second row, and so on.</li>
+                    
+                    <li><strong>Memory Address Calculation:</strong> For a 2D array arr[rows][cols], the address of element arr[i][j] is: base_address + (i × cols + j) × size_of_data_type.</li>
+                    
+                    <li><strong>Cache Performance:</strong> Row-major order means accessing elements row by row is more cache-efficient than accessing column by column.</li>
+                </ul>
+            </div>
+
+            <h3>Arrays and Functions:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Function to print array elements</span>
+<span class="keyword">void</span> <span class="keyword">printArray</span>(<span class="keyword">int</span> arr[], <span class="keyword">int</span> size) {
+    <span class="keyword">printf</span>(<span class="string">"Array elements: "</span>);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < size; i++) {
+        <span class="keyword">printf</span>(<span class="string">"%d "</span>, arr[i]);
+    }
+    <span class="keyword">printf</span>(<span class="string">"\n"</span>);
+}
+
+<span class="comment">// Function to find maximum element</span>
+<span class="keyword">int</span> <span class="keyword">findMax</span>(<span class="keyword">int</span> arr[], <span class="keyword">int</span> size) {
+    <span class="keyword">int</span> max = arr[<span class="number">0</span>];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i < size; i++) {
+        <span class="keyword">if</span> (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    <span class="keyword">return</span> max;
+}
+
+<span class="comment">// Function to reverse array elements</span>
+<span class="keyword">void</span> <span class="keyword">reverseArray</span>(<span class="keyword">int</span> arr[], <span class="keyword">int</span> size) {
+    <span class="keyword">int</span> start = <span class="number">0</span>;
+    <span class="keyword">int</span> end = size - <span class="number">1</span>;
+    
+    <span class="keyword">while</span> (start < end) {
+        <span class="comment">// Swap elements</span>
+        <span class="keyword">int</span> temp = arr[start];
+        arr[start] = arr[end];
+        arr[end] = temp;
+        
+        start++;
+        end--;
+    }
+}
+
+<span class="keyword">int</span> <span class="keyword">main</span>() {
+    <span class="keyword">int</span> numbers[<span class="number">5</span>] = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>};
+    
+    <span class="keyword">printArray</span>(numbers, <span class="number">5</span>);
+    
+    <span class="keyword">int</span> maxValue = <span class="keyword">findMax</span>(numbers, <span class="number">5</span>);
+    <span class="keyword">printf</span>(<span class="string">"Maximum value: %d\n"</span>, maxValue);
+    
+    <span class="keyword">reverseArray</span>(numbers, <span class="number">5</span>);
+    <span class="keyword">printf</span>(<span class="string">"After reversing: "</span>);
+    <span class="keyword">printArray</span>(numbers, <span class="number">5</span>);
+    
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+            </div>
+
+            <div class="highlight">
+                <h3>Important Array Concepts:</h3>
+                <ul>
+                    <li><strong>Array Decay:</strong> When an array is passed to a function, it decays to a pointer to its first element. The function receives the address of the first element, not a copy of the entire array.</li>
+                    
+                    <li><strong>Size Information Loss:</strong> When an array decays to a pointer, the size information is lost. That's why we need to pass the size as a separate parameter.</li>
+                    
+                    <li><strong>Modification in Functions:</strong> Since functions receive pointers to array elements, any modifications made in the function will affect the original array.</li>
+                    
+                    <li><strong>Array Bounds:</strong> Always ensure that array indices are within valid bounds (0 to size-1). Out-of-bounds access can cause serious program errors.</li>
+                    
+                    <li><strong>Memory Efficiency:</strong> Arrays are memory-efficient for storing large amounts of data of the same type, as they use contiguous memory allocation.</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>Common Array Applications:</h3>
+                <ul>
+                    <li><strong>Data Storage:</strong> Storing collections of related data like student scores, temperature readings, or sensor data.</li>
+                    
+                    <li><strong>Lookup Tables:</strong> Creating tables for quick data retrieval, such as conversion tables or mathematical constants.</li>
+                    
+                    <li><strong>Buffers:</strong> Temporary storage areas for data processing, such as input/output buffers.</li>
+                    
+                    <li><strong>Matrices:</strong> Representing mathematical matrices for scientific and engineering calculations.</li>
+                    
+                    <li><strong>Strings:</strong> Character arrays used to store and manipulate text data.</li>
+                    
+                    <li><strong>Sorting and Searching:</strong> Arrays are fundamental for implementing sorting and searching algorithms.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>7. Pointers</h2>
+            <p>Pointers are one of the most powerful and fundamental features of C programming. A pointer is a variable that stores the memory address of another variable. Pointers provide direct access to memory locations, enabling efficient memory manipulation, dynamic memory allocation, and complex data structures. Understanding pointers is crucial for advanced C programming and system-level development.</p>
+            
+            <div class="highlight">
+                <h3>Key Concepts of Pointers:</h3>
+                <ul>
+                    <li><strong>Memory Address:</strong> Every variable in C is stored at a specific memory location. A pointer stores this memory address, allowing you to access the variable indirectly.</li>
+                    
+                    <li><strong>Indirection:</strong> Pointers provide a way to access data indirectly. Instead of working with the actual value, you work with the address where the value is stored.</li>
+                    
+                    <li><strong>Dynamic Memory:</strong> Pointers enable dynamic memory allocation, allowing programs to allocate and deallocate memory at runtime.</li>
+                    
+                    <li><strong>Efficiency:</strong> Pointers can make programs more efficient by avoiding copying large amounts of data when passing to functions.</li>
+                    
+                    <li><strong>Complex Data Structures:</strong> Pointers are essential for implementing linked lists, trees, graphs, and other dynamic data structures.</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>Pointer Declaration and Initialization:</h3>
+                <ul>
+                    <li><strong>Declaration Syntax:</strong> data_type *pointer_name; The asterisk (*) indicates that the variable is a pointer.</li>
+                    
+                    <li><strong>Address Operator (&):</strong> Used to get the memory address of a variable. &variable_name returns the address where the variable is stored.</li>
+                    
+                    <li><strong>Dereference Operator (*):</strong> Used to access the value stored at the address pointed to by the pointer. *pointer_name returns the value.</li>
+                    
+                    <li><strong>Null Pointer:</strong> A pointer that doesn't point to any valid memory location. Initialized as NULL or 0.</li>
+                </ul>
+            </div>
+
+            <h3>Basic Pointer Operations:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Basic pointer declaration and usage</span>
+<span class="keyword">int</span> number = <span class="number">42</span>;           <span class="comment">// Integer variable</span>
+<span class="keyword">int</span> *ptr;                  <span class="comment">// Pointer declaration</span>
+ptr = &number;                <span class="comment">// Assigning address of number to ptr</span>
+
+<span class="comment">// Accessing values and addresses</span>
+<span class="keyword">printf</span>(<span class="string">"Value of number: %d\n"</span>, number);        <span class="comment">// Direct access</span>
+<span class="keyword">printf</span>(<span class="string">"Address of number: %p\n"</span>, &number);      <span class="comment">// Address of number</span>
+<span class="keyword">printf</span>(<span class="string">"Value pointed by ptr: %d\n"</span>, *ptr);      <span class="comment">// Indirect access</span>
+<span class="keyword">printf</span>(<span class="string">"Address stored in ptr: %p\n"</span>, ptr);      <span class="comment">// Address stored in ptr</span>
+
+<span class="comment">// Modifying value through pointer</span>
+*ptr = <span class="number">100</span>;                   <span class="comment">// Change value of number through ptr</span>
+<span class="keyword">printf</span>(<span class="string">"New value of number: %d\n"</span>, number);    <span class="comment">// Now 100</span>
+
+<span class="comment">// Null pointer initialization</span>
+<span class="keyword">int</span> *nullPtr = <span class="keyword">NULL</span>;        <span class="comment">// Safe initialization</span>
+<span class="keyword">printf</span>(<span class="string">"Null pointer: %p\n"</span>, nullPtr);</code></pre>
+            </div>
+
+            <h3>Pointers and Arrays:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Array and pointer relationship</span>
+<span class="keyword">int</span> arr[<span class="number">5</span>] = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>};
+<span class="keyword">int</span> *ptr = arr;            <span class="comment">// Array name is a pointer to first element</span>
+
+<span class="comment">// Different ways to access array elements</span>
+<span class="keyword">printf</span>(<span class="string">"arr[0]: %d\n"</span>, arr[<span class="number">0</span>]);           <span class="comment">// Array notation</span>
+<span class="keyword">printf</span>(<span class="string">"*ptr: %d\n"</span>, *ptr);                   <span class="comment">// Pointer notation</span>
+<span class="keyword">printf</span>(<span class="string">"*(ptr+1): %d\n"</span>, *(ptr + <span class="number">1</span>));       <span class="comment">// Pointer arithmetic</span>
+<span class="keyword">printf</span>(<span class="string">"ptr[1]: %d\n"</span>, ptr[<span class="number">1</span>]);           <span class="comment">// Pointer with array notation</span>
+
+<span class="comment">// Traversing array using pointer</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">5</span>; i++) {
+    <span class="keyword">printf</span>(<span class="string">"Element %d: %d\n"</span>, i, *(ptr + i));
+}
+
+<span class="comment">// Pointer arithmetic</span>
+ptr++;                        <span class="comment">// Move to next element</span>
+<span class="keyword">printf</span>(<span class="string">"After ptr++: %d\n"</span>, *ptr);           <span class="comment">// Now points to arr[1]</span>
+ptr += <span class="number">2</span>;                     <span class="comment">// Move 2 elements forward</span>
+<span class="keyword">printf</span>(<span class="string">"After ptr+=2: %d\n"</span>, *ptr);         <span class="comment">// Now points to arr[3]</span></code></pre>
+            </div>
+
+            <h3>Pointers to Pointers (Double Pointers):</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Double pointer declaration and usage</span>
+<span class="keyword">int</span> value = <span class="number">42</span>;
+<span class="keyword">int</span> *ptr1 = &value;        <span class="comment">// Pointer to int</span>
+<span class="keyword">int</span> **ptr2 = &ptr1;        <span class="comment">// Pointer to pointer to int</span>
+
+<span class="comment">// Accessing values through double pointer</span>
+<span class="keyword">printf</span>(<span class="string">"Value: %d\n"</span>, value);                <span class="comment">// Direct access</span>
+<span class="keyword">printf</span>(<span class="string">"Value through ptr1: %d\n"</span>, *ptr1);     <span class="comment">// Single dereference</span>
+<span class="keyword">printf</span>(<span class="string">"Value through ptr2: %d\n"</span>, **ptr2);    <span class="comment">// Double dereference</span>
+
+<span class="comment">// Modifying value through double pointer</span>
+**ptr2 = <span class="number">100</span>;                  <span class="comment">// Change value through double pointer</span>
+<span class="keyword">printf</span>(<span class="string">"New value: %d\n"</span>, value);</code></pre>
+            </div>
+
+            <h3>Pointers and Functions:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Function that takes a pointer parameter</span>
+<span class="keyword">void</span> <span class="keyword">modifyValue</span>(<span class="keyword">int</span> *ptr) {
+    *ptr = *ptr * <span class="number">2</span>;              <span class="comment">// Modify the value pointed to</span>
+    <span class="keyword">printf</span>(<span class="string">"Inside function: %d\n"</span>, *ptr);
+}
+
+<span class="comment">// Function that returns a pointer</span>
+<span class="keyword">int</span>* <span class="keyword">getLarger</span>(<span class="keyword">int</span> *a, <span class="keyword">int</span> *b) {
+    <span class="keyword">return</span> (*a > *b) ? a : b;    <span class="comment">// Return pointer to larger value</span>
+}
+
+<span class="keyword">int</span> <span class="keyword">main</span>() {
+    <span class="keyword">int</span> x = <span class="number">10</span>, y = <span class="number">20</span>;
+    
+    <span class="comment">// Pass address to function</span>
+    <span class="keyword">modifyValue</span>(&x);
+    <span class="keyword">printf</span>(<span class="string">"After function call: %d\n"</span>, x);
+    
+    <span class="comment">// Get pointer to larger value</span>
+    <span class="keyword">int</span> *larger = <span class="keyword">getLarger</span>(&x, &y);
+    <span class="keyword">printf</span>(<span class="string">"Larger value: %d\n"</span>, *larger);
+    
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+            </div>
+
+            <div class="highlight">
+                <h3>Common Pointer Applications:</h3>
+                <ul>
+                    <li><strong>Dynamic Memory Allocation:</strong> Using malloc(), calloc(), realloc() to allocate memory at runtime.</li>
+                    
+                    <li><strong>Function Parameters:</strong> Passing large data structures efficiently by reference instead of by value.</li>
+                    
+                    <li><strong>Array Manipulation:</strong> Efficiently traversing and manipulating arrays using pointer arithmetic.</li>
+                    
+                    <li><strong>String Handling:</strong> Working with character arrays and string manipulation functions.</li>
+                    
+                    <li><strong>Data Structures:</strong> Implementing linked lists, trees, and other dynamic structures.</li>
+                    
+                    <li><strong>System Programming:</strong> Direct memory access for hardware interaction and system calls.</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>Pointer Safety and Best Practices:</h3>
+                <ul>
+                    <li><strong>Always Initialize:</strong> Initialize pointers to NULL or a valid address to avoid undefined behavior.</li>
+                    
+                    <li><strong>Check for NULL:</strong> Always check if a pointer is NULL before dereferencing it.</li>
+                    
+                    <li><strong>Memory Leaks:</strong> Ensure that dynamically allocated memory is properly freed when no longer needed.</li>
+                    
+                    <li><strong>Dangling Pointers:</strong> Avoid using pointers that point to deallocated memory.</li>
+                    
+                    <li><strong>Bounds Checking:</strong> Be careful with pointer arithmetic to avoid accessing invalid memory locations.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>8. Strings</h2>
+            <p>In C programming, strings are arrays of characters terminated by a null character ('\0'). Unlike some other programming languages, C doesn't have a built-in string data type. Instead, strings are implemented as character arrays, which makes string manipulation both powerful and potentially error-prone. Understanding string handling is essential for text processing, user input, and data manipulation.</p>
+            
+            <div class="highlight">
+                <h3>Key Characteristics of Strings in C:</h3>
+                <ul>
+                    <li><strong>Null-Terminated:</strong> Every string in C ends with a null character ('\0'), which marks the end of the string. This is crucial for string functions to know where the string ends.</li>
+                    
+                    <li><strong>Character Arrays:</strong> Strings are stored as arrays of characters, where each character occupies one byte of memory.</li>
+                    
+                    <li><strong>Dynamic Length:</strong> The length of a string can vary, but the array size must be large enough to hold the string plus the null terminator.</li>
+                    
+                    <li><strong>Library Functions:</strong> C provides a rich set of string manipulation functions in the &lt;string.h&gt; header file.</li>
+                    
+                    <li><strong>Memory Management:</strong> Careful attention must be paid to buffer sizes to avoid buffer overflows and memory corruption.</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>String Declaration and Initialization:</h3>
+                <ul>
+                    <li><strong>Character Array Declaration:</strong> char str[size]; declares an array that can hold size-1 characters plus the null terminator.</li>
+                    
+                    <li><strong>String Literal Initialization:</strong> char str[] = "Hello"; automatically determines the size and adds the null terminator.</li>
+                    
+                    <li><strong>Explicit Size Declaration:</strong> char str[50] = "Hello"; reserves 50 bytes, with the string starting at the beginning.</li>
+                    
+                    <li><strong>Character-by-Character Initialization:</strong> char str[] = {'H', 'e', 'l', 'l', 'o', '\0'}; manually creates the string.</li>
+                </ul>
+            </div>
+
+            <h3>String Declaration and Basic Operations:</h3>
+            <div class="code-box">
+<pre><code><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span>
+<span class="keyword">#include</span> <span class="string">&lt;string.h&gt;</span>
+
+<span class="comment">// Different ways to declare and initialize strings</span>
+<span class="keyword">char</span> str1[<span class="number">50</span>] = <span class="string">"Hello World"</span>;           <span class="comment">// With explicit size</span>
+<span class="keyword">char</span> str2[] = <span class="string">"Programming"</span>;            <span class="comment">// Size determined automatically</span>
+<span class="keyword">char</span> str3[<span class="number">20</span>];                          <span class="comment">// Uninitialized array</span>
+
+<span class="comment">// Character-by-character initialization</span>
+<span class="keyword">char</span> str4[] = {<span class="string">'C'</span>, <span class="string">' '</span>, <span class="string">'L'</span>, <span class="string">'a'</span>, <span class="string">'n'</span>, <span class="string">'g'</span>, <span class="string">'u'</span>, <span class="string">'a'</span>, <span class="string">'g'</span>, <span class="string">'e'</span>, <span class="string">'\0'</span>};
+
+<span class="comment">// String length calculation</span>
+<span class="keyword">int</span> len1 = <span class="keyword">strlen</span>(str1);              <span class="comment">// Length of "Hello World" (11)</span>
+<span class="keyword">int</span> len2 = <span class="keyword">strlen</span>(str2);              <span class="comment">// Length of "Programming" (11)</span>
+
+<span class="keyword">printf</span>(<span class="string">"String 1: %s (Length: %d)\n"</span>, str1, len1);
+<span class="keyword">printf</span>(<span class="string">"String 2: %s (Length: %d)\n"</span>, str2, len2);
+<span class="keyword">printf</span>(<span class="string">"String 4: %s\n"</span>, str4);
+
+<span class="comment">// Accessing individual characters</span>
+<span class="keyword">printf</span>(<span class="string">"First character of str1: %c\n"</span>, str1[<span class="number">0</span>]);
+<span class="keyword">printf</span>(<span class="string">"Last character of str1: %c\n"</span>, str1[len1 - <span class="number">1</span>]);
+<span class="keyword">printf</span>(<span class="string">"Null terminator: %d\n"</span>, str1[len1]);</code></pre>
+            </div>
+
+            <h3>String Input and Output:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// String input and output methods</span>
+<span class="keyword">char</span> name[<span class="number">50</span>];
+
+<span class="comment">// Method 1: Using scanf (stops at whitespace)</span>
+<span class="keyword">printf</span>(<span class="string">"Enter your first name: "</span>);
+<span class="keyword">scanf</span>(<span class="string">"%s"</span>, name);
+<span class="keyword">printf</span>(<span class="string">"Hello, %s!\n"</span>, name);
+
+<span class="comment">// Method 2: Using gets (deprecated, unsafe)</span>
+<span class="comment">// gets(name);  // Avoid using gets()</span>
+
+<span class="comment">// Method 3: Using fgets (safe, includes newline)</span>
+<span class="keyword">printf</span>(<span class="string">"Enter your full name: "</span>);
+<span class="keyword">fgets</span>(name, <span class="keyword">sizeof</span>(name), <span class="keyword">stdin</span>);
+<span class="keyword">printf</span>(<span class="string">"Full name: %s"</span>, name);
+
+<span class="comment">// Method 4: Using getchar() in a loop</span>
+<span class="keyword">char</span> input[<span class="number">100</span>];
+<span class="keyword">int</span> i = <span class="number">0</span>;
+<span class="keyword">char</span> ch;
+
+<span class="keyword">printf</span>(<span class="string">"Enter a string (press Enter to finish): "</span>);
+<span class="keyword">while</span> ((ch = <span class="keyword">getchar</span>()) != <span class="string">'\n'</span> && i < <span class="number">99</span>) {
+    input[i++] = ch;
+}
+input[i] = <span class="string">'\0'</span>;  <span class="comment">// Add null terminator</span>
+<span class="keyword">printf</span>(<span class="string">"You entered: %s\n"</span>, input);</code></pre>
+            </div>
+
+            <h3>String Manipulation Functions:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// String copying</span>
+<span class="keyword">char</span> source[<span class="number">50</span>] = <span class="string">"Source String"</span>;
+<span class="keyword">char</span> dest[<span class="number">50</span>];
+
+<span class="keyword">strcpy</span>(dest, source);              <span class="comment">// Copy source to dest</span>
+<span class="keyword">printf</span>(<span class="string">"After strcpy: %s\n"</span>, dest);
+
+<span class="comment">// String concatenation</span>
+<span class="keyword">char</span> str1[<span class="number">50</span>] = <span class="string">"Hello"</span>;
+<span class="keyword">char</span> str2[<span class="number">50</span>] = <span class="string">" World"</span>;
+
+<span class="keyword">strcat</span>(str1, str2);                 <span class="comment">// Concatenate str2 to str1</span>
+<span class="keyword">printf</span>(<span class="string">"After strcat: %s\n"</span>, str1);
+
+<span class="comment">// String comparison</span>
+<span class="keyword">char</span> s1[<span class="number">20</span>] = <span class="string">"apple"</span>;
+<span class="keyword">char</span> s2[<span class="number">20</span>] = <span class="string">"apple"</span>;
+<span class="keyword">char</span> s3[<span class="number">20</span>] = <span class="string">"banana"</span>;
+
+<span class="keyword">int</span> result1 = <span class="keyword">strcmp</span>(s1, s2);      <span class="comment">// Compare s1 and s2</span>
+<span class="keyword">int</span> result2 = <span class="keyword">strcmp</span>(s1, s3);      <span class="comment">// Compare s1 and s3</span>
+
+<span class="keyword">if</span> (result1 == <span class="number">0</span>) {
+    <span class="keyword">printf</span>(<span class="string">"s1 and s2 are equal\n"</span>);
+} <span class="keyword">else</span> {
+    <span class="keyword">printf</span>(<span class="string">"s1 and s2 are not equal\n"</span>);
+}
+
+<span class="keyword">if</span> (result2 < <span class="number">0</span>) {
+    <span class="keyword">printf</span>(<span class="string">"s1 comes before s3\n"</span>);
+} <span class="keyword">else</span> <span class="keyword">if</span> (result2 > <span class="number">0</span>) {
+    <span class="keyword">printf</span>(<span class="string">"s1 comes after s3\n"</span>);
+}
+
+<span class="comment">// String searching</span>
+<span class="keyword">char</span> text[<span class="number">100</span>] = <span class="string">"This is a sample text for searching"</span>;
+<span class="keyword">char</span> *found = <span class="keyword">strstr</span>(text, <span class="string">"sample"</span>);  <span class="comment">// Find substring</span>
+
+<span class="keyword">if</span> (found != <span class="keyword">NULL</span>) {
+    <span class="keyword">printf</span>(<span class="string">"Found 'sample' at position: %ld\n"</span>, found - text);
+} <span class="keyword">else</span> {
+    <span class="keyword">printf</span>(<span class="string">"'sample' not found\n"</span>);
+}</code></pre>
+            </div>
+
+            <h3>Advanced String Operations:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// String tokenization (splitting)</span>
+<span class="keyword">char</span> sentence[<span class="number">100</span>] = <span class="string">"C programming is fun and powerful"</span>;
+<span class="keyword">char</span> *token = <span class="keyword">strtok</span>(sentence, <span class="string">" "</span>);  <span class="comment">// Split by space</span>
+
+<span class="keyword">printf</span>(<span class="string">"Tokens:\n"</span>);
+<span class="keyword">while</span> (token != <span class="keyword">NULL</span>) {
+    <span class="keyword">printf</span>(<span class="string">"%s\n"</span>, token);
+    token = <span class="keyword">strtok</span>(<span class="keyword">NULL</span>, <span class="string">" "</span>);  <span class="comment">// Continue with same string</span>
+}
+
+<span class="comment">// String conversion functions</span>
+<span class="keyword">char</span> numStr[<span class="number">20</span>] = <span class="string">"12345"</span>;
+<span class="keyword">int</span> number = <span class="keyword">atoi</span>(numStr);              <span class="comment">// String to integer</span>
+<span class="keyword">printf</span>(<span class="string">"Converted number: %d\n"</span>, number);
+
+<span class="keyword">float</span> floatNum = <span class="keyword">atof</span>(<span class="string">"123.456"</span>);      <span class="comment">// String to float</span>
+<span class="keyword">printf</span>(<span class="string">"Converted float: %.3f\n"</span>, floatNum);
+
+<span class="comment">// Number to string conversion</span>
+<span class="keyword">int</span> value = <span class="number">42</span>;
+<span class="keyword">char</span> strValue[<span class="number">20</span>];
+<span class="keyword">sprintf</span>(strValue, <span class="string">"%d"</span>, value);          <span class="comment">// Integer to string</span>
+<span class="keyword">printf</span>(<span class="string">"String value: %s\n"</span>, strValue);
+
+<span class="comment">// Case conversion</span>
+<span class="keyword">char</span> mixed[<span class="number">50</span>] = <span class="string">"Hello World 123"</span>;
+<span class="keyword">printf</span>(<span class="string">"Original: %s\n"</span>, mixed);
+
+<span class="comment">// Convert to uppercase</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; mixed[i] != <span class="string">'\0'</span>; i++) {
+    <span class="keyword">if</span> (mixed[i] >= <span class="string">'a'</span> && mixed[i] <= <span class="string">'z'</span>) {
+        mixed[i] = mixed[i] - <span class="number">32</span>;  <span class="comment">// Convert to uppercase</span>
+    }
+}
+<span class="keyword">printf</span>(<span class="string">"Uppercase: %s\n"</span>, mixed);</code></pre>
+            </div>
+
+            <div class="highlight">
+                <h3>Common String Functions Summary:</h3>
+                <ul>
+                    <li><strong>strlen(str):</strong> Returns the length of the string (excluding null terminator).</li>
+                    
+                    <li><strong>strcpy(dest, src):</strong> Copies the source string to the destination string.</li>
+                    
+                    <li><strong>strcat(dest, src):</strong> Appends the source string to the end of the destination string.</li>
+                    
+                    <li><strong>strcmp(str1, str2):</strong> Compares two strings. Returns 0 if equal, negative if str1 < str2, positive if str1 > str2.</li>
+                    
+                    <li><strong>strstr(haystack, needle):</strong> Finds the first occurrence of needle in haystack. Returns pointer to found substring or NULL.</li>
+                    
+                    <li><strong>strtok(str, delimiters):</strong> Splits a string into tokens based on delimiters.</li>
+                    
+                    <li><strong>atoi(str):</strong> Converts string to integer.</li>
+                    
+                    <li><strong>atof(str):</strong> Converts string to float.</li>
+                    
+                    <li><strong>sprintf(dest, format, ...):</strong> Formats and writes to a string.</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>String Safety and Best Practices:</h3>
+                <ul>
+                    <li><strong>Buffer Overflow Prevention:</strong> Always ensure that destination buffers are large enough to hold the result plus the null terminator.</li>
+                    
+                    <li><strong>Use Safe Functions:</strong> Prefer strncpy(), strncat(), and strncmp() over their unsafe counterparts when possible.</li>
+                    
+                    <li><strong>Check Return Values:</strong> Always check the return values of string functions for errors.</li>
+                    
+                    <li><strong>Null Terminator:</strong> Always ensure strings are properly null-terminated.</li>
+                    
+                    <li><strong>Memory Allocation:</strong> Be careful with dynamic string allocation and ensure proper deallocation.</li>
+                    
+                    <li><strong>Input Validation:</strong> Validate user input to prevent buffer overflows and other security issues.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>9. Structures</h2>
+            <p>Structures in C are user-defined data types that allow you to group different types of data under a single name. They are fundamental for creating complex data types and are essential for building real-world applications. Structures enable you to organize related data together, making your code more readable, maintainable, and efficient.</p>
+            
+            <div class="highlight">
+                <h3>Key Concepts of Structures:</h3>
+                <ul>
+                    <li><strong>User-Defined Data Type:</strong> Structures allow you to create your own data types by combining different primitive data types.</li>
+                    
+                    <li><strong>Data Organization:</strong> Structures help organize related data into logical units, making code more readable and maintainable.</li>
+                    
+                    <li><strong>Memory Layout:</strong> Structure members are stored in contiguous memory locations, though there may be padding for alignment.</li>
+                    
+                    <li><strong>Member Access:</strong> Structure members are accessed using the dot operator (.) for structure variables and arrow operator (->) for structure pointers.</li>
+                    
+                    <li><strong>Nested Structures:</strong> Structures can contain other structures as members, allowing for complex data organization.</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>Structure Declaration and Definition:</h3>
+                <ul>
+                    <li><strong>Structure Template:</strong> The struct keyword defines a template that describes the layout of the data.</li>
+                    
+                    <li><strong>Member Variables:</strong> Each member of a structure can be of any data type, including arrays, pointers, and other structures.</li>
+                    
+                    <li><strong>Structure Tags:</strong> Structure tags (names) help identify the structure type and can be used to declare variables.</li>
+                    
+                    <li><strong>Memory Allocation:</strong> When a structure variable is declared, memory is allocated for all its members.</li>
+                </ul>
+            </div>
+
+            <h3>Basic Structure Definition and Usage:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Basic structure definition</span>
+<span class="keyword">struct</span> <span class="keyword">Student</span> {
+    <span class="keyword">int</span> id;                    <span class="comment">// Student ID</span>
+    <span class="keyword">char</span> name[<span class="number">50</span>];            <span class="comment">// Student name</span>
+    <span class="keyword">float</span> marks;              <span class="comment">// Student marks</span>
+    <span class="keyword">char</span> grade;               <span class="comment">// Student grade</span>
+};
+
+<span class="comment">// Different ways to declare structure variables</span>
+<span class="keyword">struct</span> <span class="keyword">Student</span> student1;                    <span class="comment">// Declaration only</span>
+<span class="keyword">struct</span> <span class="keyword">Student</span> student2 = {<span class="number">101</span>, <span class="string">"John Doe"</span>, <span class="number">85.5</span>, <span class="string">'A'</span>};  <span class="comment">// Declaration with initialization</span>
+
+<span class="comment">// Accessing and modifying structure members</span>
+student1.id = <span class="number">102</span>;
+<span class="keyword">strcpy</span>(student1.name, <span class="string">"Jane Smith"</span>);
+student1.marks = <span class="number">92.0</span>;
+student1.grade = <span class="string">'A'</span>;
+
+<span class="comment">// Printing structure members</span>
+<span class="keyword">printf</span>(<span class="string">"Student 1: ID=%d, Name=%s, Marks=%.1f, Grade=%c\n"</span>, 
+         student1.id, student1.name, student1.marks, student1.grade);
+<span class="keyword">printf</span>(<span class="string">"Student 2: ID=%d, Name=%s, Marks=%.1f, Grade=%c\n"</span>, 
+         student2.id, student2.name, student2.marks, student2.grade);</code></pre>
+            </div>
+
+            <h3>Structure Arrays and Pointers:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Array of structures</span>
+<span class="keyword">struct</span> <span class="keyword">Student</span> class[<span class="number">5</span>] = {
+    {<span class="number">101</span>, <span class="string">"Alice"</span>, <span class="number">85.5</span>, <span class="string">'A'</span>},
+    {<span class="number">102</span>, <span class="string">"Bob"</span>, <span class="number">78.0</span>, <span class="string">'B'</span>},
+    {<span class="number">103</span>, <span class="string">"Charlie"</span>, <span class="number">92.5</span>, <span class="string">'A'</span>},
+    {<span class="number">104</span>, <span class="string">"Diana"</span>, <span class="number">67.0</span>, <span class="string">'C'</span>},
+    {<span class="number">105</span>, <span class="string">"Eve"</span>, <span class="number">88.0</span>, <span class="string">'A'</span>}
+};
+
+<span class="comment">// Traversing array of structures</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">5</span>; i++) {
+    <span class="keyword">printf</span>(<span class="string">"Student %d: %s (ID: %d, Marks: %.1f, Grade: %c)\n"</span>, 
+             i + <span class="number">1</span>, class[i].name, class[i].id, class[i].marks, class[i].grade);
+}
+
+<span class="comment">// Structure pointers</span>
+<span class="keyword">struct</span> <span class="keyword">Student</span> *ptr = &student1;  <span class="comment">// Pointer to structure</span>
+
+<span class="comment">// Accessing members through pointer (using arrow operator)</span>
+<span class="keyword">printf</span>(<span class="string">"Pointer access: ID=%d, Name=%s\n"</span>, ptr->id, ptr->name);
+
+<span class="comment">// Alternative way using dereference and dot operator</span>
+<span class="keyword">printf</span>(<span class="string">"Dereference access: ID=%d, Name=%s\n"</span>, (*ptr).id, (*ptr).name);
+
+<span class="comment">// Modifying structure through pointer</span>
+ptr->marks = <span class="number">95.0</span>;
+<span class="keyword">printf</span>(<span class="string">"Updated marks: %.1f\n"</span>, student1.marks);</code></pre>
+            </div>
+
+            <h3>Nested Structures:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Nested structure definition</span>
+<span class="keyword">struct</span> <span class="keyword">Address</span> {
+    <span class="keyword">char</span> street[<span class="number">100</span>];
+    <span class="keyword">char</span> city[<span class="number">50</span>];
+    <span class="keyword">char</span> state[<span class="number">30</span>];
+    <span class="keyword">int</span> zipCode;
+};
+
+<span class="keyword">struct</span> <span class="keyword">Employee</span> {
+    <span class="keyword">int</span> empId;
+    <span class="keyword">char</span> name[<span class="number">50</span>];
+    <span class="keyword">float</span> salary;
+    <span class="keyword">struct</span> <span class="keyword">Address</span> address;  <span class="comment">// Nested structure</span>
+};
+
+<span class="comment">// Creating and initializing nested structure</span>
+<span class="keyword">struct</span> <span class="keyword">Employee</span> emp = {
+    <span class="number">1001</span>,
+    <span class="string">"John Smith"</span>,
+    <span class="number">75000.0</span>,
+    {<span class="string">"123 Main St"</span>, <span class="string">"New York"</span>, <span class="string">"NY"</span>, <span class="number">10001</span>}
+};
+
+<span class="comment">// Accessing nested structure members</span>
+<span class="keyword">printf</span>(<span class="string">"Employee: %s\n"</span>, emp.name);
+<span class="keyword">printf</span>(<span class="string">"Address: %s, %s, %s %d\n"</span>, 
+         emp.address.street, emp.address.city, emp.address.state, emp.address.zipCode);
+
+<span class="comment">// Modifying nested structure members</span>
+<span class="keyword">strcpy</span>(emp.address.city, <span class="string">"Los Angeles"</span>);
+emp.address.zipCode = <span class="number">90210</span>;
+<span class="keyword">printf</span>(<span class="string">"Updated address: %s, %s, %s %d\n"</span>, 
+         emp.address.street, emp.address.city, emp.address.state, emp.address.zipCode);</code></pre>
+            </div>
+
+            <h3>Structures and Functions:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Function that takes structure as parameter (pass by value)</span>
+<span class="keyword">void</span> <span class="keyword">printStudent</span>(<span class="keyword">struct</span> <span class="keyword">Student</span> s) {
+    <span class="keyword">printf</span>(<span class="string">"Student Details:\n"</span>);
+    <span class="keyword">printf</span>(<span class="string">"ID: %d\n"</span>, s.id);
+    <span class="keyword">printf</span>(<span class="string">"Name: %s\n"</span>, s.name);
+    <span class="keyword">printf</span>(<span class="string">"Marks: %.1f\n"</span>, s.marks);
+    <span class="keyword">printf</span>(<span class="string">"Grade: %c\n"</span>, s.grade);
+}
+
+<span class="comment">// Function that takes structure pointer (pass by reference)</span>
+<span class="keyword">void</span> <span class="keyword">updateMarks</span>(<span class="keyword">struct</span> <span class="keyword">Student</span> *s, <span class="keyword">float</span> newMarks) {
+    s->marks = newMarks;
+    
+    <span class="comment">// Update grade based on marks</span>
+    <span class="keyword">if</span> (s->marks >= <span class="number">90</span>) s->grade = <span class="string">'A'</span>;
+    <span class="keyword">else</span> <span class="keyword">if</span> (s->marks >= <span class="number">80</span>) s->grade = <span class="string">'B'</span>;
+    <span class="keyword">else</span> <span class="keyword">if</span> (s->marks >= <span class="number">70</span>) s->grade = <span class="string">'C'</span>;
+    <span class="keyword">else</span> <span class="keyword">if</span> (s->marks >= <span class="number">60</span>) s->grade = <span class="string">'D'</span>;
+    <span class="keyword">else</span> s->grade = <span class="string">'F'</span>;
+}
+
+<span class="comment">// Function that returns a structure</span>
+<span class="keyword">struct</span> <span class="keyword">Student</span> <span class="keyword">createStudent</span>(<span class="keyword">int</span> id, <span class="keyword">char</span> name[], <span class="keyword">float</span> marks) {
+    <span class="keyword">struct</span> <span class="keyword">Student</span> newStudent;
+    newStudent.id = id;
+    <span class="keyword">strcpy</span>(newStudent.name, name);
+    newStudent.marks = marks;
+    
+    <span class="comment">// Determine grade</span>
+    <span class="keyword">if</span> (marks >= <span class="number">90</span>) newStudent.grade = <span class="string">'A'</span>;
+    <span class="keyword">else</span> <span class="keyword">if</span> (marks >= <span class="number">80</span>) newStudent.grade = <span class="string">'B'</span>;
+    <span class="keyword">else</span> <span class="keyword">if</span> (marks >= <span class="number">70</span>) newStudent.grade = <span class="string">'C'</span>;
+    <span class="keyword">else</span> <span class="keyword">if</span> (marks >= <span class="number">60</span>) newStudent.grade = <span class="string">'D'</span>;
+    <span class="keyword">else</span> newStudent.grade = <span class="string">'F'</span>;
+    
+    <span class="keyword">return</span> newStudent;
+}
+
+<span class="keyword">int</span> <span class="keyword">main</span>() {
+    <span class="comment">// Using functions with structures</span>
+    <span class="keyword">printStudent</span>(student1);
+    
+    <span class="keyword">updateMarks</span>(&student1, <span class="number">95.0</span>);
+    <span class="keyword">printf</span>(<span class="string">"After update: Marks=%.1f, Grade=%c\n"</span>, student1.marks, student1.grade);
+    
+    <span class="keyword">struct</span> <span class="keyword">Student</span> newStudent = <span class="keyword">createStudent</span>(<span class="number">106</span>, <span class="string">"Frank"</span>, <span class="number">88.5</span>);
+    <span class="keyword">printStudent</span>(newStudent);
+    
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+            </div>
+
+            <div class="highlight">
+                <h3>Structure Applications and Use Cases:</h3>
+                <ul>
+                    <li><strong>Database Records:</strong> Representing records with multiple fields like employee data, student information, or product details.</li>
+                    
+                    <li><strong>Complex Data Organization:</strong> Grouping related data together for better organization and readability.</li>
+                    
+                    <li><strong>Function Parameters:</strong> Passing multiple related values to functions as a single unit.</li>
+                    
+                    <li><strong>Data Structures:</strong> Building more complex data structures like linked lists, trees, and graphs.</li>
+                    
+                    <li><strong>File I/O:</strong> Reading and writing structured data to files.</li>
+                    
+                    <li><strong>API Design:</strong> Creating interfaces that work with structured data.</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>Structure Best Practices:</h3>
+                <ul>
+                    <li><strong>Meaningful Names:</strong> Use descriptive names for structures and their members.</li>
+                    
+                    <li><strong>Logical Grouping:</strong> Group related data together in a single structure.</li>
+                    
+                    <li><strong>Memory Efficiency:</strong> Consider the order of members to minimize padding and optimize memory usage.</li>
+                    
+                    <li><strong>Initialization:</strong> Always initialize structure variables to avoid undefined behavior.</li>
+                    
+                    <li><strong>Documentation:</strong> Document the purpose and usage of each structure and its members.</li>
+                    
+                    <li><strong>Consistency:</strong> Use consistent naming conventions for structures and their members.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>10. File Handling</h2>
+            <p>File handling in C allows programs to read from and write to files on the disk. This is essential for data persistence, configuration management, and processing large datasets. C provides a comprehensive set of functions for file operations through the standard I/O library, making it possible to create, read, write, and manipulate files efficiently.</p>
+            
+            <div class="highlight">
+                <h3>Key Concepts of File Handling:</h3>
+                <ul>
+                    <li><strong>File Streams:</strong> Files are accessed through file pointers (FILE*) which represent a stream of data.</li>
+                    
+                    <li><strong>File Modes:</strong> Different modes determine how a file can be accessed (read, write, append, etc.).</li>
+                    
+                    <li><strong>Buffer Management:</strong> File operations are buffered for efficiency, with data being read/written in chunks.</li>
+                    
+                    <li><strong>Error Handling:</strong> File operations can fail, so proper error checking is essential.</li>
+                    
+                    <li><strong>File Position:</strong> Each file has a current position indicator that tracks where the next read/write operation will occur.</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>File Opening Modes:</h3>
+                <ul>
+                    <li><strong>"r" (Read):</strong> Opens file for reading. File must exist.</li>
+                    
+                    <li><strong>"w" (Write):</strong> Opens file for writing. Creates new file or truncates existing file.</li>
+                    
+                    <li><strong>"a" (Append):</strong> Opens file for appending. Creates new file if it doesn't exist.</li>
+                    
+                    <li><strong>"r+" (Read/Write):</strong> Opens file for both reading and writing. File must exist.</li>
+                    
+                    <li><strong>"w+" (Read/Write):</strong> Opens file for both reading and writing. Creates new file or truncates existing.</li>
+                    
+                    <li><strong>"a+" (Read/Append):</strong> Opens file for reading and appending. Creates new file if it doesn't exist.</li>
+                </ul>
+            </div>
+
+            <h3>Basic File Operations:</h3>
+            <div class="code-box">
+<pre><code><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span>
+
+<span class="comment">// Writing to a file</span>
+FILE *file = <span class="keyword">fopen</span>(<span class="string">"data.txt"</span>, <span class="string">"w"</span>);
+
+<span class="comment">// Check if file opened successfully</span>
+<span class="keyword">if</span> (file == <span class="keyword">NULL</span>) {
+    <span class="keyword">printf</span>(<span class="string">"Error opening file!\n"</span>);
+    <span class="keyword">return</span> <span class="number">1</span>;
+}
+
+<span class="comment">// Write data to file</span>
+<span class="keyword">fprintf</span>(file, <span class="string">"Hello, File Handling!\n"</span>);
+<span class="keyword">fprintf</span>(file, <span class="string">"This is line 2\n"</span>);
+<span class="keyword">fprintf</span>(file, <span class="string">"Line 3 with number: %d\n"</span>, <span class="number">42</span>);
+
+<span class="comment">// Close the file</span>
+<span class="keyword">fclose</span>(file);
+<span class="keyword">printf</span>(<span class="string">"File written successfully!\n"</span>);
+
+<span class="comment">// Reading from a file</span>
+FILE *readFile = <span class="keyword">fopen</span>(<span class="string">"data.txt"</span>, <span class="string">"r"</span>);
+
+<span class="keyword">if</span> (readFile == <span class="keyword">NULL</span>) {
+    <span class="keyword">printf</span>(<span class="string">"Error opening file for reading!\n"</span>);
+    <span class="keyword">return</span> <span class="number">1</span>;
+}
+
+<span class="comment">// Read and display file contents</span>
+<span class="keyword">char</span> buffer[<span class="number">100</span>];
+<span class="keyword">printf</span>(<span class="string">"File contents:\n"</span>);
+
+<span class="keyword">while</span> (<span class="keyword">fgets</span>(buffer, <span class="keyword">sizeof</span>(buffer), readFile) != <span class="keyword">NULL</span>) {
+    <span class="keyword">printf</span>(<span class="string">"%s"</span>, buffer);
+}
+
+<span class="keyword">fclose</span>(readFile);</code></pre>
+            </div>
+
+            <h3>Character-by-Character File Operations:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Writing characters to file</span>
+FILE *charFile = <span class="keyword">fopen</span>(<span class="string">"characters.txt"</span>, <span class="string">"w"</span>);
+
+<span class="keyword">if</span> (charFile == <span class="keyword">NULL</span>) {
+    <span class="keyword">printf</span>(<span class="string">"Error opening file!\n"</span>);
+    <span class="keyword">return</span> <span class="number">1</span>;
+}
+
+<span class="comment">// Write individual characters</span>
+<span class="keyword">fputc</span>(<span class="string">'H'</span>, charFile);
+<span class="keyword">fputc</span>(<span class="string">'e'</span>, charFile);
+<span class="keyword">fputc</span>(<span class="string">'l'</span>, charFile);
+<span class="keyword">fputc</span>(<span class="string">'l'</span>, charFile);
+<span class="keyword">fputc</span>(<span class="string">'o'</span>, charFile);
+<span class="keyword">fputc</span>(<span class="string">'\n'</span>, charFile);
+
+<span class="keyword">fclose</span>(charFile);
+
+<span class="comment">// Reading characters from file</span>
+FILE *readCharFile = <span class="keyword">fopen</span>(<span class="string">"characters.txt"</span>, <span class="string">"r"</span>);
+
+<span class="keyword">if</span> (readCharFile == <span class="keyword">NULL</span>) {
+    <span class="keyword">printf</span>(<span class="string">"Error opening file!\n"</span>);
+    <span class="keyword">return</span> <span class="number">1</span>;
+}
+
+<span class="keyword">printf</span>(<span class="string">"Characters read: "</span>);
+<span class="keyword">int</span> ch;
+<span class="keyword">while</span> ((ch = <span class="keyword">fgetc</span>(readCharFile)) != <span class="keyword">EOF</span>) {
+    <span class="keyword">printf</span>(<span class="string">"%c"</span>, ch);
+}
+<span class="keyword">printf</span>(<span class="string">"\n"</span>);
+
+<span class="keyword">fclose</span>(readCharFile);</code></pre>
+            </div>
+
+            <h3>File Positioning and Random Access:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Creating a file with multiple lines</span>
+FILE *posFile = <span class="keyword">fopen</span>(<span class="string">"position.txt"</span>, <span class="string">"w+"</span>);
+
+<span class="keyword">if</span> (posFile == <span class="keyword">NULL</span>) {
+    <span class="keyword">printf</span>(<span class="string">"Error opening file!\n"</span>);
+    <span class="keyword">return</span> <span class="number">1</span>;
+}
+
+<span class="comment">// Write some lines</span>
+<span class="keyword">fprintf</span>(posFile, <span class="string">"Line 1: First line\n"</span>);
+<span class="keyword">fprintf</span>(posFile, <span class="string">"Line 2: Second line\n"</span>);
+<span class="keyword">fprintf</span>(posFile, <span class="string">"Line 3: Third line\n"</span>);
+<span class="keyword">fprintf</span>(posFile, <span class="string">"Line 4: Fourth line\n"</span>);
+
+<span class="comment">// Get current position</span>
+<span class="keyword">long</span> currentPos = <span class="keyword">ftell</span>(posFile);
+<span class="keyword">printf</span>(<span class="string">"Current position: %ld\n"</span>, currentPos);
+
+<span class="comment">// Move to beginning of file</span>
+<span class="keyword">rewind</span>(posFile);
+<span class="keyword">printf</span>(<span class="string">"After rewind: %ld\n"</span>, <span class="keyword">ftell</span>(posFile));
+
+<span class="comment">// Read first line</span>
+<span class="keyword">char</span> line[<span class="number">100</span>];
+<span class="keyword">fgets</span>(line, <span class="keyword">sizeof</span>(line), posFile);
+<span class="keyword">printf</span>(<span class="string">"First line: %s"</span>, line);
+
+<span class="comment">// Move to specific position (beginning of third line)</span>
+<span class="keyword">fseek</span>(posFile, <span class="number">30</span>, <span class="keyword">SEEK_SET</span>);  <span class="comment">// Move 30 bytes from beginning</span>
+<span class="keyword">fgets</span>(line, <span class="keyword">sizeof</span>(line), posFile);
+<span class="keyword">printf</span>(<span class="string">"Line at position 30: %s"</span>, line);
+
+<span class="comment">// Move to end of file</span>
+<span class="keyword">fseek</span>(posFile, <span class="number">0</span>, <span class="keyword">SEEK_END</span>);
+<span class="keyword">printf</span>(<span class="string">"File size: %ld bytes\n"</span>, <span class="keyword">ftell</span>(posFile));
+
+<span class="keyword">fclose</span>(posFile);</code></pre>
+            </div>
+
+            <h3>Binary File Operations:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Structure for binary file operations</span>
+<span class="keyword">struct</span> <span class="keyword">Person</span> {
+    <span class="keyword">int</span> id;
+    <span class="keyword">char</span> name[<span class="number">50</span>];
+    <span class="keyword">int</span> age;
+};
+
+<span class="comment">// Writing structures to binary file</span>
+FILE *binFile = <span class="keyword">fopen</span>(<span class="string">"people.dat"</span>, <span class="string">"wb"</span>);
+
+<span class="keyword">if</span> (binFile == <span class="keyword">NULL</span>) {
+    <span class="keyword">printf</span>(<span class="string">"Error opening binary file!\n"</span>);
+    <span class="keyword">return</span> <span class="number">1</span>;
+}
+
+<span class="comment">// Create and write some person records</span>
+<span class="keyword">struct</span> <span class="keyword">Person</span> people[] = {
+    {<span class="number">1</span>, <span class="string">"Alice"</span>, <span class="number">25</span>},
+    {<span class="number">2</span>, <span class="string">"Bob"</span>, <span class="number">30</span>},
+    {<span class="number">3</span>, <span class="string">"Charlie"</span>, <span class="number">35</span>}
+};
+
+<span class="keyword">fwrite</span>(people, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> <span class="keyword">Person</span>), <span class="number">3</span>, binFile);
+<span class="keyword">fclose</span>(binFile);
+
+<span class="comment">// Reading structures from binary file</span>
+FILE *readBinFile = <span class="keyword">fopen</span>(<span class="string">"people.dat"</span>, <span class="string">"rb"</span>);
+
+<span class="keyword">if</span> (readBinFile == <span class="keyword">NULL</span>) {
+    <span class="keyword">printf</span>(<span class="string">"Error opening binary file for reading!\n"</span>);
+    <span class="keyword">return</span> <span class="number">1</span>;
+}
+
+<span class="keyword">struct</span> <span class="keyword">Person</span> person;
+<span class="keyword">printf</span>(<span class="string">"People from binary file:\n"</span>);
+
+<span class="keyword">while</span> (<span class="keyword">fread</span>(&person, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> <span class="keyword">Person</span>), <span class="number">1</span>, readBinFile) == <span class="number">1</span>) {
+    <span class="keyword">printf</span>(<span class="string">"ID: %d, Name: %s, Age: %d\n"</span>, person.id, person.name, person.age);
+}
+
+<span class="keyword">fclose</span>(readBinFile);</code></pre>
+            </div>
+
+            <h3>Error Handling and File Status:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Comprehensive file handling with error checking</span>
+<span class="keyword">void</span> <span class="keyword">checkFileStatus</span>(FILE *file, <span class="keyword">const</span> <span class="keyword">char</span> *operation) {
+    <span class="keyword">if</span> (<span class="keyword">ferror</span>(file)) {
+        <span class="keyword">printf</span>(<span class="string">"Error during %s operation!\n"</span>, operation);
+        <span class="keyword">clearerr</span>(file);  <span class="comment">// Clear error flag</span>
+    }
+    
+    <span class="keyword">if</span> (<span class="keyword">feof</span>(file)) {
+        <span class="keyword">printf</span>(<span class="string">"End of file reached during %s operation.\n"</span>, operation);
+    }
+}
+
+<span class="comment">// Safe file operations</span>
+FILE *safeFile = <span class="keyword">fopen</span>(<span class="string">"safe.txt"</span>, <span class="string">"w"</span>);
+
+<span class="keyword">if</span> (safeFile == <span class="keyword">NULL</span>) {
+    <span class="keyword">perror</span>(<span class="string">"Error opening file"</span>);  <span class="comment">// Print system error message</span>
+    <span class="keyword">return</span> <span class="number">1</span>;
+}
+
+<span class="comment">// Write with error checking</span>
+<span class="keyword">fprintf</span>(safeFile, <span class="string">"Safe writing test\n"</span>);
+<span class="keyword">checkFileStatus</span>(safeFile, <span class="string">"write"</span>);
+
+<span class="keyword">fclose</span>(safeFile);
+
+<span class="comment">// Check if file exists before opening</span>
+FILE *testFile = <span class="keyword">fopen</span>(<span class="string">"nonexistent.txt"</span>, <span class="string">"r"</span>);
+<span class="keyword">if</span> (testFile == <span class="keyword">NULL</span>) {
+    <span class="keyword">perror</span>(<span class="string">"File does not exist"</span>);
+} <span class="keyword">else</span> {
+    <span class="keyword">fclose</span>(testFile);
+}</code></pre>
+            </div>
+
+            <div class="highlight">
+                <h3>Common File Handling Functions:</h3>
+                <ul>
+                    <li><strong>fopen(filename, mode):</strong> Opens a file and returns a file pointer.</li>
+                    
+                    <li><strong>fclose(file):</strong> Closes a file and flushes any buffered data.</li>
+                    
+                    <li><strong>fprintf(file, format, ...):</strong> Writes formatted output to a file.</li>
+                    
+                    <li><strong>fscanf(file, format, ...):</strong> Reads formatted input from a file.</li>
+                    
+                    <li><strong>fgets(buffer, size, file):</strong> Reads a line from a file.</li>
+                    
+                    <li><strong>fputs(string, file):</strong> Writes a string to a file.</li>
+                    
+                    <li><strong>fgetc(file):</strong> Reads a single character from a file.</li>
+                    
+                    <li><strong>fputc(character, file):</strong> Writes a single character to a file.</li>
+                    
+                    <li><strong>fread(ptr, size, count, file):</strong> Reads binary data from a file.</li>
+                    
+                    <li><strong>fwrite(ptr, size, count, file):</strong> Writes binary data to a file.</li>
+                    
+                    <li><strong>fseek(file, offset, whence):</strong> Moves file position indicator.</li>
+                    
+                    <li><strong>ftell(file):</strong> Returns current file position.</li>
+                    
+                    <li><strong>rewind(file):</strong> Moves file position to beginning.</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>File Handling Best Practices:</h3>
+                <ul>
+                    <li><strong>Always Check Return Values:</strong> Check if file operations succeed before proceeding.</li>
+                    
+                    <li><strong>Close Files Properly:</strong> Always close files when done to free system resources.</li>
+                    
+                    <li><strong>Use Appropriate Modes:</strong> Choose the correct file mode for your intended operations.</li>
+                    
+                    <li><strong>Handle Errors Gracefully:</strong> Provide meaningful error messages and handle file operation failures.</li>
+                    
+                    <li><strong>Check File Existence:</strong> Verify files exist before attempting to read from them.</li>
+                    
+                    <li><strong>Use Buffered I/O:</strong> Prefer buffered functions for better performance with large files.</li>
+                    
+                    <li><strong>Validate File Paths:</strong> Ensure file paths are valid and accessible.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>11. Memory Management</h2>
+            <p>Memory management in C is a critical aspect of programming that involves allocating, using, and deallocating memory dynamically during program execution. Unlike some high-level languages, C gives programmers direct control over memory allocation, which provides flexibility but also requires careful management to avoid memory leaks, buffer overflows, and other memory-related issues.</p>
+            
+            <div class="highlight">
+                <h3>Key Concepts of Memory Management:</h3>
+                <ul>
+                    <li><strong>Static vs Dynamic Allocation:</strong> Static allocation happens at compile time (variables, arrays), while dynamic allocation happens at runtime using functions like malloc(), calloc(), and realloc().</li>
+                    
+                    <li><strong>Heap vs Stack:</strong> Dynamically allocated memory comes from the heap, while local variables are stored on the stack.</li>
+                    
+                    <li><strong>Memory Leaks:</strong> Occur when allocated memory is not properly freed, causing the program to consume more memory over time.</li>
+                    
+                    <li><strong>Dangling Pointers:</strong> Pointers that point to memory that has been deallocated, leading to undefined behavior.</li>
+                    
+                    <li><strong>Buffer Overflows:</strong> Writing beyond the allocated memory boundaries, which can corrupt data or crash the program.</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>Memory Allocation Functions:</h3>
+                <ul>
+                    <li><strong>malloc(size):</strong> Allocates a block of memory of specified size in bytes. Returns a pointer to the allocated memory or NULL if allocation fails.</li>
+                    
+                    <li><strong>calloc(count, size):</strong> Allocates memory for an array of elements, initializing all bytes to zero.</li>
+                    
+                    <li><strong>realloc(ptr, new_size):</strong> Changes the size of previously allocated memory block, preserving existing data.</li>
+                    
+                    <li><strong>free(ptr):</strong> Deallocates previously allocated memory, making it available for future allocations.</li>
+                </ul>
+            </div>
+
+            <h3>Basic Dynamic Memory Allocation:</h3>
+            <div class="code-box">
+<pre><code><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span>
+<span class="keyword">#include</span> <span class="string">&lt;stdlib.h&gt;</span>
+
+<span class="comment">// Allocating memory for a single integer</span>
+<span class="keyword">int</span> *ptr = (<span class="keyword">int</span> *)<span class="keyword">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>));
+
+<span class="comment">// Check if allocation was successful</span>
+<span class="keyword">if</span> (ptr == <span class="keyword">NULL</span>) {
+    <span class="keyword">printf</span>(<span class="string">"Memory allocation failed!\n"</span>);
+    <span class="keyword">return</span> <span class="number">1</span>;
+}
+
+<span class="comment">// Use the allocated memory</span>
+*ptr = <span class="number">42</span>;
+<span class="keyword">printf</span>(<span class="string">"Value stored: %d\n"</span>, *ptr);
+
+<span class="comment">// Free the memory when done</span>
+<span class="keyword">free</span>(ptr);
+ptr = <span class="keyword">NULL</span>;  <span class="comment">// Set pointer to NULL after freeing</span>
+
+<span class="comment">// Allocating memory for an array</span>
+<span class="keyword">int</span> size = <span class="number">5</span>;
+<span class="keyword">int</span> *arr = (<span class="keyword">int</span> *)<span class="keyword">malloc</span>(size * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));
+
+<span class="keyword">if</span> (arr == <span class="keyword">NULL</span>) {
+    <span class="keyword">printf</span>(<span class="string">"Array allocation failed!\n"</span>);
+    <span class="keyword">return</span> <span class="number">1</span>;
+}
+
+<span class="comment">// Initialize array elements</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < size; i++) {
+    arr[i] = i * <span class="number">10</span>;
+}
+
+<span class="comment">// Print array elements</span>
+<span class="keyword">printf</span>(<span class="string">"Array elements: "</span>);
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < size; i++) {
+    <span class="keyword">printf</span>(<span class="string">"%d "</span>, arr[i]);
+}
+<span class="keyword">printf</span>(<span class="string">"\n"</span>);
+
+<span class="comment">// Free array memory</span>
+<span class="keyword">free</span>(arr);
+arr = <span class="keyword">NULL</span>;</code></pre>
+            </div>
+
+            <h3>Calloc and Realloc Functions:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Using calloc for array allocation (initializes to zero)</span>
+<span class="keyword">int</span> *callocArr = (<span class="keyword">int</span> *)<span class="keyword">calloc</span>(<span class="number">5</span>, <span class="keyword">sizeof</span>(<span class="keyword">int</span>));
+
+<span class="keyword">if</span> (callocArr == <span class="keyword">NULL</span>) {
+    <span class="keyword">printf</span>(<span class="string">"Calloc allocation failed!\n"</span>);
+    <span class="keyword">return</span> <span class="number">1</span>;
+}
+
+<span class="comment">// Calloc initializes all elements to zero</span>
+<span class="keyword">printf</span>(<span class="string">"Calloc array (should be all zeros): "</span>);
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">5</span>; i++) {
+    <span class="keyword">printf</span>(<span class="string">"%d "</span>, callocArr[i]);
+}
+<span class="keyword">printf</span>(<span class="string">"\n"</span>);
+
+<span class="comment">// Using realloc to resize memory</span>
+<span class="keyword">int</span> *resizedArr = (<span class="keyword">int</span> *)<span class="keyword">realloc</span>(callocArr, <span class="number">10</span> * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));
+
+<span class="keyword">if</span> (resizedArr == <span class="keyword">NULL</span>) {
+    <span class="keyword">printf</span>(<span class="string">"Realloc failed!\n"</span>);
+    <span class="keyword">free</span>(callocArr);  <span class="comment">// Free original memory</span>
+    <span class="keyword">return</span> <span class="number">1</span>;
+}
+
+<span class="keyword">if</span> (resizedArr != callocArr) {
+    <span class="keyword">printf</span>(<span class="string">"Memory was moved to new location\n"</span>);
+    callocArr = resizedArr;  <span class="comment">// Update pointer</span>
+}
+
+<span class="comment">// Initialize new elements</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">5</span>; i < <span class="number">10</span>; i++) {
+    callocArr[i] = i * <span class="number">10</span>;
+}
+
+<span class="keyword">printf</span>(<span class="string">"Resized array: "</span>);
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">10</span>; i++) {
+    <span class="keyword">printf</span>(<span class="string">"%d "</span>, callocArr[i]);
+}
+<span class="keyword">printf</span>(<span class="string">"\n"</span>);
+
+<span class="keyword">free</span>(callocArr);</code></pre>
+            </div>
+
+            <h3>Dynamic Memory for Structures:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Structure definition</span>
+<span class="keyword">struct</span> <span class="keyword">Student</span> {
+    <span class="keyword">int</span> id;
+    <span class="keyword">char</span> *name;  <span class="comment">// Dynamic string</span>
+    <span class="keyword">float</span> marks;
+};
+
+<span class="comment">// Allocating memory for a structure</span>
+<span class="keyword">struct</span> <span class="keyword">Student</span> *student = (<span class="keyword">struct</span> <span class="keyword">Student</span> *)<span class="keyword">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> <span class="keyword">Student</span>));
+
+<span class="keyword">if</span> (student == <span class="keyword">NULL</span>) {
+    <span class="keyword">printf</span>(<span class="string">"Student allocation failed!\n"</span>);
+    <span class="keyword">return</span> <span class="number">1</span>;
+}
+
+<span class="comment">// Allocating memory for the name string</span>
+student->name = (<span class="keyword">char</span> *)<span class="keyword">malloc</span>(<span class="number">50</span> * <span class="keyword">sizeof</span>(<span class="keyword">char</span>));
+
+<span class="keyword">if</span> (student->name == <span class="keyword">NULL</span>) {
+    <span class="keyword">printf</span>(<span class="string">"Name allocation failed!\n"</span>);
+    <span class="keyword">free</span>(student);
+    <span class="keyword">return</span> <span class="number">1</span>;
+}
+
+<span class="comment">// Initialize structure</span>
+student->id = <span class="number">101</span>;
+<span class="keyword">strcpy</span>(student->name, <span class="string">"John Doe"</span>);
+student->marks = <span class="number">85.5</span>;
+
+<span class="keyword">printf</span>(<span class="string">"Student: ID=%d, Name=%s, Marks=%.1f\n"</span>, 
+         student->id, student->name, student->marks);
+
+<span class="comment">// Free memory in reverse order of allocation</span>
+<span class="keyword">free</span>(student->name);  <span class="comment">// Free name first</span>
+<span class="keyword">free</span>(student);        <span class="comment">// Then free structure</span>
+
+<span class="comment">// Allocating array of structures</span>
+<span class="keyword">struct</span> <span class="keyword">Student</span> *students = (<span class="keyword">struct</span> <span class="keyword">Student</span> *)<span class="keyword">calloc</span>(<span class="number">3</span>, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> <span class="keyword">Student</span>));
+
+<span class="keyword">if</span> (students == <span class="keyword">NULL</span>) {
+    <span class="keyword">printf</span>(<span class="string">"Students array allocation failed!\n"</span>);
+    <span class="keyword">return</span> <span class="number">1</span>;
+}
+
+<span class="comment">// Initialize array elements</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">3</span>; i++) {
+    students[i].id = <span class="number">100</span> + i;
+    students[i].name = (<span class="keyword">char</span> *)<span class="keyword">malloc</span>(<span class="number">50</span>);
+    <span class="keyword">sprintf</span>(students[i].name, <span class="string">"Student %d"</span>, i + <span class="number">1</span>);
+    students[i].marks = <span class="number">70</span> + i * <span class="number">5</span>;
+}
+
+<span class="comment">// Print all students</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">3</span>; i++) {
+    <span class="keyword">printf</span>(<span class="string">"Student %d: ID=%d, Name=%s, Marks=%.1f\n"</span>, 
+             i + <span class="number">1</span>, students[i].id, students[i].name, students[i].marks);
+}
+
+<span class="comment">// Free all allocated memory</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">3</span>; i++) {
+    <span class="keyword">free</span>(students[i].name);
+}
+<span class="keyword">free</span>(students);</code></pre>
+            </div>
+
+            <h3>Memory Management Functions:</h3>
+            <div class="code-box">
+<pre><code><span class="comment">// Function to allocate and initialize an integer array</span>
+<span class="keyword">int</span>* <span class="keyword">createIntArray</span>(<span class="keyword">int</span> size) {
+    <span class="keyword">int</span> *arr = (<span class="keyword">int</span> *)<span class="keyword">calloc</span>(size, <span class="keyword">sizeof</span>(<span class="keyword">int</span>));
+    
+    <span class="keyword">if</span> (arr == <span class="keyword">NULL</span>) {
+        <span class="keyword">printf</span>(<span class="string">"Failed to allocate array of size %d\n"</span>, size);
+        <span class="keyword">return</span> <span class="keyword">NULL</span>;
+    }
+    
+    <span class="keyword">printf</span>(<span class="string">"Successfully allocated array of size %d\n"</span>, size);
+    <span class="keyword">return</span> arr;
+}
+
+<span class="comment">// Function to resize an integer array</span>
+<span class="keyword">int</span>* <span class="keyword">resizeIntArray</span>(<span class="keyword">int</span> *arr, <span class="keyword">int</span> oldSize, <span class="keyword">int</span> newSize) {
+    <span class="keyword">int</span> *newArr = (<span class="keyword">int</span> *)<span class="keyword">realloc</span>(arr, newSize * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));
+    
+    <span class="keyword">if</span> (newArr == <span class="keyword">NULL</span>) {
+        <span class="keyword">printf</span>(<span class="string">"Failed to resize array from %d to %d\n"</span>, oldSize, newSize);
+        <span class="keyword">return</span> arr;  <span class="comment">// Return original array</span>
+    }
+    
+    <span class="keyword">printf</span>(<span class="string">"Successfully resized array from %d to %d\n"</span>, oldSize, newSize);
+    <span class="keyword">return</span> newArr;
+}
+
+<span class="comment">// Function to safely free memory</span>
+<span class="keyword">void</span> <span class="keyword">safeFree</span>(<span class="keyword">void</span> **ptr) {
+    <span class="keyword">if</span> (*ptr != <span class="keyword">NULL</span>) {
+        <span class="keyword">free</span>(*ptr);
+        *ptr = <span class="keyword">NULL</span>;  <span class="comment">// Set pointer to NULL after freeing</span>
+        <span class="keyword">printf</span>(<span class="string">"Memory freed successfully\n"</span>);
+    }
+}
+
+<span class="keyword">int</span> <span class="keyword">main</span>() {
+    <span class="comment">// Test memory management functions</span>
+    <span class="keyword">int</span> *arr = <span class="keyword">createIntArray</span>(<span class="number">5</span>);
+    
+    <span class="keyword">if</span> (arr != <span class="keyword">NULL</span>) {
+        <span class="comment">// Initialize array</span>
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">5</span>; i++) {
+            arr[i] = i * <span class="number">10</span>;
+        }
+        
+        <span class="comment">// Resize array</span>
+        arr = <span class="keyword">resizeIntArray</span>(arr, <span class="number">5</span>, <span class="number">10</span>);
+        
+        <span class="keyword">if</span> (arr != <span class="keyword">NULL</span>) {
+            <span class="comment">// Initialize new elements</span>
+            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">5</span>; i < <span class="number">10</span>; i++) {
+                arr[i] = i * <span class="number">10</span>;
+            }
+            
+            <span class="comment">// Print array</span>
+            <span class="keyword">printf</span>(<span class="string">"Array contents: "</span>);
+            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">10</span>; i++) {
+                <span class="keyword">printf</span>(<span class="string">"%d "</span>, arr[i]);
+            }
+            <span class="keyword">printf</span>(<span class="string">"\n"</span>);
+            
+            <span class="comment">// Free memory</span>
+            <span class="keyword">safeFree</span>((<span class="keyword">void</span> **)&arr);
+        }
+    }
+    
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+            </div>
+
+            <div class="highlight">
+                <h3>Common Memory Management Issues:</h3>
+                <ul>
+                    <li><strong>Memory Leaks:</strong> Allocated memory that is never freed, causing the program to consume increasing amounts of memory.</li>
+                    
+                    <li><strong>Dangling Pointers:</strong> Pointers that reference memory that has been deallocated, leading to undefined behavior.</li>
+                    
+                    <li><strong>Buffer Overflows:</strong> Writing beyond the boundaries of allocated memory, which can corrupt data or crash the program.</li>
+                    
+                    <li><strong>Double Free:</strong> Attempting to free the same memory block twice, which can corrupt the memory management system.</li>
+                    
+                    <li><strong>Uninitialized Pointers:</strong> Using pointers that haven't been properly initialized, leading to undefined behavior.</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>Memory Management Best Practices:</h3>
+                <ul>
+                    <li><strong>Always Check Return Values:</strong> Verify that memory allocation functions return valid pointers before using them.</li>
+                    
+                    <li><strong>Free Memory in Reverse Order:</strong> Free memory in the opposite order of allocation to avoid dangling pointers.</li>
+                    
+                    <li><strong>Set Pointers to NULL After Freeing:</strong> This helps prevent accidental use of freed memory.</li>
+                    
+                    <li><strong>Use Appropriate Allocation Functions:</strong> Use calloc() when you need zero-initialized memory, realloc() for resizing.</li>
+                    
+                    <li><strong>Check for Memory Leaks:</strong> Use tools like Valgrind to detect memory leaks in your programs.</li>
+                    
+                    <li><strong>Plan Memory Management:</strong> Design your memory allocation strategy before implementing it.</li>
+                    
+                    <li><strong>Use RAII-like Patterns:</strong> Ensure that memory is freed when variables go out of scope.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>12. Common Examples</h2>
+            <p>This section provides practical examples of common programming problems and their solutions in C. These examples demonstrate the application of various C programming concepts including functions, arrays, pointers, control structures, and algorithms. Understanding these examples will help you develop problem-solving skills and become proficient in C programming.</p>
+            
+            <h3>Mathematical Functions:</h3>
+            
+            <h4>1. Factorial Calculation (Recursive and Iterative):</h4>
+            <div class="code-box">
+<pre><code><span class="comment">// Recursive factorial function</span>
+<span class="keyword">int</span> <span class="keyword">factorialRecursive</span>(<span class="keyword">int</span> n) {
+    <span class="comment">// Base case: factorial of 0 or 1 is 1</span>
+    <span class="keyword">if</span> (n <= <span class="number">1</span>) {
+        <span class="keyword">return</span> <span class="number">1</span>;
+    }
+    <span class="comment">// Recursive case: n! = n * (n-1)!</span>
+    <span class="keyword">return</span> n * <span class="keyword">factorialRecursive</span>(n - <span class="number">1</span>);
+}
+
+<span class="comment">// Iterative factorial function</span>
+<span class="keyword">int</span> <span class="keyword">factorialIterative</span>(<span class="keyword">int</span> n) {
+    <span class="keyword">int</span> result = <span class="number">1</span>;
+    
+    <span class="comment">// Calculate factorial using loop</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i <= n; i++) {
+        result *= i;
+    }
+    
+    <span class="keyword">return</span> result;
+}
+
+<span class="comment">// Test factorial functions</span>
+<span class="keyword">int</span> <span class="keyword">main</span>() {
+    <span class="keyword">int</span> n = <span class="number">5</span>;
+    
+    <span class="keyword">printf</span>(<span class="string">"Factorial of %d (recursive): %d\n"</span>, n, <span class="keyword">factorialRecursive</span>(n));
+    <span class="keyword">printf</span>(<span class="string">"Factorial of %d (iterative): %d\n"</span>, n, <span class="keyword">factorialIterative</span>(n));
+    
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+            </div>
+
+            <h4>2. Fibonacci Series:</h4>
+            <div class="code-box">
+<pre><code><span class="comment">// Recursive Fibonacci function</span>
+<span class="keyword">int</span> <span class="keyword">fibonacciRecursive</span>(<span class="keyword">int</span> n) {
+    <span class="comment">// Base cases</span>
+    <span class="keyword">if</span> (n <= <span class="number">1</span>) {
+        <span class="keyword">return</span> n;
+    }
+    <span class="comment">// Recursive case: F(n) = F(n-1) + F(n-2)</span>
+    <span class="keyword">return</span> <span class="keyword">fibonacciRecursive</span>(n - <span class="number">1</span>) + <span class="keyword">fibonacciRecursive</span>(n - <span class="number">2</span>);
+}
+
+<span class="comment">// Iterative Fibonacci function</span>
+<span class="keyword">int</span> <span class="keyword">fibonacciIterative</span>(<span class="keyword">int</span> n) {
+    <span class="keyword">if</span> (n <= <span class="number">1</span>) {
+        <span class="keyword">return</span> n;
+    }
+    
+    <span class="keyword">int</span> prev = <span class="number">0</span>, current = <span class="number">1</span>, next;
+    
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i <= n; i++) {
+        next = prev + current;
+        prev = current;
+        current = next;
+    }
+    
+    <span class="keyword">return</span> current;
+}
+
+<span class="comment">// Print Fibonacci series</span>
+<span class="keyword">void</span> <span class="keyword">printFibonacciSeries</span>(<span class="keyword">int</span> n) {
+    <span class="keyword">printf</span>(<span class="string">"Fibonacci series up to %d terms: "</span>, n);
+    
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) {
+        <span class="keyword">printf</span>(<span class="string">"%d "</span>, <span class="keyword">fibonacciIterative</span>(i));
+    }
+    <span class="keyword">printf</span>(<span class="string">"\n"</span>);
+}</code></pre>
+            </div>
+
+            <h3>Sorting Algorithms:</h3>
+            
+            <h4>1. Bubble Sort:</h4>
+            <div class="code-box">
+<pre><code><span class="comment">// Bubble sort implementation</span>
+<span class="keyword">void</span> <span class="keyword">bubbleSort</span>(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n) {
+    <span class="keyword">int</span> swapped;
+    
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < n - <span class="number">1</span>; i++) {
+        swapped = <span class="number">0</span>;  <span class="comment">// Flag to optimize</span>
+        
+        <span class="comment">// Compare adjacent elements</span>
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j < n - i - <span class="number">1</span>; j++) {
+            <span class="comment">// Swap if current element is greater than next</span>
+            <span class="keyword">if</span> (arr[j] > arr[j + <span class="number">1</span>]) {
+                <span class="keyword">int</span> temp = arr[j];
+                arr[j] = arr[j + <span class="number">1</span>];
+                arr[j + <span class="number">1</span>] = temp;
+                swapped = <span class="number">1</span>;
+            }
+        }
+        
+        <span class="comment">// If no swapping occurred, array is sorted</span>
+        <span class="keyword">if</span> (swapped == <span class="number">0</span>) {
+            <span class="keyword">break</span>;
+        }
+    }
+}
+
+<span class="comment">// Function to print array</span>
+<span class="keyword">void</span> <span class="keyword">printArray</span>(<span class="keyword">int</span> arr[], <span class="keyword">int</span> size) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < size; i++) {
+        <span class="keyword">printf</span>(<span class="string">"%d "</span>, arr[i]);
+    }
+    <span class="keyword">printf</span>(<span class="string">"\n"</span>);
+}</code></pre>
+            </div>
+
+            <h4>2. Selection Sort:</h4>
+            <div class="code-box">
+<pre><code><span class="comment">// Selection sort implementation</span>
+<span class="keyword">void</span> <span class="keyword">selectionSort</span>(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < n - <span class="number">1</span>; i++) {
+        <span class="comment">// Find minimum element in unsorted part</span>
+        <span class="keyword">int</span> minIndex = i;
+        
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j < n; j++) {
+            <span class="keyword">if</span> (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+        
+        <span class="comment">// Swap minimum element with first element</span>
+        <span class="keyword">if</span> (minIndex != i) {
+            <span class="keyword">int</span> temp = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = temp;
+        }
+    }
+}</code></pre>
+            </div>
+
+            <h3>Searching Algorithms:</h3>
+            
+            <h4>1. Linear Search:</h4>
+            <div class="code-box">
+<pre><code><span class="comment">// Linear search implementation</span>
+<span class="keyword">int</span> <span class="keyword">linearSearch</span>(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n, <span class="keyword">int</span> key) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) {
+        <span class="keyword">if</span> (arr[i] == key) {
+            <span class="keyword">return</span> i;  <span class="comment">// Return index if found</span>
+        }
+    }
+    <span class="keyword">return</span> -<span class="number">1</span>;  <span class="comment">// Return -1 if not found</span>
+}</code></pre>
+            </div>
+
+            <h4>2. Binary Search:</h4>
+            <div class="code-box">
+<pre><code><span class="comment">// Binary search implementation (requires sorted array)</span>
+<span class="keyword">int</span> <span class="keyword">binarySearch</span>(<span class="keyword">int</span> arr[], <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> key) {
+    <span class="keyword">while</span> (left <= right) {
+        <span class="keyword">int</span> mid = left + (right - left) / <span class="number">2</span>;
+        
+        <span class="comment">// If element is found at mid</span>
+        <span class="keyword">if</span> (arr[mid] == key) {
+            <span class="keyword">return</span> mid;
+        }
+        
+        <span class="comment">// If element is greater than mid, ignore left half</span>
+        <span class="keyword">if</span> (arr[mid] < key) {
+            left = mid + <span class="number">1</span>;
+        }
+        <span class="comment">// If element is smaller than mid, ignore right half</span>
+        <span class="keyword">else</span> {
+            right = mid - <span class="number">1</span>;
+        }
+    }
+    
+    <span class="keyword">return</span> -<span class="number">1</span>;  <span class="comment">// Element not found</span>
+}</code></pre>
+            </div>
+
+            <h3>String Manipulation:</h3>
+            
+            <h4>1. String Length (Custom Implementation):</h4>
+            <div class="code-box">
+<pre><code><span class="comment">// Custom string length function</span>
+<span class="keyword">int</span> <span class="keyword">stringLength</span>(<span class="keyword">const</span> <span class="keyword">char</span> *str) {
+    <span class="keyword">int</span> length = <span class="number">0</span>;
+    
+    <span class="comment">// Count characters until null terminator</span>
+    <span class="keyword">while</span> (str[length] != <span class="string">'\0'</span>) {
+        length++;
+    }
+    
+    <span class="keyword">return</span> length;
+}
+
+<span class="comment">// String copy function</span>
+<span class="keyword">void</span> <span class="keyword">stringCopy</span>(<span class="keyword">char</span> *dest, <span class="keyword">const</span> <span class="keyword">char</span> *src) {
+    <span class="keyword">int</span> i = <span class="number">0</span>;
+    
+    <span class="comment">// Copy characters until null terminator</span>
+    <span class="keyword">while</span> (src[i] != <span class="string">'\0'</span>) {
+        dest[i] = src[i];
+        i++;
+    }
+    dest[i] = <span class="string">'\0'</span>;  <span class="comment">// Add null terminator</span>
+}</code></pre>
+            </div>
+
+            <h4>2. String Reverse:</h4>
+            <div class="code-box">
+<pre><code><span class="comment">// String reverse function</span>
+<span class="keyword">void</span> <span class="keyword">stringReverse</span>(<span class="keyword">char</span> *str) {
+    <span class="keyword">int</span> length = <span class="keyword">stringLength</span>(str);
+    <span class="keyword">int</span> start = <span class="number">0</span>;
+    <span class="keyword">int</span> end = length - <span class="number">1</span>;
+    
+    <span class="comment">// Swap characters from start and end</span>
+    <span class="keyword">while</span> (start < end) {
+        <span class="keyword">char</span> temp = str[start];
+        str[start] = str[end];
+        str[end] = temp;
+        start++;
+        end--;
+    }
+}</code></pre>
+            </div>
+
+            <h3>Array Operations:</h3>
+            
+            <h4>1. Find Maximum and Minimum:</h4>
+            <div class="code-box">
+<pre><code><span class="comment">// Find maximum element in array</span>
+<span class="keyword">int</span> <span class="keyword">findMax</span>(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n) {
+    <span class="keyword">int</span> max = arr[<span class="number">0</span>];  <span class="comment">// Assume first element is maximum</span>
+    
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i < n; i++) {
+        <span class="keyword">if</span> (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    
+    <span class="keyword">return</span> max;
+}
+
+<span class="comment">// Find minimum element in array</span>
+<span class="keyword">int</span> <span class="keyword">findMin</span>(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n) {
+    <span class="keyword">int</span> min = arr[<span class="number">0</span>];  <span class="comment">// Assume first element is minimum</span>
+    
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i < n; i++) {
+        <span class="keyword">if</span> (arr[i] < min) {
+            min = arr[i];
+        }
+    }
+    
+    <span class="keyword">return</span> min;
+}</code></pre>
+            </div>
+
+            <h4>2. Array Sum and Average:</h4>
+            <div class="code-box">
+<pre><code><span class="comment">// Calculate sum of array elements</span>
+<span class="keyword">int</span> <span class="keyword">arraySum</span>(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n) {
+    <span class="keyword">int</span> sum = <span class="number">0</span>;
+    
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < n; i++) {
+        sum += arr[i];
+    }
+    
+    <span class="keyword">return</span> sum;
+}
+
+<span class="comment">// Calculate average of array elements</span>
+<span class="keyword">float</span> <span class="keyword">arrayAverage</span>(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n) {
+    <span class="keyword">int</span> sum = <span class="keyword">arraySum</span>(arr, n);
+    <span class="keyword">return</span> (<span class="keyword">float</span>)sum / n;
+}</code></pre>
+            </div>
+
+            <h3>Complete Example Program:</h3>
+            <div class="code-box">
+<pre><code><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span>
+
+<span class="comment">// Function declarations</span>
+<span class="keyword">void</span> <span class="keyword">printArray</span>(<span class="keyword">int</span> arr[], <span class="keyword">int</span> size);
+<span class="keyword">void</span> <span class="keyword">bubbleSort</span>(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n);
+<span class="keyword">int</span> <span class="keyword">linearSearch</span>(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n, <span class="keyword">int</span> key);
+<span class="keyword">int</span> <span class="keyword">findMax</span>(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n);
+<span class="keyword">int</span> <span class="keyword">findMin</span>(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n);
+<span class="keyword">float</span> <span class="keyword">arrayAverage</span>(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n);
+
+<span class="keyword">int</span> <span class="keyword">main</span>() {
+    <span class="keyword">int</span> arr[] = {<span class="number">64</span>, <span class="number">34</span>, <span class="number">25</span>, <span class="number">12</span>, <span class="number">22</span>, <span class="number">11</span>, <span class="number">90</span>};
+    <span class="keyword">int</span> n = <span class="keyword">sizeof</span>(arr) / <span class="keyword">sizeof</span>(arr[<span class="number">0</span>]);
+    
+    <span class="keyword">printf</span>(<span class="string">"Original array: "</span>);
+    <span class="keyword">printArray</span>(arr, n);
+    
+    <span class="keyword">printf</span>(<span class="string">"Maximum element: %d\n"</span>, <span class="keyword">findMax</span>(arr, n));
+    <span class="keyword">printf</span>(<span class="string">"Minimum element: %d\n"</span>, <span class="keyword">findMin</span>(arr, n));
+    <span class="keyword">printf</span>(<span class="string">"Average: %.2f\n"</span>, <span class="keyword">arrayAverage</span>(arr, n));
+    
+    <span class="keyword">bubbleSort</span>(arr, n);
+    <span class="keyword">printf</span>(<span class="string">"Sorted array: "</span>);
+    <span class="keyword">printArray</span>(arr, n);
+    
+    <span class="keyword">int</span> searchKey = <span class="number">22</span>;
+    <span class="keyword">int</span> result = <span class="keyword">linearSearch</span>(arr, n, searchKey);
+    
+    <span class="keyword">if</span> (result != -<span class="number">1</span>) {
+        <span class="keyword">printf</span>(<span class="string">"Element %d found at index %d\n"</span>, searchKey, result);
+    } <span class="keyword">else</span> {
+        <span class="keyword">printf</span>(<span class="string">"Element %d not found\n"</span>, searchKey);
+    }
+    
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+            </div>
+
+            <div class="highlight">
+                <h3>Key Learning Points from Examples:</h3>
+                <ul>
+                    <li><strong>Algorithm Design:</strong> Understanding how to break down problems into smaller, manageable steps.</li>
+                    
+                    <li><strong>Function Implementation:</strong> Creating reusable functions for common operations.</li>
+                    
+                    <li><strong>Array Manipulation:</strong> Working with arrays for data storage and processing.</li>
+                    
+                    <li><strong>Control Structures:</strong> Using loops and conditionals effectively.</li>
+                    
+                    <li><strong>Memory Management:</strong> Understanding how data is stored and accessed.</li>
+                    
+                    <li><strong>Problem Solving:</strong> Developing logical thinking and debugging skills.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2024 PrepCampus. All rights reserved.</p>
+            <p>www.prepcampus.com</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        // Fallback to alternative CDN if first one fails
+        if (typeof html2pdf === 'undefined') {
+            const script = document.createElement('script');
+            script.src = 'https://unpkg.com/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js';
+            script.onload = function() {
+                console.log('html2pdf loaded from fallback CDN');
+            };
+            script.onerror = function() {
+                console.error('Both CDNs failed to load html2pdf');
+            };
+            document.head.appendChild(script);
+        }
+    </script>
+    <script>
+        // Check if html2pdf is loaded
+        function checkHtml2Pdf() {
+            if (typeof html2pdf === 'undefined') {
+                console.error('html2pdf library not loaded');
+                alert('PDF library not loaded. Please check your internet connection and try again.');
+                return false;
+            }
+            return true;
+        }
+
+        function downloadPDF() {
+            console.log('Download PDF function called');
+            
+            // Check if library is loaded
+            if (!checkHtml2Pdf()) {
+                return;
+            }
+
+            // Show loading message
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '⏳ Generating PDF...';
+            btn.disabled = true;
+
+            try {
+                // Configure PDF options
+                const opt = {
+                    margin: [10, 10, 10, 10],
+                    filename: 'C_Programming_Notes_PrepCampus.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { 
+                        scale: 2,
+                        useCORS: true,
+                        letterRendering: true,
+                        allowTaint: true
+                    },
+                    jsPDF: { 
+                        unit: 'mm', 
+                        format: 'a4', 
+                        orientation: 'portrait' 
+                    }
+                };
+
+                console.log('Starting PDF generation...');
+                
+                // Generate PDF
+                html2pdf()
+                    .set(opt)
+                    .from(document.querySelector('.container'))
+                    .save()
+                    .then(() => {
+                        console.log('PDF generated successfully');
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    })
+                    .catch(err => {
+                        console.error('PDF generation failed:', err);
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                        alert('PDF generation failed: ' + err.message + '. Please try again.');
+                    });
+            } catch (error) {
+                console.error('Error in downloadPDF function:', error);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                alert('Error generating PDF: ' + error.message);
+            }
+        }
+
+        // Alternative download method using print
+        function downloadAsPrint() {
+            console.log('Using print method for PDF');
+            window.print();
+        }
+
+        // Test function to verify download functionality
+        function testDownload() {
+            console.log('Test download function called');
+            alert('Test function working! Check console for details.');
+            
+            // Test if html2pdf is available
+            if (typeof html2pdf !== 'undefined') {
+                console.log('html2pdf is available');
+                alert('html2pdf library is loaded successfully!');
+            } else {
+                console.log('html2pdf is NOT available');
+                alert('html2pdf library is NOT loaded. Please check internet connection.');
+            }
+            
+            // Test if container element exists
+            const container = document.querySelector('.container');
+            if (container) {
+                console.log('Container element found:', container);
+            } else {
+                console.log('Container element NOT found');
+            }
+        }
+
+        // Add print functionality
+        function printNotes() {
+            window.print();
+        }
+
+        // Add keyboard shortcut for download (Ctrl+D)
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'd') {
+                e.preventDefault();
+                downloadPDF();
+            }
+        });
+
+        // Check library loading on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                if (checkHtml2Pdf()) {
+                    console.log('html2pdf library loaded successfully');
+                } else {
+                    console.log('html2pdf library failed to load');
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

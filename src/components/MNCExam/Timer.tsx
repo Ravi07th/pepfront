@@ -57,11 +57,11 @@ const Timer: React.FC<TimerProps> = ({
   };
 
   return (
-    <div className={`flex items-center space-x-2 px-3 py-2 rounded-lg ${getTimerBgColor()}`}>
-      {isCritical && <AlertTriangle className="h-4 w-4 text-red-600 animate-pulse" />}
-      {isWarning && !isCritical && <Clock className="h-4 w-4 text-yellow-600" />}
-      {!isWarning && !isCritical && <Clock className="h-4 w-4 text-white" />}
-      <span className={`font-mono font-bold text-lg ${getTimerColor()}`}>
+    <div className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg ${getTimerBgColor()}`}>
+      {isCritical && <AlertTriangle className="h-3 w-3 sm:h-4 sm:w-4 text-red-600 animate-pulse" />}
+      {isWarning && !isCritical && <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-600" />}
+      {!isWarning && !isCritical && <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-white" />}
+      <span className={`font-mono font-bold text-sm sm:text-lg ${getTimerColor()}`}>
         {formatTime(timeLeft)}
       </span>
     </div>

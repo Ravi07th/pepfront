@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import ExamInterface from './ExamInterface';
 import { Company, ExamType } from './types';
+import { parseRouteId, getRouteId } from './utils/routingUtils';
+import { companies } from './data/companies';
 
 const MNCExamInterface: React.FC = () => {
   const navigate = useNavigate();
@@ -14,22 +16,68 @@ const MNCExamInterface: React.FC = () => {
     examType: ExamType; 
   } || {};
 
+  // If no state data, try to parse from URL
+  const resolvedCompany = company || (() => {
+    if (!companyExamId) return null;
+    
+    const { companyId, examTypeId } = parseRouteId(companyExamId);
+    const foundCompany = companies.find(c => c.id === companyId);
+    if (!foundCompany) return null;
+    
+    const foundExamType = foundCompany.examTypes.find(e => e.id === examTypeId);
+    if (!foundExamType) return null;
+    
+    return foundCompany;
+  })();
+
+  const resolvedExamType = examType || (() => {
+    if (!companyExamId) return null;
+    
+    const { companyId, examTypeId } = parseRouteId(companyExamId);
+    const foundCompany = companies.find(c => c.id === companyId);
+    if (!foundCompany) return null;
+    
+    const foundExamType = foundCompany.examTypes.find(e => e.id === examTypeId);
+    if (!foundExamType) return null;
+    
+    return foundExamType;
+  })();
+
   const handleExamEnd = () => {
     // Navigate back to selection after exam ends
     navigate('/mock-test');
   };
 
+  const handleReExam = () => {
+    console.log('[MNCExamInterface] Retake exam clicked');
+    console.log('[MNCExamInterface] Company:', resolvedCompany?.id);
+    console.log('[MNCExamInterface] ExamType:', resolvedExamType?.id);
+    
+    // Navigate to the exam instructions page with the same company and exam type
+    const routeId = getRouteId(resolvedCompany, resolvedExamType);
+    console.log('[MNCExamInterface] Generated routeId:', routeId);
+    
+    // Navigate with state to ensure data is passed correctly
+    navigate(`/mock-test/${routeId}`, {
+      state: {
+        company: resolvedCompany,
+        examType: resolvedExamType
+      }
+    });
+  };
+
   // If no company/examType data, redirect to selection
-  if (!company || !examType) {
+  if (!resolvedCompany || !resolvedExamType) {
     navigate('/mock-test');
     return null;
   }
 
   return (
     <ExamInterface
-      company={company}
-      examType={examType}
+      company={resolvedCompany}
+      examType={resolvedExamType}
       onExamEnd={handleExamEnd}
+      onReExam={handleReExam}
     />
   );
 };

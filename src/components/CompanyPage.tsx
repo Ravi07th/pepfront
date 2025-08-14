@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { companies, sampleQuestions, languages } from '../data/mockData';
+import { companies } from '../data/companyOverview';
+import { sampleQuestions } from '../data/MNC_coding/index';
 import { ArrowLeft, Search, Filter, Clock, Code, Star } from 'lucide-react';
 import { ScrollToTop } from './ScrollToTop';
 
@@ -29,7 +30,7 @@ interface Question {
   title: string;
   description: string;
   difficulty: DifficultyType;
-  category: string;
+  category: string[];
 }
 
 interface RouteParams extends Record<string, string> {
@@ -53,12 +54,12 @@ const CompanyPage: React.FC = () => {
       const matchesSearch: boolean = question.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           question.description.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesDifficulty: boolean = selectedDifficulty === 'all' || question.difficulty === selectedDifficulty;
-      const matchesCategory: boolean = selectedCategory === 'all' || question.category === selectedCategory;
+      const matchesCategory: boolean = selectedCategory === 'all' || question.category.includes(selectedCategory);
       return matchesSearch && matchesDifficulty && matchesCategory;
     });
   }, [questions, searchQuery, selectedDifficulty, selectedCategory]);
 
-  const categories: string[] = [...new Set(questions.map((q: Question) => q.category))];
+  const categories: string[] = [...new Set(questions.flatMap((q: Question) => q.category))];
   const difficulties: DifficultyType[] = ['Easy', 'Medium', 'Hard'];
 
   const getDifficultyColor = (difficulty: DifficultyType): string => {
@@ -127,8 +128,8 @@ const CompanyPage: React.FC = () => {
           <div className={`absolute inset-0 bg-gradient-to-br ${company.color} opacity-10`} />
           <div className="relative p-8">
             <div className="flex items-center space-x-6">
-              <div className={`w-24 h-24 bg-gradient-to-br ${company.color} rounded-3xl flex items-center justify-center text-5xl`}>
-                <img src={company.logo} className='rounded-xl'/>
+              <div className={`w-24 h-24 bg-gradient-to-br ${company.color} rounded-3xl flex items-center justify-center text-5xl text-white font-bold`}>
+                {company.name.charAt(0)}
               </div>
               <div className="space-y-2">
                 <h1 className="text-4xl font-bold text-white">{company.name} Questions</h1>
@@ -231,7 +232,7 @@ const CompanyPage: React.FC = () => {
                             {question.difficulty}
                           </Badge>
                           <Badge variant="secondary" className="bg-slate-700 text-gray-300">
-                            {question.category}
+                            {question.category[0]}
                           </Badge>
                         </div>
                         <p className="text-gray-400 mb-4 line-clamp-2">

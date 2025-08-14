@@ -1,13 +1,21 @@
 import React from 'react';
-import { MessageSquare, BookOpen, FileText, Book, Brain } from 'lucide-react';
-import PracticeComponent from '../common/PracticeComponent';
 import { 
-  readingComprehensionQuestions, 
-  sentenceCompletionQuestions, 
-  vocabularyQuestions, 
-  grammarQuestions, 
-  verbalReasoningQuestions 
-} from './data/verbalData';
+  BookOpen, 
+  Link, 
+  CheckCircle, 
+  Puzzle, 
+  MessageSquare, 
+  FileText, 
+  BookMarked 
+} from 'lucide-react';
+import PracticeComponent from '../common/PracticeComponent';
+import { readingComprehensionQuestions } from './data/readingComprehensionData';
+import { tenseSubjectVerbAgreementQuestions } from './data/tenseSubjectVerbAgreementData';
+import { sportingErrorQuestions } from './data/sportingErrorData';
+import { paraJumblesQuestions } from './data/paraJumblesData';
+import { idiomsPhraseQuestions } from './data/idiomsPhraseData';
+import { sentenceCompletionQuestions } from './data/sentenceCompletionData';
+import { activepassiveVoiceQuestions } from './data/activepassiveVoiceData';
 
 const VerbalSectionPractice: React.FC = () => {
   const categories = [
@@ -15,31 +23,43 @@ const VerbalSectionPractice: React.FC = () => {
       id: 'reading-comprehension',
       name: 'Reading Comprehension',
       icon: <BookOpen className="w-5 h-5" />,
-      description: 'Passage analysis and understanding'
+      description: 'Practice reading comprehension with short and medium length passages'
+    },
+    {
+      id: 'tenses-subject-verb-agreement',
+      name: 'Tenses, Subject and Verb Agreement',
+      icon: <Link className="w-5 h-5" />,
+      description: 'Master sentence completion and paragraph organization'
+    },
+    {
+      id: 'spotting-error',
+      name: 'Spotting Error',
+      icon: <CheckCircle className="w-5 h-5" />,
+      description: 'Identify and correct grammatical errors in sentences'
+    },
+    {
+      id: 'para-jumbles',
+      name: 'Para Jumbles',
+      icon: <Puzzle className="w-5 h-5" />,
+      description: 'Arrange jumbled sentences in logical order'
+    },
+    {
+      id: 'idioms-phrases',
+      name: 'Idioms and Phrases',
+      icon: <MessageSquare className="w-5 h-5" />,
+      description: 'Enhance vocabulary and word usage skills'
     },
     {
       id: 'sentence-completion',
       name: 'Sentence Completion',
       icon: <FileText className="w-5 h-5" />,
-      description: 'Fill in the blanks and context'
+      description: 'Improve sentence structure and grammar usage'
     },
     {
-      id: 'vocabulary',
-      name: 'Vocabulary',
-      icon: <Book className="w-5 h-5" />,
-      description: 'Word meanings and usage'
-    },
-    {
-      id: 'grammar',
-      name: 'Grammar',
-      icon: <MessageSquare className="w-5 h-5" />,
-      description: 'Grammar rules and corrections'
-    },
-    {
-      id: 'verbal-reasoning',
-      name: 'Verbal Reasoning',
-      icon: <Brain className="w-5 h-5" />,
-      description: 'Logical thinking and analogies'
+      id: 'active-passive-voice',
+      name: 'Active and Passive Voice',
+      icon: <BookMarked className="w-5 h-5" />,
+      description: 'Master English grammar rules and applications'
     }
   ];
 
@@ -47,14 +67,18 @@ const VerbalSectionPractice: React.FC = () => {
     switch (topic) {
       case 'reading-comprehension':
         return readingComprehensionQuestions;
+      case 'tenses-subject-verb-agreement':
+        return tenseSubjectVerbAgreementQuestions;
+      case 'spotting-error':
+        return sportingErrorQuestions;
+      case 'para-jumbles':
+        return paraJumblesQuestions;
+      case 'idioms-phrases':
+        return idiomsPhraseQuestions;
       case 'sentence-completion':
         return sentenceCompletionQuestions;
-      case 'vocabulary':
-        return vocabularyQuestions;
-      case 'grammar':
-        return grammarQuestions;
-      case 'verbal-reasoning':
-        return verbalReasoningQuestions;
+      case 'active-passive-voice':
+        return activepassiveVoiceQuestions;
       default:
         return readingComprehensionQuestions;
     }
@@ -64,14 +88,18 @@ const VerbalSectionPractice: React.FC = () => {
     switch (topic) {
       case 'reading-comprehension':
         return 'Reading Comprehension';
+      case 'tenses-subject-verb-agreement':
+        return 'Tenses, Subject and Verb Agreement';
+      case 'spotting-error':
+        return 'Spotting Error';
+      case 'para-jumbles':
+        return 'Para Jumbles';
+      case 'idioms-phrases':
+        return 'Idioms and Phrases';
       case 'sentence-completion':
         return 'Sentence Completion';
-      case 'vocabulary':
-        return 'Vocabulary';
-      case 'grammar':
-        return 'Grammar';
-      case 'verbal-reasoning':
-        return 'Verbal Reasoning';
+      case 'active-passive-voice':
+        return 'Active and Passive Voice';
       default:
         return 'Verbal Section';
     }

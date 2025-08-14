@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Star, Users, Package, Zap } from "lucide-react";
-import heroBackground from "@/assets/hero-bg.jpg";
 
 const Hero = () => {
   const stats = [
@@ -15,8 +14,7 @@ const Hero = () => {
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroBackground})` }}
+        className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/80 to-background/95" />
       </div>

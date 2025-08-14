@@ -55,7 +55,9 @@ export interface ExamState {
 export interface ExamResult {
   totalQuestions: number;
   answeredQuestions: number;
+  notAnsweredQuestions: number;
   correctAnswers: number;
+  incorrectAnswers: number;
   score: number;
   percentage: number;
   sectionResults: SectionResult[];
@@ -68,7 +70,9 @@ export interface SectionResult {
   sectionName: string;
   totalQuestions: number;
   answeredQuestions: number;
+  notAnsweredQuestions: number;
   correctAnswers: number;
+  incorrectAnswers: number;
   score: number;
   percentage: number;
 }

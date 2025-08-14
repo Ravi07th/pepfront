@@ -14,7 +14,7 @@ export interface LogicalQuestion {
   options: string[];
   correctAnswer: number | number[];
   explanation?: string;
-  difficulty?: 'easy' | 'medium' | 'hard';
+  difficulty?: 'easy' | 'medium' | 'hard' | string;
 }
 
 export interface LogicalExamState {

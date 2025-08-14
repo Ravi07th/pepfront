@@ -7,6 +7,21 @@ import QuestionPanel from '../logicalReasoning/QuestionPanel';
 import ResultsPage from '../logicalReasoning/ResultsPage';
 import SolutionViewer from '../logicalReasoning/SolutionViewer';
 
+// Import all question data
+import { numberSystemQuestions } from './data/numberSystemData';
+import { agesQuestions } from './data/agesData';
+import { percentageRatioQuestions } from './data/percentageRatioData';
+import { profitLossQuestions } from './data/profit&lossData';
+import { simpleAndCompoundInterestQuestions } from './data/simple&CompoundInterestData';
+import { timeSpeedDistanceQuestions } from './data/timeSpeed&Distance';
+import { timeWorkQuestions } from './data/time&WorkData';
+import { pipeAndCisternQuestions } from './data/pipeAndCisternData';
+import { averagesQuestions } from './data/averagesData';
+import { mixtureAlligationQuestions } from './data/mixtureAlligationData';
+import { permutationAndCombinationQuestions } from './data/permutationAndCombinationData';
+import { probabilityQuestions } from './data/probabilityData';
+import { algebraAndLinearEquationsQuestions } from './data/algebraAndlinearEquationsData';
+
 const QuantitativeAptitudeMockTest: React.FC = () => {
   const { topic } = useParams<{ topic: string }>();
   const navigate = useNavigate();
@@ -17,8 +32,8 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
     id: topic || 'number-system',
     name: topic ? topic.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : 'Number System',
     description: 'Mock test for quantitative aptitude topic',
-    questionCount: 15,
-    duration: 20 // 20 minutes
+    questionCount: 60, // Changed to 60 questions
+    duration: 60 // Changed to 60 minutes
   }), [topic]);
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -31,6 +46,90 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
   const [visitedQuestions, setVisitedQuestions] = useState<Set<string>>(new Set());
   const [actualTimeTaken, setActualTimeTaken] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Function to shuffle array (Fisher-Yates algorithm)
+  const shuffleArray = <T,>(array: T[]): T[] => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
+  // Get questions based on topic and randomly select 60
+  const questions: QuantitativeQuestion[] = useMemo(() => {
+    let topicQuestions: QuantitativeQuestion[] = [];
+    
+    // Map topic ID to corresponding question data
+    switch (topic) {
+      case 'comprehensive-aptitude':
+        // For comprehensive mock test, combine questions from all topics
+        const allTopics = [
+          ...numberSystemQuestions,
+          ...agesQuestions,
+          ...percentageRatioQuestions,
+          ...profitLossQuestions,
+          ...simpleAndCompoundInterestQuestions,
+          ...timeSpeedDistanceQuestions,
+          ...timeWorkQuestions,
+          ...pipeAndCisternQuestions,
+          ...averagesQuestions,
+          ...mixtureAlligationQuestions,
+          ...permutationAndCombinationQuestions,
+          ...probabilityQuestions,
+          ...algebraAndLinearEquationsQuestions
+        ];
+        // Shuffle all questions and select 60
+        const shuffledAll = shuffleArray(allTopics);
+        return shuffledAll.slice(0, 60);
+      case 'number-system':
+        topicQuestions = numberSystemQuestions;
+        break;
+      case 'ages':
+        topicQuestions = agesQuestions;
+        break;
+      case 'percentage-ratio':
+        topicQuestions = percentageRatioQuestions;
+        break;
+      case 'profit-loss':
+        topicQuestions = profitLossQuestions;
+        break;
+      case 'simple-compound-interest':
+        topicQuestions = simpleAndCompoundInterestQuestions;
+        break;
+      case 'speed-distance':
+        topicQuestions = timeSpeedDistanceQuestions;
+        break;
+      case 'time-work':
+        topicQuestions = timeWorkQuestions;
+        break;
+      case 'pipe-cistern':
+        topicQuestions = pipeAndCisternQuestions;
+        break;
+      case 'averages':
+        topicQuestions = averagesQuestions;
+        break;
+      case 'mixture-alligation':
+        topicQuestions = mixtureAlligationQuestions;
+        break;
+      case 'permutation-combination':
+        topicQuestions = permutationAndCombinationQuestions;
+        break;
+      case 'probability':
+        topicQuestions = probabilityQuestions;
+        break;
+      case 'algebra-linear-equations':
+        topicQuestions = algebraAndLinearEquationsQuestions;
+        break;
+      default:
+        topicQuestions = numberSystemQuestions; // Default fallback
+    }
+
+    // Shuffle and select 60 questions (or all if less than 60)
+    const shuffledQuestions = shuffleArray(topicQuestions);
+    return shuffledQuestions.slice(0, 60);
+  }, [topic]);
 
   // Check full screen status
   useEffect(() => {
@@ -70,127 +169,6 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
     }
   }, [isFullScreen]);
 
-  // Mock questions - in real implementation, this would come from a data file
-  const questions: QuantitativeQuestion[] = useMemo(() => {
-    // Generate proper quantitative aptitude questions based on topic
-    const mockQuestions: QuantitativeQuestion[] = [];
-    
-    const topicQuestions = {
-      'number-system': [
-        {
-          question: "What is the HCF of 24 and 36?",
-          options: ['6', '8', '12', '18'],
-          correctAnswer: 2,
-          explanation: "Prime factorization: 24 = 2³ × 3, 36 = 2² × 3². HCF = 2² × 3 = 12"
-        },
-        {
-          question: "Find the LCM of 15, 20, and 25.",
-          options: ['150', '300', '450', '600'],
-          correctAnswer: 1,
-          explanation: "Prime factorization: 15 = 3 × 5, 20 = 2² × 5, 25 = 5². LCM = 2² × 3 × 5² = 300"
-        },
-        {
-          question: "Which of the following numbers is divisible by 9?",
-          options: ['12345', '23456', '34567', '45678'],
-          correctAnswer: 3,
-          explanation: "Sum of digits of 45678 = 4+5+6+7+8 = 30, which is divisible by 9"
-        },
-        {
-          question: "A number when divided by 6 leaves remainder 2, when divided by 8 leaves remainder 4. What is the smallest such number?",
-          options: ['14', '20', '26', '32'],
-          correctAnswer: 1,
-          explanation: "Using Chinese Remainder Theorem or trial: 20 ÷ 6 = 3 remainder 2, 20 ÷ 8 = 2 remainder 4"
-        },
-        {
-          question: "Find the unit digit of 7^2023.",
-          options: ['1', '3', '7', '9'],
-          correctAnswer: 2,
-          explanation: "Cyclic pattern: 7¹=7, 7²=49, 7³=343, 7⁴=2401. Pattern repeats every 4. 2023 ÷ 4 = 505 remainder 3. So unit digit is 7"
-        }
-      ],
-      'percentage-ratio': [
-        {
-          question: "If 20% of a number is 40, what is 60% of the same number?",
-          options: ['80', '100', '120', '140'],
-          correctAnswer: 2,
-          explanation: "20% = 40, so 100% = 40 × 5 = 200. 60% of 200 = 120"
-        },
-        {
-          question: "The ratio of boys to girls in a class is 3:2. If there are 25 students, how many girls are there?",
-          options: ['8', '10', '12', '15'],
-          correctAnswer: 1,
-          explanation: "Ratio 3:2 means 3+2=5 parts. 25 students ÷ 5 = 5 students per part. Girls = 2 parts = 10"
-        },
-        {
-          question: "A number is increased by 20% and then decreased by 20%. What is the net change?",
-          options: ['No change', '4% decrease', '4% increase', '20% decrease'],
-          correctAnswer: 1,
-          explanation: "Let original number be 100. After 20% increase = 120. After 20% decrease = 120 × 0.8 = 96. Net change = 4% decrease"
-        },
-        {
-          question: "If A:B = 2:3 and B:C = 4:5, what is A:C?",
-          options: ['8:15', '6:15', '8:12', '6:12'],
-          correctAnswer: 0,
-          explanation: "A:B = 2:3, B:C = 4:5. To combine ratios, make B same: A:B = 8:12, B:C = 12:15. So A:C = 8:15"
-        },
-        {
-          question: "A shopkeeper marks his goods 25% above cost price and allows 10% discount. What is his profit percentage?",
-          options: ['12.5%', '15%', '17.5%', '20%'],
-          correctAnswer: 0,
-          explanation: "Let CP = 100. MP = 125. SP after 10% discount = 125 × 0.9 = 112.5. Profit = 12.5%"
-        }
-      ],
-      'profit-loss-interest': [
-        {
-          question: "A man buys a watch for Rs. 1950 and sells it for Rs. 2200. What is his profit percentage?",
-          options: ['12.8%', '14.2%', '15.8%', '16.4%'],
-          correctAnswer: 0,
-          explanation: "Profit = 2200 - 1950 = 250. Profit % = (250/1950) × 100 = 12.8%"
-        },
-        {
-          question: "At what rate of simple interest will Rs. 5000 amount to Rs. 6000 in 4 years?",
-          options: ['5%', '6%', '7%', '8%'],
-          correctAnswer: 0,
-          explanation: "SI = 6000 - 5000 = 1000. Rate = (1000 × 100)/(5000 × 4) = 5%"
-        },
-        {
-          question: "Find the compound interest on Rs. 8000 for 2 years at 10% per annum.",
-          options: ['Rs. 1600', 'Rs. 1680', 'Rs. 1760', 'Rs. 1840'],
-          correctAnswer: 1,
-          explanation: "CI = P[(1 + r/100)ⁿ - 1] = 8000[(1.1)² - 1] = 8000[1.21 - 1] = Rs. 1680"
-        },
-        {
-          question: "A trader sells an article at a loss of 10%. Had he sold it for Rs. 200 more, he would have gained 10%. Find the cost price.",
-          options: ['Rs. 800', 'Rs. 900', 'Rs. 1000', 'Rs. 1100'],
-          correctAnswer: 2,
-          explanation: "Let CP = x. SP at 10% loss = 0.9x. SP at 10% profit = 1.1x. Difference = 1.1x - 0.9x = 0.2x = 200. So x = 1000"
-        },
-        {
-          question: "The difference between simple and compound interest on a sum for 2 years at 10% is Rs. 100. Find the sum.",
-          options: ['Rs. 8000', 'Rs. 9000', 'Rs. 10000', 'Rs. 11000'],
-          correctAnswer: 2,
-          explanation: "Difference = P(r/100)² = 100. P(10/100)² = 100. P = 10000"
-        }
-      ]
-    };
-
-    const topicQuestionsList = topicQuestions[mockTopic.id as keyof typeof topicQuestions] || topicQuestions['number-system'];
-    
-    for (let i = 0; i < mockTopic.questionCount; i++) {
-      const questionData = topicQuestionsList[i % topicQuestionsList.length];
-      mockQuestions.push({
-        id: `${mockTopic.id}-q${i + 1}`,
-        topicId: mockTopic.id,
-        question: questionData.question,
-        options: questionData.options,
-        correctAnswer: questionData.correctAnswer,
-        explanation: questionData.explanation,
-        difficulty: ['easy', 'medium', 'hard'][Math.floor(Math.random() * 3)] as 'easy' | 'medium' | 'hard'
-      });
-    }
-    return mockQuestions;
-  }, [mockTopic]);
-
   // Initialize exam
   useEffect(() => {
     if (!examStartTime) {
@@ -205,11 +183,17 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
   }, [examCompleted, showSolutions]);
 
   const handleExamEnd = () => {
-    console.log('handleExamEnd called, setting examCompleted to true');
+    console.log('handleExamEnd called, showing loading effect');
+    setIsSubmitting(true);
     const totalTime = mockTopic.duration * 60;
     const timeUsed = totalTime - timeLeft;
     setActualTimeTaken(timeUsed);
-    setExamCompleted(true);
+    
+    // Simulate a 4-second loading period before showing results
+    setTimeout(() => {
+      setExamCompleted(true);
+      setIsSubmitting(false);
+    }, 4000);
   };
 
   const handleReturnHome = () => {
@@ -222,15 +206,25 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
       (document as any).msExitFullscreen();
     }
     
-    // Navigate back to quantitative aptitude topics
-    navigate('/quantitative-aptitude');
+    // Navigate back based on test type
+    if (topic === 'comprehensive-aptitude') {
+      navigate('/test');
+    } else {
+      navigate('/quantitative-aptitude');
+    }
   };
 
   const handleTimeUp = () => {
-    console.log('handleTimeUp called, setting examCompleted to true');
+    console.log('handleTimeUp called, showing loading effect');
+    setIsSubmitting(true);
     const totalTime = mockTopic.duration * 60;
     setActualTimeTaken(totalTime); // All time used when time runs out
-    setExamCompleted(true);
+    
+    // Simulate a 4-second loading period before showing results
+    setTimeout(() => {
+      setExamCompleted(true);
+      setIsSubmitting(false);
+    }, 4000);
   };
 
   const handleAnswerChange = (questionId: string, answer: number | number[]) => {
@@ -250,6 +244,10 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
   const handleQuestionChange = (questionIndex: number) => {
     setCurrentQuestion(questionIndex);
     setVisitedQuestions(prev => new Set([...prev, questions[questionIndex]?.id || '']));
+    // Scroll to top when changing questions
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
   };
 
   const handleSubmitExam = () => {
@@ -354,33 +352,86 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
 
   if (isSubmitting) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
-        <div className="bg-white rounded-xl shadow-2xl p-10 max-w-lg w-full mx-4 transform transition-all duration-500 hover:scale-105">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+          <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+          <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+        </div>
+
+        <div className="relative z-10 bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl p-12 max-w-md w-full mx-4 border border-white/20">
           <div className="text-center">
-            {/* Enhanced Spinner */}
-            <div className="relative mb-6">
-              <div className="animate-spin rounded-full h-20 w-20 border-4 border-blue-200 mx-auto"></div>
-              <div className="animate-spin rounded-full h-20 w-20 border-4 border-transparent border-t-blue-600 mx-auto absolute top-0 left-1/2 transform -translate-x-1/2"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-8 h-8 bg-blue-600 rounded-full animate-pulse"></div>
+            {/* Modern Animated Icon */}
+            <div className="relative mb-8">
+              <div className="w-24 h-24 mx-auto relative">
+                {/* Outer Ring */}
+                <div className="absolute inset-0 rounded-full border-4 border-purple-200/30"></div>
+                <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-purple-500 animate-spin"></div>
+                
+                {/* Middle Ring */}
+                <div className="absolute inset-2 rounded-full border-4 border-blue-200/30"></div>
+                <div className="absolute inset-2 rounded-full border-4 border-transparent border-t-blue-500 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '2s' }}></div>
+                
+                {/* Inner Circle */}
+                <div className="absolute inset-4 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center">
+                  <div className="w-6 h-6 bg-white rounded-full animate-pulse"></div>
+                </div>
               </div>
             </div>
-            
-            {/* Progress Bar */}
-            <div className="w-full bg-gray-200 rounded-full h-2 mb-6">
-              <div className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full animate-pulse" style={{ width: '60%' }}></div>
+
+            {/* Progress Indicator */}
+            <div className="mb-8">
+              <div className="flex justify-center items-center space-x-2 mb-4">
+                <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                <div className="w-2 h-2 bg-pink-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+              </div>
+              
+              {/* Animated Progress Bar */}
+              <div className="w-full bg-white/20 rounded-full h-3 overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-purple-500 via-blue-500 to-pink-500 rounded-full animate-pulse" style={{ width: '75%' }}></div>
+              </div>
             </div>
-            
-            <h3 className="text-xl font-bold text-gray-900 mb-3">Processing Your Test</h3>
-            <p className="text-gray-600 mb-6">Please wait while we analyze your answers and calculate your results...</p>
-            
-            {/* Enhanced Loading Dots */}
-            <div className="flex justify-center space-x-2">
-              <div className="w-3 h-3 bg-blue-600 rounded-full animate-bounce"></div>
-              <div className="w-3 h-3 bg-indigo-600 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-              <div className="w-3 h-3 bg-purple-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+
+            {/* Content */}
+            <h3 className="text-2xl font-bold text-white mb-4 tracking-wide">Analyzing Results</h3>
+            <p className="text-white/80 mb-8 leading-relaxed">
+              We're carefully evaluating your performance and preparing detailed insights...
+            </p>
+
+            {/* Animated Steps */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-center space-x-3 text-white/70">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span className="text-sm">Calculating scores</span>
+              </div>
+              <div className="flex items-center justify-center space-x-3 text-white/70">
+                <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                <span className="text-sm">Generating performance report</span>
+              </div>
+              <div className="flex items-center justify-center space-x-3 text-white/70">
+                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                <span className="text-sm">Preparing solutions</span>
+              </div>
             </div>
           </div>
+        </div>
+
+        {/* Floating Particles */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-white/30 rounded-full animate-float"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${3 + Math.random() * 2}s`
+              }}
+            ></div>
+          ))}
         </div>
       </div>
     );
@@ -388,6 +439,8 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
 
   if (showSolutions) {
     console.log('Rendering SolutionViewer, showSolutions is true');
+    console.log('Questions:', questions);
+    console.log('Answers:', answers);
     return (
       <SolutionViewer
         questions={questions}

@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
+import { useGoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
 
 interface User {
   _id: string;
@@ -16,6 +18,8 @@ interface User {
   lastLogin?: string;
   createdAt: string;
   updatedAt: string;
+  college?: string;
+  degree?: string;
 }
 
 interface AuthState {
@@ -37,9 +41,12 @@ type AuthAction =
 interface AuthContextType extends AuthState {
   login: (email: string, password: string) => Promise<void>;
   register: (userData: RegisterData) => Promise<void>;
+  loginWithGoogle: () => void;
+  handleGoogleSuccess: (credentialResponse: any) => Promise<void>;
   logout: () => void;
   clearError: () => void;
   updateUser: (userData: Partial<User>) => Promise<void>;
+  updateProfilePicture: (imageDataUrl: string) => Promise<void>;
 }
 
 interface RegisterData {
@@ -184,7 +191,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           payload: { user: data.data.user, token: data.data.token },
         });
       } else {
-        dispatch({ type: 'AUTH_FAILURE', payload: data.message });
+        const isAuthClientError = response.status >= 400 && response.status < 500;
+        const message = isAuthClientError
+          ? (data?.message || 'Incorrect email or password')
+          : (data?.message || 'Login failed. Please try again.');
+        dispatch({ type: 'AUTH_FAILURE', payload: message });
       }
     } catch (error) {
       dispatch({ type: 'AUTH_FAILURE', payload: 'Network error. Please try again.' });
@@ -228,8 +239,64 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     dispatch({ type: 'CLEAR_ERROR' });
   };
 
+  const loginWithGoogle = () => {
+    // This will be called by the GoogleLogin component
+    // The actual OAuth flow is handled by the GoogleLogin component
+  };
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    try {
+      const decoded: any = jwtDecode(credentialResponse.credential);
+      
+      const response = await fetch(`${API_BASE_URL}/auth/google`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: decoded.email,
+          firstName: decoded.given_name,
+          lastName: decoded.family_name,
+          googleId: decoded.sub,
+          profilePicture: decoded.picture,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem('token', data.data.token);
+        dispatch({
+          type: 'AUTH_SUCCESS',
+          payload: { user: data.data.user, token: data.data.token },
+        });
+      } else {
+        dispatch({ type: 'AUTH_FAILURE', payload: data.message });
+      }
+    } catch (error) {
+      dispatch({ type: 'AUTH_FAILURE', payload: 'Google login failed. Please try again.' });
+    }
+  };
+
   const updateUser = async (userData: Partial<User>) => {
     try {
+      console.log('=== PROFILE UPDATE DEBUG ===');
+      console.log('Updating user with data:', userData);
+      console.log('Token:', state.token);
+      console.log('API URL:', `${API_BASE_URL}/user/profile`);
+      
+      // First, test if the backend is reachable
+      try {
+        const healthCheck = await fetch(`${API_BASE_URL}/health`);
+        console.log('Health check status:', healthCheck.status);
+        if (!healthCheck.ok) {
+          throw new Error('Backend server is not responding');
+        }
+      } catch (healthError) {
+        console.error('Health check failed:', healthError);
+        throw new Error('Backend server is not running. Please start the backend server.');
+      }
+      
       const response = await fetch(`${API_BASE_URL}/user/profile`, {
         method: 'PUT',
         headers: {
@@ -237,6 +304,36 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(userData),
+      });
+
+      console.log('Response status:', response.status);
+      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+      
+      const data = await response.json();
+      console.log('Response data:', data);
+
+      if (response.ok) {
+        dispatch({ type: 'UPDATE_USER', payload: data.data.user });
+        console.log('User updated successfully');
+      } else {
+        console.error('API Error:', data.message);
+        throw new Error(data.message || 'Failed to update user profile');
+      }
+    } catch (error) {
+      console.error('Error updating user:', error);
+      throw error; // Re-throw the error so the component can handle it
+    }
+  };
+
+  const updateProfilePicture = async (imageDataUrl: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/user/profile-picture`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${state.token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ profilePicture: imageDataUrl }),
       });
 
       const data = await response.json();
@@ -247,7 +344,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         throw new Error(data.message);
       }
     } catch (error) {
-      console.error('Error updating user:', error);
+      console.error('Error updating profile picture:', error);
+      throw error;
     }
   };
 
@@ -255,9 +353,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     ...state,
     login,
     register,
+    loginWithGoogle,
+    handleGoogleSuccess,
     logout,
     clearError,
     updateUser,
+    updateProfilePicture,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

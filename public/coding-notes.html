@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comprehensive Coding Guide - DSA & Programming</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --secondary: #7c3aed;
+      --success: #059669;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --dark: #1f2937;
+      --light: #f8fafc;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #f8fafc;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      margin-bottom: 30px;
+      border-radius: 12px;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #047857;
+      transform: translateY(-2px);
+    }
+
+    .content {
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section h2 {
+      color: var(--primary);
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 10px;
+    }
+
+    .section h3 {
+      color: var(--dark);
+      font-size: 1.4rem;
+      margin: 25px 0 15px 0;
+    }
+
+    .section h4 {
+      color: var(--secondary);
+      font-size: 1.2rem;
+      margin: 20px 0 10px 0;
+    }
+
+    .code-block {
+      background: #1e293b;
+      color: #e2e8f0;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 15px 0;
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+    }
+
+    .highlight {
+      background: #fef3c7;
+      padding: 15px;
+      border-left: 4px solid var(--warning);
+      margin: 15px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .complexity-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    .complexity-table th,
+    .complexity-table td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+
+    .complexity-table th {
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+    }
+
+    .complexity-table tr:nth-child(even) {
+      background: #f8f9fa;
+    }
+
+    .algorithm-steps {
+      background: #f0f9ff;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 15px 0;
+    }
+
+    .algorithm-steps ol {
+      margin-left: 20px;
+    }
+
+    .algorithm-steps li {
+      margin-bottom: 8px;
+    }
+
+    .problem-list {
+      background: #f0fdf4;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 15px 0;
+    }
+
+    .problem-list ul {
+      margin-left: 20px;
+    }
+
+    .problem-list li {
+      margin-bottom: 8px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    @media print {
+      .controls {
+        display: none;
+      }
+      
+      body {
+        background: white;
+      }
+      
+      .header {
+        background: var(--primary) !important;
+        -webkit-print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Comprehensive Coding Guide</h1>
+      <p>Data Structures & Algorithms for IT Freshers</p>
+      <p style="margin-top: 10px; font-size: 0.9rem;">PrepCampus • Your Learning Partner</p>
+    </div>
+
+    <div class="controls">
+      <button class="btn btn-primary" onclick="window.print()">
+        📄 Download PDF
+      </button>
+      <a href="/student-notes" class="btn btn-success">
+        ← Back to Notes
+      </a>
+    </div>
+
+    <div class="content">
+      <!-- 1. Basics of Programming -->
+      <div class="section">
+        <h2>1. Basics of Programming</h2>
+        
+        <h3>1.1 Time & Space Complexity</h3>
+        <p>Understanding algorithm efficiency is crucial for coding interviews.</p>
+        
+        <h4>Big-O Notation (O)</h4>
+        <p>Worst-case time complexity - upper bound of algorithm performance.</p>
+        
+        <div class="code-block">
+// Common Time Complexities
+O(1)     - Constant time (array access)
+O(log n) - Logarithmic (binary search)
+O(n)     - Linear (linear search)
+O(n log n) - Linearithmic (merge sort)
+O(n²)    - Quadratic (bubble sort)
+O(2ⁿ)    - Exponential (recursive fibonacci)
+O(n!)    - Factorial (traveling salesman)
+        </div>
+
+        <h4>Big-Ω Notation (Ω)</h4>
+        <p>Best-case time complexity - lower bound of algorithm performance.</p>
+        
+        <h4>Big-Θ Notation (Θ)</h4>
+        <p>Tight bound - both upper and lower bounds are the same.</p>
+
+        <h3>1.2 Recursion</h3>
+        <p>A function calling itself to solve smaller subproblems.</p>
+        
+        <div class="code-block">
+// Basic Recursion - Factorial
+int factorial(int n) {
+    // Base case
+    if (n <= 1) return 1;
+    
+    // Recursive case
+    return n * factorial(n - 1);
+}
+
+// Tail Recursion - Optimized
+int factorialTail(int n, int accumulator = 1) {
+    if (n <= 1) return accumulator;
+    return factorialTail(n - 1, n * accumulator);
+}
+        </div>
+
+        <h3>1.3 Iterative vs Recursive Solutions</h3>
+        <div class="highlight">
+          <strong>Iterative:</strong> Uses loops, generally more memory efficient<br>
+          <strong>Recursive:</strong> Uses function calls, often more readable
+        </div>
+        
+        <div class="code-block">
+// Iterative Fibonacci
+int fibIterative(int n) {
+    if (n <= 1) return n;
+    
+    int prev = 0, curr = 1;
+    for (int i = 2; i <= n; i++) {
+        int temp = curr;
+        curr = prev + curr;
+        prev = temp;
+    }
+    return curr;
+}
+
+// Recursive Fibonacci
+int fibRecursive(int n) {
+    if (n <= 1) return n;
+    return fibRecursive(n-1) + fibRecursive(n-2);
+}
+        </div>
+      </div>
+
+      <!-- 2. Arrays -->
+      <div class="section">
+        <h2>2. Arrays</h2>
+        
+        <h3>2.1 Basic Operations</h3>
+        
+        <h4>Traversal, Insertion, Deletion</h4>
+        <div class="code-block">
+// Array Traversal
+void traverseArray(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+}
+
+// Insertion at position
+void insertAt(int arr[], int &n, int pos, int value) {
+    for (int i = n; i > pos; i--) {
+        arr[i] = arr[i-1];
+    }
+    arr[pos] = value;
+    n++;
+}
+
+// Deletion at position
+void deleteAt(int arr[], int &n, int pos) {
+    for (int i = pos; i < n-1; i++) {
+        arr[i] = arr[i+1];
+    }
+    n--;
+}
+        </div>
+
+        <h3>2.2 Searching Algorithms</h3>
+        
+        <h4>Linear Search</h4>
+        <div class="code-block">
+int linearSearch(int arr[], int n, int target) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == target) {
+            return i; // Found
+        }
+    }
+    return -1; // Not found
+}
+// Time Complexity: O(n)
+// Space Complexity: O(1)
+        </div>
+
+        <h4>Binary Search</h4>
+        <div class="code-block">
+int binarySearch(int arr[], int n, int target) {
+    int left = 0, right = n - 1;
+    
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        
+        if (arr[mid] == target) return mid;
+        else if (arr[mid] < target) left = mid + 1;
+        else right = mid - 1;
+    }
+    return -1;
+}
+// Time Complexity: O(log n)
+// Space Complexity: O(1)
+        </div>
+
+        <h3>2.3 Sorting Algorithms</h3>
+        
+        <h4>Bubble Sort</h4>
+        <div class="code-block">
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n-1; i++) {
+        for (int j = 0; j < n-i-1; j++) {
+            if (arr[j] > arr[j+1]) {
+                swap(arr[j], arr[j+1]);
+            }
+        }
+    }
+}
+// Time Complexity: O(n²)
+// Space Complexity: O(1)
+        </div>
+
+        <h4>Quick Sort</h4>
+        <div class="code-block">
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
+    
+    for (int j = low; j < high; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i + 1], arr[high]);
+    return i + 1;
+}
+
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+// Time Complexity: O(n log n) average, O(n²) worst
+// Space Complexity: O(log n)
+        </div>
+
+        <h3>2.4 Advanced Array Techniques</h3>
+        
+        <h4>Prefix Sum</h4>
+        <div class="code-block">
+void prefixSum(int arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        arr[i] += arr[i-1];
+    }
+}
+
+// Get sum from index l to r
+int getSum(int prefix[], int l, int r) {
+    if (l == 0) return prefix[r];
+    return prefix[r] - prefix[l-1];
+}
+        </div>
+
+        <h4>Kadane's Algorithm (Maximum Subarray Sum)</h4>
+        <div class="code-block">
+int kadane(int arr[], int n) {
+    int maxSoFar = arr[0];
+    int maxEndingHere = arr[0];
+    
+    for (int i = 1; i < n; i++) {
+        maxEndingHere = max(arr[i], maxEndingHere + arr[i]);
+        maxSoFar = max(maxSoFar, maxEndingHere);
+    }
+    return maxSoFar;
+}
+// Time Complexity: O(n)
+// Space Complexity: O(1)
+        </div>
+
+        <h4>Two Pointer Technique</h4>
+        <div class="code-block">
+// Find pair with given sum in sorted array
+bool findPair(int arr[], int n, int target) {
+    int left = 0, right = n - 1;
+    
+    while (left < right) {
+        int sum = arr[left] + arr[right];
+        if (sum == target) return true;
+        else if (sum < target) left++;
+        else right--;
+    }
+    return false;
+}
+        </div>
+
+        <div class="problem-list">
+          <h4>Common Array Problems:</h4>
+          <ul>
+            <li>Reverse an array</li>
+            <li>Find min & max in array</li>
+            <li>Subarray sum problems</li>
+            <li>Remove duplicates</li>
+            <li>Move zeros to end</li>
+            <li>Find missing number</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 3. Strings -->
+      <div class="section">
+        <h2>3. Strings</h2>
+        
+        <h3>3.1 Basic String Operations</h3>
+        
+        <h4>Palindrome Check</h4>
+        <div class="code-block">
+bool isPalindrome(string s) {
+    int left = 0, right = s.length() - 1;
+    
+    while (left < right) {
+        if (s[left] != s[right]) {
+            return false;
+        }
+        left++;
+        right--;
+    }
+    return true;
+}
+        </div>
+
+        <h4>Reverse a String</h4>
+        <div class="code-block">
+string reverseString(string s) {
+    int left = 0, right = s.length() - 1;
+    
+    while (left < right) {
+        swap(s[left], s[right]);
+        left++;
+        right--;
+    }
+    return s;
+}
+        </div>
+
+        <h4>Anagram Check</h4>
+        <div class="code-block">
+bool isAnagram(string s1, string s2) {
+    if (s1.length() != s2.length()) return false;
+    
+    int count[256] = {0};
+    
+    for (char c : s1) count[c]++;
+    for (char c : s2) count[c]--;
+    
+    for (int i = 0; i < 256; i++) {
+        if (count[i] != 0) return false;
+    }
+    return true;
+}
+        </div>
+
+        <h4>Count Vowels and Consonants</h4>
+        <div class="code-block">
+void countVowelsConsonants(string s) {
+    int vowels = 0, consonants = 0;
+    
+    for (char c : s) {
+        c = tolower(c);
+        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+            vowels++;
+        } else if (isalpha(c)) {
+            consonants++;
+        }
+    }
+    
+    cout << "Vowels: " << vowels << ", Consonants: " << consonants;
+}
+        </div>
+
+        <h4>Basic String Hashing</h4>
+        <div class="code-block">
+// Simple hash function for strings
+int stringHash(string s) {
+    int hash = 0;
+    for (char c : s) {
+        hash = (hash * 31 + c) % 1000000007;
+    }
+    return hash;
+}
+        </div>
+      </div>
+
+      <!-- 4. Linked List -->
+      <div class="section">
+        <h2>4. Linked List</h2>
+        
+        <h3>4.1 Singly Linked List</h3>
+        
+        <div class="code-block">
+// Node structure
+struct Node {
+    int data;
+    Node* next;
+    Node(int val) : data(val), next(nullptr) {}
+};
+
+// Insertion at beginning
+Node* insertAtBeginning(Node* head, int value) {
+    Node* newNode = new Node(value);
+    newNode->next = head;
+    return newNode;
+}
+
+// Insertion at end
+Node* insertAtEnd(Node* head, int value) {
+    Node* newNode = new Node(value);
+    
+    if (head == nullptr) return newNode;
+    
+    Node* current = head;
+    while (current->next != nullptr) {
+        current = current->next;
+    }
+    current->next = newNode;
+    return head;
+}
+
+// Deletion
+Node* deleteNode(Node* head, int value) {
+    if (head == nullptr) return nullptr;
+    
+    if (head->data == value) {
+        Node* temp = head->next;
+        delete head;
+        return temp;
+    }
+    
+    Node* current = head;
+    while (current->next != nullptr && current->next->data != value) {
+        current = current->next;
+    }
+    
+    if (current->next != nullptr) {
+        Node* temp = current->next;
+        current->next = temp->next;
+        delete temp;
+    }
+    
+    return head;
+}
+        </div>
+
+        <h3>4.2 Reverse a Linked List</h3>
+        <div class="code-block">
+Node* reverseList(Node* head) {
+    Node* prev = nullptr;
+    Node* current = head;
+    Node* next = nullptr;
+    
+    while (current != nullptr) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    
+    return prev;
+}
+        </div>
+
+        <h3>4.3 Detect Loop in Linked List</h3>
+        <div class="code-block">
+bool detectLoop(Node* head) {
+    Node* slow = head;
+    Node* fast = head;
+    
+    while (fast != nullptr && fast->next != nullptr) {
+        slow = slow->next;
+        fast = fast->next->next;
+        
+        if (slow == fast) {
+            return true; // Loop detected
+        }
+    }
+    
+    return false; // No loop
+}
+        </div>
+      </div>
+
+      <!-- 5. Stack & Queue -->
+      <div class="section">
+        <h2>5. Stack & Queue</h2>
+        
+        <h3>5.1 Stack Implementation</h3>
+        <div class="code-block">
+class Stack {
+private:
+    int* arr;
+    int top;
+    int capacity;
+    
+public:
+    Stack(int size) {
+        capacity = size;
+        arr = new int[capacity];
+        top = -1;
+    }
+    
+    void push(int value) {
+        if (top < capacity - 1) {
+            arr[++top] = value;
+        }
+    }
+    
+    int pop() {
+        if (top >= 0) {
+            return arr[top--];
+        }
+        return -1; // Stack underflow
+    }
+    
+    int peek() {
+        if (top >= 0) {
+            return arr[top];
+        }
+        return -1;
+    }
+    
+    bool isEmpty() {
+        return top == -1;
+    }
+};
+        </div>
+
+        <h3>5.2 Queue Implementation</h3>
+        <div class="code-block">
+class Queue {
+private:
+    int* arr;
+    int front, rear, size, capacity;
+    
+public:
+    Queue(int size) {
+        capacity = size;
+        arr = new int[capacity];
+        front = 0;
+        rear = -1;
+        this->size = 0;
+    }
+    
+    void enqueue(int value) {
+        if (size < capacity) {
+            rear = (rear + 1) % capacity;
+            arr[rear] = value;
+            size++;
+        }
+    }
+    
+    int dequeue() {
+        if (size > 0) {
+            int value = arr[front];
+            front = (front + 1) % capacity;
+            size--;
+            return value;
+        }
+        return -1; // Queue underflow
+    }
+};
+        </div>
+
+        <h3>5.3 Applications</h3>
+        
+        <h4>Balanced Parentheses</h4>
+        <div class="code-block">
+bool isBalanced(string s) {
+    stack<char> st;
+    
+    for (char c : s) {
+        if (c == '(' || c == '{' || c == '[') {
+            st.push(c);
+        } else {
+            if (st.empty()) return false;
+            
+            char top = st.top();
+            if ((c == ')' && top == '(') ||
+                (c == '}' && top == '{') ||
+                (c == ']' && top == '[')) {
+                st.pop();
+            } else {
+                return false;
+            }
+        }
+    }
+    
+    return st.empty();
+}
+        </div>
+      </div>
+
+      <!-- 6. Recursion & Backtracking -->
+      <div class="section">
+        <h2>6. Recursion & Backtracking</h2>
+        
+        <h3>6.1 Basic Recursion Problems</h3>
+        
+        <h4>Factorial</h4>
+        <div class="code-block">
+int factorial(int n) {
+    if (n <= 1) return 1;
+    return n * factorial(n - 1);
+}
+        </div>
+
+        <h4>Fibonacci</h4>
+        <div class="code-block">
+int fibonacci(int n) {
+    if (n <= 1) return n;
+    return fibonacci(n-1) + fibonacci(n-2);
+}
+        </div>
+
+        <h3>6.2 Tower of Hanoi</h3>
+        <div class="code-block">
+void towerOfHanoi(int n, char from, char aux, char to) {
+    if (n == 1) {
+        cout << "Move disk 1 from " << from << " to " << to << endl;
+        return;
+    }
+    
+    towerOfHanoi(n-1, from, to, aux);
+    cout << "Move disk " << n << " from " << from << " to " << to << endl;
+    towerOfHanoi(n-1, aux, from, to);
+}
+        </div>
+
+        <h3>6.3 N-Queens Problem</h3>
+        <div class="code-block">
+bool isSafe(int board[][8], int row, int col, int n) {
+    // Check row
+    for (int i = 0; i < col; i++) {
+        if (board[row][i]) return false;
+    }
+    
+    // Check upper diagonal
+    for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) {
+        if (board[i][j]) return false;
+    }
+    
+    // Check lower diagonal
+    for (int i = row, j = col; i < n && j >= 0; i++, j--) {
+        if (board[i][j]) return false;
+    }
+    
+    return true;
+}
+
+bool solveNQueens(int board[][8], int col, int n) {
+    if (col >= n) return true;
+    
+    for (int i = 0; i < n; i++) {
+        if (isSafe(board, i, col, n)) {
+            board[i][col] = 1;
+            
+            if (solveNQueens(board, col + 1, n)) {
+                return true;
+            }
+            
+            board[i][col] = 0; // Backtrack
+        }
+    }
+    
+    return false;
+}
+        </div>
+      </div>
+
+      <!-- 7. Advanced Searching & Sorting -->
+      <div class="section">
+        <h2>7. Advanced Searching & Sorting</h2>
+        
+        <h3>7.1 Binary Search on Answer</h3>
+        <div class="code-block">
+// Find the minimum value that satisfies a condition
+int binarySearchOnAnswer(int arr[], int n, int target) {
+    int left = 0, right = 1e9; // Adjust based on problem
+    
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        
+        if (checkCondition(arr, n, mid, target)) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    
+    return left;
+}
+
+bool checkCondition(int arr[], int n, int mid, int target) {
+    // Implement your condition here
+    // Example: count elements <= mid
+    int count = 0;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] <= mid) count++;
+    }
+    return count >= target;
+}
+        </div>
+
+        <h3>7.2 Count Sort</h3>
+        <div class="code-block">
+void countSort(int arr[], int n) {
+    int max_val = arr[0];
+    for (int i = 1; i < n; i++) {
+        max_val = max(max_val, arr[i]);
+    }
+    
+    int count[max_val + 1] = {0};
+    
+    // Count occurrences
+    for (int i = 0; i < n; i++) {
+        count[arr[i]]++;
+    }
+    
+    // Reconstruct array
+    int index = 0;
+    for (int i = 0; i <= max_val; i++) {
+        while (count[i] > 0) {
+            arr[index++] = i;
+            count[i]--;
+        }
+    }
+}
+// Time Complexity: O(n + k) where k is range
+// Space Complexity: O(k)
+        </div>
+      </div>
+
+      <!-- 8. Trees -->
+      <div class="section">
+        <h2>8. Trees</h2>
+        
+        <h3>8.1 Binary Tree Basics</h3>
+        <div class="code-block">
+struct TreeNode {
+    int data;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int val) : data(val), left(nullptr), right(nullptr) {}
+};
+
+// Inorder Traversal (Left -> Root -> Right)
+void inorder(TreeNode* root) {
+    if (root != nullptr) {
+        inorder(root->left);
+        cout << root->data << " ";
+        inorder(root->right);
+    }
+}
+
+// Preorder Traversal (Root -> Left -> Right)
+void preorder(TreeNode* root) {
+    if (root != nullptr) {
+        cout << root->data << " ";
+        preorder(root->left);
+        preorder(root->right);
+    }
+}
+
+// Postorder Traversal (Left -> Right -> Root)
+void postorder(TreeNode* root) {
+    if (root != nullptr) {
+        postorder(root->left);
+        postorder(root->right);
+        cout << root->data << " ";
+    }
+}
+        </div>
+
+        <h3>8.2 Height of Tree</h3>
+        <div class="code-block">
+int height(TreeNode* root) {
+    if (root == nullptr) return 0;
+    
+    int leftHeight = height(root->left);
+    int rightHeight = height(root->right);
+    
+    return 1 + max(leftHeight, rightHeight);
+}
+        </div>
+
+        <h3>8.3 Count Nodes</h3>
+        <div class="code-block">
+int countNodes(TreeNode* root) {
+    if (root == nullptr) return 0;
+    
+    return 1 + countNodes(root->left) + countNodes(root->right);
+}
+
+int countLeafNodes(TreeNode* root) {
+    if (root == nullptr) return 0;
+    
+    if (root->left == nullptr && root->right == nullptr) {
+        return 1;
+    }
+    
+    return countLeafNodes(root->left) + countLeafNodes(root->right);
+}
+        </div>
+      </div>
+
+      <!-- 9. Graph Basics -->
+      <div class="section">
+        <h2>9. Graph Basics</h2>
+        
+        <h3>9.1 Graph Representation</h3>
+        
+        <h4>Adjacency Matrix</h4>
+        <div class="code-block">
+class Graph {
+private:
+    int V;
+    vector<vector<int>> adjMatrix;
+    
+public:
+    Graph(int vertices) {
+        V = vertices;
+        adjMatrix = vector<vector<int>>(V, vector<int>(V, 0));
+    }
+    
+    void addEdge(int src, int dest) {
+        adjMatrix[src][dest] = 1;
+        adjMatrix[dest][src] = 1; // For undirected graph
+    }
+};
+        </div>
+
+        <h4>Adjacency List</h4>
+        <div class="code-block">
+class Graph {
+private:
+    int V;
+    vector<vector<int>> adjList;
+    
+public:
+    Graph(int vertices) {
+        V = vertices;
+        adjList.resize(V);
+    }
+    
+    void addEdge(int src, int dest) {
+        adjList[src].push_back(dest);
+        adjList[dest].push_back(src); // For undirected graph
+    }
+};
+        </div>
+
+        <h3>9.2 BFS (Breadth First Search)</h3>
+        <div class="code-block">
+void BFS(Graph& graph, int start) {
+    vector<bool> visited(graph.V, false);
+    queue<int> q;
+    
+    visited[start] = true;
+    q.push(start);
+    
+    while (!q.empty()) {
+        int current = q.front();
+        cout << current << " ";
+        q.pop();
+        
+        for (int neighbor : graph.adjList[current]) {
+            if (!visited[neighbor]) {
+                visited[neighbor] = true;
+                q.push(neighbor);
+            }
+        }
+    }
+}
+        </div>
+
+        <h3>9.3 DFS (Depth First Search)</h3>
+        <div class="code-block">
+void DFS(Graph& graph, int start, vector<bool>& visited) {
+    visited[start] = true;
+    cout << start << " ";
+    
+    for (int neighbor : graph.adjList[start]) {
+        if (!visited[neighbor]) {
+            DFS(graph, neighbor, visited);
+        }
+    }
+}
+
+void DFSTraversal(Graph& graph, int start) {
+    vector<bool> visited(graph.V, false);
+    DFS(graph, start, visited);
+}
+        </div>
+      </div>
+
+      <!-- 10. Hashing -->
+      <div class="section">
+        <h2>10. Hashing</h2>
+        
+        <h3>10.1 HashMap Usage</h3>
+        <div class="code-block">
+#include <unordered_map>
+
+// Frequency count
+void countFrequency(int arr[], int n) {
+    unordered_map<int, int> freq;
+    
+    for (int i = 0; i < n; i++) {
+        freq[arr[i]]++;
+    }
+    
+    for (auto& pair : freq) {
+        cout << pair.first << ": " << pair.second << endl;
+    }
+}
+
+// Remove duplicates
+vector<int> removeDuplicates(int arr[], int n) {
+    unordered_set<int> seen;
+    vector<int> result;
+    
+    for (int i = 0; i < n; i++) {
+        if (seen.find(arr[i]) == seen.end()) {
+            seen.insert(arr[i]);
+            result.push_back(arr[i]);
+        }
+    }
+    
+    return result;
+}
+        </div>
+
+        <h3>10.2 Two Sum Problem</h3>
+        <div class="code-block">
+vector<int> twoSum(vector<int>& nums, int target) {
+    unordered_map<int, int> map;
+    
+    for (int i = 0; i < nums.size(); i++) {
+        int complement = target - nums[i];
+        
+        if (map.find(complement) != map.end()) {
+            return {map[complement], i};
+        }
+        
+        map[nums[i]] = i;
+    }
+    
+    return {};
+}
+        </div>
+      </div>
+
+      <!-- 11. Dynamic Programming -->
+      <div class="section">
+        <h2>11. Dynamic Programming</h2>
+        
+        <h3>11.1 Fibonacci (DP Version)</h3>
+        <div class="code-block">
+int fibonacciDP(int n) {
+    if (n <= 1) return n;
+    
+    vector<int> dp(n + 1);
+    dp[0] = 0;
+    dp[1] = 1;
+    
+    for (int i = 2; i <= n; i++) {
+        dp[i] = dp[i-1] + dp[i-2];
+    }
+    
+    return dp[n];
+}
+// Time Complexity: O(n)
+// Space Complexity: O(n)
+        </div>
+
+        <h3>11.2 Coin Change</h3>
+        <div class="code-block">
+int coinChange(vector<int>& coins, int amount) {
+    vector<int> dp(amount + 1, amount + 1);
+    dp[0] = 0;
+    
+    for (int i = 1; i <= amount; i++) {
+        for (int coin : coins) {
+            if (coin <= i) {
+                dp[i] = min(dp[i], dp[i - coin] + 1);
+            }
+        }
+    }
+    
+    return dp[amount] > amount ? -1 : dp[amount];
+}
+        </div>
+
+        <h3>11.3 Knapsack Problem</h3>
+        <div class="code-block">
+int knapsack(vector<int>& weights, vector<int>& values, int W) {
+    int n = weights.size();
+    vector<vector<int>> dp(n + 1, vector<int>(W + 1, 0));
+    
+    for (int i = 1; i <= n; i++) {
+        for (int w = 1; w <= W; w++) {
+            if (weights[i-1] <= w) {
+                dp[i][w] = max(dp[i-1][w], 
+                              dp[i-1][w - weights[i-1]] + values[i-1]);
+            } else {
+                dp[i][w] = dp[i-1][w];
+            }
+        }
+    }
+    
+    return dp[n][W];
+}
+        </div>
+      </div>
+
+      <!-- 12. Miscellaneous -->
+      <div class="section">
+        <h2>12. Miscellaneous</h2>
+        
+        <h3>12.1 Bit Manipulation</h3>
+        <div class="code-block">
+// Check if number is power of 2
+bool isPowerOfTwo(int n) {
+    return n > 0 && (n & (n - 1)) == 0;
+}
+
+// Count set bits
+int countSetBits(int n) {
+    int count = 0;
+    while (n) {
+        count += n & 1;
+        n >>= 1;
+    }
+    return count;
+}
+
+// Get the rightmost set bit
+int getRightmostSetBit(int n) {
+    return n & (-n);
+}
+        </div>
+
+        <h3>12.2 GCD and LCM</h3>
+        <div class="code-block">
+int gcd(int a, int b) {
+    if (b == 0) return a;
+    return gcd(b, a % b);
+}
+
+int lcm(int a, int b) {
+    return (a * b) / gcd(a, b);
+}
+        </div>
+
+        <h3>12.3 Sieve of Eratosthenes</h3>
+        <div class="code-block">
+vector<bool> sieve(int n) {
+    vector<bool> isPrime(n + 1, true);
+    isPrime[0] = isPrime[1] = false;
+    
+    for (int i = 2; i * i <= n; i++) {
+        if (isPrime[i]) {
+            for (int j = i * i; j <= n; j += i) {
+                isPrime[j] = false;
+            }
+        }
+    }
+    
+    return isPrime;
+}
+        </div>
+
+        <h3>12.4 Modular Arithmetic</h3>
+        <div class="code-block">
+// Modular exponentiation
+int modPow(int base, int exp, int mod) {
+    int result = 1;
+    base = base % mod;
+    
+    while (exp > 0) {
+        if (exp & 1) {
+            result = (result * base) % mod;
+        }
+        base = (base * base) % mod;
+        exp >>= 1;
+    }
+    
+    return result;
+}
+
+// Modular inverse using Fermat's little theorem
+int modInverse(int a, int m) {
+    return modPow(a, m - 2, m);
+}
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>© 2024 PrepCampus. All rights reserved.</p>
+      <p>Visit www.prepcampus.com for more study materials and resources.</p>
+    </div>
+  </div>
+
+  <script>
+    // Add smooth scrolling for better navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Add print functionality
+    function printPage() {
+      window.print();
+    }
+  </script>
+</body>
+</html>

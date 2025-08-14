@@ -11,7 +11,7 @@ export const companies: Company[] = [
       {
         id: 'nqt',
         name: 'TCS NQT',
-        description: 'National Qualifier Test - Foundation and Advanced sections',
+        description: 'TCS NQT is an online exam assessing aptitude, reasoning, and coding skills for fresher hiring at TCS and partner companies.',
         sections: [
           {
             id: 'numerical-ability',
@@ -53,7 +53,7 @@ export const companies: Company[] = [
       {
         id: 'genc',
         name: 'Cognizant GenC 2025',
-        description: 'GenC - Graduate Engineer Next Generation - Complete 2025 exam pattern with Communication, Aptitude, and Technical assessments',
+        description: 'Cognizant GenC Test is an online exam assessing aptitude, reasoning, and coding skills for fresher hiring.',
         sections: [
           {
             id: 'quantitative-aptitude',
@@ -87,7 +87,7 @@ export const companies: Company[] = [
       {
         id: 'mock-test',
         name: 'Wipro Mock Test',
-        description: 'Single-phase online assessment',
+        description: 'Wipro Test is an online assessment that evaluates aptitude, reasoning, and coding skills for hiring at Wipro.',
         sections: [
           {
             id: 'quantitative-aptitude',

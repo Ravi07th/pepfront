@@ -235,3 +235,5 @@ export const TestResults = ({
     </div>
   );
 };
+
+export default TestResults;
