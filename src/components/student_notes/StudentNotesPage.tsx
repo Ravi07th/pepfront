@@ -265,63 +265,7 @@ const StudentNotesPage: React.FC = () => {
           </p>
         </div>
 
-        {/* Search and Filter Section */}
-        <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700 p-6 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            {/* Search */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <Input
-                placeholder="Search notes..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500"
-              />
-            </div>
 
-            {/* Category Filter */}
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="bg-gray-700/50 border-gray-600 text-white">
-                <SelectValue placeholder="Select category" />
-              </SelectTrigger>
-              <SelectContent className="bg-gray-800 border-gray-600 text-white">
-                {categories.map((category) => (
-                  <SelectItem key={category.value} value={category.value} className="hover:bg-gray-700">
-                    {category.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            {/* Sort */}
-            <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="bg-gray-700/50 border-gray-600 text-white">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent className="bg-gray-800 border-gray-600 text-white">
-                {sortOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value} className="hover:bg-gray-700">
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            {/* Clear Filters */}
-            <Button
-              variant="outline"
-              onClick={() => {
-                setSearchTerm('');
-                setSelectedCategory('all');
-                setSortBy('title');
-              }}
-              className="flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white"
-            >
-              <Filter className="h-4 w-4" />
-              Clear Filters
-            </Button>
-          </div>
-        </div>
 
                  {/* Featured Section */}
          {featuredNotes.length > 0 && (
@@ -448,7 +392,65 @@ const StudentNotesPage: React.FC = () => {
              </div>
            </div>
          )}
+        <p className='text-white text-3xl font-semibold'>Search Notes</p>
+        {/* Search and Filter Section */}
+        <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700 p-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {/* Search */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Input
+                placeholder="Search notes..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500"
+              />
+            </div>
 
+            {/* Category Filter */}
+            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+              <SelectTrigger className="bg-gray-700/50 border-gray-600 text-white">
+                <SelectValue placeholder="Select category" />
+              </SelectTrigger>
+              <SelectContent className="bg-gray-800 border-gray-600 text-white">
+                {categories.map((category) => (
+                  <SelectItem key={category.value} value={category.value} className="hover:bg-gray-700">
+                    {category.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {/* Sort */}
+            <Select value={sortBy} onValueChange={setSortBy}>
+              <SelectTrigger className="bg-gray-700/50 border-gray-600 text-white">
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent className="bg-gray-800 border-gray-600 text-white">
+                {sortOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value} className="hover:bg-gray-700">
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {/* Clear Filters */}
+            <Button
+              variant="outline"
+              onClick={() => {
+                setSearchTerm('');
+                setSelectedCategory('all');
+                setSortBy('title');
+              }}
+              className="flex items-center gap-2 border-gray-600 text-gray-700 hover:bg-gray-700 hover:text-white"
+            >
+              <Filter className="h-4 w-4" />
+              Clear Filters
+            </Button>
+          </div>
+        </div>
+        
                  {/* All Notes Section */}
          <div>
            <div className="flex items-center justify-between mb-4">

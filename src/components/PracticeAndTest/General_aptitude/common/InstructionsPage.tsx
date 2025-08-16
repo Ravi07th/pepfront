@@ -47,7 +47,7 @@ const InstructionsPage: React.FC<InstructionsPageProps> = ({
       </header>
 
       <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex gap-8">
+        <div className="flex flex-col gap-8 sm:flex-row">
           {/* Main Content */}
           <div className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">General Instructions:</h2>

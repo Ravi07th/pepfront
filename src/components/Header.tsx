@@ -6,7 +6,8 @@ import {
   Palette, BookOpen, GraduationCap, Info, LogIn, LogOut,
   Code, Target, Brain, Clock, TrendingUp, Lightbulb, Shield, Users, 
   FileText, Calculator, MessageSquare, BarChart3, Settings, HelpCircle,
-  ClipboardList, TestTube, BookMarked, FileSpreadsheet, Home, CodeXml, CircleUserRound, User, ArrowRight, Bell, ExternalLink
+  ClipboardList, TestTube, BookMarked, FileSpreadsheet, Home, CodeXml, CircleUserRound, User, ArrowRight, Bell, ExternalLink,
+  LogInIcon
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import notificationService from "../services/notificationService";
@@ -356,7 +357,8 @@ export default function Header() {
               <span className="hidden lg:inline">Contact</span>
             </Link>
           </div>
-
+          
+          <div className="flex flex-row-reverse items-center justify-between gap-5 space-x-4 sm:space-x-6 md:space-x-8 lg:space-x-10">
           {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button
@@ -496,11 +498,13 @@ export default function Header() {
                 to="/signin"
                 className="bg-gradient-to-r from-amber-500 to-rose-500 text-white px-3 sm:px-4 md:px-6 py-2 rounded-lg hover:from-amber-600 hover:to-rose-600 transition-all duration-300 flex items-center space-x-1 sm:space-x-2 shadow-lg hover:shadow-xl transform hover:scale-105"
               >
-                <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
-                <span className="hidden sm:inline">Sign In</span>
+                {/* <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" /> */}
+                <LogInIcon />
+                <span className="hidden sm:inline">Login</span>
                 <span className="sm:hidden">Login</span>
               </Link>
             )}
+          </div>
           </div>
         </div>
 

@@ -63,8 +63,8 @@ const Footer: React.FC = () => {
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
               <div className="flex items-center space-x-0">
-                <span className="text-xl sm:text-2xl font-bold text-purple-500">Campus</span>
-                <span className="text-xl sm:text-2xl font-bold text-amber-400">Prep</span>
+                <span className="text-xl sm:text-2xl font-bold text-purple-500">Prep</span>
+                <span className="text-xl sm:text-2xl font-bold text-amber-400">Campus</span>
               </div>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-6 hidden sm:block">
@@ -75,9 +75,10 @@ const Footer: React.FC = () => {
               Your ultimate platform for coding practice and interview preparation.
             </p>
             <div className="flex items-center space-x-4">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-600 to-amber-500 flex items-center justify-center">
-                <span className="text-white text-sm font-bold">CP</span>
-              </div>
+              {/* <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-600 to-amber-500 flex items-center justify-center"> */}
+                {/* <span className="text-white text-sm font-bold">CP</span> */}
+                <img src="/favicon.png" alt="PrepCampus Logo" className="h-7 sm:h-8 md:h-8 w-auto object-contain" />
+              {/* </div> */}
               <div>
                 <p className="text-slate-300 text-sm font-medium">prepCampus</p>
                 <p className="text-slate-500 text-xs">Your Learning Partner</p>

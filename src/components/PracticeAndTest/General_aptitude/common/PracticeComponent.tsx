@@ -358,30 +358,22 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
             </div>
             
             {/* Center - Heading */}
-            <div className="flex-1 flex items-center justify-center space-x-3 px-4">
-              <div className="p-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg text-white flex-shrink-0 shadow-md">
+            {/* <div className="flex-1 flex items-center justify-center space-x-3 px-4"> */}
+              {/* <div className="p-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg text-white flex-shrink-0 shadow-md">
                 {sectionIcon}
-              </div>
-              <div className="text-center">
-                <h1 className="text-base sm:text-lg font-bold text-white">{getTopicTitle(topicId || '')} Practice</h1>
-                <p className="text-xs sm:text-sm text-gray-400">Panel {currentPanel + 1} of {totalPanels}</p>
-                <p className="text-xs text-blue-400 lg:hidden">Tap "Topics" to change practice area</p>
-              </div>
-            </div>
+              </div> */}
+              {/* <div className="text-center"> */}
+                <h1 className="text-base text-center sm:text-lg font-bold text-white">{getTopicTitle(topicId || '')} Practice</h1>
+                {/* <p className="text-xs sm:text-sm text-gray-400">Panel {currentPanel + 1} of {totalPanels}</p> */}
+                {/* <p className="text-xs text-blue-400 lg:hidden">Tap "Topics" to change practice area</p> */}
+              {/* </div> */}
+            {/* </div> */}
             
             {/* Right Side - Menu Toggle and Score */}
-            <div className="w-24 flex-shrink-0 flex items-center justify-end space-x-2">
+            <div className=" flex-shrink-0 flex items-center justify-end space-x-2">
               {/* Mobile Menu Toggle */}
-              <Button
-                variant="ghost"
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                className="lg:hidden flex items-center gap-2 text-gray-300 hover:text-white hover:bg-gray-700 p-2 transition-all duration-200"
-              >
-                <Menu className="w-5 h-5" />
-                <span className="hidden sm:inline">Topics</span>
-              </Button>
               
-              <div className="flex items-center space-x-2 bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 shadow-md">
+              <div className="hidden lg:block md:block flex items-center space-x-2 bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 shadow-md">
                 <Trophy className="w-4 h-4 text-yellow-400 flex-shrink-0" />
                 <span className="text-sm font-medium text-gray-200 hidden sm:inline">Score: {score}/{totalQuestions}</span>
                 <span className="text-sm font-medium text-gray-200 sm:hidden">{score}/{totalQuestions}</span>
@@ -389,6 +381,15 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
                   {accuracy}%
                 </Badge>
               </div>
+
+              <Button
+                variant="ghost"
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                className="lg:hidden flex items-center gap-2 text-gray-300 hover:text-white hover:bg-gray-700 p-2 transition-all duration-200"
+              >
+                <Menu className="w-8 h-8" />
+                {/* <span className="hidden sm:inline">Topics</span> */}
+              </Button>
             </div>
           </div>
         </div>
@@ -412,10 +413,10 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
             </div>
             <div className="p-4 space-y-4">
               {/* Start Practice Button */}
-              <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-4 flex items-center justify-center space-x-2 shadow-lg transition-all duration-300 transform hover:scale-105">
+              {/* <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-4 flex items-center justify-center space-x-2 shadow-lg transition-all duration-300 transform hover:scale-105">
                 <span className="text-lg">▶</span>
                 <span>Start Practice</span>
-              </Button>
+              </Button> */}
               
               {/* Practice Categories */}
               <div className="space-y-3">
@@ -493,10 +494,10 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
             </div>
             
             {/* Start Practice Button */}
-            <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-4 flex items-center justify-center space-x-2 shadow-lg transition-all duration-300 transform hover:scale-105">
+            {/* <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-4 flex items-center justify-center space-x-2 shadow-lg transition-all duration-300 transform hover:scale-105">
               <span className="text-lg">▶</span>
               <span>Start Practice</span>
-            </Button>
+            </Button> */}
             
             {/* Practice Categories */}
             <div className="space-y-3">
@@ -530,12 +531,12 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className={`font-medium text-sm ${
-                          topicId === category.id ? 'text-blue-200' : 'text-gray-300'
+                          topicId === category.id ? 'text-blue-800' : 'text-gray-300'
                         }`}>
                           {category.name}
                         </h3>
                         <p className={`text-xs mt-1 line-clamp-2 ${
-                          topicId === category.id ? 'text-blue-100' : 'text-gray-400'
+                          topicId === category.id ? 'text-grey-400' : 'text-gray-400'
                         }`}>
                           {category.description}
                         </p>
@@ -555,18 +556,30 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
         <div className="flex-1 p-2 sm:p-4 md:p-6 lg:p-8 min-w-0 overflow-y-auto" id="practice-content">
           <div className="w-full max-w-4xl mx-auto">
             {/* Progress Section */}
-            <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-3 sm:p-4 md:p-6 mb-4 sm:mb-6 shadow-lg border border-gray-700">
+            <div className=" sticky -top-[50px] bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-3 sm:p-4 md:p-6 mb-4 sm:mb-6 shadow-lg border border-gray-700">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-4 space-y-2 sm:space-y-0">
                 <h3 className="text-base sm:text-lg font-semibold text-white">Progress</h3>
-                <div className="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-4">
-                  <div className="flex items-center space-x-2">
-                    <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-blue-400" />
-                    <span className="text-xs sm:text-sm text-gray-300">Panel {currentPanel + 1} of {totalPanels}</span>
+                <div className=" flex justify-between">
+                  <div className='flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-4'>
+                    <div className="flex items-center space-x-2">
+                      <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-blue-400" />
+                      <span className="text-xs sm:text-sm text-gray-300">Page {currentPanel + 1} of {totalPanels}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Target className="w-3 h-3 sm:w-4 sm:h-4 text-blue-400" />
+                      <span className="text-xs sm:text-sm text-gray-300">{answeredCount}/{totalQuestions} Questions ({progress}% Complete)</span>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <Target className="w-3 h-3 sm:w-4 sm:h-4 text-blue-400" />
-                    <span className="text-xs sm:text-sm text-gray-300">{answeredCount}/{totalQuestions} Questions ({progress}% Complete)</span>
-                  </div>
+
+                <div className="lg:hidden md:hidden flex w-fit items-center space-x-2 bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 shadow-md">
+                  <Trophy className="w-4 h-4 text-yellow-400 flex-shrink-0" />
+                  <span className="text-sm font-medium text-gray-200 hidden sm:inline">Score: {score}/{totalQuestions}</span>
+                  <span className="text-sm font-medium text-gray-200 sm:hidden">{score}/{totalQuestions}</span>
+                  <Badge variant="secondary" className="ml-2 text-xs bg-blue-600 text-white">
+                    {accuracy}%
+                  </Badge>
+                </div>
+
                 </div>
               </div>
               <div className="relative">

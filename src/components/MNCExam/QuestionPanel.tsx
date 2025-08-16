@@ -336,7 +336,7 @@ const QuestionPanel: React.FC<QuestionPanelProps> = ({
          <div className="fixed bottom-0 left-0 bg-white border-t border-gray-200 p-3 sm:p-4 z-10 w-full lg:w-[calc(100vw-320px)]">
            <div className="flex justify-center">
              <div className="w-full max-w-4xl">
-               <div className="flex items-center justify-between">
+               <div className="flex flex-col lg:flex-col-reverse items-center justify-between">
                  <button
                    onClick={handlePrevQuestion}
                    disabled={currentQuestion === 0}

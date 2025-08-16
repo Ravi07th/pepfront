@@ -206,7 +206,7 @@ const ExamPrepNav: React.FC<ExamPrepNavProps> = ({
         </div>
 
         {/* Quick Actions */}
-        <div className="p-4 border-b border-slate-700">
+        {/* <div className="p-4 border-b border-slate-700">
           <Button 
             className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-2 font-semibold shadow-lg"
             onClick={() => onStartTest("live-test", "test")}
@@ -214,7 +214,7 @@ const ExamPrepNav: React.FC<ExamPrepNavProps> = ({
             <Play className="w-4 h-4 mr-2" />
             Start Practice
           </Button>
-        </div>
+        </div> */}
 
         {/* Navigation Sections */}
         <div className="p-4">
@@ -286,9 +286,9 @@ const ExamPrepNav: React.FC<ExamPrepNavProps> = ({
               className={`nav-item flex items-center px-3 py-2 rounded-lg text-slate-300 hover:text-white ${
                 isActiveRoute('/syllabus') ? 'active' : ''
               }`}
-              onClick={() => handleNavigation('/syllabus')}
+              onClick={() => handleNavigation('/exam-patterns')}
             >
-              <Calendar className={`w-4 h-4 mr-3 ${isActiveRoute('/syllabus') ? 'text-white' : 'text-red-400'}`} />
+              <Calendar className={`w-4 h-4 mr-3 ${isActiveRoute('/exam-patterns') ? 'text-white' : 'text-red-400'}`} />
               <span className="font-medium text-sm">Exam Syllabus</span>
             </div>
 
@@ -324,7 +324,7 @@ const ExamPrepNav: React.FC<ExamPrepNavProps> = ({
                 <div className="flex-1">
                   <span className="text-slate-300 font-medium text-sm">{test.name}</span>
                   <div className="flex items-center justify-between mt-1">
-                    <span className="text-xs text-slate-500">60 questions</span>
+                    <span className="text-xs">60 questions</span>
                     <Badge variant="secondary" className="text-xs bg-red-600 text-white">Live</Badge>
                   </div>
                 </div>
@@ -333,15 +333,15 @@ const ExamPrepNav: React.FC<ExamPrepNavProps> = ({
           </div>
 
           {/* Notifications Section */}
-          <div className="mt-6 space-y-1">
+          {/* <div className="mt-6 space-y-1">
             <div className="px-3 py-2">
               <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
                 Notifications
               </h3>
-            </div>
+            </div> */}
             
             {/* Sample notifications - in real app, these would come from API */}
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
               <div className="nav-item flex items-center px-3 py-2 rounded-lg text-slate-300 hover:text-white">
                 <div className="w-5 h-5 mr-3 bg-gradient-to-br from-green-500 to-blue-600 rounded flex items-center justify-center">
                   <ThumbsUp className="w-3 h-3 text-white" />
@@ -367,8 +367,8 @@ const ExamPrepNav: React.FC<ExamPrepNavProps> = ({
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </div> */}
+          {/* </div> */}
 
           {/* Bottom Section */}
           <div className="mt-6 pt-4 border-t border-slate-700">

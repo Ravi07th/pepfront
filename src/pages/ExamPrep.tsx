@@ -166,7 +166,7 @@ const ExamPrep = () => {
       />
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-10 overflow-hidden">
+        <section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-10 overflow-hidden px-4">
           {/* Particle Background */}
           <div className="absolute inset-0 pointer-events-none">
             {[...Array(20)].map((_, i) => (
@@ -196,13 +196,13 @@ const ExamPrep = () => {
               </p>
               <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
                 <a
-                  href="/questions"
+                  href="/exam-patterns"
                   className="bg-gradient-to-r from-cyan-400 to-blue-500 text-indigo-900 px-8 py-4 rounded-xl font-bold hover:scale-105 transition"
                 >
-                  Explore Questions
+                  Explore Exam Pattern
                 </a>
                 <a
-                  href="/practice"
+                  href="/quantitative-aptitude"
                   className="border-2 border-cyan-400 text-cyan-200 px-8 py-4 rounded-xl font-bold hover:bg-cyan-400/20 hover:text-cyan-100 transition"
                 >
                   Launch Practice Mode
@@ -226,7 +226,7 @@ const ExamPrep = () => {
             <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-green-500/10 to-cyan-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
           </div>
 
-          <div className="max-w-6xl mx-auto px-4 py-16 relative z-10">
+          <div className="max-w-6xl mx-auto px-4 py-8 relative z-10">
             {/* Section Header */}
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold text-white mb-4">Platform Statistics</h2>
@@ -376,7 +376,7 @@ const ExamPrep = () => {
           </div>
         </section>
 
-        <div className="flex flex-col justify-center mb-5 lg:flex-row gap-8">
+        <div className="flex flex-col justify-center mb-5 lg:flex-row gap-8 px-4">
          
 
             
@@ -491,68 +491,68 @@ const ExamPrep = () => {
       <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 px-4 md:px-10 py-8 items-stretch">
           {/* Timed Tests - Blue Theme */}
-          <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-blue-200 group h-full flex flex-col">
+          <Card className="shadow-lg hover:shadow-xl bg-gradient-to-br from-gray-200 via-blue-700 to-gray-700 transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-blue-200 group h-full flex flex-col">
             <CardHeader className="text-center pb-4">
               <div className="w-20 h-20 mx-auto mb-2 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-lg">
                 <Clock className="w-10 h-10" />
               </div>
-              <CardTitle className="text-xl font-bold text-center mb-3 group-hover:text-blue-600 transition-colors">
+              <CardTitle className="text-xl font-bold text-center mb-3 group-hover:text-white transition-colors">
                 Timed Tests
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-0 px-6 pb-6 flex-1">
-              <CardDescription className="text-center leading-relaxed text-gray-600">
+              <CardDescription className="text-center leading-relaxed text-slate-200">
                 Practice under real exam conditions with time tracking.
               </CardDescription>
             </CardContent>
           </Card>
 
           {/* Comprehensive Syllabus - Green Theme */}
-          <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-green-200 group h-full flex flex-col">
+          <Card className="bg-white shadow-lg hover:shadow-xl bg-gradient-to-br from-gray-200 via-green-700 to-gray-700 transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-green-200 group h-full flex flex-col">
             <CardHeader className="text-center pb-4">
               <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-lg">
                 <BookOpen className="w-10 h-10" />
               </div>
-              <CardTitle className="text-xl font-bold text-center mb-3 group-hover:text-green-600 transition-colors">
+              <CardTitle className="text-xl font-bold text-center mb-3 group-hover:text-white transition-colors">
                 Comprehensive Syllabus
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-0 px-6 pb-6 flex-1">
-              <CardDescription className="text-center leading-relaxed text-gray-600">
+              <CardDescription className="text-center leading-relaxed text-slate-200">
                 Detailed curriculum covering all exam topics with structured learning paths
               </CardDescription>
             </CardContent>
           </Card>
 
           {/* Practice Tests - Yellow Theme */}
-          <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-yellow-200 group h-full flex flex-col">
+          <Card className="bg-white shadow-lg hover:shadow-xl bg-gradient-to-br from-gray-200 via-yellow-700 to-gray-700 transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-yellow-200 group h-full flex flex-col">
             <CardHeader className="text-center pb-4">
               <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-600 flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-lg">
                 <Trophy className="w-10 h-10" />
               </div>
-              <CardTitle className="text-xl font-bold text-center mb-3 group-hover:text-yellow-600 transition-colors">
+              <CardTitle className="text-xl font-bold text-center mb-3 group-hover:text-white transition-colors">
                 Practice Tests
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-0 px-6 pb-6 flex-1">
-              <CardDescription className="text-center leading-relaxed text-gray-600">
+              <CardDescription className="text-center leading-relaxed text-slate-200">
                 Mock tests simulating real exam conditions to boost your confidence
               </CardDescription>
             </CardContent>
           </Card>
 
           {/* Detailed Analysis - Purple Theme */}
-          <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-purple-200 group h-full flex flex-col">
+          <Card className="bg-white shadow-lg hover:shadow-xl bg-gradient-to-br from-gray-200 via-purple-700 to-gray-700 transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-purple-200 group h-full flex flex-col">
             <CardHeader className="text-center pb-4">
               <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-lg">
                 <Brain className="w-10 h-10" />
               </div>
-              <CardTitle className="text-xl font-bold text-center mb-3 group-hover:text-purple-600 transition-colors">
+              <CardTitle className="text-xl font-bold text-center mb-3 group-hover:text-white transition-colors">
                 Detailed Analysis
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-0 px-6 pb-6 flex-1">
-              <CardDescription className="text-center leading-relaxed text-gray-600">
+              <CardDescription className="text-center leading-relaxed text-slate-200">
                 Get insights and explanations for every question.
               </CardDescription>
             </CardContent>

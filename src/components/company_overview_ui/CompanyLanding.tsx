@@ -8,7 +8,7 @@ export default function CompanyLanding() {
   const navigate = useNavigate();
 
   const handleCompanySelect = (companyId: string) => {
-    navigate(`/coding/${companyId}`);
+    navigate(`/exam-patterns/${companyId}`);
   };
 
   return (
@@ -55,17 +55,17 @@ export default function CompanyLanding() {
 
                   {/* Stats */}
                   <div className="space-y-2 mb-6">
-                    <div className="flex items-center justify-center gap-2 text-md text-muted-foreground">
+                    <div className="flex items-center justify-center gap-2 text-md text-slate-400">
                       <BookOpen className="w-5 h-5 text-green-500" />
                       Exam Syllabus
                       {/* <span>{company.sections.syllabus.topics.length} Topics</span> */}
                     </div>
-                    <div className="flex items-center justify-center gap-2 text-md text-muted-foreground">
+                    <div className="flex items-center justify-center gap-2 text-md text-slate-400">
                       <Trophy className="w-5 h-5 text-blue-900" />
                       {/* <span>{company.sections.tests.practiceTests.length} Practice Tests</span> */}
                       Mock Test
                     </div>
-                    <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                    <div className="flex items-center justify-center gap-2 text-sm text-slate-400">
                       <Users className="w-5 h-5 text-yellow-500" />
                       {/* <span>{company.sections.overview.examPattern.duration}</span> */}
                       More...

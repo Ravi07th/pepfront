@@ -48,10 +48,10 @@ const PDFGenerator: React.FC<PDFGeneratorProps> = ({ className = '' }) => {
   return (
     <div className={`space-y-6 ${className}`}>
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+        <h2 className="text-2xl font-bold text-gray-100 mb-2">
           Generate Study Notes PDFs
         </h2>
-        <p className="text-gray-600">
+        <p className="text-gray-400">
           Download comprehensive study materials for each section
         </p>
       </div>
@@ -114,15 +114,16 @@ const PDFGenerator: React.FC<PDFGeneratorProps> = ({ className = '' }) => {
 
       <div className="text-center pt-6 border-t border-gray-200">
         <Button
-          onClick={handleViewAllPDFs}
+          // onClick={handleViewAllPDFs}
           size="lg"
+          disabled
           className="bg-green-600 hover:bg-green-700 text-white"
         >
           <FileText className="h-5 w-5 mr-2" />
           View All PDFs
         </Button>
         <p className="text-sm text-gray-500 mt-2">
-          Download all study materials at once
+          Download all study materials at once coming soon
         </p>
       </div>
 

@@ -171,6 +171,7 @@ const SignUp: React.FC = () => {
 
       <div className="relative z-10 w-full max-w-2xl">
         {/* Enhanced Header Section with PrepCampus Branding */}
+        <a href="/">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-gray-700 via-gray-600 to-gray-800 rounded-2xl shadow-2xl mb-6 p-2">
             <img 
@@ -193,7 +194,7 @@ const SignUp: React.FC = () => {
             <span className="text-sm text-gray-400">Your Gateway to Success</span>
           </div>
         </div>
-
+        </a>
         {/* Enhanced Main Card */}
         <Card className="backdrop-blur-xl bg-white/5 border border-white/10 shadow-2xl">
           <CardContent className="p-8">

@@ -162,7 +162,7 @@ const DetailedSyllabus: React.FC<DetailedSyllabusProps> = ({ companyId, onBack }
       {/* Header */}
       <div className="mb-8">
         {onBack && (
-          <Button onClick={onBack} variant="ghost" className="mb-4 transition-all duration-200 hover:bg-gray-100">
+          <Button onClick={onBack} variant="ghost" className="mb-4 transition-all duration-200 hover:bg-gray-800">
             <ArrowRight className="h-4 w-4 mr-2 rotate-180" />
             Back to Exam Patterns
           </Button>
@@ -196,28 +196,28 @@ const DetailedSyllabus: React.FC<DetailedSyllabusProps> = ({ companyId, onBack }
               className="flex items-center space-x-2 transition-all duration-200 hover:bg-blue-50 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700"
             >
               <BookOpen className="h-4 w-4" />
-              <span>Syllabus</span>
+              <span className='hidden xl:block lg:block md:block'>Syllabus</span>
             </TabsTrigger>
             <TabsTrigger 
               value="pattern" 
               className="flex items-center space-x-2 transition-all duration-200 hover:bg-blue-50 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700"
             >
               <BarChart3 className="h-4 w-4" />
-              <span>Exam Pattern</span>
+              <span className='hidden xl:block lg:block md:block'>Exam Pattern</span>
             </TabsTrigger>
             <TabsTrigger 
               value="process" 
               className="flex items-center space-x-2 transition-all duration-200 hover:bg-blue-50 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700"
             >
               <Users className="h-4 w-4" />
-              <span>Selection Process</span>
+              <span className='hidden xl:block lg:block md:block'>Selection Process</span>
             </TabsTrigger>
             <TabsTrigger 
               value="tips" 
               className="flex items-center space-x-2 transition-all duration-200 hover:bg-blue-50 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700"
             >
               <TrendingUp className="h-4 w-4" />
-              <span>Preparation Tips</span>
+              <span className='hidden xl:block lg:block md:block'>Preparation Tips</span>
             </TabsTrigger>
           </TabsList>
         </Tabs>
@@ -330,7 +330,7 @@ const DetailedSyllabus: React.FC<DetailedSyllabusProps> = ({ companyId, onBack }
                                       <div key={subIndex} className="flex items-center space-x-2">
                                         <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
                                         <button
-                                          onClick={() => navigate('/exam-practice')}
+                                          // onClick={() => navigate('/exam-practice')}
                                           className="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline transition-colors duration-200 cursor-pointer text-left"
                                         >
                                           {subTopic}
@@ -373,8 +373,8 @@ const DetailedSyllabus: React.FC<DetailedSyllabusProps> = ({ companyId, onBack }
                 </CardContent>
               </Card>
 
-              {/* Quick Actions */}
-              <Card>
+              {/* Quick Actions ------------ implement in later half*/}
+              {/* <Card>
                 <CardHeader>
                   <CardTitle>Quick Actions</CardTitle>
                 </CardHeader>
@@ -400,7 +400,7 @@ const DetailedSyllabus: React.FC<DetailedSyllabusProps> = ({ companyId, onBack }
                     Apply Job at {pattern.companyName}
                   </Button>
                 </CardContent>
-              </Card>
+              </Card> */}
               
               {/* Student Exam Tips */}
               <Card>

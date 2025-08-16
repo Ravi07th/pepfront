@@ -165,11 +165,11 @@ const ExamPatternDisplay: React.FC<ExamPatternDisplayProps> = ({ selectedCompany
                           {pattern.examName}
                         </CardTitle>
                       </div>
-                      <div className="flex-shrink-0">
+                      {/* <div className="flex-shrink-0">
                         <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                           <ArrowRight className="w-6 h-6 text-white" />
-                        </div>
-                      </div>
+                        </div> */}
+                      {/* </div> */}
                     </div>
 
                     {/* Exam Sections */}

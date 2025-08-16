@@ -530,7 +530,7 @@ const Index1 = () => {
                 </Button>
               </Link>
               <Link to="/exam-patterns">
-                <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 px-8 py-4 rounded-lg transition-all duration-200">
+                <Button variant="outline" className="border-gray-600 text-gray-700 hover:bg-gray-800 px-8 py-4 rounded-lg transition-all duration-200">
                   <BookOpen className="h-5 w-5 mr-2" />
                   View Exam Patterns
                 </Button>
@@ -542,7 +542,7 @@ const Index1 = () => {
           <div className="grid grid-cols-4 md:grid-cols-8 gap-6 mt-16">
             {companies.map((company, index) => (
               <div key={index} className="flex flex-col items-center space-y-2 group">
-                <div className={`w-16 h-16 ${company.color} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200 shadow-md`}>
+                <div className={`w-16 h-16 ${company.color} rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200 shadow-md hover:rotate-[10deg]`}>
                   <CompanyLogo companyName={company.name} size={56} />
                 </div>
                 <span className="text-sm text-gray-300 text-center">{company.name}</span>
@@ -584,43 +584,99 @@ const Index1 = () => {
                 title: 'Microsoft Mock Test',
                 tag: 'Mock Test',
                 gradient: 'from-blue-500 to-cyan-500',
+                colour: 'text-blue-500',
                 chips: ['Azure Fundamentals', 'SDE-I Coding', 'Cloud Basics'],
-                href: '/mock-test'
+                href: '/mock-test',
+                svg: `<svg width="180" height="130" viewBox="0 0 180 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="40" y="30" width="100" height="70" rx="14" fill="#fff" fill-opacity="0.18"/>
+                        <rect x="60" y="50" width="60" height="10" rx="3" fill="#fff" fill-opacity="0.5"/>
+                        <rect x="60" y="65" width="40" height="10" rx="3" fill="#fff" fill-opacity="0.4"/>
+                        <rect x="60" y="80" width="30" height="10" rx="3" fill="#fff" fill-opacity="0.3"/>
+                        <polyline points="52,55 58,61 70,51" stroke="#fff" stroke-width="3" fill="none" stroke-opacity="0.7"/>
+                        <polyline points="52,70 58,76 70,66" stroke="#fff" stroke-width="3" fill="none" stroke-opacity="0.6"/>
+                        <polyline points="52,85 58,91 70,81" stroke="#fff" stroke-width="3" fill="none" stroke-opacity="0.5"/>
+                        <rect x="120" y="100" width="32" height="8" rx="4" fill="#fff" fill-opacity="0.3"/>
+                        <polygon points="152,100 160,104 152,108" fill="#fff" fill-opacity="0.5"/>
+                      </svg>`
               },
               {
                 title: 'Student Notes',
                 tag: 'Notes',
                 gradient: 'from-purple-500 to-pink-500',
+                colour: 'text-purple-500',
                 chips: ['DBMS', 'Operating Systems', 'DSA Notes'],
-                href: '/student-notes'
+                href: '/student-notes',
+                svg: `<svg width="140" height="100" className="absolute top-8 right-6 opacity-30">
+                        <rect x="30" y="20" width="80" height="16" rx="4" fill="#fff" fillOpacity="0.5" />
+                        <rect x="20" y="40" width="100" height="16" rx="4" fill="#fff" fillOpacity="0.5" />
+                        <rect x="40" y="60" width="60" height="16" rx="4" fill="#fff" fillOpacity="0.5" />
+                        <rect x="35" y="80" width="70" height="10" rx="3" fill="#fff" fillOpacity="0.5" />
+                      </svg>`
               },
               {
                 title: 'Student Syllabus',
                 tag: 'Syllabus',
                 gradient: 'from-indigo-500 to-violet-500',
+                colour: 'text-indigo-500',
                 chips: ['TCS NQT', 'Accenture', 'Infosys'],
-                href: '/exam-patterns'
+                href: '/exam-patterns',
+                svg: `<svg width="140" height="100" className="absolute top-8 right-6 opacity-30">
+                        <circle cx="30" cy="30" r="6" fill="#fff" fillOpacity="0.5" />
+                        <rect x="45" y="24" width="70" height="12" rx="4" fill="#fff" fillOpacity="0.5" />
+                        <circle cx="30" cy="55" r="6" fill="#fff" fillOpacity="0.5" />
+                        <rect x="45" y="49" width="70" height="12" rx="4" fill="#fff" fillOpacity="0.5" />
+                        <circle cx="30" cy="80" r="6" fill="#fff" fillOpacity="0.5" />
+                        <rect x="45" y="74" width="70" height="12" rx="4" fill="#fff" fillOpacity="0.5" />
+                      </svg>`
               },
               {
                 title: 'TCS NQT Mock Test',
                 tag: 'Mock Test',
                 gradient: 'from-amber-500 to-orange-500',
+                colour: 'text-amber-500',
                 chips: ['Foundation', 'Advanced', 'Coding'],
-                href: '/mock-test'
+                href: '/mock-test',
+                svg: `<svg width="180" height="130" viewBox="0 0 180 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="40" y="30" width="100" height="70" rx="14" fill="#fff" fill-opacity="0.18"/>
+                        <rect x="60" y="50" width="60" height="10" rx="3" fill="#fff" fill-opacity="0.5"/>
+                        <rect x="60" y="65" width="40" height="10" rx="3" fill="#fff" fill-opacity="0.4"/>
+                        <rect x="60" y="80" width="30" height="10" rx="3" fill="#fff" fill-opacity="0.3"/>
+                        <polyline points="52,55 58,61 70,51" stroke="#fff" stroke-width="3" fill="none" stroke-opacity="0.7"/>
+                        <polyline points="52,70 58,76 70,66" stroke="#fff" stroke-width="3" fill="none" stroke-opacity="0.6"/>
+                        <polyline points="52,85 58,91 70,81" stroke="#fff" stroke-width="3" fill="none" stroke-opacity="0.5"/>
+                        <rect x="120" y="100" width="32" height="8" rx="4" fill="#fff" fill-opacity="0.3"/>
+                        <polygon points="152,100 160,104 152,108" fill="#fff" fill-opacity="0.5"/>
+                      </svg>`
               },
               {
                 title: 'Coding Practice',
                 tag: 'Coding',
                 gradient: 'from-emerald-500 to-teal-500',
+                colour: 'text-emerald-500',
                 chips: ['C / Java / Python', 'Data Structures', 'Patterns'],
-                href: '/coding'
+                href: '/coding',
+                svg: `<svg width="140" height="100" viewBox="0 0 140 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="15" y="20" width="110" height="60" rx="8" fill="#fff" fillOpacity="0.15"/>
+                        <rect x="22" y="28" width="96" height="44" rx="4" fill="#fff" fillOpacity="0.25"/>
+                        <rect x="60" y="82" width="20" height="8" rx="3" fill="#fff" fillOpacity="0.25"/>
+                        <text x="40" y="58" textAnchor="middle" font-size="32" font-family="monospace" fill="#000" fill-opacity="0.7">&lt;/&gt;</text>
+                      </svg>`
               },
               {
                 title: 'Company Exam Patterns',
                 tag: 'Syllabus',
                 gradient: 'from-slate-600 to-blue-600',
+                colour: 'text-slate-500',
                 chips: ['Overview', 'Sections', 'Time & Qs'],
-                href: '/exam-patterns'
+                href: '/exam-patterns',
+                svg: `<svg width="140" height="100" className="absolute top-8 right-6 opacity-30">
+                        <circle cx="30" cy="30" r="6" fill="#fff" fillOpacity="0.5" />
+                        <rect x="45" y="24" width="70" height="12" rx="4" fill="#fff" fillOpacity="0.5" />
+                        <circle cx="30" cy="55" r="6" fill="#fff" fillOpacity="0.5" />
+                        <rect x="45" y="49" width="70" height="12" rx="4" fill="#fff" fillOpacity="0.5" />
+                        <circle cx="30" cy="80" r="6" fill="#fff" fillOpacity="0.5" />
+                        <rect x="45" y="74" width="70" height="12" rx="4" fill="#fff" fillOpacity="0.5" />
+                      </svg>`
               },
             ];
 
@@ -634,7 +690,7 @@ const Index1 = () => {
               autoplaySpeed: 2500,
               pauseOnHover: true,
               centerMode: true,
-              centerPadding: '40px',
+              // centerPadding: '40px',
               cssEase: 'ease-in-out',
               responsive: [
                 { breakpoint: 1280, settings: { slidesToShow: 3, centerPadding: '24px' } },
@@ -648,30 +704,30 @@ const Index1 = () => {
                 <Slider {...(trendingCarouselSettings as any)}>
                   {items.map((item, idx) => (
                     <div key={idx} className="px-2 h-full">
-                      <div className={`h-64 md:h-72 rounded-2xl bg-gradient-to-r ${item.gradient} relative overflow-hidden shadow-lg`}> 
+                      <div className={`h-44 md:h-60 rounded-2xl bg-gradient-to-r ${item.gradient} relative overflow-hidden shadow-lg`}> 
                         <div className="absolute inset-0 bg-black/25" />
                         <div className="relative z-10 h-full p-5 flex flex-col justify-between">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-white/90 bg-white/20 px-2 py-1 rounded-md">
-                              {item.tag}
-                            </span>
-                          </div>
-                          <div>
-                            <h3 className="text-2xl font-bold text-white mb-3">{item.title}</h3>
+                            <span
+                              className="absolute top-8 right-6 opacity-30"
+                              dangerouslySetInnerHTML={{ __html: item.svg }} />
+                            <div className="">
+                              <span className="text-xs font-semibold text-white/90 bg-white/20 px-2 py-1 w-fit rounded-md">
+                                {item.tag}
+                              </span>
+                              <h3 className="text-2xl font-bold text-white">{item.title}</h3>
+                            </div>
+                          <div className="flex justify-between items-center">
                             <div className="flex flex-wrap gap-2">
                               {item.chips.map((chip, cIdx) => (
-                                <span key={cIdx} className="text-xs text-white bg-white/15 px-2 py-1 rounded-full">
+                                <span key={cIdx} className="text-xs text-white bg-white/15 px-2 py-1 rounded-full h-fit">
                                   {chip}
                                 </span>
                               ))}
                             </div>
-                          </div>
-                          <div className="flex justify-end">
                             <Link to={item.href}>
-                              <Button size="sm" className="bg-white/90 text-gray-900 hover:bg-white">
-                                Open
-                                <ArrowRight className="h-4 w-4 ml-2" />
-                              </Button>
+                              <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-lg">
+                                <Play className={`w-8 h-8 ${item.colour} hover:scale-110`} />
+                              </div>
                             </Link>
                           </div>
                         </div>
@@ -684,8 +740,6 @@ const Index1 = () => {
           })()}
         </div>
       </section>
-
-      {/* (Removed duplicate Trending section) */}
 
       {/* Features Section */}
       <section className="py-10 px-4">
@@ -738,7 +792,7 @@ const Index1 = () => {
                   <h3 className="text-xl font-semibold text-white mb-2">{topic.title}</h3>
                   <p className="text-gray-400 mb-4">{topic.questions} questions available</p>
                   <Link to="/coding">
-                    <Button variant="outline" className="w-full border-gray-600 text-gray-300 hover:bg-gray-800">
+                    <Button variant="outline" className="w-full border-gray-600 text-gray-700 hover:bg-gray-800">
                       Start Learning
                       <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
@@ -961,7 +1015,7 @@ const Index1 = () => {
             </Button>
             </Link>
             <Link to="/coding">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 px-8 py-4 rounded-lg transition-all duration-200">
+              <Button variant="outline" className="border-gray-600 text-gray-700 hover:bg-gray-800 px-8 py-4 rounded-lg transition-all duration-200">
                 <BookOpen className="h-5 w-5 mr-2" />
                 Explore Questions
               </Button>
