@@ -23,7 +23,9 @@ import {
   BarChart3,
   Award,
   Zap,
-  ExternalLink
+  ExternalLink,
+  Code,
+  Brain
 } from "lucide-react";
 import { ExamPattern, getExamPatternByCompany } from './CompanyExamPatterns2025';
 
@@ -158,29 +160,30 @@ const DetailedSyllabus: React.FC<DetailedSyllabusProps> = ({ companyId, onBack }
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 transition-all duration-300" style={{ scrollBehavior: 'smooth' }}>
+    <div className="w-full max-w-7xl mx-auto px-2 sm:px-3 md:px-4 py-3 sm:py-4 md:py-8 transition-all duration-300 overflow-x-hidden" style={{ scrollBehavior: 'smooth' }}>
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-4 sm:mb-6 md:mb-8">
         {onBack && (
-          <Button onClick={onBack} variant="ghost" className="mb-4 transition-all duration-200 hover:bg-gray-100">
+          <Button onClick={onBack} variant="ghost" className="mb-2 sm:mb-3 md:mb-4 transition-all duration-200 hover:bg-gray-100 w-full sm:w-auto justify-start">
             <ArrowRight className="h-4 w-4 mr-2 rotate-180" />
-            Back to Exam Patterns
+            <span className="hidden sm:inline">Back to Exam Patterns</span>
+            <span className="sm:hidden">Back</span>
           </Button>
         )}
         
-        <div className="flex items-center space-x-4 mb-4">
-          <Badge className={`text-lg px-4 py-2 ${getCompanyColor(companyId)} transition-all duration-200`}>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 md:gap-4 mb-2 sm:mb-3 md:mb-4">
+          <Badge className={`text-xs sm:text-sm md:text-lg px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 ${getCompanyColor(companyId)} transition-all duration-200 w-fit`}>
             {pattern.companyName}
           </Badge>
-          <Badge variant="outline" className="text-lg px-4 py-2 transition-all duration-200">
+          <Badge variant="outline" className="text-xs sm:text-sm md:text-lg px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 transition-all duration-200 w-fit">
             {pattern.year}
           </Badge>
         </div>
         
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+        <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 mb-2 sm:mb-3 md:mb-4 leading-tight break-words">
           {pattern.examName}
         </h1>
-        <p className="text-lg text-gray-600 mb-6">
+        <p className="text-sm sm:text-base md:text-lg text-gray-600 mb-3 sm:mb-4 md:mb-6">
           {pattern.platform}
         </p>
       </div>
@@ -188,58 +191,63 @@ const DetailedSyllabus: React.FC<DetailedSyllabusProps> = ({ companyId, onBack }
       
 
       {/* Sticky Navigation */}
-      <div className="sticky top-20 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm mb-6 transition-all duration-300">
+      <div className="sticky top-14 sm:top-16 md:top-20 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm mb-3 sm:mb-4 md:mb-6 transition-all duration-300">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 bg-gray-50/80 backdrop-blur-sm">
+          <TabsList className="grid w-full grid-cols-4 bg-gray-50/80 backdrop-blur-sm gap-1 transition-all duration-300" style={{ minWidth: '100%', overflow: 'hidden' }}>
             <TabsTrigger 
               value="syllabus" 
-              className="flex items-center space-x-2 transition-all duration-200 hover:bg-blue-50 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700"
+              className="flex items-center justify-center space-x-1 sm:space-x-2 transition-all duration-200 hover:bg-blue-50 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700 text-xs sm:text-sm p-2 sm:p-2.5 md:p-3 min-w-0 overflow-hidden"
             >
-              <BookOpen className="h-4 w-4" />
-              <span>Syllabus</span>
+              <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+              <span className="hidden sm:inline">Syllabus</span>
+              <span className="sm:hidden text-xs">Syl</span>
             </TabsTrigger>
             <TabsTrigger 
               value="pattern" 
-              className="flex items-center space-x-2 transition-all duration-200 hover:bg-blue-50 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700"
+              className="flex items-center justify-center space-x-1 sm:space-x-2 transition-all duration-200 hover:bg-blue-50 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700 text-xs sm:text-sm p-2 sm:p-2.5 md:p-3 min-w-0 overflow-hidden"
             >
-              <BarChart3 className="h-4 w-4" />
-              <span>Exam Pattern</span>
+              <BarChart3 className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+              <span className="hidden sm:inline">Exam Pattern</span>
+              <span className="sm:hidden text-xs">Pat</span>
             </TabsTrigger>
             <TabsTrigger 
               value="process" 
-              className="flex items-center space-x-2 transition-all duration-200 hover:bg-blue-50 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700"
+              className="flex items-center justify-center space-x-1 sm:space-x-2 transition-all duration-200 hover:bg-blue-50 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700 text-xs sm:text-sm p-2 sm:p-2.5 md:p-3 min-w-0 overflow-hidden"
             >
-              <Users className="h-4 w-4" />
-              <span>Selection Process</span>
+              <Users className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+              <span className="hidden sm:inline">Selection Process</span>
+              <span className="sm:hidden text-xs">Proc</span>
             </TabsTrigger>
             <TabsTrigger 
               value="tips" 
-              className="flex items-center space-x-2 transition-all duration-200 hover:bg-blue-50 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700"
+              className="flex items-center justify-center space-x-1 sm:space-x-2 transition-all duration-200 hover:bg-blue-50 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700 text-xs sm:text-sm p-2 sm:p-2.5 md:p-3 min-w-0 overflow-hidden"
             >
-              <TrendingUp className="h-4 w-4" />
-              <span>Preparation Tips</span>
+              <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+              <span className="hidden sm:inline">Preparation Tips</span>
+              <span className="sm:hidden text-xs">Tips</span>
             </TabsTrigger>
           </TabsList>
         </Tabs>
         
         {/* Auto-navigation indicator */}
         {isAutoNavigating && (
-          <div className="absolute top-full left-0 right-0 bg-blue-100 text-blue-800 text-sm py-2 px-4 text-center animate-pulse">
-            <span className="flex items-center justify-center space-x-2">
-              <TrendingUp className="h-4 w-4" />
-              <span>Auto-advancing to next section...</span>
+          <div className="absolute top-full left-0 right-0 bg-blue-100 text-blue-800 text-xs sm:text-sm py-1.5 sm:py-2 px-2 sm:px-3 md:px-4 text-center animate-pulse">
+            <span className="flex items-center justify-center space-x-1 sm:space-x-2">
+              <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="hidden sm:inline">Auto-advancing to next section...</span>
+              <span className="sm:hidden">Auto-advancing...</span>
             </span>
           </div>
         )}
       </div>
 
       {/* Main Content with Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 sm:space-y-6">
         {/* Syllabus Tab */}
-        <TabsContent value="syllabus" className="space-y-6 transition-all duration-300" ref={syllabusRef}>
-          <div className="grid gap-6 lg:grid-cols-4">
+        <TabsContent value="syllabus" className="space-y-3 sm:space-y-4 md:space-y-6 transition-all duration-300" ref={syllabusRef}>
+          <div className="grid gap-3 sm:gap-4 md:gap-6 lg:grid-cols-4">
             {/* Main Content */}
-            <div className="lg:col-span-3 space-y-6">
+            <div className="lg:col-span-3 space-y-3 sm:space-y-4 md:space-y-6">
               {/* Exam Sections */}
                              <Card className="transition-all duration-200 hover:shadow-lg">
                  <CardHeader>
@@ -253,50 +261,50 @@ const DetailedSyllabus: React.FC<DetailedSyllabusProps> = ({ companyId, onBack }
                  </CardHeader>
                  
                  {/* Quick Stats Cards */}
-                 <div className="px-6 pb-6">
-                                       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                 <div className="px-3 sm:px-6 pb-4 sm:pb-6">
+                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6">
                      <Card className="transition-all duration-200 hover:shadow-md">
-                       <CardContent className="p-4">
+                       <CardContent className="p-3 sm:p-4">
                          <div className="flex items-center space-x-2">
-                           <Clock className="h-5 w-5 text-blue-600" />
+                           <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" />
                            <div>
-                             <p className="text-sm font-medium text-gray-600">Duration</p>
-                             <p className="text-lg font-bold">{pattern.totalDuration}</p>
+                             <p className="text-xs sm:text-sm font-medium text-gray-600">Duration</p>
+                             <p className="text-sm sm:text-lg font-bold">{pattern.totalDuration}</p>
                            </div>
                          </div>
                        </CardContent>
                      </Card>
                      <Card className="transition-all duration-200 hover:shadow-md">
-                       <CardContent className="p-4">
+                       <CardContent className="p-3 sm:p-4">
                          <div className="flex items-center space-x-2">
-                           <Target className="h-5 w-5 text-green-600" />
+                           <Target className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
                            <div>
-                             <p className="text-sm font-medium text-gray-600">Questions</p>
-                             <p className="text-lg font-bold">{pattern.totalQuestions}</p>
+                             <p className="text-xs sm:text-sm font-medium text-gray-600">Questions</p>
+                             <p className="text-sm sm:text-lg font-bold">{pattern.totalQuestions}</p>
                            </div>
                          </div>
                        </CardContent>
                      </Card>
-                                           <Card className="transition-all duration-200 hover:shadow-md">
-                        <CardContent className="p-4">
-                          <div className="flex items-center space-x-2">
-                            <Users className="h-5 w-5 text-purple-600" />
-                            <div>
-                              <p className="text-sm font-medium text-gray-600">Process</p>
-                              <p className="text-lg font-bold">{pattern.selectionProcess.length} rounds</p>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
+                     <Card className="transition-all duration-200 hover:shadow-md">
+                       <CardContent className="p-3 sm:p-4">
+                         <div className="flex items-center space-x-2">
+                           <Users className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600" />
+                           <div>
+                             <p className="text-xs sm:text-sm font-medium text-gray-600">Process</p>
+                             <p className="text-sm sm:text-lg font-bold">{pattern.selectionProcess.length} rounds</p>
+                           </div>
+                         </div>
+                       </CardContent>
+                     </Card>
                    </div>
                  </div>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-3 sm:space-y-4 md:space-y-6">
                   {pattern.sections.map((section, index) => (
-                    <div key={index} className="border rounded-lg p-6 bg-gradient-to-r from-gray-50 to-white transition-all duration-200 hover:shadow-md">
-                      <div className="flex items-center justify-between mb-4">
+                    <div key={index} className="border rounded-lg p-3 sm:p-4 md:p-6 bg-gradient-to-r from-gray-50 to-white transition-all duration-200 hover:shadow-md">
+                      <div className="flex flex-col gap-2 sm:gap-3 md:gap-0 mb-2 sm:mb-3 md:mb-4">
                         <div>
-                          <h3 className="text-xl font-semibold text-gray-900">{section.name}</h3>
-                          <p className="text-sm text-gray-600 mt-1">{section.description}</p>
+                          <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900 leading-tight break-words">{section.name}</h3>
+                          <p className="text-xs sm:text-sm text-gray-600 mt-1 leading-relaxed">{section.description}</p>
                         </div>
                       </div>
                       
@@ -329,12 +337,11 @@ const DetailedSyllabus: React.FC<DetailedSyllabusProps> = ({ companyId, onBack }
                                     {topic.subTopics.map((subTopic, subIndex) => (
                                       <div key={subIndex} className="flex items-center space-x-2">
                                         <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
-                                        <button
-                                          onClick={() => navigate('/exam-practice')}
-                                          className="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline transition-colors duration-200 cursor-pointer text-left"
+                                        <span
+                                          className="text-sm font-medium text-gray-700 cursor-default"
                                         >
                                           {subTopic}
-                                        </button>
+                                        </span>
                                       </div>
                                     ))}
                                   </div>
@@ -374,29 +381,47 @@ const DetailedSyllabus: React.FC<DetailedSyllabusProps> = ({ companyId, onBack }
               </Card>
 
               {/* Quick Actions */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Quick Actions</CardTitle>
+              <Card className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200 shadow-lg hover:shadow-xl transition-all duration-300">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center space-x-2 text-blue-900">
+                    <Zap className="h-5 w-5 text-blue-600" />
+                    <span>Quick Actions</span>
+                  </CardTitle>
+                  <CardDescription className="text-blue-700">
+                    Access study materials and practice resources
+                  </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-3">
-                  <Button className="w-full" variant="default">
-                    <Play className="h-4 w-4 mr-2" />
+                <CardContent className="space-y-4">
+                  <Button 
+                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg" 
+                    variant="default"
+                    onClick={() => navigate('/mock-test')}
+                  >
+                    <Play className="h-5 w-5 mr-3" />
                     Start Mock Test
                   </Button>
-                  <Button className="w-full" variant="outline">
-                    <Download className="h-4 w-4 mr-2" />
-                    Practice Paper
-                  </Button>
-                  <Button className="w-full" variant="outline">
-                    <FileText className="h-4 w-4 mr-2" />
-                    Mock Test Preparation
+                  <Button 
+                    className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg" 
+                    variant="default"
+                    onClick={() => navigate('/student-notes')}
+                  >
+                    <Brain className="h-5 w-5 mr-3" />
+                    Technical Questions
                   </Button>
                   <Button 
-                    className="w-full" 
-                    variant="outline"
+                    className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg" 
+                    variant="default"
+                    onClick={() => navigate('/coding')}
+                  >
+                    <Code className="h-5 w-5 mr-3" />
+                    Coding Problems
+                  </Button>
+                  <Button 
+                    className="w-full bg-gradient-to-r from-gray-600 to-slate-600 hover:from-gray-700 hover:to-slate-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg" 
+                    variant="default"
                     onClick={() => window.open(pattern.careerPortal, '_blank')}
                   >
-                    <ExternalLink className="h-4 w-4 mr-2" />
+                    <ExternalLink className="h-5 w-5 mr-3" />
                     Apply Job at {pattern.companyName}
                   </Button>
                 </CardContent>
@@ -488,39 +513,39 @@ const DetailedSyllabus: React.FC<DetailedSyllabusProps> = ({ companyId, onBack }
                 Complete exam structure, timing, and question distribution
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-4 sm:space-y-6">
               {/* Exam Pattern Details */}
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Exam Structure</h3>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg transition-all duration-200 hover:bg-blue-100">
-                      <span className="font-medium text-blue-900">Total Duration</span>
-                      <span className="text-blue-700 font-semibold">{pattern.totalDuration}</span>
+              <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
+                <div className="space-y-3 sm:space-y-4">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900">Exam Structure</h3>
+                  <div className="space-y-2 sm:space-y-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-2 sm:p-3 bg-blue-50 rounded-lg transition-all duration-200 hover:bg-blue-100 gap-1 sm:gap-0">
+                      <span className="font-medium text-blue-900 text-sm sm:text-base">Total Duration</span>
+                      <span className="text-blue-700 font-semibold text-sm sm:text-base">{pattern.totalDuration}</span>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg transition-all duration-200 hover:bg-green-100">
-                      <span className="font-medium text-green-900">Total Questions</span>
-                      <span className="text-green-700 font-semibold">{pattern.totalQuestions}</span>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-2 sm:p-3 bg-green-50 rounded-lg transition-all duration-200 hover:bg-green-100 gap-1 sm:gap-0">
+                      <span className="font-medium text-green-900 text-sm sm:text-base">Total Questions</span>
+                      <span className="text-green-700 font-semibold text-sm sm:text-base">{pattern.totalQuestions}</span>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg transition-all duration-200 hover:bg-purple-100">
-                      <span className="font-medium text-purple-900">Sections</span>
-                      <span className="text-purple-700 font-semibold">{pattern.sections.length}</span>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-2 sm:p-3 bg-purple-50 rounded-lg transition-all duration-200 hover:bg-purple-100 gap-1 sm:gap-0">
+                      <span className="font-medium text-purple-900 text-sm sm:text-base">Sections</span>
+                      <span className="text-purple-700 font-semibold text-sm sm:text-base">{pattern.sections.length}</span>
                     </div>
                   </div>
                 </div>
                 
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Section Breakdown</h3>
-                  <div className="space-y-3">
+                <div className="space-y-3 sm:space-y-4">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900">Section Breakdown</h3>
+                  <div className="space-y-2 sm:space-y-3">
                     {pattern.sections.map((section, index) => (
-                      <div key={index} className="p-3 bg-gray-50 rounded-lg transition-all duration-200 hover:bg-gray-100">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="font-medium text-gray-900">{section.name}</span>
-                          <span className="text-sm text-blue-600 ">{section.duration}</span>
+                      <div key={index} className="p-2 sm:p-3 bg-gray-50 rounded-lg transition-all duration-200 hover:bg-gray-100">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-0 mb-1 sm:mb-2">
+                          <span className="font-medium text-gray-900 text-sm sm:text-base break-words">{section.name}</span>
+                          <span className="text-xs sm:text-sm text-blue-600">{section.duration}</span>
                         </div>
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-gray-600 mx-2">{section.questions} questions</span>
-                          <span className="text-gray-600">{section.description}</span>
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs sm:text-sm gap-1 sm:gap-0">
+                          <span className="text-gray-600">{section.questions} questions</span>
+                          <span className="text-gray-600 break-words">{section.description}</span>
                         </div>
                       </div>
                     ))}
@@ -532,26 +557,26 @@ const DetailedSyllabus: React.FC<DetailedSyllabusProps> = ({ companyId, onBack }
         </TabsContent>
 
                           {/* Selection Process Tab */}
-         <TabsContent value="process" className="space-y-6 transition-all duration-300" ref={processRef}>
+         <TabsContent value="process" className="space-y-4 sm:space-y-6 transition-all duration-300" ref={processRef}>
            <Card className="transition-all duration-200 hover:shadow-lg">
              <CardHeader>
                <CardTitle className="flex items-center space-x-2">
-                 <Users className="h-5 w-5" />
-                 <span>Selection Process</span>
+                 <Users className="h-4 w-4 sm:h-5 sm:w-5" />
+                 <span className="text-base sm:text-lg">Selection Process</span>
                </CardTitle>
-               <CardDescription>
+               <CardDescription className="text-sm sm:text-base">
                  Step-by-step selection process and requirements
                </CardDescription>
              </CardHeader>
-             <CardContent className="space-y-6">
-               <div className="space-y-4">
+             <CardContent className="space-y-3 sm:space-y-4 md:space-y-6">
+               <div className="space-y-3 sm:space-y-4">
                  {pattern.selectionProcess.map((step, index) => (
-                   <div key={index} className="flex items-start space-x-4 p-4 bg-gradient-to-r from-gray-50 to-white rounded-lg transition-all duration-200 hover:shadow-md">
-                     <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold">
+                   <div key={index} className="flex items-start space-x-2 sm:space-x-4 p-3 sm:p-4 bg-gradient-to-r from-gray-50 to-white rounded-lg transition-all duration-200 hover:shadow-md">
+                     <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-xs sm:text-sm">
                        {index + 1}
                      </div>
                      <div className="flex-1">
-                       <p className="text-gray-700">{step}</p>
+                       <p className="text-gray-700 text-sm sm:text-base leading-relaxed">{step}</p>
                      </div>
                    </div>
                  ))}
@@ -561,26 +586,26 @@ const DetailedSyllabus: React.FC<DetailedSyllabusProps> = ({ companyId, onBack }
          </TabsContent>
 
         {/* Preparation Tips Tab */}
-        <TabsContent value="tips" className="space-y-6 transition-all duration-300" ref={tipsRef}>
+        <TabsContent value="tips" className="space-y-4 sm:space-y-6 transition-all duration-300" ref={tipsRef}>
           <Card className="transition-all duration-200 hover:shadow-lg">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
-                <TrendingUp className="h-5 w-5" />
-                <span>Student Exam Tips</span>
+                <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span className="text-base sm:text-lg">Student Exam Tips</span>
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="text-sm sm:text-base">
                 Essential tips and strategies for exam preparation
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
-                    <Star className="h-5 w-5 text-yellow-500" />
+            <CardContent className="space-y-4 sm:space-y-6">
+              <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
+                <div className="space-y-3 sm:space-y-4">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 flex items-center space-x-2">
+                    <Star className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-500" />
                     <span>General Tips</span>
                   </h3>
-                  <div className="space-y-3">
-                    <div className="flex items-start space-x-3 p-3 bg-yellow-50 rounded-lg transition-all duration-200 hover:bg-yellow-100">
+                  <div className="space-y-2 sm:space-y-3">
+                    <div className="flex items-start space-x-2 sm:space-x-3 p-2 sm:p-3 bg-yellow-50 rounded-lg transition-all duration-200 hover:bg-yellow-100">
                       <CheckCircle className="h-5 w-5 text-yellow-600 mt-0.5" />
                       <div>
                         <p className="font-medium text-yellow-900">Start Early</p>

@@ -1,8 +1,11 @@
+import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { HelmetProvider } from "react-helmet-async";
 import GoogleAnalytics from "./components/GoogleAnalytics";
+import ErrorBoundary from "./components/ErrorBoundary";
+import { performanceService } from "./services/performanceService";
 // import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -12,6 +15,7 @@ import Contact from "./pages/Contact.tsx";
 import ExamPrep from "./pages/ExamPrep.tsx";
 import ExamPatternsPage from "./pages/ExamPatternsPage.tsx";
 import TermsAndConditions from "./pages/TermsAndConditions.tsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
 import Blog from "./pages/Blog.tsx";
 import Community from "./pages/Community.tsx";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
@@ -25,9 +29,9 @@ import UserProfile from "./components/auth/UserProfile.tsx";
 import ScrollToTop from "./components/ScrollToTop.tsx";
 
 // Import MNC Exam components
-import MNCExamSelection from "./components/MNCExam/MNCExamSelection.tsx";
-import MNCExamInstructions from "./components/MNCExam/MNCExamInstructions.tsx";
-import MNCExamInterface from "./components/MNCExam/MNCExamInterface.tsx";
+import MNCExamSelection from "./components/mnc_mock_test/MNCExamSelection.tsx";
+import MNCExamInstructions from "./components/mnc_mock_test/MNCExamInstructions.tsx";
+import MNCExamInterface from "./components/mnc_mock_test/MNCExamInterface.tsx";
 
 // Import Practice and Test components
 import Programming from "./components/PracticeAndTest/programming/Programming.tsx";
@@ -44,8 +48,7 @@ import BookmarksPage from "./components/student_notes/BookmarksPage.tsx";
 // Import MCQ Test component
 import MCQTest from "./components/MCQTest.tsx";
 
-// Import Study and Syllabus components
-import Study from "./components/Study.tsx";
+// Import Syllabus components
 
 // Import Question Page component
 import QuestionPage from "./components/QuestionPage.tsx";
@@ -87,17 +90,39 @@ import VerbalSectionFormula from "./components/PracticeAndTest/General_aptitude/
 import VerbalSectionInstructions from "./components/PracticeAndTest/General_aptitude/verbalSection/VerbalSectionInstructions.tsx";
 import VerbalSectionMockTest from "./components/PracticeAndTest/General_aptitude/verbalSection/VerbalSectionMockTest.tsx";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes (replaces cacheTime in newer versions)
+      retry: 3,
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: true,
+    },
+    mutations: {
+      retry: 1,
+      retryDelay: 1000,
+    },
+  },
+});
 
-const App = () => (
-  <HelmetProvider>
-    <QueryClientProvider client={queryClient}>
-      <GoogleOAuthProvider clientId="922756107438-3bqbs956ph4p3su9811c9cc6c5fqa0us.apps.googleusercontent.com">
-        <AuthProvider>
-          <LayoutProvider>
-                      <BrowserRouter>
-            <GoogleAnalytics />
-            <ScrollToTop />
+const App = () => {
+  // Initialize performance tracking
+  React.useEffect(() => {
+    performanceService.trackPageLoad(window.location.href);
+  }, []);
+
+  return (
+    <ErrorBoundary>
+      <HelmetProvider>
+        <QueryClientProvider client={queryClient}>
+          <GoogleOAuthProvider clientId="922756107438-3bqbs956ph4p3su9811c9cc6c5fqa0us.apps.googleusercontent.com">
+            <AuthProvider>
+              <LayoutProvider>
+                <BrowserRouter>
+                  <GoogleAnalytics />
+                  <ScrollToTop />
             <Routes>
               {/* Auth Routes */}
               <Route path="/signin" element={<SignIn />} />
@@ -258,8 +283,18 @@ const App = () => (
             
             
             
-            {/* Coding Route */}
+            {/* Coding Routes */}
             <Route path="/coding" element={
+              <PageLayout variant="full">
+                <CodingPractice />
+              </PageLayout>
+            } />
+            <Route path="/coding/:companyId" element={
+              <PageLayout variant="full">
+                <CodingPractice />
+              </PageLayout>
+            } />
+            <Route path="/coding/:companyId/:questionId" element={
               <PageLayout variant="full">
                 <CodingPractice />
               </PageLayout>
@@ -275,7 +310,7 @@ const App = () => (
             {/* SkillUp Routes */}
             <Route path="/skillup" element={
               <PageLayout variant="full">
-                <Study />
+                <StudentNotesPage />
               </PageLayout>
             } />
             
@@ -294,7 +329,7 @@ const App = () => (
             } />
             
             {/* Interview Questions Guide */}
-            <Route path="/interview-questions" element={
+            <Route path="/student-notes/interview-question" element={
               <PageLayout variant="content-only">
                 <div className="w-full h-screen bg-gray-100">
                   <iframe
@@ -322,7 +357,7 @@ const App = () => (
             } />
             
             {/* DSA Notes */}
-            <Route path="/dsa-notes" element={
+            <Route path="/student-notes/dsa-notes" element={
               <PageLayout variant="content-only">
                 <div className="w-full h-screen bg-gray-100">
                   <iframe
@@ -364,7 +399,7 @@ const App = () => (
             } />
             
             {/* C Programming Notes */}
-            <Route path="/c-programming-notes" element={
+            <Route path="/student-notes/c-programming-notes" element={
               <PageLayout variant="content-only">
                 <div className="w-full h-screen bg-gray-100">
                   <iframe
@@ -378,7 +413,7 @@ const App = () => (
             } />
             
             {/* Automata Theory Notes */}
-            <Route path="/automata-notes" element={
+            <Route path="/student-notes/automata-notes" element={
               <PageLayout variant="content-only">
                 <div className="w-full h-screen bg-gray-100">
                   <iframe
@@ -392,7 +427,7 @@ const App = () => (
             } />
             
             {/* Operating System Notes */}
-            <Route path="/osnotes" element={
+            <Route path="/student-notes/operating-system-notes" element={
               <PageLayout variant="content-only">
                 <div className="w-full h-screen bg-gray-100">
                   <iframe
@@ -406,7 +441,7 @@ const App = () => (
             } />
 
             {/* Computer Network Notes */}
-            <Route path="/computer-network-notes" element={
+            <Route path="/student-notes/computer-network-notes" element={
               <PageLayout variant="content-only">
                 <div className="w-full h-screen bg-gray-100">
                   <iframe
@@ -420,7 +455,7 @@ const App = () => (
             } />
 
             {/* Python Notes */}
-            <Route path="/python-notes" element={
+            <Route path="/student-notes/python-notes" element={
               <PageLayout variant="content-only">
                 <div className="w-full h-screen bg-gray-100">
                   <iframe
@@ -451,12 +486,7 @@ const App = () => (
               </PageLayout>
             } />
             
-            {/* Study */}
-            <Route path="/study" element={
-              <PageLayout variant="full">
-                <Study />
-              </PageLayout>
-            } />
+
             
             {/* Syllabus */}
             <Route path="/syllabus-pattern" element={
@@ -537,6 +567,11 @@ const App = () => (
                 <TermsAndConditions />
               </PageLayout>
             } />
+            <Route path="/privacy" element={
+              <PageLayout variant="full">
+                <PrivacyPolicy />
+              </PageLayout>
+            } />
 
             {/* Content */}
             <Route path="/blog" element={
@@ -570,6 +605,8 @@ const App = () => (
   </GoogleOAuthProvider>
     </QueryClientProvider>
   </HelmetProvider>
-);
+    </ErrorBoundary>
+  );
+};
 
 export default App;

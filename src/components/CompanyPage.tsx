@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { companies } from '../data/companyOverview';
-import { sampleQuestions } from '../data/MNC_coding/index';
+import { sampleQuestions } from '../data/mnc_coding_data/index';
 import { ArrowLeft, Search, Filter, Clock, Code, Star } from 'lucide-react';
 import { ScrollToTop } from './ScrollToTop';
 
@@ -238,20 +238,7 @@ const CompanyPage: React.FC = () => {
                         <p className="text-gray-400 mb-4 line-clamp-2">
                           {question.description}
                         </p>
-                        <div className="flex items-center space-x-4 text-sm text-gray-500">
-                          <div className="flex items-center">
-                            <Code className="w-4 h-4 mr-1" />
-                            5 Languages
-                          </div>
-                          <div className="flex items-center">
-                            <Star className="w-4 h-4 mr-1" />
-                            3 Approaches
-                          </div>
-                          <div className="flex items-center">
-                            <Clock className="w-4 h-4 mr-1" />
-                            ~15 min read
-                          </div>
-                        </div>
+
                       </div>
                       <Button 
                         variant="ghost" 

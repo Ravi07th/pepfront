@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, BookOpen, Code, Network, Brain, Star, Filter, Globe, Database, Cpu, Users } from 'lucide-react';
+import { Search, BookOpen, Code, Network, Brain, Star, Filter, Globe, Database, Cpu, Users, Server, Settings } from 'lucide-react';
 import PDFGenerator from './PDFGenerator';
 
 const StudentNotesPage: React.FC = () => {
@@ -17,69 +17,17 @@ const StudentNotesPage: React.FC = () => {
   // Enhanced notes data structure
   const notesList = [
     {
-      id: "id1",
-      title: "Top 30 Interview Questions for IT Freshers",
-      category: "Interview Prep",
-      description: "Comprehensive interview guide with 30 essential questions, sample answers, and tips specifically designed for IT freshers and students.",
-      tags: ["interview", "freshers", "it", "placement"],
-      icon: <BookOpen className="w-6 h-6" />,
-      gradient: "from-yellow-400 to-orange-500",
-      bgGradient: "from-yellow-900/20 to-orange-900/20",
-      featured: true,
-      stats: { questions: "30+", difficulty: "Beginner", time: "15 min", downloads: "2.5K" },
-      features: ["PDF Download", "Interview Tips", "Sample Answers"]
-    },
-    {
       id: "id2",
       title: "Data Structures & Algorithms - Complete Guide",
-      category: "Programming",
+      category: "Theory",
       description: "Comprehensive DSA guide with detailed explanations, code examples, complexity analysis, and common interview problems. Perfect for placement preparation!",
       tags: ["dsa", "algorithms", "programming", "coding", "interview"],
       icon: <Code className="w-6 h-6" />,
       gradient: "from-blue-500 to-cyan-500",
       bgGradient: "from-blue-900/20 to-cyan-900/20",
       featured: true,
-      stats: { questions: "200+", difficulty: "All Levels", time: "90 min", downloads: "3.2K" },
+      stats: { questions: "200+", time: "90 min", downloads: "3.2K" },
       features: ["Detailed Explanations", "Code Examples", "Complexity Analysis", "Interview Problems", "PDF Download"]
-    },
-    {
-      id: "id3",
-      title: "Web Development Fundamentals",
-      category: "Web Dev",
-      description: "Essential concepts of web development including HTML, CSS, JavaScript, and modern frameworks.",
-      tags: ["web", "html", "css", "javascript"],
-      icon: <Globe className="w-6 h-6" />,
-      gradient: "from-purple-500 to-pink-500",
-      bgGradient: "from-purple-900/20 to-pink-900/20",
-      featured: false,
-      stats: { questions: "80+", difficulty: "Beginner", time: "30 min", downloads: "1.2K" },
-      features: ["Modern Frameworks", "Responsive Design", "Best Practices"]
-    },
-    {
-      id: "id4",
-      title: "Database Management Systems",
-      category: "Database",
-      description: "Comprehensive guide to database concepts, SQL, and modern database technologies.",
-      tags: ["database", "sql", "dbms", "nosql"],
-      icon: <Database className="w-6 h-6" />,
-      gradient: "from-green-500 to-emerald-500",
-      bgGradient: "from-green-900/20 to-emerald-900/20",
-      featured: false,
-      stats: { questions: "60+", difficulty: "Intermediate", time: "25 min", downloads: "950" },
-      features: ["SQL Queries", "NoSQL", "Database Design"]
-    },
-    {
-      id: "id5",
-      title: "System Design Principles",
-      category: "Architecture",
-      description: "Learn system design concepts, scalability patterns, and best practices for building robust applications.",
-      tags: ["system-design", "architecture", "scalability"],
-      icon: <Network className="w-6 h-6" />,
-      gradient: "from-red-500 to-pink-500",
-      bgGradient: "from-red-900/20 to-pink-900/20",
-      featured: false,
-      stats: { questions: "40+", difficulty: "Advanced", time: "60 min", downloads: "750" },
-      features: ["Scalability", "Architecture Patterns", "Case Studies"]
     },
     {
       id: "id6",
@@ -91,46 +39,46 @@ const StudentNotesPage: React.FC = () => {
       gradient: "from-indigo-500 to-purple-500",
       bgGradient: "from-indigo-900/20 to-purple-900/20",
       featured: true,
-      stats: { questions: "30+", difficulty: "Beginner", time: "45 min", downloads: "1.2K" },
+      stats: { questions: "30+", time: "45 min", downloads: "1.2K" },
       features: ["Interview Tips", "Sample Answers", "Career Guidance", "PDF Download"]
     },
     {
       id: "id7",
       title: "C Programming Fundamentals",
-      category: "Programming",
+      category: "Theory",
       description: "Complete guide to C programming language covering syntax, data types, control structures, functions, arrays, pointers, and memory management.",
       tags: ["c", "programming", "basics", "syntax", "pointers"],
       icon: <Code className="w-6 h-6" />,
       gradient: "from-teal-500 to-cyan-500",
       bgGradient: "from-teal-900/20 to-cyan-900/20",
       featured: false,
-      stats: { questions: "100+", difficulty: "Beginner", time: "60 min", downloads: "1.8K" },
+      stats: { questions: "100+", time: "60 min", downloads: "1.8K" },
       features: ["Syntax Examples", "Code Snippets", "Memory Management", "File Handling", "PDF Download"]
     },
     {
       id: "id8",
       title: "Automata Theory - Complete Guide",
-      category: "Programming",
+      category: "Theory",
       description: "Comprehensive guide to Automata Theory covering Finite Automata, Regular Expressions, Context-Free Grammars, Pushdown Automata, and Turing Machines with detailed explanations and examples.",
       tags: ["automata", "theory", "finite-automata", "regular-expressions", "turing-machines"],
       icon: <Cpu className="w-6 h-6" />,
       gradient: "from-violet-500 to-purple-500",
       bgGradient: "from-violet-900/20 to-purple-900/20",
       featured: false,
-      stats: { questions: "150+", difficulty: "Advanced", time: "120 min", downloads: "950" },
+      stats: { questions: "150+", time: "120 min", downloads: "950" },
       features: ["Finite Automata", "Regular Expressions", "Context-Free Grammars", "Turing Machines", "PDF Download"]
     },
                   {
                 id: "id9",
                 title: "Operating System - Complete Guide",
-                category: "Programming",
+                category: "Theory",
                 description: "Comprehensive Operating System guide covering process management, memory management, file systems, I/O management, deadlocks, and modern OS case studies with practical examples.",
                 tags: ["operating-system", "os", "process-management", "memory-management", "file-systems"],
                 icon: <Cpu className="w-6 h-6" />,
                 gradient: "from-orange-500 to-red-500",
                 bgGradient: "from-orange-900/20 to-red-900/20",
                 featured: false,
-                stats: { questions: "200+", difficulty: "Intermediate", time: "150 min", downloads: "1.2K" },
+                stats: { questions: "200+", time: "150 min", downloads: "1.2K" },
                 features: ["Process Management", "Memory Management", "File Systems", "I/O Management", "PDF Download"]
               },
               {
@@ -143,20 +91,20 @@ const StudentNotesPage: React.FC = () => {
                 gradient: "from-blue-500 to-purple-500",
                 bgGradient: "from-blue-900/20 to-purple-900/20",
                 featured: false,
-                stats: { questions: "250+", difficulty: "Intermediate", time: "180 min", downloads: "1.5K" },
+                stats: { questions: "250+", time: "180 min", downloads: "1.5K" },
                 features: ["OSI Model", "TCP/IP Protocols", "Routing & Switching", "Network Security", "PDF Download"]
               },
-              {
+                              {
                 id: "id11",
                 title: "Python Programming - Complete Guide",
-                category: "Programming",
+                category: "Theory",
                 description: "Comprehensive Python programming guide covering basics, data types, control flow, functions, OOP, modules, file handling, exception handling, and advanced concepts with practical examples.",
                 tags: ["python", "programming", "basics", "oop", "modules", "file-handling"],
                 icon: <Code className="w-6 h-6" />,
                 gradient: "from-green-500 to-blue-500",
                 bgGradient: "from-green-900/20 to-blue-900/20",
                 featured: false,
-                stats: { questions: "300+", difficulty: "All Levels", time: "200 min", downloads: "2.0K" },
+                stats: { questions: "300+", time: "200 min", downloads: "2.0K" },
                 features: ["Python Basics", "OOP Concepts", "File Handling", "Exception Handling", "PDF Download"]
               }
   ];
@@ -164,10 +112,7 @@ const StudentNotesPage: React.FC = () => {
   const categories = [
     { value: 'all', label: 'All Categories' },
     { value: 'Interview Prep', label: 'Interview Prep' },
-    { value: 'Programming', label: 'Programming' },
-    { value: 'Web Dev', label: 'Web Development' },
-    { value: 'Database', label: 'Database' },
-    { value: 'Architecture', label: 'Architecture' },
+    { value: 'Theory', label: 'Theory' },
     { value: 'AI/ML', label: 'AI/ML' }
   ];
 
@@ -213,27 +158,30 @@ const StudentNotesPage: React.FC = () => {
       // Open the interview questions PDF in a new tab
       window.open('/pdf/interviewQue.pdf', '_blank');
     } else if (note.id === "id2") {
-      // Open the DSA notes in a new tab
-      window.open('/dsa-notes', '_blank');
+      // Navigate to DSA notes
+      navigate('/student-notes/dsa-notes');
     } else if (note.id === "id3") {
-      // Open the coding notes in a new tab
-      window.open('/coding-notes', '_blank');
+      // Navigate to coding notes
+      navigate('/coding-notes');
+    } else if (note.id === "id6") {
+      // Navigate to interview questions
+      navigate('/student-notes/interview-question');
     } else if (note.id === "id7") {
-      // Open the C programming notes in a new tab
-      window.open('/c-programming-notes', '_blank');
+      // Navigate to C programming notes
+      navigate('/student-notes/c-programming-notes');
     } else if (note.id === "id8") {
-      // Open the automata theory notes in a new tab
-      window.open('/automata-notes', '_blank');
-                  } else if (note.id === "id9") {
-                // Open the operating system notes in a new tab
-                window.open('/osnotes', '_blank');
-              } else if (note.id === "id10") {
-                // Open the computer network notes in a new tab
-                window.open('/computer-network-notes', '_blank');
-              } else if (note.id === "id11") {
-                // Open the Python notes in a new tab
-                window.open('/python-notes', '_blank');
-              } else {
+      // Navigate to automata theory notes
+      navigate('/student-notes/automata-notes');
+    } else if (note.id === "id9") {
+      // Navigate to operating system notes
+      navigate('/student-notes/operating-system-notes');
+    } else if (note.id === "id10") {
+      // Navigate to computer network notes
+      navigate('/student-notes/computer-network-notes');
+    } else if (note.id === "id11") {
+      // Navigate to Python notes
+      navigate('/student-notes/python-notes');
+    } else {
       // For other notes, navigate to PDF viewer
       navigate(`/pdf-viewer/${note.id}`);
     }
@@ -256,72 +204,15 @@ const StudentNotesPage: React.FC = () => {
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-4">
+          <h1 className="text-6xl font-bold text-white mb-4">
             Student Notes & Resources
           </h1>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Comprehensive study materials, interview guides, and learning resources 
-            to help you excel in your IT career journey.
+          Comprehensive study notes, exam guides, and learning resources designed to help you understand concepts clearly and score better in your semester exams.
           </p>
         </div>
 
-        {/* Search and Filter Section */}
-        <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700 p-6 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            {/* Search */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <Input
-                placeholder="Search notes..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500"
-              />
-            </div>
 
-            {/* Category Filter */}
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="bg-gray-700/50 border-gray-600 text-white">
-                <SelectValue placeholder="Select category" />
-              </SelectTrigger>
-              <SelectContent className="bg-gray-800 border-gray-600 text-white">
-                {categories.map((category) => (
-                  <SelectItem key={category.value} value={category.value} className="hover:bg-gray-700">
-                    {category.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            {/* Sort */}
-            <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="bg-gray-700/50 border-gray-600 text-white">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent className="bg-gray-800 border-gray-600 text-white">
-                {sortOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value} className="hover:bg-gray-700">
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            {/* Clear Filters */}
-            <Button
-              variant="outline"
-              onClick={() => {
-                setSearchTerm('');
-                setSelectedCategory('all');
-                setSortBy('title');
-              }}
-              className="flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white"
-            >
-              <Filter className="h-4 w-4" />
-              Clear Filters
-            </Button>
-          </div>
-        </div>
 
                  {/* Featured Section */}
          {featuredNotes.length > 0 && (
@@ -351,10 +242,6 @@ const StudentNotesPage: React.FC = () => {
                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${note.gradient} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                          {note.icon}
                        </div>
-                       <div className="text-right">
-                         <div className="text-xs text-gray-400 font-medium">Difficulty</div>
-                         <div className="text-sm font-bold text-white">{note.stats.difficulty}</div>
-                       </div>
                      </div>
 
                      {/* Title */}
@@ -367,25 +254,7 @@ const StudentNotesPage: React.FC = () => {
                        </Badge>
                      </div>
 
-                     {/* Stats Bar */}
-                     <div className="flex items-center justify-between mb-4 p-3 bg-gray-800/50 rounded-lg backdrop-blur-sm">
-                       <div className="text-center">
-                         <div className="text-lg font-bold text-white">
-                           {note.stats.questions}
-                         </div>
-                         <div className="text-xs text-gray-400">
-                           Questions
-                         </div>
-                       </div>
-                       <div className="text-center">
-                         <div className="text-lg font-bold text-white">{note.stats.time}</div>
-                         <div className="text-xs text-gray-400">Avg Time</div>
-                       </div>
-                       <div className="text-center">
-                         <div className="text-lg font-bold text-white">{note.stats.downloads}</div>
-                         <div className="text-xs text-gray-400">Downloads</div>
-                       </div>
-                     </div>
+
 
                      {/* Category Badge */}
                      <Badge className={`${getCategoryColor(note.category)} mb-4 border`}>
@@ -455,9 +324,6 @@ const StudentNotesPage: React.FC = () => {
              <h2 className="text-2xl font-semibold text-white">
                All Study Notes
              </h2>
-             <span className="text-sm text-gray-400">
-               {regularNotes.length} note{regularNotes.length !== 1 ? 's' : ''}
-             </span>
            </div>
 
            {regularNotes.length > 0 ? (
@@ -482,10 +348,6 @@ const StudentNotesPage: React.FC = () => {
                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${note.gradient} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                          {note.icon}
                        </div>
-                       <div className="text-right">
-                         <div className="text-xs text-gray-400 font-medium">Difficulty</div>
-                         <div className="text-sm font-bold text-white">{note.stats.difficulty}</div>
-                       </div>
                      </div>
 
                      {/* Title */}
@@ -493,25 +355,6 @@ const StudentNotesPage: React.FC = () => {
                        {note.title}
                      </h3>
 
-                     {/* Stats Bar */}
-                     <div className="flex items-center justify-between mb-4 p-3 bg-gray-800/50 rounded-lg backdrop-blur-sm">
-                       <div className="text-center">
-                         <div className="text-lg font-bold text-white">
-                           {note.stats.questions}
-                         </div>
-                         <div className="text-xs text-gray-400">
-                           Questions
-                         </div>
-                       </div>
-                       <div className="text-center">
-                         <div className="text-lg font-bold text-white">{note.stats.time}</div>
-                         <div className="text-xs text-gray-400">Avg Time</div>
-                       </div>
-                       <div className="text-center">
-                         <div className="text-lg font-bold text-white">{note.stats.downloads}</div>
-                         <div className="text-xs text-gray-400">Downloads</div>
-                       </div>
-                     </div>
 
                      {/* Category Badge */}
                      <Badge className={`${getCategoryColor(note.category)} mb-4 border`}>
@@ -583,9 +426,189 @@ const StudentNotesPage: React.FC = () => {
            )}
          </div>
 
-                 {/* PDF Generator Section */}
+                 {/* Upcoming Notes Section */}
          <div className="mt-12">
-           <PDFGenerator className="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700 p-6" />
+           <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700 p-6">
+             <div className="flex items-center justify-between mb-6">
+               <div>
+                 <h2 className="text-2xl font-bold text-white mb-2">Upcoming Notes</h2>
+                 <p className="text-gray-400">New study materials coming soon!</p>
+               </div>
+               <Badge variant="secondary" className="bg-orange-900/30 text-orange-300 border-orange-500/30">
+                 Coming Soon
+               </Badge>
+             </div>
+             
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+               {/* Java Notes Card */}
+               <div className="group relative bg-gradient-to-br from-orange-900/20 to-red-900/20 rounded-2xl p-6 border border-orange-500/30 hover:border-orange-400/50 transition-all duration-300 cursor-pointer">
+                 <div className="flex items-center justify-between mb-4">
+                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white shadow-lg">
+                     <Code className="w-6 h-6" />
+                   </div>
+                   <Badge variant="outline" className="bg-orange-900/30 text-orange-300 border-orange-500/30">
+                     Coming Soon
+                   </Badge>
+                 </div>
+                 <h3 className="text-xl font-bold text-white mb-3">Java Programming</h3>
+                 <p className="text-gray-300 text-sm mb-4">Complete Java programming guide covering OOP concepts, collections, multithreading, and advanced features.</p>
+                 <div className="flex flex-wrap gap-1 mb-4">
+                   <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white opacity-80">
+                     OOP Concepts
+                   </span>
+                   <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white opacity-80">
+                     Collections
+                   </span>
+                   <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white opacity-80">
+                     Multithreading
+                   </span>
+                 </div>
+                 <button className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-lg text-sm font-semibold opacity-50 cursor-not-allowed">
+                   Coming Soon
+                 </button>
+               </div>
+
+               {/* JavaScript Notes Card */}
+               <div className="group relative bg-gradient-to-br from-yellow-900/20 to-orange-900/20 rounded-2xl p-6 border border-yellow-500/30 hover:border-yellow-400/50 transition-all duration-300 cursor-pointer">
+                 <div className="flex items-center justify-between mb-4">
+                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center text-white shadow-lg">
+                     <Code className="w-6 h-6" />
+                   </div>
+                   <Badge variant="outline" className="bg-yellow-900/30 text-yellow-300 border-yellow-500/30">
+                     Coming Soon
+                   </Badge>
+                 </div>
+                 <h3 className="text-xl font-bold text-white mb-3">JavaScript Fundamentals</h3>
+                 <p className="text-gray-300 text-sm mb-4">Modern JavaScript guide covering ES6+, DOM manipulation, async programming, and frameworks.</p>
+                 <div className="flex flex-wrap gap-1 mb-4">
+                   <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white opacity-80">
+                     ES6+
+                   </span>
+                   <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white opacity-80">
+                     DOM
+                   </span>
+                   <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white opacity-80">
+                     Async/Await
+                   </span>
+                 </div>
+                 <button className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-4 py-2 rounded-lg text-sm font-semibold opacity-50 cursor-not-allowed">
+                   Coming Soon
+                 </button>
+               </div>
+
+               {/* Node.js Notes Card */}
+               <div className="group relative bg-gradient-to-br from-green-900/20 to-emerald-900/20 rounded-2xl p-6 border border-green-500/30 hover:border-green-400/50 transition-all duration-300 cursor-pointer">
+                 <div className="flex items-center justify-between mb-4">
+                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-white shadow-lg">
+                     <Server className="w-6 h-6" />
+                   </div>
+                   <Badge variant="outline" className="bg-green-900/30 text-green-300 border-green-500/30">
+                     Coming Soon
+                   </Badge>
+                 </div>
+                 <h3 className="text-xl font-bold text-white mb-3">Node.js Backend</h3>
+                 <p className="text-gray-300 text-sm mb-4">Complete Node.js backend development guide with Express, MongoDB, authentication, and deployment.</p>
+                 <div className="flex flex-wrap gap-1 mb-4">
+                   <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-green-500 to-emerald-500 text-white opacity-80">
+                     Express.js
+                   </span>
+                   <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-green-500 to-emerald-500 text-white opacity-80">
+                     MongoDB
+                   </span>
+                   <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-green-500 to-emerald-500 text-white opacity-80">
+                     Authentication
+                   </span>
+                 </div>
+                 <button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-semibold opacity-50 cursor-not-allowed">
+                   Coming Soon
+                 </button>
+               </div>
+
+               {/* React Notes Card */}
+               <div className="group relative bg-gradient-to-br from-blue-900/20 to-cyan-900/20 rounded-2xl p-6 border border-blue-500/30 hover:border-blue-400/50 transition-all duration-300 cursor-pointer">
+                 <div className="flex items-center justify-between mb-4">
+                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white shadow-lg">
+                     <Code className="w-6 h-6" />
+                   </div>
+                   <Badge variant="outline" className="bg-blue-900/30 text-blue-300 border-blue-500/30">
+                     Coming Soon
+                   </Badge>
+                 </div>
+                 <h3 className="text-xl font-bold text-white mb-3">React Development</h3>
+                 <p className="text-gray-300 text-sm mb-4">Modern React development guide with hooks, context, state management, and advanced patterns.</p>
+                 <div className="flex flex-wrap gap-1 mb-4">
+                   <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white opacity-80">
+                     Hooks
+                   </span>
+                   <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white opacity-80">
+                     Context
+                   </span>
+                   <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white opacity-80">
+                     Redux
+                   </span>
+                 </div>
+                 <button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-4 py-2 rounded-lg text-sm font-semibold opacity-50 cursor-not-allowed">
+                   Coming Soon
+                 </button>
+               </div>
+
+               {/* Database Notes Card */}
+               <div className="group relative bg-gradient-to-br from-purple-900/20 to-pink-900/20 rounded-2xl p-6 border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 cursor-pointer">
+                 <div className="flex items-center justify-between mb-4">
+                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white shadow-lg">
+                     <Database className="w-6 h-6" />
+                   </div>
+                   <Badge variant="outline" className="bg-purple-900/30 text-purple-300 border-purple-500/30">
+                     Coming Soon
+                   </Badge>
+                 </div>
+                 <h3 className="text-xl font-bold text-white mb-3">Database Systems</h3>
+                 <p className="text-gray-300 text-sm mb-4">Comprehensive database guide covering SQL, NoSQL, normalization, transactions, and optimization.</p>
+                 <div className="flex flex-wrap gap-1 mb-4">
+                   <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white opacity-80">
+                     SQL
+                   </span>
+                   <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white opacity-80">
+                     NoSQL
+                   </span>
+                   <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white opacity-80">
+                     Optimization
+                   </span>
+                 </div>
+                 <button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-lg text-sm font-semibold opacity-50 cursor-not-allowed">
+                   Coming Soon
+                 </button>
+               </div>
+
+               {/* DevOps Notes Card */}
+               <div className="group relative bg-gradient-to-br from-indigo-900/20 to-violet-900/20 rounded-2xl p-6 border border-indigo-500/30 hover:border-indigo-400/50 transition-all duration-300 cursor-pointer">
+                 <div className="flex items-center justify-between mb-4">
+                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center text-white shadow-lg">
+                     <Settings className="w-6 h-6" />
+                   </div>
+                   <Badge variant="outline" className="bg-indigo-900/30 text-indigo-300 border-indigo-500/30">
+                     Coming Soon
+                   </Badge>
+                 </div>
+                 <h3 className="text-xl font-bold text-white mb-3">DevOps & CI/CD</h3>
+                 <p className="text-gray-300 text-sm mb-4">DevOps practices, Docker, Kubernetes, CI/CD pipelines, and cloud deployment strategies.</p>
+                 <div className="flex flex-wrap gap-1 mb-4">
+                   <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 text-white opacity-80">
+                     Docker
+                   </span>
+                   <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 text-white opacity-80">
+                     Kubernetes
+                   </span>
+                   <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 text-white opacity-80">
+                     CI/CD
+                   </span>
+                 </div>
+                 <button className="w-full bg-gradient-to-r from-indigo-500 to-violet-500 text-white px-4 py-2 rounded-lg text-sm font-semibold opacity-50 cursor-not-allowed">
+                   Coming Soon
+                 </button>
+               </div>
+             </div>
+           </div>
          </div>
       </div>
     </div>

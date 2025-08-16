@@ -29,7 +29,7 @@ export interface Question {
 
 export const allAmazonQuestions: Question[] = [
   {
-    id: 'amz-1',
+    id: 'two-sum',
     title: 'Two Sum - Find Pair with Target Sum',
     description: `Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order.`,
     difficulty: 'Easy',
@@ -432,10 +432,10 @@ int main() {
     }
   },
   {
-    id: 'amz-2',
+    id: 'valid-parentheses',
     title: 'Valid Parentheses - Balanced Brackets',
     description: `Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid. An input string is valid if: Open brackets must be closed by the same type of brackets. Open brackets must be closed in the correct order. Every close bracket has a corresponding open bracket of the same type.`,
-    difficulty: 'Hard',
+    difficulty: 'Medium',
     category: ['String', 'Stack', 'Data Structure'],
     input1: 's = "()"',
     input2: 's = "([)]"',
@@ -785,7 +785,7 @@ int main() {
     }
   },
   {
-    id: 'amz-3',
+    id: 'maximum-subarray',
     title: 'Maximum Subarray - Kadane\'s Algorithm',
     description: `Given an integer array nums, find the subarray with the largest sum, and return its sum. A subarray is a contiguous part of an array.`,
     difficulty: 'Hard',
@@ -1072,652 +1072,12 @@ int main() {
       }
     }
   },
+
   {
-    id: 'amz-2',
-    title: 'Valid Parentheses - Balanced Brackets',
-    description: `Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid. An input string is valid if: Open brackets must be closed by the same type of brackets. Open brackets must be closed in the correct order. Every close bracket has a corresponding open bracket of the same type.`,
-    difficulty: 'Hard',
-    category: ['String', 'Stack', 'Data Structure'],
-    input1: 's = "()"',
-    input2: 's = "([)]"',
-    explanation: `## Problem Statement
-
-Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
-
-An input string is valid if:
-1. Open brackets must be closed by the same type of brackets.
-2. Open brackets must be closed in the correct order.
-3. Every close bracket has a corresponding open bracket of the same type.
-
-## Examples
-
-### Example 1:
-**Input:** s = "()"  
-**Output:** true  
-**Explanation:** Simple valid parentheses.
-
-### Example 2:
-**Input:** s = "()[]{}"  
-**Output:** true  
-**Explanation:** All brackets are properly closed.
-
-### Example 3:
-**Input:** s = "(]"  
-**Output:** false  
-**Explanation:** Opening parenthesis is closed by wrong bracket.
-
-### Example 4:
-**Input:** s = "([)]"  
-**Output:** false  
-**Explanation:** Brackets are not closed in correct order.
-
-### Example 5:
-**Input:** s = "{[]}"  
-**Output:** true  
-**Explanation:** Nested brackets are properly closed.
-
-## Intuition
-
-The key insight is that we need to match each closing bracket with its corresponding opening bracket. The last opening bracket should be closed first (LIFO - Last In, First Out), which suggests using a stack.
-
-## Approach
-
-### Approach 1: Stack (Optimal)
-1. Use a stack to keep track of opening brackets
-2. For each character in the string:
-   - If it's an opening bracket, push it onto the stack
-   - If it's a closing bracket, check if it matches the top of the stack
-   - If match found, pop the stack; otherwise return false
-3. At the end, check if stack is empty
-
-### Approach 2: Array as Stack
-1. Use an array to simulate stack operations
-2. Keep track of stack size manually
-3. Same logic as stack approach but with array implementation
-
-### Approach 3: Character Counting (Limited)
-1. Count opening and closing brackets
-2. Only works for simple cases, fails for nested brackets
-3. Not recommended for this problem
-
-## Dry Run
-
-Let's trace through Example 4: s = "([)]"
-
-### Stack Approach:
-- '(', push '(' → stack: ['(']
-- '[', push '[' → stack: ['(', '[']
-- ')', check top of stack '[' ≠ '(', return false
-
-### Array Approach:
-- '(', push '(' → arr[0] = '(', size = 1
-- '[', push '[' → arr[1] = '[', size = 2
-- ')', check arr[1] = '[' ≠ '(', return false
-
-## Solution
-
-**⚠️ Disclaimer:** Don't jump directly to the solution, try it out yourself first. Only look at the solution after you've given it a good attempt.
-
-### Solution 1: Stack (Optimal)
-
-**Time Complexity:** O(n) - We traverse the string once  
-**Space Complexity:** O(n) - Stack can grow up to n elements
-
-### Solution 2: Array as Stack
-
-**Time Complexity:** O(n) - Same as stack approach  
-**Space Complexity:** O(n) - Array can grow up to n elements
-
-### Solution 3: Character Counting
-
-**Time Complexity:** O(n) - We traverse the string once  
-**Space Complexity:** O(1) - Only need counters
-
-**Note:** This approach is limited and doesn't work for all cases.`,
-    output1: 'true',
-    output2: 'false',
-    constraints: `## Constraints
-
-- 1 <= s.length <= 104
-- s consists of parentheses only '()[]{}'`,
-    solutions: {
-      c: {
-        best: {
-          code: `#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-
-// Stack implementation
-#define MAX_SIZE 10000
-
-typedef struct {
-    char data[MAX_SIZE];
-    int top;
-} Stack;
-
-void initStack(Stack* stack) {
-    stack->top = -1;
-}
-
-void push(Stack* stack, char c) {
-    if (stack->top < MAX_SIZE - 1) {
-        stack->data[++stack->top] = c;
-    }
-}
-
-char pop(Stack* stack) {
-    if (stack->top >= 0) {
-        return stack->data[stack->top--];
-    }
-    return '\\0';
-}
-
-char peek(Stack* stack) {
-    if (stack->top >= 0) {
-        return stack->data[stack->top];
-    }
-    return '\\0';
-}
-
-bool isEmpty(Stack* stack) {
-    return stack->top == -1;
-}
-
-bool isValid(char* s) {
-    Stack stack;
-    initStack(&stack);
-    
-    for (int i = 0; s[i] != '\\0'; i++) {
-        char c = s[i];
-        
-        // Push opening brackets
-        if (c == '(' || c == '[' || c == '{') {
-            push(&stack, c);
-        }
-        // Check closing brackets
-        else if (c == ')' || c == ']' || c == '}') {
-            if (isEmpty(&stack)) {
-                return false;
-            }
-            
-            char top = peek(&stack);
-            if ((c == ')' && top == '(') ||
-                (c == ']' && top == '[') ||
-                (c == '}' && top == '{')) {
-                pop(&stack);
-            } else {
-                return false;
-            }
-        }
-    }
-    
-    return isEmpty(&stack);
-}
-
-int main() {
-    // Test case 1
-    char* s1 = "()";
-    printf("Test 1: s = \\"%s\\"\\n", s1);
-    printf("Output: %s\\n", isValid(s1) ? "true" : "false");
-    
-    // Test case 2
-    char* s2 = "()[]{}";
-    printf("Test 2: s = \\"%s\\"\\n", s2);
-    printf("Output: %s\\n", isValid(s2) ? "true" : "false");
-    
-    // Test case 3
-    char* s3 = "(]";
-    printf("Test 3: s = \\"%s\\"\\n", s3);
-    printf("Output: %s\\n", isValid(s3) ? "true" : "false");
-    
-    // Test case 4
-    char* s4 = "([)]";
-    printf("Test 4: s = \\"%s\\"\\n", s4);
-    printf("Output: %s\\n", isValid(s4) ? "true" : "false");
-    
-    // Test case 5
-    char* s5 = "{[]}";
-    printf("Test 5: s = \\"%s\\"\\n", s5);
-    printf("Output: %s\\n", isValid(s5) ? "true" : "false");
-    
-    return 0;
-}`,
-          timeComplexity: 'O(n)',
-          spaceComplexity: 'O(n)',
-          explanation: 'We use a stack to keep track of opening brackets. For each closing bracket, we check if it matches the top of the stack. If it matches, we pop the stack; otherwise, the string is invalid. At the end, the stack should be empty for a valid string.'
-        },
-        Average: {
-          code: `#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-
-#define MAX_SIZE 10000
-
-bool isValid(char* s) {
-    char stack[MAX_SIZE];
-    int top = -1;
-    
-    for (int i = 0; s[i] != '\\0'; i++) {
-        char c = s[i];
-        
-        // Push opening brackets
-        if (c == '(' || c == '[' || c == '{') {
-            stack[++top] = c;
-        }
-        // Check closing brackets
-        else if (c == ')' || c == ']' || c == '}') {
-            if (top == -1) {
-                return false;
-            }
-            
-            char topChar = stack[top];
-            if ((c == ')' && topChar == '(') ||
-                (c == ']' && topChar == '[') ||
-                (c == '}' && topChar == '{')) {
-                top--;
-            } else {
-                return false;
-            }
-        }
-    }
-    
-    return top == -1;
-}
-
-int main() {
-    // Test case 1
-    char* s1 = "()";
-    printf("Test 1: s = \\"%s\\"\\n", s1);
-    printf("Output: %s\\n", isValid(s1) ? "true" : "false");
-    
-    // Test case 2
-    char* s2 = "()[]{}";
-    printf("Test 2: s = \\"%s\\"\\n", s2);
-    printf("Output: %s\\n", isValid(s2) ? "true" : "false");
-    
-    // Test case 3
-    char* s3 = "(]";
-    printf("Test 3: s = \\"%s\\"\\n", s3);
-    printf("Output: %s\\n", isValid(s3) ? "true" : "false");
-    
-    // Test case 4
-    char* s4 = "([)]";
-    printf("Test 4: s = \\"%s\\"\\n", s4);
-    printf("Output: %s\\n", isValid(s4) ? "true" : "false");
-    
-    // Test case 5
-    char* s5 = "{[]}";
-    printf("Test 5: s = \\"%s\\"\\n", s5);
-    printf("Output: %s\\n", isValid(s5) ? "true" : "false");
-    
-    return 0;
-}`,
-          timeComplexity: 'O(n)',
-          spaceComplexity: 'O(n)',
-          explanation: 'We use an array to simulate stack operations. This approach is more memory-efficient than the stack structure approach but follows the same logic.'
-        },
-        worst: {
-          code: `#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-
-bool isValid(char* s) {
-    int len = strlen(s);
-    
-    // Simple character counting (limited approach)
-    int round = 0, square = 0, curly = 0;
-    
-    for (int i = 0; i < len; i++) {
-        char c = s[i];
-        
-        if (c == '(') round++;
-        else if (c == ')') round--;
-        else if (c == '[') square++;
-        else if (c == ']') square--;
-        else if (c == '{') curly++;
-        else if (c == '}') curly--;
-        
-        // Check for negative counts
-        if (round < 0 || square < 0 || curly < 0) {
-            return false;
-        }
-    }
-    
-    // Check if all brackets are balanced
-    return (round == 0 && square == 0 && curly == 0);
-}
-
-int main() {
-    // Test case 1
-    char* s1 = "()";
-    printf("Test 1: s = \\"%s\\"\\n", s1);
-    printf("Output: %s\\n", isValid(s1) ? "true" : "false");
-    
-    // Test case 2
-    char* s2 = "()[]{}";
-    printf("Test 2: s = \\"%s\\"\\n", s2);
-    printf("Output: %s\\n", isValid(s2) ? "true" : "false");
-    
-    // Test case 3
-    char* s3 = "(]";
-    printf("Test 3: s = \\"%s\\"\\n", s3);
-    printf("Output: %s\\n", isValid(s3) ? "true" : "false");
-    
-    // Test case 4
-    char* s4 = "([)]";
-    printf("Test 4: s = \\"%s\\"\\n", s4);
-    printf("Output: %s\\n", isValid(s4) ? "true" : "false");
-    
-    // Test case 5
-    char* s5 = "{[]}";
-    printf("Test 5: s = \\"%s\\"\\n", s5);
-    printf("Output: %s\\n", isValid(s5) ? "true" : "false");
-    
-    return 0;
-}`,
-          timeComplexity: 'O(n)',
-          spaceComplexity: 'O(1)',
-          explanation: 'This approach only counts opening and closing brackets. It works for simple cases but fails for nested brackets like "([)]" because it doesn\'t check the order of brackets.'
-        }
-      }
-    }
-  },
-  {
-    id: 'amz-3',
-    title: 'Maximum Subarray - Kadane\'s Algorithm',
-    description: `Given an integer array nums, find the subarray with the largest sum, and return its sum. A subarray is a contiguous part of an array.`,
-    difficulty: 'Hard',
-    category: ['Array', 'Dynamic Programming', 'Divide and Conquer'],
-    input1: 'nums = [-2,1,-3,4,-1,2,1,-5,4]',
-    input2: 'nums = [1]',
-    explanation: `## Problem Statement
-
-Given an integer array nums, find the subarray with the largest sum, and return its sum.
-
-A subarray is a contiguous part of an array.
-
-## Examples
-
-### Example 1:
-**Input:** nums = [-2,1,-3,4,-1,2,1,-5,4]  
-**Output:** 6  
-**Explanation:** The subarray [4,-1,2,1] has the largest sum 6.
-
-### Example 2:
-**Input:** nums = [1]  
-**Output:** 1  
-**Explanation:** The subarray [1] has the largest sum 1.
-
-### Example 3:
-**Input:** nums = [5,4,-1,7,8]  
-**Output:** 23  
-**Explanation:** The subarray [5,4,-1,7,8] has the largest sum 23.
-
-### Example 4:
-**Input:** nums = [-1,-2,-3,-4]  
-**Output:** -1  
-**Explanation:** The subarray [-1] has the largest sum -1.
-
-## Intuition
-
-The key insight is that we can solve this problem using Kadane's algorithm, which keeps track of the maximum sum ending at each position. If the current sum becomes negative, we reset it to the current element.
-
-## Approach
-
-### Approach 1: Kadane's Algorithm (Optimal)
-1. Initialize maxSum and currentSum to the first element
-2. For each element starting from the second:
-   - Update currentSum = max(currentSum + current_element, current_element)
-   - Update maxSum = max(maxSum, currentSum)
-3. Return maxSum
-
-### Approach 2: Dynamic Programming
-1. Create a DP array where dp[i] represents max sum ending at index i
-2. dp[i] = max(nums[i], dp[i-1] + nums[i])
-3. Find maximum value in DP array
-
-### Approach 3: Brute Force
-1. Check all possible subarrays
-2. Calculate sum for each subarray
-3. Keep track of maximum sum found
-
-## Dry Run
-
-Let's trace through Example 1: nums = [-2,1,-3,4,-1,2,1,-5,4]
-
-### Kadane's Algorithm:
-- i=0: currentSum = -2, maxSum = -2
-- i=1: currentSum = max(-2+1, 1) = 1, maxSum = max(-2, 1) = 1
-- i=2: currentSum = max(1+(-3), -3) = -2, maxSum = max(1, -2) = 1
-- i=3: currentSum = max(-2+4, 4) = 4, maxSum = max(1, 4) = 4
-- i=4: currentSum = max(4+(-1), -1) = 3, maxSum = max(4, 3) = 4
-- i=5: currentSum = max(3+2, 2) = 5, maxSum = max(4, 5) = 5
-- i=6: currentSum = max(5+1, 1) = 6, maxSum = max(5, 6) = 6
-- i=7: currentSum = max(6+(-5), -5) = 1, maxSum = max(6, 1) = 6
-- i=8: currentSum = max(1+4, 4) = 5, maxSum = max(6, 5) = 6
-
-## Solution
-
-**⚠️ Disclaimer:** Don't jump directly to the solution, try it out yourself first. Only look at the solution after you've given it a good attempt.
-
-### Solution 1: Kadane's Algorithm (Optimal)
-
-**Time Complexity:** O(n) - We traverse the array once  
-**Space Complexity:** O(1) - Only need a few variables
-
-### Solution 2: Dynamic Programming
-
-**Time Complexity:** O(n) - We traverse the array once  
-**Space Complexity:** O(n) - Need DP array
-
-### Solution 3: Brute Force
-
-**Time Complexity:** O(n²) - We check all subarrays  
-**Space Complexity:** O(1) - Only need a few variables`,
-    output1: '6',
-    output2: '1',
-    constraints: `## Constraints
-
-- 1 <= nums.length <= 105
-- -104 <= nums[i] <= 104`,
-    solutions: {
-      c: {
-        best: {
-          code: `#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-
-int max(int a, int b) {
-    return (a > b) ? a : b;
-}
-
-/**
- * Kadane's Algorithm - Optimal solution
- * Time Complexity: O(n)
- * Space Complexity: O(1)
- */
-int maxSubArray(int* nums, int numsSize) {
-    if (numsSize == 0) return 0;
-    
-    int maxSum = nums[0];
-    int currentSum = nums[0];
-    
-    for (int i = 1; i < numsSize; i++) {
-        // Either extend the current subarray or start a new one
-        currentSum = max(nums[i], currentSum + nums[i]);
-        // Update the maximum sum found so far
-        maxSum = max(maxSum, currentSum);
-    }
-    
-    return maxSum;
-}
-
-int main() {
-    // Test case 1
-    int nums1[] = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
-    int size1 = 9;
-    printf("Test 1: nums = [-2,1,-3,4,-1,2,1,-5,4]\\n");
-    printf("Output: %d\\n", maxSubArray(nums1, size1));
-    
-    // Test case 2
-    int nums2[] = {1};
-    int size2 = 1;
-    printf("Test 2: nums = [1]\\n");
-    printf("Output: %d\\n", maxSubArray(nums2, size2));
-    
-    // Test case 3
-    int nums3[] = {5, 4, -1, 7, 8};
-    int size3 = 5;
-    printf("Test 3: nums = [5,4,-1,7,8]\\n");
-    printf("Output: %d\\n", maxSubArray(nums3, size3));
-    
-    // Test case 4
-    int nums4[] = {-1, -2, -3, -4};
-    int size4 = 4;
-    printf("Test 4: nums = [-1,-2,-3,-4]\\n");
-    printf("Output: %d\\n", maxSubArray(nums4, size4));
-    
-    return 0;
-}`,
-          timeComplexity: 'O(n)',
-          spaceComplexity: 'O(1)',
-          explanation: 'Kadane\'s algorithm keeps track of the maximum sum ending at each position. If the current sum becomes negative, we reset it to the current element. This ensures we always have the optimal solution.'
-        },
-        Average: {
-          code: `#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-
-int max(int a, int b) {
-    return (a > b) ? a : b;
-}
-
-/**
- * Dynamic Programming approach
- * Time Complexity: O(n)
- * Space Complexity: O(n)
- */
-int maxSubArray(int* nums, int numsSize) {
-    if (numsSize == 0) return 0;
-    
-    int* dp = (int*)malloc(numsSize * sizeof(int));
-    dp[0] = nums[0];
-    int maxSum = dp[0];
-    
-    for (int i = 1; i < numsSize; i++) {
-        // dp[i] = max(nums[i], dp[i-1] + nums[i])
-        dp[i] = max(nums[i], dp[i-1] + nums[i]);
-        maxSum = max(maxSum, dp[i]);
-    }
-    
-    free(dp);
-    return maxSum;
-}
-
-int main() {
-    // Test case 1
-    int nums1[] = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
-    int size1 = 9;
-    printf("Test 1: nums = [-2,1,-3,4,-1,2,1,-5,4]\\n");
-    printf("Output: %d\\n", maxSubArray(nums1, size1));
-    
-    // Test case 2
-    int nums2[] = {1};
-    int size2 = 1;
-    printf("Test 2: nums = [1]\\n");
-    printf("Output: %d\\n", maxSubArray(nums2, size2));
-    
-    // Test case 3
-    int nums3[] = {5, 4, -1, 7, 8};
-    int size3 = 5;
-    printf("Test 3: nums = [5,4,-1,7,8]\\n");
-    printf("Output: %d\\n", maxSubArray(nums3, size3));
-    
-    // Test case 4
-    int nums4[] = {-1, -2, -3, -4};
-    int size4 = 4;
-    printf("Test 4: nums = [-1,-2,-3,-4]\\n");
-    printf("Output: %d\\n", maxSubArray(nums4, size4));
-    
-    return 0;
-}`,
-          timeComplexity: 'O(n)',
-          spaceComplexity: 'O(n)',
-          explanation: 'We use dynamic programming where dp[i] represents the maximum sum ending at index i. Each dp[i] is calculated as max(nums[i], dp[i-1] + nums[i]).'
-        },
-        worst: {
-          code: `#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-
-int max(int a, int b) {
-    return (a > b) ? a : b;
-}
-
-/**
- * Brute Force approach
- * Time Complexity: O(n²)
- * Space Complexity: O(1)
- */
-int maxSubArray(int* nums, int numsSize) {
-    if (numsSize == 0) return 0;
-    
-    int maxSum = INT_MIN;
-    
-    // Check all possible subarrays
-    for (int start = 0; start < numsSize; start++) {
-        int currentSum = 0;
-        for (int end = start; end < numsSize; end++) {
-            currentSum += nums[end];
-            maxSum = max(maxSum, currentSum);
-        }
-    }
-    
-    return maxSum;
-}
-
-int main() {
-    // Test case 1
-    int nums1[] = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
-    int size1 = 9;
-    printf("Test 1: nums = [-2,1,-3,4,-1,2,1,-5,4]\\n");
-    printf("Output: %d\\n", maxSubArray(nums1, size1));
-    
-    // Test case 2
-    int nums2[] = {1};
-    int size2 = 1;
-    printf("Test 2: nums = [1]\\n");
-    printf("Output: %d\\n", maxSubArray(nums2, size2));
-    
-    // Test case 3
-    int nums3[] = {5, 4, -1, 7, 8};
-    int size3 = 5;
-    printf("Test 3: nums = [5,4,-1,7,8]\\n");
-    printf("Output: %d\\n", maxSubArray(nums3, size3));
-    
-    // Test case 4
-    int nums4[] = {-1, -2, -3, -4};
-    int size4 = 4;
-    printf("Test 4: nums = [-1,-2,-3,-4]\\n");
-    printf("Output: %d\\n", maxSubArray(nums4, size4));
-    
-    return 0;
-}`,
-          timeComplexity: 'O(n²)',
-          spaceComplexity: 'O(1)',
-          explanation: 'We check all possible subarrays by using nested loops. For each starting position, we calculate the sum of all subarrays ending at different positions. This is the most straightforward but inefficient approach.'
-        }
-      }
-    }
-  },
-  {
-    id: 'amz-4',
+    id: 'longest-substring-without-repeating-characters',
     title: 'Longest Substring Without Repeating Characters',
     description: `Given a string s, find the length of the longest substring without repeating characters. A substring is a contiguous sequence of characters within a string.`,
-    difficulty: 'Hard',
+    difficulty: 'Medium',
     category: ['String', 'Hash Table', 'Sliding Window', 'Two Pointers'],
     input1: 's = "abcabcbb"',
     input2: 's = "bbbbb"',
@@ -1987,7 +1347,7 @@ int main() {
     }
   },
   {
-    id: 'amz-5',
+    id: 'container-with-most-water',
     title: 'Container With Most Water',
     description: `Given n non-negative integers height where each represents a point at coordinate (i, height[i]), find two lines that together with the x-axis form a container that can hold the maximum amount of water. Return the maximum amount of water a container can store.`,
     difficulty: 'Hard',
@@ -2274,7 +1634,7 @@ int main() {
     }
   },
   {
-    id: 'amz-6',
+    id: '3sum',
     title: '3Sum - Find All Unique Triplets',
     description: `Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0. Notice that the solution set must not contain duplicate triplets.`,
     difficulty: 'Hard',
@@ -2688,7 +2048,7 @@ int main() {
     }
   },
   {
-    id: 'amz-7',
+    id: 'merge-k-sorted-lists',
     title: 'Merge k Sorted Lists',
     description: `You are given an array of k linked-lists lists, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it.`,
     difficulty: 'Hard',
@@ -3290,7 +2650,7 @@ int main() {
     }
   },
   {
-    id: 'amz-8',
+    id: 'lru-cache',
     title: 'LRU Cache - Least Recently Used Cache',
     description: `Design a data structure that follows the constraints of a Least Recently Used (LRU) cache. Implement the LRUCache class: LRUCache(int capacity) Initialize the LRU cache with positive size capacity. int get(int key) Return the value of the key if the key exists, otherwise return -1. void put(int key, int value) Update the value of the key if the key exists. Otherwise, add the key-value pair to the cache. If the number of keys exceeds the capacity from this operation, evict the least recently used key.`,
     difficulty: 'Hard',
@@ -3924,7 +3284,7 @@ int main() {
     }
   },
   {
-    id: 'amz-9',
+    id: 'word-break',
     title: 'Word Break - Dynamic Programming',
     description: `Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words. Note that the same word in the dictionary may be reused multiple times in the segmentation.`,
     difficulty: 'Hard',
@@ -4475,7 +3835,7 @@ int main() {
     }
   },
   {
-    id: 'amz-10',
+    id: 'median-of-two-sorted-arrays',
     title: 'Median of Two Sorted Arrays - Binary Search',
     description: `Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).`,
     difficulty: 'Hard',
@@ -4856,7 +4216,7 @@ int main() {
     }
   },
   {
-    id: 'amz-11',
+    id: 'regular-expression-matching',
     title: 'Regular Expression Matching - Dynamic Programming',
     description: `Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*'. '.' Matches any single character. '*' Matches zero or more of the preceding element. The matching should cover the entire input string (not partial).`,
     difficulty: 'Hard',
@@ -5202,7 +4562,7 @@ int main() {
     }
   },
   {
-    id: 'amz-12',
+    id: 'trapping-rain-water',
     title: 'Trapping Rain Water - Two Pointers',
     description: `Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.`,
     difficulty: 'Hard',
@@ -5541,7 +4901,7 @@ int main() {
     }
   },
   {
-    id: 'amz-13',
+    id: 'sliding-window-maximum',
     title: 'Sliding Window Maximum - Monotonic Queue',
     description: `You are given an array of integers nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.`,
     difficulty: 'Hard',

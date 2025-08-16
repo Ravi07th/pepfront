@@ -241,7 +241,7 @@ export default function BookmarksPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 overflow-x-hidden">
       {/* Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -275,14 +275,14 @@ export default function BookmarksPage() {
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="bookmarks" className="flex items-center space-x-2">
-              <Bookmark className="h-4 w-4" />
-              <span>Bookmarks ({bookmarkedNotes.length})</span>
+          <TabsList className="grid w-full grid-cols-2 gap-1 transition-all duration-300" style={{ minWidth: '100%', overflow: 'hidden' }}>
+            <TabsTrigger value="bookmarks" className="flex items-center space-x-2 p-2 min-w-0 overflow-hidden">
+              <Bookmark className="h-4 w-4 flex-shrink-0" />
+              <span className="text-xs sm:text-sm">Bookmarks ({bookmarkedNotes.length})</span>
             </TabsTrigger>
-            <TabsTrigger value="favorites" className="flex items-center space-x-2">
-              <Heart className="h-4 w-4" />
-              <span>Favorites ({favoriteNotes.length})</span>
+            <TabsTrigger value="favorites" className="flex items-center space-x-2 p-2 min-w-0 overflow-hidden">
+              <Heart className="h-4 w-4 flex-shrink-0" />
+              <span className="text-xs sm:text-sm">Favorites ({favoriteNotes.length})</span>
             </TabsTrigger>
           </TabsList>
         </Tabs>
@@ -357,8 +357,6 @@ export default function BookmarksPage() {
                       <div className="flex items-center space-x-2 text-xs text-gray-500">
                         <Clock className="h-3 w-3" />
                         <span>{note.duration}</span>
-                        <span>•</span>
-                        <span>Updated {new Date(note.lastUpdated).toLocaleDateString()}</span>
                       </div>
                       <div className="flex items-center space-x-2">
                         <Button
@@ -456,8 +454,6 @@ export default function BookmarksPage() {
                       <div className="flex items-center space-x-2 text-xs text-gray-500">
                         <Clock className="h-3 w-3" />
                         <span>{note.duration}</span>
-                        <span>•</span>
-                        <span>Updated {new Date(note.lastUpdated).toLocaleDateString()}</span>
                       </div>
                       <div className="flex items-center space-x-2">
                         <Button

@@ -26,7 +26,8 @@
       font-family: 'Inter', sans-serif;
       line-height: 1.6;
       color: #333;
-      background: #f8fafc;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
     }
     .code-box {
     background-color: #f4f6f9; /* light pastel grey */
@@ -59,15 +60,21 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 20px;
+      background: white;
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+      border-radius: 15px;
+      margin-top: 20px;
+      margin-bottom: 20px;
     }
 
     .header {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
       padding: 40px 20px;
       text-align: center;
       margin-bottom: 30px;
       border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
     }
 
     .header h1 {
@@ -82,51 +89,37 @@
     }
 
     .controls {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
+      text-align: center;
       margin-bottom: 30px;
-      flex-wrap: wrap;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      border: 2px solid #e9ecef;
     }
 
     .btn {
+      display: inline-block;
       padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
+      margin: 5px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
       text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      border-radius: 25px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
       transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
     }
 
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: #1d4ed8;
+    .btn:hover {
       transform: translateY(-2px);
-    }
-
-    .btn-success {
-      background: var(--success);
-      color: white;
-    }
-
-    .btn-success:hover {
-      background: #047857;
-      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
     }
 
     .content {
-      background: white;
-      border-radius: 12px;
       padding: 40px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       margin-bottom: 30px;
     }
 
@@ -135,10 +128,10 @@
     }
 
     .section h2 {
-      color: var(--primary);
+      color: #667eea;
       font-size: 1.8rem;
       margin-bottom: 20px;
-      border-bottom: 3px solid var(--primary);
+      border-bottom: 3px solid #667eea;
       padding-bottom: 10px;
     }
 
@@ -238,11 +231,8 @@
 
     <div class="controls">
       <button class="btn btn-primary" onclick="window.print()">
-        📄 Download PDF
+        📥 Download Notes
       </button>
-      <a href="/student-notes" class="btn btn-success">
-        ← Back to Notes
-      </a>
     </div>
 
     <div class="content">
@@ -1862,7 +1852,7 @@ public List<Integer> findAnagrams(String s, String p) {
     </div>
 
     <div class="footer">
-      <p>© 2024 PrepCampus. All rights reserved.</p>
+      <p>© 2025 PrepCampus. All rights reserved.</p>
       <p>Visit www.prepcampus.com for more study materials and resources.</p>
     </div>
   </div>

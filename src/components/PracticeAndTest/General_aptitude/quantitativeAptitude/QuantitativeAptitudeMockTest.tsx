@@ -489,10 +489,10 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
             />
             <button
               onClick={handleExamEnd}
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors flex items-center space-x-2"
+              className="bg-green-700 hover:bg-green-500 text-white px-4 py-2 rounded text-sm font-medium transition-colors flex items-center space-x-2"
             >
               <LogOut className="h-4 w-4" />
-              <span>Exit Test</span>
+              <span>Submit</span>
             </button>
           </div>
         </div>
@@ -513,26 +513,7 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
       </div>
 
       {/* Current Section Info */}
-      <div className="bg-white border-b px-4 py-2">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between">
-            <div className="text-lg font-semibold text-blue-600">
-              Quantitative Aptitude
-            </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">
-                Question {currentQuestion + 1} of {questions.length}
-              </span>
-              <button
-                onClick={handleSubmitExam}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors"
-              >
-                Submit Test
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      
 
       {/* Main Content - Same as MNC Exam */}
       <div className="flex-1 flex">

@@ -165,11 +165,6 @@ const ExamPatternDisplay: React.FC<ExamPatternDisplayProps> = ({ selectedCompany
                           {pattern.examName}
                         </CardTitle>
                       </div>
-                      <div className="flex-shrink-0">
-                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                          <ArrowRight className="w-6 h-6 text-white" />
-                        </div>
-                      </div>
                     </div>
 
                     {/* Exam Sections */}
@@ -206,14 +201,14 @@ const ExamPatternDisplay: React.FC<ExamPatternDisplayProps> = ({ selectedCompany
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Button 
-                            size="sm"
-                            className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 transform group-hover:scale-105"
+                            size="lg"
+                            className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 transform group-hover:scale-105 text-base"
                             onClick={(e) => {
                               e.stopPropagation();
                               navigate(`/exam-patterns/${pattern.companyId}`);
                             }}
                           >
-                            <Eye className="w-4 h-4 mr-2" />
+                            <Eye className="w-5 h-5 mr-2" />
                             View Details
                           </Button>
                         </TooltipTrigger>

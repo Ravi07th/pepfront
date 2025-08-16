@@ -15,7 +15,7 @@ interface NoteCardProps {
     downloads: number;
     rating: number;
     views: number;
-    lastUpdated: string;
+  
     author: string;
     icon: string;
     color: string;
@@ -60,22 +60,7 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note, onView, onDownload, vi
           {note.description}
         </p>
         
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center space-x-4 text-sm text-gray-500">
-            <div className="flex items-center space-x-1">
-              <Download className="h-4 w-4" />
-              <span>{note.downloads}</span>
-            </div>
-            <div className="flex items-center space-x-1">
-              <Eye className="h-4 w-4" />
-              <span>{note.views}</span>
-            </div>
-            <div className="flex items-center space-x-1">
-              <Star className="h-4 w-4 text-yellow-400 fill-current" />
-              <span>{note.rating}</span>
-            </div>
-          </div>
-        </div>
+
 
         <div className="flex flex-wrap gap-1 mb-4">
           {note.tags.slice(0, 3).map((tag, index) => (
@@ -94,8 +79,6 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note, onView, onDownload, vi
           <div className="flex items-center space-x-2 text-xs text-gray-500">
             <Clock className="h-3 w-3" />
             <span>{note.duration}</span>
-            <span>•</span>
-            <span>Updated {new Date(note.lastUpdated).toLocaleDateString()}</span>
           </div>
           <div className="flex items-center space-x-2">
             <Button

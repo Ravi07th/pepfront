@@ -171,11 +171,11 @@ const Index1 = () => {
   const carouselSettings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 8000,
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 50000,
     responsive: [
       {
         breakpoint: 1280,
@@ -260,46 +260,64 @@ const Index1 = () => {
 
   const popularTopics = [
     {
+      title: "Most Asked Coding Questions",
+      icon: Code,
+      questions: 1200,
+      difficulty: "Mixed",
+      color: "bg-gradient-to-r from-blue-500 to-purple-500",
+      description: "Top coding problems from major tech companies",
+      href: "/coding/top30",
+      category: "Coding"
+    },
+    {
+      title: "TCS NQT Practice",
+      icon: Target,
+      questions: 950,
+      difficulty: "Medium",
+      color: "bg-gradient-to-r from-green-500 to-emerald-500",
+      description: "Comprehensive TCS NQT exam preparation",
+      href: "/coding/tcs",
+      category: "Company Specific"
+    },
+    {
+      title: "Student Notes & Theory",
+      icon: BookOpen,
+      questions: 500,
+      difficulty: "Mixed",
+      color: "bg-gradient-to-r from-purple-500 to-pink-500",
+      description: "Complete study materials and theory notes",
+      href: "/student-notes",
+      category: "Study Materials"
+    },
+    {
+      title: "Company Exam Patterns",
+      icon: GraduationCap,
+      questions: 25,
+      difficulty: "Easy",
+      color: "bg-gradient-to-r from-orange-500 to-red-500",
+      description: "Latest exam patterns for all major companies",
+      href: "/exam-patterns",
+      category: "Exam Prep"
+    },
+    {
+      title: "Mock Tests & Practice",
+      icon: Trophy,
+      questions: 200,
+      difficulty: "Mixed",
+      color: "bg-gradient-to-r from-indigo-500 to-violet-500",
+      description: "Real-time mock tests with detailed analysis",
+      href: "/mock-test",
+      category: "Practice"
+    },
+    {
       title: "Data Structures & Algorithms",
-      icon: "📊",
+      icon: BarChart3,
       questions: 850,
-      difficulty: "Medium",
-      color: "bg-blue-500"
-    },
-    {
-      title: "Verbal Aptitude",
-      icon: "⚡",
-      questions: 720,
       difficulty: "Hard",
-      color: "bg-purple-500"
-    },
-    {
-      title: "System Design",
-      icon: "🏗️",
-      questions: 450,
-      difficulty: "Hard",
-      color: "bg-green-500"
-    },
-    {
-      title: "Database",
-      icon: "🗄️",
-      questions: 380,
-      difficulty: "Medium",
-      color: "bg-orange-500"
-    },
-    {
-      title: "Operating Systems",
-      icon: "💻",
-      questions: 320,
-      difficulty: "Medium",
-      color: "bg-red-500"
-    },
-    {
-      title: "Networking",
-      icon: "🌐",
-      questions: 280,
-      difficulty: "Medium",
-      color: "bg-cyan-500"
+      color: "bg-gradient-to-r from-teal-500 to-cyan-500",
+      description: "Master DSA concepts and problem-solving",
+      href: "/coding",
+      category: "Coding"
     }
   ];
 
@@ -333,9 +351,9 @@ const Index1 = () => {
   const studyResources = [
     {
       title: "Coding Practice",
-      description: "500+ coding questions with detailed solutions",
+      description: "100+ coding questions with detailed solutions",
       icon: Code,
-      count: "500+",
+      count: "100+",
       color: "text-red-400",
       bgColor: "bg-red-500/10"
     },
@@ -368,7 +386,6 @@ const Index1 = () => {
   const quickStats = [
     { number: '5000+', label: 'Problem', icon: Code, color: "text-blue-400", bgColor: "bg-blue-500/10" },
     { number: '50K+', label: 'Students Helped', icon: Users, color: "text-green-400", bgColor: "bg-green-500/10" },
-    { number: '95%', label: 'Success Rate', icon: Award, color: "text-yellow-400", bgColor: "bg-yellow-500/10" },
     { number: '24/7', label: 'Available', icon: Clock, color: "text-purple-400", bgColor: "bg-purple-500/10" },
     { number: '50+', label: 'Mock Tests', icon: Timer, color: "text-cyan-400", bgColor: "bg-cyan-500/10" }
   ];
@@ -376,7 +393,7 @@ const Index1 = () => {
   const stats = [
     { number: '5000+', label: 'Coding Questions', icon: Code },
     { number: '50K+', label: 'Students Helped', icon: Users },
-    { number: '95%', label: 'Success Rate', icon: Award },
+
     { number: '24/7', label: 'Available', icon: Clock }
   ];
 
@@ -431,24 +448,33 @@ const Index1 = () => {
   const examPatterns = [
     {
       company: "TCS NQT",
-      duration: "190mins",
+      duration: "190 mins",
       questions: "83",
       sections: "2",
-      difficulty: "Medium-Hard"
+      difficulty: "Medium-Hard",
+      icon: Target,
+      gradient: "from-blue-500 to-cyan-500",
+      description: "Comprehensive TCS NQT exam preparation with latest pattern"
     },
     {
       company: "Infosys",
       duration: "100 mins", 
       questions: "74",
       sections: "5",
-      difficulty: "Medium"
+      difficulty: "Medium",
+      icon: Building2,
+      gradient: "from-purple-500 to-pink-500",
+      description: "Infosys recruitment process with detailed syllabus"
     },
     {
       company: "Amazon SDE-1",
       duration: "200 mins",
       questions: "49",
       sections: "5", 
-      difficulty: "Hard"
+      difficulty: "Hard",
+      icon: Trophy,
+      gradient: "from-orange-500 to-red-500",
+      description: "Amazon SDE-1 online assessment with coding challenges"
     }
   ];
 
@@ -495,7 +521,7 @@ const Index1 = () => {
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       
       {/* Hero Section */}
-      <section className="relative py-10 create  px-4 overflow-hidden">
+      <section className="relative py-8 sm:py-10 create px-4 sm:px-6 overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
@@ -503,12 +529,12 @@ const Index1 = () => {
         
         <div className="relative z-10 max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center space-x-2 bg-blue-500/20 text-blue-300 px-4 py-2 rounded-full mb-8 animate-fade-in">
-                <Sparkles className="h-4 w-4" />
-              <span className="text-sm font-medium">Beta Version if you find any issue please report to us in contact page</span>
+            <div className="inline-flex items-center space-x-2 bg-blue-500/20 text-blue-300 px-3 sm:px-4 py-2 rounded-full mb-8 animate-fade-in">
+                <Sparkles className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="text-xs sm:text-sm font-medium">Beta Version if you find any issue please report to us in contact page</span>
               </div>
               
-            <h1 className="text-5xl md:text-7xl text-white font-bold mb-6 animate-fade-in">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white font-bold mb-6 animate-fade-in">
               Master Coding
               <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                   {typedText}
@@ -516,22 +542,22 @@ const Index1 = () => {
                 </span>
               </h1>
               
-            <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed animate-slide-up">
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed animate-slide-up px-4">
               Practice with 5000+ Aptitude, reasoning, verbal and coding questions from top companies. 
               Crack TCS, Infosys, Amazon, Google interviews with confidence.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up">
               <Link to="/mock-test">
-                <Button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-8 py-4 rounded-lg transition-all duration-200 transform hover:scale-105">
-                  <Play className="h-5 w-5 mr-2" />
+                <Button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg transition-all duration-200 transform hover:scale-105 text-sm sm:text-base">
+                  <Play className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                   Start Mock Test
-                  <ArrowRight className="h-5 w-5 ml-2" />
+                  <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 ml-2" />
                 </Button>
               </Link>
               <Link to="/exam-patterns">
-                <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 px-8 py-4 rounded-lg transition-all duration-200">
-                  <BookOpen className="h-5 w-5 mr-2" />
+                <Button variant="outline" className="border-gray-600 text-black hover:bg-gray-800 px-6 sm:px-8 py-3 sm:py-4 rounded-lg transition-all duration-200 text-sm sm:text-base">
+                  <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                   View Exam Patterns
                 </Button>
               </Link>
@@ -539,13 +565,13 @@ const Index1 = () => {
                 </div>
                 
           {/* Company Logos (text-only dummy logos) */}
-          <div className="grid grid-cols-4 md:grid-cols-8 gap-6 mt-16">
+          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-4 md:gap-6 mt-16">
             {companies.map((company, index) => (
               <div key={index} className="flex flex-col items-center space-y-2 group">
-                <div className={`w-16 h-16 ${company.color} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200 shadow-md`}>
-                  <CompanyLogo companyName={company.name} size={56} />
+                <div className={`w-12 h-12 sm:w-16 sm:h-16 ${company.color} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200 shadow-md`}>
+                  <CompanyLogo companyName={company.name} size={48} />
                 </div>
-                <span className="text-sm text-gray-300 text-center">{company.name}</span>
+                <span className="text-xs sm:text-sm text-gray-300 text-center">{company.name}</span>
                 {/* <span className="text-xs text-gray-500">{company.questions}+ Qs</span> */}
               </div>
             ))}
@@ -554,28 +580,37 @@ const Index1 = () => {
       </section>
 
       {/* Quick Stats Section */}
-      <section className="py-10  bg-gray-800/20">
-        <div className="max-w-7xl mx-auto ">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+      <section className="py-10 bg-gray-800/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {quickStats.map((stat, index) => (
               <div key={index} className="text-center group">
-                <div className={`w-12 h-12 ${stat.bgColor} rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform`}>
-                  <stat.icon className={`h-6 w-6 ${stat.color}`} />
+                <div className={`w-12 h-12 sm:w-14 sm:h-14 ${stat.bgColor} rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform`}>
+                  <stat.icon className={`h-6 w-6 sm:h-7 sm:w-7 ${stat.color}`} />
                 </div>
-                <div className="text-2xl md:text-3xl font-bold text-white mb-1">{stat.number}</div>
-                <div className="text-sm text-gray-400">{stat.label}</div>
+                <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1">{stat.number}</div>
+                <div className="text-xs sm:text-sm text-gray-400">{stat.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Trending Section – redesigned */}
-      <section className="py-10 px-4">
+      {/* Trending Section – Enhanced */}
+      <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 bg-gradient-to-br from-gray-900/50 via-gray-800/30 to-gray-900/50">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-5">
-            <h2 className="text-4xl md:text-5xl text-orange-500 font-bold mb-4">Trending Now</h2>
-            <p className="text-xl text-gray-300">Most searched topics by students in prepCampus</p>
+          <div className="text-center mb-6 sm:mb-8 md:mb-12">
+            <div className="inline-flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
+                <TrendingUp className="h-6 w-6 text-white" />
+              </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl text-orange-500 font-bold">
+                Trending Now
+              </h2>
+            </div>
+            <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto px-4">
+              Most searched topics by students in PrepCampus - Discover what's hot right now
+            </p>
           </div>
 
           {(() => {
@@ -583,102 +618,147 @@ const Index1 = () => {
               {
                 title: 'Microsoft Mock Test',
                 tag: 'Mock Test',
-                gradient: 'from-blue-500 to-cyan-500',
+                icon: Play,
+                gradient: 'from-blue-600 via-blue-500 to-cyan-500',
                 chips: ['Azure Fundamentals', 'SDE-I Coding', 'Cloud Basics'],
-                href: '/mock-test'
+                href: '/mock-test',
+                description: 'Practice with Microsoft-specific questions'
               },
               {
                 title: 'Student Notes',
                 tag: 'Notes',
-                gradient: 'from-purple-500 to-pink-500',
+                icon: BookOpen,
+                gradient: 'from-purple-600 via-purple-500 to-pink-500',
                 chips: ['DBMS', 'Operating Systems', 'DSA Notes'],
-                href: '/student-notes'
-              },
-              {
-                title: 'Student Syllabus',
-                tag: 'Syllabus',
-                gradient: 'from-indigo-500 to-violet-500',
-                chips: ['TCS NQT', 'Accenture', 'Infosys'],
-                href: '/exam-patterns'
-              },
-              {
-                title: 'TCS NQT Mock Test',
-                tag: 'Mock Test',
-                gradient: 'from-amber-500 to-orange-500',
-                chips: ['Foundation', 'Advanced', 'Coding'],
-                href: '/mock-test'
-              },
-              {
-                title: 'Coding Practice',
-                tag: 'Coding',
-                gradient: 'from-emerald-500 to-teal-500',
-                chips: ['C / Java / Python', 'Data Structures', 'Patterns'],
-                href: '/coding'
+                href: '/student-notes',
+                description: 'Comprehensive study materials'
               },
               {
                 title: 'Company Exam Patterns',
                 tag: 'Syllabus',
-                gradient: 'from-slate-600 to-blue-600',
-                chips: ['Overview', 'Sections', 'Time & Qs'],
-                href: '/exam-patterns'
+                icon: Target,
+                gradient: 'from-indigo-600 via-indigo-500 to-violet-500',
+                chips: ['TCS NQT', 'Accenture', 'Infosys'],
+                href: '/exam-patterns',
+                description: 'Latest exam patterns & syllabus'
+              },
+              {
+                title: 'TCS NQT Mock Test',
+                tag: 'Mock Test',
+                icon: Trophy,
+                gradient: 'from-amber-600 via-amber-500 to-orange-500',
+                chips: ['Foundation', 'Advanced', 'Coding'],
+                href: '/mock-test',
+                description: 'TCS-specific practice tests'
+              },
+              {
+                title: 'Coding Practice',
+                tag: 'Coding',
+                icon: Code,
+                gradient: 'from-emerald-600 via-emerald-500 to-teal-500',
+                chips: ['C / Java / Python', 'Data Structures', 'Patterns'],
+                href: '/coding',
+                description: 'Master coding fundamentals'
+              },
+              {
+                title: 'Exam Preparation',
+                tag: 'Prep',
+                icon: GraduationCap,
+                gradient: 'from-slate-600 via-slate-500 to-blue-600',
+                chips: ['Aptitude', 'Reasoning', 'Technical'],
+                href: '/exam-prep',
+                description: 'Complete exam preparation guide'
               },
             ];
 
             const trendingCarouselSettings = {
-              dots: false,
+              dots: true,
               infinite: true,
-              speed: 600,
+              speed: 1000,
               slidesToShow: 3,
               slidesToScroll: 1,
               autoplay: true,
-              autoplaySpeed: 2500,
+              autoplaySpeed: 5000,
               pauseOnHover: true,
               centerMode: true,
-              centerPadding: '40px',
-              cssEase: 'ease-in-out',
+              centerPadding: '100px',
+              cssEase: 'cubic-bezier(0.4, 0, 0.2, 1)',
               responsive: [
-                { breakpoint: 1280, settings: { slidesToShow: 3, centerPadding: '24px' } },
-                { breakpoint: 1024, settings: { slidesToShow: 2, centerPadding: '24px' } },
-                { breakpoint: 640, settings: { slidesToShow: 1, centerPadding: '24px' } },
+                { breakpoint: 1280, settings: { slidesToShow: 3, centerPadding: '40px' } },
+                { breakpoint: 1024, settings: { slidesToShow: 2, centerPadding: '30px' } },
+                { breakpoint: 768, settings: { slidesToShow: 2, centerPadding: '20px', centerMode: false } },
+                { breakpoint: 640, settings: { slidesToShow: 1, centerPadding: '10px', centerMode: false } },
               ],
             } as const;
 
             return (
-              <div className="border-2 border-gray-700 rounded-xl px-4 py-8">
-                <Slider {...(trendingCarouselSettings as any)}>
-                  {items.map((item, idx) => (
-                    <div key={idx} className="px-2 h-full">
-                      <div className={`h-64 md:h-72 rounded-2xl bg-gradient-to-r ${item.gradient} relative overflow-hidden shadow-lg`}> 
-                        <div className="absolute inset-0 bg-black/25" />
-                        <div className="relative z-10 h-full p-5 flex flex-col justify-between">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-white/90 bg-white/20 px-2 py-1 rounded-md">
-                              {item.tag}
-                            </span>
-                          </div>
-                          <div>
-                            <h3 className="text-2xl font-bold text-white mb-3">{item.title}</h3>
-                            <div className="flex flex-wrap gap-2">
-                              {item.chips.map((chip, cIdx) => (
-                                <span key={cIdx} className="text-xs text-white bg-white/15 px-2 py-1 rounded-full">
-                                  {chip}
+              <div className="relative">
+                {/* Background Elements */}
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-transparent to-red-500/5 rounded-3xl"></div>
+                <div className="absolute top-10 left-10 w-20 h-20 bg-orange-500/10 rounded-full blur-xl"></div>
+                <div className="absolute bottom-10 right-10 w-32 h-32 bg-red-500/10 rounded-full blur-xl"></div>
+                
+                <div className="relative bg-gray-800/20 backdrop-blur-sm border border-gray-700/50 rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl">
+                  <Slider {...(trendingCarouselSettings as any)}>
+                    {items.map((item, idx) => (
+                      <div key={idx} className="px-3 ">
+                        <div className={`h-50 sm:h-80 md:h-88 lg:h-96 rounded-2xl bg-gradient-to-br ${item.gradient} relative overflow-hidden shadow-2xl group cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-3xl`}> 
+                          {/* Animated Background */}
+                          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all duration-500"></div>
+                          <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-700"></div>
+                          <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-12 -translate-x-12 group-hover:scale-150 transition-transform duration-700"></div>
+                          
+                          <div className="relative z-10 h-full p-3 sm:p-4 md:p-6 flex flex-col justify-between">
+                            {/* Header */}
+                            <div className="flex items-center justify-between mb-3">
+                              <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                  <item.icon className="h-4 w-4 text-white" />
+                                </div>
+                                <span className="text-xs font-bold text-white/90 bg-white/20 px-3 py-1.5 rounded-full backdrop-blur-sm">
+                                  {item.tag}
                                 </span>
-                              ))}
+                              </div>
+                              <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                                <ArrowRight className="h-4 w-4 text-white/70 group-hover:text-white group-hover:translate-x-0.5 transition-all duration-300" />
+                              </div>
                             </div>
-                          </div>
-                          <div className="flex justify-end">
-                            <Link to={item.href}>
-                              <Button size="sm" className="bg-white/90 text-gray-900 hover:bg-white">
-                                Open
-                                <ArrowRight className="h-4 w-4 ml-2" />
-                              </Button>
-                            </Link>
+                            
+                            {/* Content */}
+                            <div className="flex-1 flex flex-col justify-center min-h-0">
+                              <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white mb-3 group-hover:text-white/90 transition-colors duration-300 leading-tight">
+                                {item.title}
+                              </h3>
+                              <p className="text-xs sm:text-sm md:text-base text-white/80 mb-4 leading-relaxed overflow-hidden">
+                                {item.description}
+                              </p>
+                              <div className="flex flex-wrap gap-1 sm:gap-2 mb-4">
+                                {item.chips.map((chip, cIdx) => (
+                                  <span key={cIdx} className="text-xs font-medium text-white/90 bg-white/15 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full backdrop-blur-sm border border-white/10 group-hover:bg-white/20 transition-all duration-300">
+                                    {chip}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                            
+                            {/* Action Button */}
+                            <div className="flex justify-end">
+                              <Link to={item.href}>
+                                <Button 
+                                  size="lg" 
+                                  className="bg-white/90 text-gray-900 hover:bg-white font-semibold px-3  rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:-translate-y-1 text-xs sm:text-sm md:text-base"
+                                >
+                                  Explore Now
+                                  <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 md:h-4 md:w-4 ml-1 sm:ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                                </Button>
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </Slider>
+                    ))}
+                  </Slider>
+                </div>
               </div>
             );
           })()}
@@ -688,26 +768,26 @@ const Index1 = () => {
       {/* (Removed duplicate Trending section) */}
 
       {/* Features Section */}
-      <section className="py-10 px-4">
+      <section className="py-8 sm:py-10 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl text-white font-bold mb-4">
-              Why Choose <span className="text-orange-500">prepCampus?</span>
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-white font-bold mb-4">
+              Why Choose <span className="text-orange-500">PrepCampus?</span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto">
               Comprehensive preparation platform designed to help you succeed in technical interviews.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {features.map((feature, index) => (
               <Card key={index} className="bg-gray-800/50 border-gray-700 hover:bg-gray-800/70 transition-all duration-300 group">
-                <CardContent className="p-6">
-                  <div className={`w-12 h-12 ${feature.bgColor} ${feature.color} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                    <feature.icon className="h-6 w-6" />
+                <CardContent className="p-4 sm:p-6">
+                  <div className={`w-10 h-10 sm:w-12 sm:h-12 ${feature.bgColor} ${feature.color} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                    <feature.icon className="h-5 w-5 sm:h-6 sm:w-6" />
                   </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
-                  <p className="text-gray-400">{feature.description}</p>
+                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">{feature.title}</h3>
+                  <p className="text-gray-400 text-sm sm:text-base">{feature.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -715,37 +795,90 @@ const Index1 = () => {
            </div>
         </section>
 
-      {/* Popular Topics Section */}
-      <section className="py-20 px-4 bg-gray-800/30">
+      {/* Popular Topics Section - Enhanced */}
+      <section className="py-8 sm:py-10 px-4 sm:px-6 bg-gradient-to-br from-gray-900/50 via-gray-800/30 to-gray-900/50">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl text-white font-bold mb-4">
-              Popular Topics
-            </h2>
-            <p className="text-xl text-gray-300">
-              Master the most important topics for technical interviews
+          <div className="text-center mb-12 sm:mb-16">
+            <div className="inline-flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                <Star className="h-6 w-6 text-white" />
+              </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold  text-orange-500">
+                Popular Topics
+              </h2>
+            </div>
+            <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto">
+              Master the most important topics for technical interviews and placement preparation
             </p>
           </div>
        
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {popularTopics.map((topic, index) => (
-              <Card key={index} className="bg-gray-800/50 border-gray-700 hover:bg-gray-800/70 transition-all duration-300 group">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="text-3xl">{topic.icon}</div>
-                    <Badge className={`${topic.color} text-white`}>{topic.difficulty}</Badge>
+              <Card 
+                key={index} 
+                className="group relative overflow-hidden bg-gray-800/20 backdrop-blur-sm border border-gray-700/50 hover:border-gray-600/50 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl cursor-pointer"
+                onClick={() => window.location.href = topic.href}
+              >
+                {/* Animated Background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-800/50 to-gray-900/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-700"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full translate-y-12 -translate-x-12 group-hover:scale-150 transition-transform duration-700"></div>
+                
+                <CardContent className="relative z-10 p-4 sm:p-6 md:p-8 flex flex-col h-full">
+                  {/* Header */}
+                  <div className="flex items-center justify-between mb-4 md:mb-6">
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 ${topic.color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                      <topic.icon className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-white" />
+                    </div>
+                    <div className="text-right">
+                      <div className="text-xs text-gray-400">{topic.category}</div>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">{topic.title}</h3>
-                  <p className="text-gray-400 mb-4">{topic.questions} questions available</p>
-                  <Link to="/coding">
-                    <Button variant="outline" className="w-full border-gray-600 text-gray-300 hover:bg-gray-800">
-                      Start Learning
-                      <ArrowRight className="h-4 w-4 ml-2" />
+                  
+                  {/* Content */}
+                  <div className="flex-1 space-y-3 md:space-y-4">
+                    <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white group-hover:text-blue-400 transition-colors duration-300 leading-tight">
+                      {topic.title}
+                    </h3>
+                    <p className="text-gray-300 text-xs sm:text-sm leading-relaxed flex-1">
+                      {topic.description}
+                    </p>
+                    <div className="flex justify-end">
+                      <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                        <ArrowRight className="h-4 w-4 text-white/70 group-hover:text-white group-hover:translate-x-0.5 transition-all duration-300" />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Action Button */}
+                  <div className="">
+                    <Button 
+                      className={`w-full ${topic.color} hover:shadow-lg text-white font-semibold py-2 md:py-3 rounded-xl transition-all duration-300 transform group-hover:-translate-y-1 text-xs sm:text-sm md:text-base`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.location.href = topic.href;
+                      }}
+                    >
+                      Explore Now
+                      <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                     </Button>
-                  </Link>
+                  </div>
                 </CardContent>
               </Card>
             ))}
+          </div>
+          
+          {/* Call to Action */}
+          <div className="text-center mt-5">
+            <div className="inline-flex items-center gap-3 sm:gap-4 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl px-6 sm:px-8 py-3 sm:py-4">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
+                <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
+              </div>
+              <div className="text-left">
+                <p className="text-white font-semibold text-sm sm:text-base">Ready to start your journey?</p>
+                <p className="text-gray-400 text-xs sm:text-sm">Choose any topic above to begin learning</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -802,27 +935,27 @@ const Index1 = () => {
       </section> */}
 
       {/* Study Resources Section */}
-      <section className="py-10 px-4 bg-gray-800/30">
+      <section className="py-5 px-4 bg-gray-800/30">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-5">
-            <h2 className="text-4xl md:text-5xl text-white font-bold mb-4">
-              Study Resources
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-orange-500 font-bold mb-4">
+              <span className="text-white">Study</span> Resources
             </h2>
-            <p className="text-xl text-gray-300">
+            <p className="text-lg sm:text-xl text-gray-300">
               Comprehensive study materials to boost your preparation
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {studyResources.map((resource, index) => (
               <Card key={index} className="bg-gray-800/50 border-gray-700 hover:bg-gray-800/70 transition-all duration-300 group">
-                <CardContent className="p-6 text-center">
-                  <div className={`w-12 h-12 ${resource.bgColor} ${resource.color} rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
-                    <resource.icon className="h-6 w-6" />
+                <CardContent className="p-4 sm:p-6 text-center">
+                  <div className={`w-10 h-10 sm:w-12 sm:h-12 ${resource.bgColor} ${resource.color} rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
+                    <resource.icon className="h-5 w-5 sm:h-6 sm:w-6" />
                 </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">{resource.title}</h3>
-                  <p className="text-gray-400 text-sm mb-3">{resource.description}</p>
-                  <div className="text-2xl font-bold text-white">{resource.count}</div>
+                  <h3 className="text-base sm:text-lg font-semibold text-white mb-2">{resource.title}</h3>
+                  <p className="text-gray-400 text-xs sm:text-sm mb-3">{resource.description}</p>
+                  <div className="text-xl sm:text-2xl font-bold text-white">{resource.count}</div>
                 </CardContent>
               </Card>
             ))}
@@ -844,53 +977,111 @@ const Index1 = () => {
         </div>
       </section> */}
 
-      {/* Exam Patterns Section */}
-      <section className=" py-10  bg-gray-800/30">
+      {/* Exam Patterns Section - Enhanced */}
+      <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-gradient-to-br from-gray-900/50 via-gray-800/30 to-gray-900/50">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-5">
-            <h2 className="text-4xl md:text-5xl text-white font-bold mb-4">
-              Latest Exam Patterns 2025
-            </h2>
-            <p className="text-xl text-gray-300">
-              Stay updated with the latest exam patterns and syllabus
+          <div className="text-center mb-12 sm:mb-16">
+            <div className="inline-flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
+                <GraduationCap className="h-6 w-6 text-white" />
+              </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-400 via-emerald-500 to-teal-500 bg-clip-text text-transparent">
+                Latest Exam Patterns 2025
+              </h2>
+            </div>
+            <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto">
+              Stay updated with the latest exam patterns and syllabus for top tech companies
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {examPatterns.map((pattern, index) => (
-              <Card key={index} className="bg-gray-800/50 border-gray-700 hover:bg-gray-800/70 transition-all duration-300">
-                <CardHeader>
-                  <CardTitle className="text-white">{pattern.company}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <div className="text-blue-400 text-lg">Duration</div>
-                      <div className="text-white font-semibold">{pattern.duration}</div>
+              <Card 
+                key={index} 
+                className="group relative overflow-hidden bg-gray-800/20 backdrop-blur-sm border border-gray-700/50 hover:border-gray-600/50 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl cursor-pointer"
+                onClick={() => window.location.href = '/exam-patterns'}
+              >
+                {/* Animated Background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-800/50 to-gray-900/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-700"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-full translate-y-12 -translate-x-12 group-hover:scale-150 transition-transform duration-700"></div>
+                
+                <CardContent className="relative z-10 p-6 sm:p-8">
+                  {/* Header */}
+                  <div className="flex items-center justify-between mb-6">
+                    <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r ${pattern.gradient} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                      <pattern.icon className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                     </div>
-                    <div>
-                      <div className="text-blue-400 text-lg">Questions</div>
-                      <div className="text-white font-semibold">{pattern.questions}</div>
-                    </div>
-                    <div>
-                      <div className="text-blue-400 text-lg">Sections</div>
-                      <div className="text-white font-semibold">{pattern.sections}</div>
-                    </div>
-                    <div>
-                      <div className="text-blue-400 text-lg">Difficulty</div>
-                      <div className="text-white font-semibold">{pattern.difficulty}</div>
+                    <div className="text-right">
+                      <Badge className={`bg-gradient-to-r ${pattern.gradient} text-white font-semibold px-3 py-1 rounded-full text-xs`}>
+                        {pattern.difficulty}
+                      </Badge>
                     </div>
                   </div>
-                  <Link to="/exam-patterns">
-                    <Button className="w-full mt-5 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
-                      View Details
-                      <ArrowRight className="h-4 w-4 ml-2" />
+                  
+                  {/* Content */}
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-green-400 transition-colors duration-300 mb-2">
+                        {pattern.company}
+                      </h3>
+                      <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
+                        {pattern.description}
+                      </p>
+                    </div>
+                    
+                    {/* Stats Grid */}
+                    <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                      <div className="bg-gray-700/30 rounded-lg p-2 sm:p-3 group-hover:bg-gray-700/50 transition-all duration-300">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-green-400" />
+                          <span className="text-xs text-gray-400">Duration</span>
+                        </div>
+                        <div className="text-white font-semibold text-xs sm:text-sm">{pattern.duration}</div>
+                      </div>
+                      <div className="bg-gray-700/30 rounded-lg p-2 sm:p-3 group-hover:bg-gray-700/50 transition-all duration-300">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Target className="h-3 w-3 sm:h-4 sm:w-4 text-blue-400" />
+                          <span className="text-xs text-gray-400">Questions</span>
+                        </div>
+                        <div className="text-white font-semibold text-xs sm:text-sm">{pattern.questions}</div>
+                      </div>
+                      <div className="bg-gray-700/30 rounded-lg p-2 sm:p-3 group-hover:bg-gray-700/50 transition-all duration-300">
+                        <div className="flex items-center gap-2 mb-1">
+                          <BarChart3 className="h-3 w-3 sm:h-4 sm:w-4 text-purple-400" />
+                          <span className="text-xs text-gray-400">Sections</span>
+                        </div>
+                        <div className="text-white font-semibold text-xs sm:text-sm">{pattern.sections}</div>
+                      </div>
+                      <div className="bg-gray-700/30 rounded-lg p-2 sm:p-3 group-hover:bg-gray-700/50 transition-all duration-300">
+                        <div className="flex items-center gap-2 mb-1">
+                          <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 text-orange-400" />
+                          <span className="text-xs text-gray-400">Level</span>
+                        </div>
+                        <div className="text-white font-semibold text-xs sm:text-sm">{pattern.difficulty}</div>
+                      </div>
+                    </div>
+                    
+                    {/* Action Button */}
+                    <div className="flex justify-end">
+                      <Button 
+                        className={`w-full bg-gradient-to-r ${pattern.gradient} hover:shadow-lg text-white font-semibold py-2 sm:py-3 rounded-xl transition-all duration-300 transform group-hover:-translate-y-1 text-sm sm:text-base`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.location.href = '/exam-patterns';
+                        }}
+                      >
+                        View Details
+                        <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                     </Button>
-                  </Link>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             ))}
           </div>
+          
+        
         </div>
       </section>
 
@@ -944,28 +1135,96 @@ const Index1 = () => {
         </div>
       </section> */}
 
-      {/* CTA Section */}
-      <section className="py-20 px-4 bg-gray-800/30">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl text-white font-bold mb-6">
-            Ready to Start Your Journey?
-          </h2>
-          <p className="text-xl text-gray-300 mb-8">
-            Join thousands of students who have already cracked their dream jobs
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/mock-test">
-              <Button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-8 py-4 rounded-lg transition-all duration-200 transform hover:scale-105">
-                <Rocket className="h-5 w-5 mr-2" />
-                Start Free Mock Test
-            </Button>
-            </Link>
-            <Link to="/coding">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 px-8 py-4 rounded-lg transition-all duration-200">
-                <BookOpen className="h-5 w-5 mr-2" />
-                Explore Questions
-              </Button>
-            </Link>
+      {/* Enhanced CTA Section */}
+      <section className=" px-4 bg-gradient-to-br from-gray-800/30 via-gray-900/50 to-gray-800/30">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl text-white font-bold mb-6">
+              Ready to Start Your Journey?
+            </h2>
+            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+              Join thousands of students who have already cracked their dream jobs. 
+              Create your account to track progress, save favorites, and unlock premium features.
+            </p>
+          </div>
+
+          {/* Action Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            
+            {/* Sign Up Card */}
+            <div className="bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl p-6 text-center text-white shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105">
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="h-8 w-8" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Create Account</h3>
+              <p className="text-blue-100 mb-6">
+                Sign up for free and unlock personalized learning paths, progress tracking, and exclusive content.
+              </p>
+              <Link to="/signup">
+                <Button className="w-full bg-white text-blue-600 hover:bg-gray-100 font-semibold py-3 rounded-xl transition-all duration-300">
+                  Sign Up Free
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Button>
+              </Link>
+            </div>
+
+            {/* Sign In Card */}
+            <div className="bg-gradient-to-br from-green-600 to-emerald-600 rounded-2xl p-6 text-center text-white shadow-2xl hover:shadow-green-500/25 transition-all duration-300 transform hover:scale-105">
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <GraduationCap className="h-8 w-8" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Welcome Back</h3>
+              <p className="text-green-100 mb-6">
+                Already have an account? Sign in to continue your learning journey and access your saved content.
+              </p>
+              <Link to="/signin">
+                <Button className="w-full bg-white text-green-600 hover:bg-gray-100 font-semibold py-3 rounded-xl transition-all duration-300">
+                  Sign In
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Button>
+              </Link>
+            </div>
+
+            {/* Explore Card */}
+            <div className="bg-gradient-to-br from-orange-600 to-red-600 rounded-2xl p-6 text-center text-white shadow-2xl hover:shadow-orange-500/25 transition-all duration-300 transform hover:scale-105">
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Rocket className="h-8 w-8" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Start Learning</h3>
+              <p className="text-orange-100 mb-6">
+                Explore our platform without signing up. Try free mock tests and practice questions.
+              </p>
+              <Link to="/mock-test">
+                <Button className="w-full bg-white text-orange-600 hover:bg-gray-100 font-semibold py-3 rounded-xl transition-all duration-300">
+                  Start Free Test
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+
+          
+
+          {/* Trust Indicators */}
+          <div className="py-10 text-center">
+            <div className="flex flex-wrap justify-center items-center gap-8 text-gray-400">
+              <div className="flex items-center space-x-2">
+                <Shield className="h-5 w-5 text-green-400" />
+                <span className="text-sm">Secure & Private</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Users className="h-5 w-5 text-blue-400" />
+                <span className="text-sm">50K+ Students</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Star className="h-5 w-5 text-yellow-400" />
+                <span className="text-sm">Detailed Solutions</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Zap className="h-5 w-5 text-purple-400" />
+                <span className="text-sm">Free Excess</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>

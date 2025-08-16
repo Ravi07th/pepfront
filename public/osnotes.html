@@ -226,7 +226,9 @@
         <div class="header">
             <h1>🖥️ Operating System Notes</h1>
             <p>Complete Guide for Placement Preparation - PrepCampus</p>
-            <button class="download-btn" onclick="downloadAsPrint()"> Download</button>
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="download-btn" onclick="window.print()">📥 Download Notes</button>
+            </div>
             <p></p>
         </div>
 
@@ -2096,63 +2098,12 @@ sem_t empty, full, mutex;
 }</code></pre>
             </div>
         </div>
-
-        <div class="section">
-            <h2>Recommended Reading</h2>
-            <div class="important">
-                <ul>
-                    <li><strong>Galvin & Gagne</strong> – Operating System Concepts</li>
-                    <li><strong>Tanenbaum</strong> – Modern Operating Systems</li>
-                    <li><strong>Silberschatz, Galvin, Gagne</strong> – Operating Systems Concepts</li>
-                    <li><strong>Stallings</strong> – Operating Systems: Internals and Design Principles</li>
-                </ul>
-            </div>
+        <div class="footer" style="text-align: center; margin: 40px 0">
+            <p>© 2024 PrepCampus. All rights reserved.</p>
+            <p>Visit www.prepcampus.com for more study materials and resources.</p>
         </div>
 
-        <div class="section">
-            <h2>Semester Schedule</h2>
-            <div class="important">
-                <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
-                    <tr style="background: #667eea; color: white;">
-                        <th style="padding: 10px; border: 1px solid #ddd;">Unit</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Topics Covered</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Duration</th>
-                    </tr>
-                    <tr>
-                        <td style="padding: 10px; border: 1px solid #ddd;">I</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">OS basics, Services, System calls</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">3 weeks</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 10px; border: 1px solid #ddd;">II</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">Processes, Threads, Scheduling, IPC</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">4 weeks</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 10px; border: 1px solid #ddd;">III</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">Deadlock, Memory Management, Paging</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">4 weeks</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 10px; border: 1px solid #ddd;">IV</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">File systems, I/O, Disk scheduling</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">3 weeks</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 10px; border: 1px solid #ddd;">V</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">Protection, Security, OS Case Studies</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">2 weeks</td>
-                    </tr>
-                </table>
-                <p><strong>Typical structure:</strong> 3 hrs lecture + 1 hr tutorial per week over 14–16 weeks</p>
-            </div>
-        </div>
-
-        <div style="text-align: center; margin: 40px 0;">
-            <button class="download-btn" onclick="downloadPDF()">📥 Download PDF</button>
-            <button class="download-btn" onclick="window.print()">🖨️ Print Notes</button>
-            <button class="download-btn" onclick="testDownload()">🧪 Test Download</button>
-        </div>
+        
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -2281,5 +2232,8 @@ sem_t empty, full, mutex;
             }, 2000);
         });
     </script>
+</body>
+</html>
+    
 </body>
 </html>

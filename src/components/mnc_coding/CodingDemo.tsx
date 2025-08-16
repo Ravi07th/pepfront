@@ -56,7 +56,7 @@ const CodingDemo: React.FC = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600 dark:text-slate-400 text-sm">
-                  Browse company cards with question counts, difficulty levels, and completion rates
+                  Browse company cards with question counts and difficulty levels
                 </p>
               </CardContent>
             </Card>
@@ -141,7 +141,7 @@ const CodingDemo: React.FC = () => {
                 <h3 className="ml-3 font-semibold text-slate-900 dark:text-white">Progress Tracking</h3>
               </div>
               <p className="text-slate-600 dark:text-slate-400 text-sm">
-                Track completion rates, success rates, and last attempted dates
+                Track your progress and learning journey
               </p>
             </div>
           </div>

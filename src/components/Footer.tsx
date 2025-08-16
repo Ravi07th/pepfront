@@ -6,16 +6,27 @@ import {
   GraduationCap, 
   BookOpen, 
   FileText, 
-  TestTube, 
+  ClipboardList, 
   BookMarked, 
   FileSpreadsheet,
   Mail,
   ArrowUp,
-  ExternalLink
+  ExternalLink,
+  ArrowRight,
+  Users,
+  Target,
+  Trophy,
+  Star,
+  Heart,
+  Zap,
+  Shield,
+  Globe
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const Footer: React.FC = () => {
   const [showBackToTop, setShowBackToTop] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>('');
 
   // Handle scroll for back-to-top button
   useEffect(() => {
@@ -30,6 +41,13 @@ const Footer: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleNewsletterSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle newsletter signup logic here
+    console.log('Newsletter signup:', email);
+    setEmail('');
+  };
+
   const currentYear = new Date().getFullYear();
 
   // Footer navigation data
@@ -42,64 +60,128 @@ const Footer: React.FC = () => {
     ],
     resources: [
       { name: 'Student Notes', href: '/student-notes', icon: FileText },
-      { name: 'Mock Tests', href: '/mock-test', icon: TestTube },
+      { name: 'Mock Tests', href: '/mock-test', icon: ClipboardList },
       { name: 'Exam Notes', href: '/student-notes', icon: BookMarked },
       { name: 'Exam Patterns', href: '/exam-patterns', icon: FileSpreadsheet },
     ],
     support: [
       { name: 'Contact Us', href: '/contact', icon: Mail },
       { name: 'Terms & Conditions', href: '/terms', icon: ExternalLink },
-      { name: 'Privacy Policy', href: '/privacy', icon: ExternalLink },
-      { name: 'Help Center', href: '/help', icon: ExternalLink },
+      { name: 'Privacy Policy', href: '/privacy', icon: ExternalLink }
+      // { name: 'Help Center', href: '/help', icon: ExternalLink },
     ]
   };
 
+  const socialLinks = [
+    { name: 'LinkedIn', href: '#', icon: ExternalLink },
+    { name: 'Twitter', href: '#', icon: ExternalLink },
+    { name: 'YouTube', href: '#', icon: ExternalLink },
+    { name: 'Instagram', href: '#', icon: ExternalLink },
+  ];
+
   return (
-    <footer className="bg-[#0b1220] border-t border-slate-800">
+    <footer className="bg-gradient-to-br from-gray-900 via-black to-gray-900 border-t border-gray-800">
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-8 sm:py-10 md:py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
+        
+        {/* Top Section - Brand & Newsletter */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-8">
+          
           {/* Brand Section */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="flex items-center space-x-0">
-                <span className="text-xl sm:text-2xl font-bold text-purple-500">Campus</span>
-                <span className="text-xl sm:text-2xl font-bold text-amber-400">Prep</span>
+          <div className="space-y-4">
+            <div className="flex items-center space-x-3">
+              <img 
+                src="/images/mylogo.png" 
+                alt="prepCampus Logo" 
+                className="w-20 h-12 rounded-lg"
+              />
+              <div>
+                <h3 className="text-xl font-bold text-yellow-500">PrepCampus</h3>
+                <p className="text-gray-400 text-sm">Your Learning Partner</p>
               </div>
             </div>
-            <p className="text-slate-400 text-sm leading-relaxed mb-6 hidden sm:block">
-              Your ultimate platform for coding practice, interview preparation, and academic success. 
-              Empowering students worldwide with comprehensive learning resources.
+            
+            <p className="text-gray-300 text-sm leading-relaxed max-w-md">
+              Your ultimate platform for coding practice, interview preparation, and academic success.
             </p>
-            <p className="text-slate-400 text-sm leading-relaxed mb-6 sm:hidden">
-              Your ultimate platform for coding practice and interview preparation.
-            </p>
-            <div className="flex items-center space-x-4">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-600 to-amber-500 flex items-center justify-center">
-                <span className="text-white text-sm font-bold">CP</span>
+
+            {/* Quick Stats */}
+            <div className="flex flex-wrap gap-4 text-gray-400 text-xs">
+              <div className="flex items-center space-x-1">
+                <Target className="h-3 w-3 text-amber-400" />
+                <span>5000+ Questions</span>
               </div>
-              <div>
-                <p className="text-slate-300 text-sm font-medium">prepCampus</p>
-                <p className="text-slate-500 text-xs">Your Learning Partner</p>
+              <div className="flex items-center space-x-1">
+                <Users className="h-3 w-3 text-blue-400" />
+                <span>50K+ Students</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <Trophy className="h-3 w-3 text-yellow-400" />
+                <span>95% Success</span>
               </div>
             </div>
           </div>
 
+          {/* Newsletter Section */}
+          <div className="space-y-2">
+            <div>
+              <h3 className="text-lg font-bold text-white mb-2">Stay Updated</h3>
+              <p className="text-gray-400 text-sm">Get latest updates on new features and exam patterns.</p>
+            </div>
+            
+            <form onSubmit={handleNewsletterSignup} className="space-y-3">
+              <div className="flex flex-col sm:flex-row gap-2">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-sm"
+                  required
+                />
+                <Button 
+                  type="submit"
+                  className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-4 py-2 rounded-lg transition-all duration-300 text-sm"
+                >
+                  Subscribe
+                  <ArrowRight className="h-3 w-3 ml-1" />
+                </Button>
+              </div>
+            </form>
+
+            {/* Social Links */}
+            {/* <div className="flex space-x-3">
+              {socialLinks.map((social, index) => (
+                <a
+                  key={index}
+                  href={social.href}
+                  className="w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-lg flex items-center justify-center text-gray-400 hover:text-amber-400 transition-all duration-300"
+                >
+                  <social.icon className="h-4 w-4" />
+                </a>
+              ))}
+            </div> */}
+          </div>
+        </div>
+
+        {/* Navigation Links */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-2 border-t border-gray-800">
+          
           {/* Platform Links */}
           <div>
-            <h3 className="text-slate-200 font-semibold mb-3 sm:mb-4 flex items-center">
+            <h4 className="text-white font-semibold mb-3 flex items-center text-sm">
               <Code className="w-4 h-4 mr-2 text-amber-400" />
               Platform
-            </h3>
-            <ul className="space-y-2 sm:space-y-3">
+            </h4>
+            <ul className="space-y-2">
               {footerLinks.platform.map((link) => (
                 <li key={link.name}>
                   <Link 
                     to={link.href}
-                    className="flex items-center text-slate-400 hover:text-amber-400 transition-colors duration-200 group"
+                    className="flex items-center text-gray-400 hover:text-amber-400 transition-colors duration-200 group text-sm"
                   >
-                    <link.icon className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-                    <span className="text-sm">{link.name}</span>
+                    <link.icon className="w-3 h-3 mr-2 group-hover:scale-110 transition-transform" />
+                    <span>{link.name}</span>
                   </Link>
                 </li>
               ))}
@@ -108,19 +190,19 @@ const Footer: React.FC = () => {
 
           {/* Resources Links */}
           <div>
-            <h3 className="text-slate-200 font-semibold mb-3 sm:mb-4 flex items-center">
+            <h4 className="text-white font-semibold mb-3 flex items-center text-sm">
               <BookOpen className="w-4 h-4 mr-2 text-amber-400" />
               Resources
-            </h3>
-            <ul className="space-y-2 sm:space-y-3">
+            </h4>
+            <ul className="space-y-2">
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
                   <Link 
                     to={link.href}
-                    className="flex items-center text-slate-400 hover:text-amber-400 transition-colors duration-200 group"
+                    className="flex items-center text-gray-400 hover:text-amber-400 transition-colors duration-200 group text-sm"
                   >
-                    <link.icon className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-                    <span className="text-sm">{link.name}</span>
+                    <link.icon className="w-3 h-3 mr-2 group-hover:scale-110 transition-transform" />
+                    <span>{link.name}</span>
                   </Link>
                 </li>
               ))}
@@ -129,19 +211,19 @@ const Footer: React.FC = () => {
 
           {/* Support Links */}
           <div>
-            <h3 className="text-slate-200 font-semibold mb-3 sm:mb-4 flex items-center">
+            <h4 className="text-white font-semibold mb-3 flex items-center text-sm">
               <Mail className="w-4 h-4 mr-2 text-amber-400" />
               Support
-            </h3>
-            <ul className="space-y-2 sm:space-y-3">
+            </h4>
+            <ul className="space-y-2">
               {footerLinks.support.map((link) => (
                 <li key={link.name}>
                   <Link 
                     to={link.href}
-                    className="flex items-center text-slate-400 hover:text-amber-400 transition-colors duration-200 group"
+                    className="flex items-center text-gray-400 hover:text-amber-400 transition-colors duration-200 group text-sm"
                   >
-                    <link.icon className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-                    <span className="text-sm">{link.name}</span>
+                    <link.icon className="w-3 h-3 mr-2 group-hover:scale-110 transition-transform" />
+                    <span>{link.name}</span>
                   </Link>
                 </li>
               ))}
@@ -150,23 +232,44 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-8 sm:mt-10 md:mt-12 pt-6 sm:pt-8 border-t border-slate-800">
-          <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-            {/* Copyright */}
-            <div className="text-slate-500 text-sm text-center sm:text-left">
-              <p>&copy; {currentYear} prepCampus. All rights reserved.</p>
-              <p className="mt-1 hidden sm:block">Empowering students worldwide with quality education resources.</p>
+        <div className="pt-6 border-t border-gray-800">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0">
+            
+            {/* Copyright & Info */}
+            <div className="text-center md:text-left">
+              <p className="text-gray-400 text-xs">
+                &copy; {currentYear} prepCampus. All rights reserved.
+              </p>
+              <p className="text-gray-500 text-xs mt-1">
+                Made with <Heart className="inline h-3 w-3 text-red-500" /> for students worldwide
+              </p>
+            </div>
+
+            {/* Quick Stats */}
+            <div className="flex items-center space-x-4 text-gray-400 text-xs">
+              <div className="flex items-center space-x-1">
+                <Shield className="h-3 w-3 text-green-400" />
+                <span>Secure</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <Globe className="h-3 w-3 text-blue-400" />
+                <span>Global</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <Zap className="h-3 w-3 text-yellow-400" />
+                <span>24/7</span>
+              </div>
             </div>
 
             {/* Back to Top Button */}
             {showBackToTop && (
               <button
                 onClick={scrollToTop}
-                className="flex items-center space-x-1 sm:space-x-2 bg-gradient-to-r from-purple-600 to-amber-500 text-white px-3 sm:px-4 py-2 rounded-lg hover:from-purple-700 hover:to-amber-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                className="flex items-center space-x-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-3 py-2 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 text-xs"
                 aria-label="Scroll back to top"
               >
-                <ArrowUp className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="text-xs sm:text-sm font-medium">Back to Top</span>
+                <ArrowUp className="w-3 h-3" />
+                <span className="font-medium">Top</span>
               </button>
             )}
           </div>

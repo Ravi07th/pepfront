@@ -1,37 +1,77 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import CodingHome from './CodingHome';
 import CompanyQuestionsList from './CompanyQuestionsList';
 import QuestionSolution from './QuestionSolution';
-
-type View = 'home' | 'company' | 'question';
+import { mncCodingQuestions } from '../../data/mnc_coding_data/index';
 
 interface CodingPlatformProps {}
 
 const CodingPlatform: React.FC<CodingPlatformProps> = () => {
-  const [currentView, setCurrentView] = useState<View>('home');
-  const [selectedCompany, setSelectedCompany] = useState<{ id: string; name: string } | null>(null);
-  const [selectedQuestion, setSelectedQuestion] = useState<{ id: string; title: string } | null>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { companyId, questionId } = useParams<{ companyId?: string; questionId?: string }>();
+
+  // Helper function to get proper company name from ID
+  const getCompanyName = (id: string): string => {
+    const companyNames: { [key: string]: string } = {
+      'amazon': 'Amazon',
+      'google': 'Google',
+      'microsoft': 'Microsoft',
+      'accenture': 'Accenture',
+      'tcsnqt': 'TCS NQT',
+      'cognizant': 'Cognizant',
+      'wipro': 'Wipro',
+      'capgemini': 'Capgemini',
+      'top30': 'Most Asked Coding Questions'
+    };
+    return companyNames[id] || id.charAt(0).toUpperCase() + id.slice(1);
+  };
 
   const handleCompanyClick = (companyId: string, companyName: string) => {
-    setSelectedCompany({ id: companyId, name: companyName });
-    setCurrentView('company');
+    navigate(`/coding/${companyId}`);
   };
 
   const handleQuestionClick = (questionId: string, questionTitle: string) => {
-    setSelectedQuestion({ id: questionId, title: questionTitle });
-    setCurrentView('question');
+    if (companyId) {
+      navigate(`/coding/${companyId}/${questionId}`);
+    }
+  };
+
+  // Helper function to get question title from ID
+  const getQuestionTitle = (questionId: string, companyId: string): string => {
+    const companyQuestions = mncCodingQuestions[companyId as keyof typeof mncCodingQuestions];
+    if (companyQuestions) {
+      const question = companyQuestions.find(q => q.id === questionId);
+      return question?.title || questionId;
+    }
+    return questionId;
   };
 
   const handleBackToHome = () => {
-    setCurrentView('home');
-    setSelectedCompany(null);
-    setSelectedQuestion(null);
+    navigate('/coding');
   };
 
   const handleBackToCompany = () => {
-    setCurrentView('company');
-    setSelectedQuestion(null);
+    if (companyId) {
+      navigate(`/coding/${companyId}`);
+    } else {
+      navigate('/coding');
+    }
   };
+
+  // Determine current view based on URL
+  const getCurrentView = () => {
+    if (questionId && companyId) {
+      return 'question';
+    } else if (companyId) {
+      return 'company';
+    } else {
+      return 'home';
+    }
+  };
+
+  const currentView = getCurrentView();
 
   const renderCurrentView = () => {
     switch (currentView) {
@@ -42,20 +82,20 @@ const CodingPlatform: React.FC<CodingPlatformProps> = () => {
           />
         );
       case 'company':
-        return selectedCompany ? (
+        return companyId ? (
           <CompanyQuestionsList
-            companyId={selectedCompany.id}
-            companyName={selectedCompany.name}
+            companyId={companyId}
+            companyName={getCompanyName(companyId)}
             onQuestionClick={handleQuestionClick}
             onBackClick={handleBackToHome}
           />
         ) : null;
       case 'question':
-        return selectedQuestion && selectedCompany ? (
+        return questionId && companyId ? (
           <QuestionSolution
-            questionId={selectedQuestion.id}
-            questionTitle={selectedQuestion.title}
-            companyName={selectedCompany.name}
+            questionId={questionId}
+            questionTitle={getQuestionTitle(questionId, companyId)}
+            companyName={getCompanyName(companyId)}
             onBackClick={handleBackToCompany}
           />
         ) : null;

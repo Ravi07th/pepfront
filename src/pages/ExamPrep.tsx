@@ -24,6 +24,12 @@ import {
   Code,
   UserCheck,
   Settings,
+  Building2,
+  Briefcase,
+  DollarSign,
+  FileText,
+  Target,
+  Zap,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { MCQTest } from "@/components/MCQTest";
@@ -93,7 +99,7 @@ const ExamPrep = () => {
       icon: <BookOpen className="w-6 h-6" />,
       gradient: "from-yellow-400 to-orange-500",
       bgGradient: "from-yellow-50 to-orange-50",
-      topics: ["Interview Questions", "DBMS", "OS", "Automata", "Read more..."],
+      topics: ["Interview Questions", "DSA", "OS", "Automata", "Read more..."],
       navigateTo: "/student-notes",
       buttonText: "Explore Now",
       stats: { questions: "500+", difficulty: "Beginner", time: "5 min" },
@@ -195,177 +201,80 @@ const ExamPrep = () => {
                 Boost your preparation with essential aptitude questions and solutions for placements and exams!
               </p>
               <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                <a
-                  href="/questions"
-                  className="bg-gradient-to-r from-cyan-400 to-blue-500 text-indigo-900 px-8 py-4 rounded-xl font-bold hover:scale-105 transition"
+                <div
+                  
+                  className="bg-gradient-to-r from-cyan-400 to-blue-500 text-indigo-900 px-8 py-4 rounded-xl font-bold transition"
                 >
                   Explore Questions
-                </a>
-                <a
-                  href="/practice"
-                  className="border-2 border-cyan-400 text-cyan-200 px-8 py-4 rounded-xl font-bold hover:bg-cyan-400/20 hover:text-cyan-100 transition"
+                </div>
+                <div
+                  
+                  className="border-2 border-cyan-400 text-cyan-200 px-8 py-4 rounded-xl font-bold  transition"
                 >
                   Launch Practice Mode
-                </a>
+                </div>
               </div>
               <div className="flex justify-center space-x-4 pt-4">
                 <Badge className="bg-blue-500/30 text-blue-200">500+ Questions</Badge>
-                <Badge className="bg-purple-500/30 text-purple-200">FAANG Approved</Badge>
+                <Badge className="bg-purple-500/30 text-purple-200">Mock Tests Each Topic</Badge>
                 <Badge className="bg-green-500/30 text-green-200">Real-Time Practice</Badge>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Stats Section */}
-        <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden">
-          {/* Animated Background Elements */}
-          <div className="absolute inset-0">
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]"></div>
-            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-green-500/10 to-cyan-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          </div>
-
-          <div className="max-w-6xl mx-auto px-4 py-16 relative z-10">
-            {/* Section Header */}
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-white mb-4">Platform Statistics</h2>
-              <p className="text-xl text-gray-300">Discover what makes PrepCampus the leading choice for exam preparation</p>
+        {/* Simple Stats Section */}
+        <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 lg:py-16">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8 lg:mb-12">
+              <h2 className="text-5xl lg:text-6xl font-bold text-white mb-4">Start Your Preparation Now</h2>
+              <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+                Join thousands of students who have successfully cracked their dream jobs with our comprehensive preparation platform.
+              </p>
             </div>
 
-            {/* Statistics Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {/* Questions Counter */}
-              <div className="group relative">
-                <div className="relative p-8 rounded-3xl bg-gradient-to-br from-emerald-500/20 to-teal-600/20 backdrop-blur-sm border border-emerald-500/30 hover:border-emerald-400/50 transition-all duration-500 hover:scale-105">
-                  {/* Animated Border */}
-                  <div className="absolute inset-0 rounded-3xl border-2 border-emerald-500/20 group-hover:border-emerald-400/40 transition-all duration-500"></div>
-                  
-                  {/* Icon with Glow */}
-                  <div className="relative mb-6">
-                    <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white shadow-2xl group-hover:scale-110 transition-transform duration-500">
-                      <BookOpen className="w-10 h-10" />
-                    </div>
-                    <div className="absolute inset-0 rounded-2xl bg-emerald-400 blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-500"></div>
-                  </div>
-                  
-                  {/* Number with Animation */}
-                  <div className="text-center">
-                    <div className="text-5xl font-black text-emerald-400 mb-2 group-hover:text-emerald-300 transition-colors duration-300">
-                      <span className="inline-block group-hover:animate-bounce">5</span>
-                      <span className="inline-block group-hover:animate-bounce delay-100">0</span>
-                      <span className="inline-block group-hover:animate-bounce delay-200">0</span>
-                      <span className="inline-block group-hover:animate-bounce delay-300">0</span>
-                      <span className="inline-block group-hover:animate-bounce delay-400">+</span>
-                    </div>
-                    <div className="text-lg font-semibold text-emerald-300 uppercase tracking-wider">
-                      Questions
-                    </div>
-                  </div>
-
-                  {/* Floating Elements */}
-                  <div className="absolute top-4 right-4 w-3 h-3 bg-emerald-400 rounded-full animate-ping"></div>
-                  <div className="absolute bottom-4 left-4 w-2 h-2 bg-emerald-300 rounded-full animate-ping delay-1000"></div>
+            {/* Simple Stats Grid */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center">
+                  <Trophy className="w-8 h-8 text-white" />
                 </div>
+                <div className="text-2xl lg:text-3xl font-bold text-white mb-2">95%</div>
+                <div className="text-sm text-gray-400">Success Rate</div>
               </div>
 
-              {/* PDF Notes Counter */}
-              <div className="group relative">
-                <div className="relative p-8 rounded-3xl bg-gradient-to-br from-purple-500/20 to-indigo-600/20 backdrop-blur-sm border border-purple-500/30 hover:border-purple-400/50 transition-all duration-500 hover:scale-105">
-                  <div className="absolute inset-0 rounded-3xl border-2 border-purple-500/20 group-hover:border-purple-400/40 transition-all duration-500"></div>
-                  
-                  <div className="relative mb-6">
-                    <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center text-white shadow-2xl group-hover:scale-110 transition-transform duration-500">
-                      <Brain className="w-10 h-10" />
-                    </div>
-                    <div className="absolute inset-0 rounded-2xl bg-purple-400 blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-500"></div>
-                  </div>
-                  
-                  <div className="text-center">
-                    <div className="text-5xl font-black text-purple-400 mb-2 group-hover:text-purple-300 transition-colors duration-300">
-                      <span className="inline-block group-hover:animate-pulse">4</span>
-                      <span className="inline-block group-hover:animate-pulse delay-100">0</span>
-                      <span className="inline-block group-hover:animate-pulse delay-200">+</span>
-                    </div>
-                    <div className="text-lg font-semibold text-purple-300 uppercase tracking-wider">
-                      PDF Notes
-                    </div>
-                  </div>
-
-                  <div className="absolute top-4 right-4 w-3 h-3 bg-purple-400 rounded-full animate-bounce"></div>
-                  <div className="absolute bottom-4 left-4 w-2 h-2 bg-purple-300 rounded-full animate-bounce delay-1000"></div>
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-blue-500 to-cyan-600 flex items-center justify-center">
+                  <Clock className="w-8 h-8 text-white" />
                 </div>
+                <div className="text-2xl lg:text-3xl font-bold text-white mb-2">24/7</div>
+                <div className="text-sm text-gray-400">Mock Tests</div>
               </div>
 
-              {/* Minutes Counter */}
-              <div className="group relative">
-                <div className="relative p-8 rounded-3xl bg-gradient-to-br from-orange-500/20 to-red-600/20 backdrop-blur-sm border border-orange-500/30 hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
-                  <div className="absolute inset-0 rounded-3xl border-2 border-orange-500/20 group-hover:border-orange-400/40 transition-all duration-500"></div>
-                  
-                  <div className="relative mb-6">
-                    <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-white shadow-2xl group-hover:scale-110 transition-transform duration-500">
-                      <Clock className="w-10 h-10" />
-                    </div>
-                    <div className="absolute inset-0 rounded-2xl bg-orange-400 blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-500"></div>
-                  </div>
-                  
-                  <div className="text-center">
-                    <div className="text-5xl font-black text-orange-400 mb-2 group-hover:text-orange-300 transition-colors duration-300">
-                      <span className="inline-block group-hover:animate-spin">6</span>
-                      <span className="inline-block group-hover:animate-spin delay-100">0</span>
-                    </div>
-                    <div className="text-lg font-semibold text-orange-300 uppercase tracking-wider">
-                      Minutes/Test
-                    </div>
-                  </div>
-
-                  <div className="absolute top-4 right-4 w-3 h-3 bg-orange-400 rounded-full animate-spin"></div>
-                  <div className="absolute bottom-4 left-4 w-2 h-2 bg-orange-300 rounded-full animate-spin delay-1000"></div>
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center">
+                  <FileText className="w-8 h-8 text-white" />
                 </div>
+                <div className="text-2xl lg:text-3xl font-bold text-white mb-2">200+</div>
+                <div className="text-sm text-gray-400">Practice Questions</div>
               </div>
 
-              {/* Students Counter */}
-              <div className="group relative">
-                <div className="relative p-8 rounded-3xl bg-gradient-to-br from-blue-500/20 to-cyan-600/20 backdrop-blur-sm border border-blue-500/30 hover:border-blue-400/50 transition-all duration-500 hover:scale-105">
-                  <div className="absolute inset-0 rounded-3xl border-2 border-blue-500/20 group-hover:border-blue-400/40 transition-all duration-500"></div>
-                  
-                  <div className="relative mb-6">
-                    <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center text-white shadow-2xl group-hover:scale-110 transition-transform duration-500">
-                      <Users className="w-10 h-10" />
-                    </div>
-                    <div className="absolute inset-0 rounded-2xl bg-blue-400 blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-500"></div>
-                  </div>
-                  
-                  <div className="text-center">
-                    <div className="text-5xl font-black text-blue-400 mb-2 group-hover:text-blue-300 transition-colors duration-300">
-                      <span className="inline-block group-hover:animate-pulse">1</span>
-                      <span className="inline-block group-hover:animate-pulse delay-100">0</span>
-                      <span className="inline-block group-hover:animate-pulse delay-200">K</span>
-                      <span className="inline-block group-hover:animate-pulse delay-300">+</span>
-                    </div>
-                    <div className="text-lg font-semibold text-blue-300 uppercase tracking-wider">
-                      Students
-                    </div>
-                  </div>
-
-                  <div className="absolute top-4 right-4 w-3 h-3 bg-blue-400 rounded-full animate-ping"></div>
-                  <div className="absolute bottom-4 left-4 w-2 h-2 bg-blue-300 rounded-full animate-ping delay-1000"></div>
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-orange-500 to-red-600 flex items-center justify-center">
+                  <BookOpen className="w-8 h-8 text-white" />
                 </div>
+                <div className="text-2xl lg:text-3xl font-bold text-white mb-2">500+</div>
+                <div className="text-sm text-gray-400">Study Materials</div>
               </div>
-            </div>
-
-            {/* Bottom Decoration */}
-            <div className="mt-12 text-center">
-              <div className="inline-block w-32 h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-full"></div>
             </div>
           </div>
         </section>
 
         {/* Categories */}
-        <section className="py-4 px-4 flex-1">
+        <section className="py-8 px-4 flex-1">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold mb-4 text-foreground">Choose Your Placement & Exam Preparation </h2>
+              <h2 className="text-5xl font-bold mb-4 ">Choose Your Placement & Exam Preparation </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
                 Select from our comprehensive range of aptitude, reasoning, programming, and more.
               </p>
@@ -382,7 +291,7 @@ const ExamPrep = () => {
             
             {/*  Card Section*/}
             {/* <div className="p-2"> */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
                 {sections.map((section, index) => (
                   <div
                     key={index}
@@ -397,25 +306,25 @@ const ExamPrep = () => {
                     </div>
 
                     {/* Card Content */}
-                    <div className="relative p-6">
+                    <div className="relative p-4 sm:p-6">
                       {/* Header with Icon */}
-                      <div className="flex items-center justify-between mb-4">
-                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${section.gradient} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                      <div className="flex items-center justify-between mb-3 sm:mb-4">
+                        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br ${section.gradient} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                           {section.icon}
                         </div>
-                        <div className="text-right">
+                        {/* <div className="text-right">
                           <div className="text-xs text-gray-500 font-medium">Difficulty</div>
                           <div className="text-sm font-bold text-gray-800">{section.stats.difficulty}</div>
-                        </div>
+                        </div> */}
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-xl font-bold mb-3 text-gray-800 group-hover:text-gray-900 transition-colors duration-300">
+                      <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-gray-800 group-hover:text-gray-900 transition-colors duration-300">
                         {section.title}
                       </h3>
 
                       {/* Stats Bar */}
-                      <div className="flex items-center justify-between mb-4 p-3 bg-white/50 rounded-lg backdrop-blur-sm">
+                      {/* <div className="flex items-center justify-between mb-4 p-3 bg-white/50 rounded-lg backdrop-blur-sm">
                         <div className="text-center">
                           <div className="text-lg font-bold text-gray-800">
                             {section.stats.questions || section.stats.companies}
@@ -428,7 +337,7 @@ const ExamPrep = () => {
                           <div className="text-lg font-bold text-gray-800">{section.stats.time}</div>
                           <div className="text-xs text-gray-500">Avg Time</div>
                         </div>
-                      </div>
+                      </div> */}
 
                       {/* Topics List */}
                       <div className="mb-4">
@@ -489,74 +398,77 @@ const ExamPrep = () => {
 
       {/* Features */}
       <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 px-4 md:px-10 py-8 items-stretch">
-          {/* Timed Tests - Blue Theme */}
-          <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-blue-200 group h-full flex flex-col">
-            <CardHeader className="text-center pb-4">
-              <div className="w-20 h-20 mx-auto mb-2 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-lg">
-                <Clock className="w-10 h-10" />
-              </div>
-              <CardTitle className="text-xl font-bold text-center mb-3 group-hover:text-blue-600 transition-colors">
-                Timed Tests
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="pt-0 px-6 pb-6 flex-1">
-              <CardDescription className="text-center leading-relaxed text-gray-600">
-                Practice under real exam conditions with time tracking.
-              </CardDescription>
-            </CardContent>
-          </Card>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 items-stretch">
+            
+            {/* Timed Tests - Blue Theme */}
+            <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-blue-200 group h-full flex flex-col">
+              <CardHeader className="text-center pb-4 px-4 sm:px-6">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-4 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-lg">
+                  <Clock className="w-8 h-8 sm:w-10 sm:h-10" />
+                </div>
+                <CardTitle className="text-lg sm:text-xl font-bold text-center mb-2 sm:mb-3 group-hover:text-blue-600 transition-colors">
+                  Timed Tests
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0 px-4 sm:px-6 pb-4 sm:pb-6 flex-1">
+                <CardDescription className="text-center leading-relaxed text-gray-600 text-sm sm:text-base">
+                  Practice under real exam conditions with time tracking.
+                </CardDescription>
+              </CardContent>
+            </Card>
 
-          {/* Comprehensive Syllabus - Green Theme */}
-          <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-green-200 group h-full flex flex-col">
-            <CardHeader className="text-center pb-4">
-              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-lg">
-                <BookOpen className="w-10 h-10" />
-              </div>
-              <CardTitle className="text-xl font-bold text-center mb-3 group-hover:text-green-600 transition-colors">
-                Comprehensive Syllabus
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="pt-0 px-6 pb-6 flex-1">
-              <CardDescription className="text-center leading-relaxed text-gray-600">
-                Detailed curriculum covering all exam topics with structured learning paths
-              </CardDescription>
-            </CardContent>
-          </Card>
+            {/* Comprehensive Syllabus - Green Theme */}
+            <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-green-200 group h-full flex flex-col">
+              <CardHeader className="text-center pb-4 px-4 sm:px-6">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-4 rounded-full bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-lg">
+                  <BookOpen className="w-8 h-8 sm:w-10 sm:h-10" />
+                </div>
+                <CardTitle className="text-lg sm:text-xl font-bold text-center mb-2 sm:mb-3 group-hover:text-green-600 transition-colors">
+                  Comprehensive Syllabus
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0 px-4 sm:px-6 pb-4 sm:pb-6 flex-1">
+                <CardDescription className="text-center leading-relaxed text-gray-600 text-sm sm:text-base">
+                  Detailed curriculum covering all exam topics with structured learning paths.
+                </CardDescription>
+              </CardContent>
+            </Card>
 
-          {/* Practice Tests - Yellow Theme */}
-          <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-yellow-200 group h-full flex flex-col">
-            <CardHeader className="text-center pb-4">
-              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-600 flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-lg">
-                <Trophy className="w-10 h-10" />
-              </div>
-              <CardTitle className="text-xl font-bold text-center mb-3 group-hover:text-yellow-600 transition-colors">
-                Practice Tests
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="pt-0 px-6 pb-6 flex-1">
-              <CardDescription className="text-center leading-relaxed text-gray-600">
-                Mock tests simulating real exam conditions to boost your confidence
-              </CardDescription>
-            </CardContent>
-          </Card>
+            {/* Practice Tests - Yellow Theme */}
+            <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-yellow-200 group h-full flex flex-col">
+              <CardHeader className="text-center pb-4 px-4 sm:px-6">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-4 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-600 flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-lg">
+                  <Trophy className="w-8 h-8 sm:w-10 sm:h-10" />
+                </div>
+                <CardTitle className="text-lg sm:text-xl font-bold text-center mb-2 sm:mb-3 group-hover:text-yellow-600 transition-colors">
+                  Practice Tests
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0 px-4 sm:px-6 pb-4 sm:pb-6 flex-1">
+                <CardDescription className="text-center leading-relaxed text-gray-600 text-sm sm:text-base">
+                  Mock tests simulating real exam conditions to boost your confidence.
+                </CardDescription>
+              </CardContent>
+            </Card>
 
-          {/* Detailed Analysis - Purple Theme */}
-          <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-purple-200 group h-full flex flex-col">
-            <CardHeader className="text-center pb-4">
-              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-lg">
-                <Brain className="w-10 h-10" />
-              </div>
-              <CardTitle className="text-xl font-bold text-center mb-3 group-hover:text-purple-600 transition-colors">
-                Detailed Analysis
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="pt-0 px-6 pb-6 flex-1">
-              <CardDescription className="text-center leading-relaxed text-gray-600">
-                Get insights and explanations for every question.
-              </CardDescription>
-            </CardContent>
-          </Card>
+            {/* Detailed Analysis - Purple Theme */}
+            <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 border-2 border-purple-200 group h-full flex flex-col">
+              <CardHeader className="text-center pb-4 px-4 sm:px-6">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-4 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-lg">
+                  <Brain className="w-8 h-8 sm:w-10 sm:h-10" />
+                </div>
+                <CardTitle className="text-lg sm:text-xl font-bold text-center mb-2 sm:mb-3 group-hover:text-purple-600 transition-colors">
+                  Detailed Analysis
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0 px-4 sm:px-6 pb-4 sm:pb-6 flex-1">
+                <CardDescription className="text-center leading-relaxed text-gray-600 text-sm sm:text-base">
+                  Get insights and explanations for every question.
+                </CardDescription>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
 
