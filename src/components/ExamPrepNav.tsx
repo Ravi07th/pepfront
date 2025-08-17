@@ -178,7 +178,7 @@ const ExamPrepNav: React.FC<ExamPrepNavProps> = ({
 
       {/* Modern Dark Sidebar */}
       <aside
-        className={`bg-gradient-to-b from-slate-900 to-slate-800 border border-slate-700 shadow-2xl transition-all duration-300 backdrop-blur-sm ${
+        className={`bg-gradient-to-b from-slate-900 to-slate-800 border border-slate-700 shadow-2xl transition-all duration-300 backdrop-blur-sm w-fit ${
           sidebarOpen ? 'fixed lg:relative inset-y-0 left-0 z-50 w-64 lg:w-64' : 'hidden lg:block w-64'
         }`}
       >
@@ -206,7 +206,7 @@ const ExamPrepNav: React.FC<ExamPrepNavProps> = ({
         </div>
 
         {/* Quick Actions */}
-        <div className="p-4 border-b border-slate-700">
+        {/* <div className="p-4 border-b border-slate-700">
           <Button 
             className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-2 font-semibold shadow-lg"
             onClick={() => onStartTest("live-test", "test")}
@@ -214,7 +214,7 @@ const ExamPrepNav: React.FC<ExamPrepNavProps> = ({
             <BookOpen className="w-4 h-4 mr-2" />
             Start Practice
           </Button>
-        </div>
+        </div> */}
 
         {/* Navigation Sections */}
         <div className="p-4">
@@ -324,7 +324,7 @@ const ExamPrepNav: React.FC<ExamPrepNavProps> = ({
                 <div className="flex-1">
                   <span className="text-slate-300 font-medium text-sm">{test.name}</span>
                   <div className="flex items-center justify-between mt-1">
-                    <span className="text-xs text-slate-500">60 questions</span>
+                    <span className="text-xs text-slate-300">60 questions</span>
                     <Badge variant="secondary" className="text-xs bg-red-600 text-white">Live</Badge>
                   </div>
                 </div>

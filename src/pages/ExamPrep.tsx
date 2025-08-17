@@ -200,21 +200,21 @@ const ExamPrep = () => {
               <p className="text-xl lg:text-3xl font-light leading-relaxed opacity-90">
                 Boost your preparation with essential aptitude questions and solutions for placements and exams!
               </p>
-              <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                <div
-                  
+              <div className="flex flex-col sm:flex-row justify-center px-4 space-y-4 sm:space-y-0 sm:space-x-6">
+                <a
+                  href="/exam-patterns"
                   className="bg-gradient-to-r from-cyan-400 to-blue-500 text-indigo-900 px-8 py-4 rounded-xl font-bold transition"
                 >
-                  Explore Questions
-                </div>
-                <div
-                  
+                  Explore Exam Pattern
+                </a>
+                <a
+                  href="/quantitative-aptitude"
                   className="border-2 border-cyan-400 text-cyan-200 px-8 py-4 rounded-xl font-bold  transition"
                 >
                   Launch Practice Mode
-                </div>
+                </a>
               </div>
-              <div className="flex justify-center space-x-4 pt-4">
+              <div className="flex justify-center space-x-4 pt-4 px-4">
                 <Badge className="bg-blue-500/30 text-blue-200">500+ Questions</Badge>
                 <Badge className="bg-purple-500/30 text-purple-200">Mock Tests Each Topic</Badge>
                 <Badge className="bg-green-500/30 text-green-200">Real-Time Practice</Badge>
@@ -291,7 +291,7 @@ const ExamPrep = () => {
             
             {/*  Card Section*/}
             {/* <div className="p-2"> */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 px-5">
                 {sections.map((section, index) => (
                   <div
                     key={index}

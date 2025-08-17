@@ -4,7 +4,8 @@ import CompanyLogo from '@/components/common/CompanyLogo';
 import { companies } from './data/companies';
 import { Company, ExamType } from './types';
 import ExamPrepNav from '@/components/ExamPrepNav';
-import { Target, BookOpen, TrendingUp, Clock, FileText, Play } from 'lucide-react';
+import { Target, BookOpen, TrendingUp, Clock, FileText, Play, Menu } from 'lucide-react';
+import { Button } from '../ui/button';
 
 interface CompanySelectionProps {
   onCompanySelect: (company: Company, examType: ExamType) => void;
@@ -42,8 +43,8 @@ const CompanySelection: React.FC<CompanySelectionProps> = ({ onCompanySelect }) 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#0b1220] to-[#121a2a] text-white shadow-md">
-        <div className="max-w-7xl mx-auto grid grid-cols-12 items-center py-6 px-3">
+      <div className="items-center bg-gradient-to-r py-8 from-[#0b1220] to-[#121a2a] text-white shadow-md">
+        <div className="flex items-center justify-between px-5 w-full xl:w-3/5 lg:w-4/5 md:w-full sm:w-full">
           {/* Back button - centered on mobile, left on desktop */}
           <div className="col-span-12 sm:col-span-3 flex justify-center sm:justify-start">
             <button
@@ -54,11 +55,21 @@ const CompanySelection: React.FC<CompanySelectionProps> = ({ onCompanySelect }) 
             </button>
           </div>
           {/* Centered title */}
-          <div className="col-span-12 sm:col-span-6 text-center">
+          <div className="text-center md:block hidden">
             <h1 className="text-3xl md:text-4xl font-bold mb-1">MNC Mock Test Platform</h1>
             <p className="text-sm md:text-base text-white/80">Practice with realistic mock tests from top multinational companies</p>
           </div>
-          <div className="col-span-12 sm:col-span-3" />
+          <Button
+            variant="outline"
+            className="lg:hidden border-amber-400 text-amber-200 bg-transparent hover:bg-amber-400/10"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+          >
+            <Menu className="w-4 h-4" />
+          </Button>
+        </div>
+        <div className='md:hidden text-center sm:block'>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1">MNC Mock Test Platform</h1>
+          <p className="text-xs sm:text-sm md:text-base text-white/80">Practice with realistic mock tests from top multinational companies</p>
         </div>
       </div>
 

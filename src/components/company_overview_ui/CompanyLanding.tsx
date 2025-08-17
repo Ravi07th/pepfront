@@ -55,7 +55,7 @@ export default function CompanyLanding() {
           </div>
 
           {/* Company Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4 max-w-7xl mx-auto">
             {companies.map((company, index) => (
               <Card
                 key={company.id}
@@ -96,10 +96,10 @@ export default function CompanyLanding() {
                   <div className="space-y-3 mb-6">
                     <div 
                       className="flex items-center justify-center gap-2 text-sm text-gray-300 hover:text-blue-400 transition-colors cursor-pointer group/item"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleSyllabus(company.id);
-                      }}
+                      // onClick={(e) => {
+                      //   e.stopPropagation();
+                      //   handleSyllabus(company.id);
+                      // }}
                     >
                       <BookOpen className="w-4 h-4 text-green-500 group-hover/item:scale-110 transition-transform" />
                       <span>Exam Syllabus</span>
@@ -108,10 +108,10 @@ export default function CompanyLanding() {
                     
                     <div 
                       className="flex items-center justify-center gap-2 text-sm text-gray-300 hover:text-yellow-400 transition-colors cursor-pointer group/item"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleMockTest(company.id);
-                      }}
+                      // onClick={(e) => {
+                      //   e.stopPropagation();
+                      //   handleMockTest(company.id);
+                      // }}
                     >
                       <Trophy className="w-4 h-4 text-yellow-500 group-hover/item:scale-110 transition-transform" />
                       <span>Mock Test</span>
@@ -141,8 +141,8 @@ export default function CompanyLanding() {
           </div>
 
           {/* Additional Info Section */}
-          <div className="mt-12 text-center">
-            <div className="inline-flex items-center gap-2 text-gray-400 text-sm">
+          <div className="mt-12 text-center px-4">
+            <div className="inline-flex items-center gap-1 text-gray-400 text-sm">
               <Zap className="w-4 h-4 text-yellow-500" />
               <span>Click on individual features to explore specific sections</span>
             </div>

@@ -46,36 +46,36 @@ const SectionPage: React.FC<SectionPageProps> = ({
   return (
     <div className="min-h-screen ">
       {/* Header */}
-      
-      <div className="bg-gradient-to-r from-[#0b1220] to-[#121a2a] text-white shadow-md">
-        <div className="max-w-7xl mx-auto grid grid-cols-12 items-center py-4 sm:py-6 px-3 sm:px-6">
-          {/* Left section with back button and mobile menu */}
-          <div className="col-span-12 sm:col-span-3 flex justify-start items-center space-x-3">
-            <Link to="/exam-prep">
-              <Button
-                variant="outline"
-                className="border-amber-400 text-amber-200 bg-transparent hover:bg-amber-400/10 text-xs sm:text-sm"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                <span className="hidden sm:inline">Exam Preparation</span>
-                <span className="sm:hidden">Back</span>
-              </Button>
-            </Link>
-            {/* Mobile Menu Toggle */}
+      <div className=" items-center bg-gradient-to-r py-8 from-[#0b1220] to-[#121a2a] text-white shadow-md">
+        <div className='flex items-center justify-between px-5 w-full xl:w-3/5 lg:w-4/5 md:w-full sm:w-full'>
+          <Link to="/exam-prep">
             <Button
               variant="outline"
-              className="lg:hidden border-amber-400 text-amber-200 bg-transparent hover:bg-amber-400/10"
-              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="border-amber-400 text-amber-200 bg-transparent hover:bg-amber-400/10 text-xs sm:text-sm"
             >
-              <Menu className="w-4 h-4" />
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              <span className="hidden sm:inline">Exam Preparation</span>
+              <span className="sm:hidden">Back</span>
             </Button>
-          </div>
-          {/* Centered title */}
-          <div className="col-span-12 sm:col-span-6 text-center">
+          </Link>
+
+          <div className='text-center md:block hidden'>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1">{title}</h1>
             <p className="text-xs sm:text-sm md:text-base text-white/80">{subtitle}</p>
           </div>
-          <div className="col-span-12 sm:col-span-3" />
+
+          <Button
+            variant="outline"
+            className="lg:hidden border-amber-400 text-amber-200 bg-transparent hover:bg-amber-400/10"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+          >
+            <Menu className="w-4 h-4" />
+          </Button>
+        </div>
+
+        <div className='md:hidden text-center sm:block'>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1">{title}</h1>
+          <p className="text-xs sm:text-sm md:text-base text-white/80">{subtitle}</p>
         </div>
       </div>
 
@@ -128,7 +128,7 @@ const SectionPage: React.FC<SectionPageProps> = ({
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="pt-0">
-                    <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                    <div className="flex flex-wrap gap-2 sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                       <Button 
                         onClick={() => handleStartTest(topic.id, 'practice')}
                         className="flex-1 border border-slate-300 text-slate-700 hover:bg-slate-50 transition-all duration-300 py-3 sm:py-2"

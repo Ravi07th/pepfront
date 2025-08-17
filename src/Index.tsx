@@ -597,7 +597,7 @@ const Index1 = () => {
       </section>
 
       {/* Trending Section – Enhanced */}
-      <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 bg-gradient-to-br from-gray-900/50 via-gray-800/30 to-gray-900/50">
+      <section className="py-10 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-6 sm:mb-8 md:mb-12">
             <div className="inline-flex items-center gap-3 mb-4">
@@ -612,153 +612,164 @@ const Index1 = () => {
               Most searched topics by students in PrepCampus - Discover what's hot right now
             </p>
           </div>
-
+          
           {(() => {
             const items = [
               {
                 title: 'Microsoft Mock Test',
                 tag: 'Mock Test',
-                icon: Play,
-                gradient: 'from-blue-600 via-blue-500 to-cyan-500',
+                gradient: 'from-blue-500 to-cyan-500',
+                colour: 'text-blue-500',
                 chips: ['Azure Fundamentals', 'SDE-I Coding', 'Cloud Basics'],
                 href: '/mock-test',
-                description: 'Practice with Microsoft-specific questions'
+                svg: `<svg width="180" height="130" viewBox="0 0 180 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="40" y="30" width="100" height="70" rx="14" fill="#fff" fill-opacity="0.18"/>
+                        <rect x="60" y="50" width="60" height="10" rx="3" fill="#fff" fill-opacity="0.5"/>
+                        <rect x="60" y="65" width="40" height="10" rx="3" fill="#fff" fill-opacity="0.4"/>
+                        <rect x="60" y="80" width="30" height="10" rx="3" fill="#fff" fill-opacity="0.3"/>
+                        <polyline points="52,55 58,61 70,51" stroke="#fff" stroke-width="3" fill="none" stroke-opacity="0.7"/>
+                        <polyline points="52,70 58,76 70,66" stroke="#fff" stroke-width="3" fill="none" stroke-opacity="0.6"/>
+                        <polyline points="52,85 58,91 70,81" stroke="#fff" stroke-width="3" fill="none" stroke-opacity="0.5"/>
+                        <rect x="120" y="100" width="32" height="8" rx="4" fill="#fff" fill-opacity="0.3"/>
+                        <polygon points="152,100 160,104 152,108" fill="#fff" fill-opacity="0.5"/>
+                      </svg>`
               },
               {
                 title: 'Student Notes',
                 tag: 'Notes',
-                icon: BookOpen,
-                gradient: 'from-purple-600 via-purple-500 to-pink-500',
+                gradient: 'from-purple-500 to-pink-500',
+                colour: 'text-purple-500',
                 chips: ['DBMS', 'Operating Systems', 'DSA Notes'],
                 href: '/student-notes',
-                description: 'Comprehensive study materials'
+                svg: `<svg width="140" height="100" className="absolute top-8 right-6 opacity-30">
+                        <rect x="30" y="20" width="80" height="16" rx="4" fill="#fff" fillOpacity="0.5" />
+                        <rect x="20" y="40" width="100" height="16" rx="4" fill="#fff" fillOpacity="0.5" />
+                        <rect x="40" y="60" width="60" height="16" rx="4" fill="#fff" fillOpacity="0.5" />
+                        <rect x="35" y="80" width="70" height="10" rx="3" fill="#fff" fillOpacity="0.5" />
+                      </svg>`
               },
               {
-                title: 'Company Exam Patterns',
+                title: 'Student Syllabus',
                 tag: 'Syllabus',
-                icon: Target,
-                gradient: 'from-indigo-600 via-indigo-500 to-violet-500',
+                gradient: 'from-indigo-500 to-violet-500',
+                colour: 'text-indigo-500',
                 chips: ['TCS NQT', 'Accenture', 'Infosys'],
                 href: '/exam-patterns',
-                description: 'Latest exam patterns & syllabus'
+                svg: `<svg width="140" height="100" className="absolute top-8 right-6 opacity-30">
+                        <circle cx="30" cy="30" r="6" fill="#fff" fillOpacity="0.5" />
+                        <rect x="45" y="24" width="70" height="12" rx="4" fill="#fff" fillOpacity="0.5" />
+                        <circle cx="30" cy="55" r="6" fill="#fff" fillOpacity="0.5" />
+                        <rect x="45" y="49" width="70" height="12" rx="4" fill="#fff" fillOpacity="0.5" />
+                        <circle cx="30" cy="80" r="6" fill="#fff" fillOpacity="0.5" />
+                        <rect x="45" y="74" width="70" height="12" rx="4" fill="#fff" fillOpacity="0.5" />
+                      </svg>`
               },
               {
                 title: 'TCS NQT Mock Test',
                 tag: 'Mock Test',
-                icon: Trophy,
-                gradient: 'from-amber-600 via-amber-500 to-orange-500',
+                gradient: 'from-amber-500 to-orange-500',
+                colour: 'text-amber-500',
                 chips: ['Foundation', 'Advanced', 'Coding'],
                 href: '/mock-test',
-                description: 'TCS-specific practice tests'
+                svg: `<svg width="180" height="130" viewBox="0 0 180 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="40" y="30" width="100" height="70" rx="14" fill="#fff" fill-opacity="0.18"/>
+                        <rect x="60" y="50" width="60" height="10" rx="3" fill="#fff" fill-opacity="0.5"/>
+                        <rect x="60" y="65" width="40" height="10" rx="3" fill="#fff" fill-opacity="0.4"/>
+                        <rect x="60" y="80" width="30" height="10" rx="3" fill="#fff" fill-opacity="0.3"/>
+                        <polyline points="52,55 58,61 70,51" stroke="#fff" stroke-width="3" fill="none" stroke-opacity="0.7"/>
+                        <polyline points="52,70 58,76 70,66" stroke="#fff" stroke-width="3" fill="none" stroke-opacity="0.6"/>
+                        <polyline points="52,85 58,91 70,81" stroke="#fff" stroke-width="3" fill="none" stroke-opacity="0.5"/>
+                        <rect x="120" y="100" width="32" height="8" rx="4" fill="#fff" fill-opacity="0.3"/>
+                        <polygon points="152,100 160,104 152,108" fill="#fff" fill-opacity="0.5"/>
+                      </svg>`
               },
               {
                 title: 'Coding Practice',
                 tag: 'Coding',
-                icon: Code,
-                gradient: 'from-emerald-600 via-emerald-500 to-teal-500',
+                gradient: 'from-emerald-500 to-teal-500',
+                colour: 'text-emerald-500',
                 chips: ['C / Java / Python', 'Data Structures', 'Patterns'],
                 href: '/coding',
-                description: 'Master coding fundamentals'
+                svg: `<svg width="140" height="100" viewBox="0 0 140 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="15" y="20" width="110" height="60" rx="8" fill="#fff" fillOpacity="0.15"/>
+                        <rect x="22" y="28" width="96" height="44" rx="4" fill="#fff" fillOpacity="0.25"/>
+                        <rect x="60" y="82" width="20" height="8" rx="3" fill="#fff" fillOpacity="0.25"/>
+                        <text x="40" y="58" textAnchor="middle" font-size="32" font-family="monospace" fill="#000" fill-opacity="0.7">&lt;/&gt;</text>
+                      </svg>`
               },
               {
-                title: 'Exam Preparation',
-                tag: 'Prep',
-                icon: GraduationCap,
-                gradient: 'from-slate-600 via-slate-500 to-blue-600',
-                chips: ['Aptitude', 'Reasoning', 'Technical'],
-                href: '/exam-prep',
-                description: 'Complete exam preparation guide'
+                title: 'Company Exam Patterns',
+                tag: 'Syllabus',
+                gradient: 'from-slate-600 to-blue-600',
+                colour: 'text-slate-500',
+                chips: ['Overview', 'Sections', 'Time & Qs'],
+                href: '/exam-patterns',
+                svg: `<svg width="140" height="100" className="absolute top-8 right-6 opacity-30">
+                        <circle cx="30" cy="30" r="6" fill="#fff" fillOpacity="0.5" />
+                        <rect x="45" y="24" width="70" height="12" rx="4" fill="#fff" fillOpacity="0.5" />
+                        <circle cx="30" cy="55" r="6" fill="#fff" fillOpacity="0.5" />
+                        <rect x="45" y="49" width="70" height="12" rx="4" fill="#fff" fillOpacity="0.5" />
+                        <circle cx="30" cy="80" r="6" fill="#fff" fillOpacity="0.5" />
+                        <rect x="45" y="74" width="70" height="12" rx="4" fill="#fff" fillOpacity="0.5" />
+                      </svg>`
               },
             ];
 
             const trendingCarouselSettings = {
-              dots: true,
+              dots: false,
               infinite: true,
-              speed: 1000,
+              speed: 600,
               slidesToShow: 3,
               slidesToScroll: 1,
               autoplay: true,
-              autoplaySpeed: 5000,
+              autoplaySpeed: 2500,
               pauseOnHover: true,
               centerMode: true,
-              centerPadding: '100px',
-              cssEase: 'cubic-bezier(0.4, 0, 0.2, 1)',
+              // centerPadding: '40px',
+              cssEase: 'ease-in-out',
               responsive: [
-                { breakpoint: 1280, settings: { slidesToShow: 3, centerPadding: '40px' } },
-                { breakpoint: 1024, settings: { slidesToShow: 2, centerPadding: '30px' } },
-                { breakpoint: 768, settings: { slidesToShow: 2, centerPadding: '20px', centerMode: false } },
-                { breakpoint: 640, settings: { slidesToShow: 1, centerPadding: '10px', centerMode: false } },
+                { breakpoint: 1280, settings: { slidesToShow: 3, centerPadding: '24px' } },
+                { breakpoint: 1024, settings: { slidesToShow: 2, centerPadding: '24px' } },
+                { breakpoint: 640, settings: { slidesToShow: 1, centerPadding: '24px' } },
               ],
             } as const;
 
             return (
-              <div className="relative">
-                {/* Background Elements */}
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-transparent to-red-500/5 rounded-3xl"></div>
-                <div className="absolute top-10 left-10 w-20 h-20 bg-orange-500/10 rounded-full blur-xl"></div>
-                <div className="absolute bottom-10 right-10 w-32 h-32 bg-red-500/10 rounded-full blur-xl"></div>
-                
-                <div className="relative bg-gray-800/20 backdrop-blur-sm border border-gray-700/50 rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl">
-                  <Slider {...(trendingCarouselSettings as any)}>
-                    {items.map((item, idx) => (
-                      <div key={idx} className="px-3 ">
-                        <div className={`h-50 sm:h-80 md:h-88 lg:h-96 rounded-2xl bg-gradient-to-br ${item.gradient} relative overflow-hidden shadow-2xl group cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-3xl`}> 
-                          {/* Animated Background */}
-                          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all duration-500"></div>
-                          <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-700"></div>
-                          <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-12 -translate-x-12 group-hover:scale-150 transition-transform duration-700"></div>
-                          
-                          <div className="relative z-10 h-full p-3 sm:p-4 md:p-6 flex flex-col justify-between">
-                            {/* Header */}
-                            <div className="flex items-center justify-between mb-3">
-                              <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                  <item.icon className="h-4 w-4 text-white" />
-                                </div>
-                                <span className="text-xs font-bold text-white/90 bg-white/20 px-3 py-1.5 rounded-full backdrop-blur-sm">
-                                  {item.tag}
+              <div className="border-2 border-gray-700 rounded-xl px-4 py-8">
+                <Slider {...(trendingCarouselSettings as any)}>
+                  {items.map((item, idx) => (
+                    <div key={idx} className="px-2 h-full">
+                      <div className={`h-44 md:h-60 rounded-2xl bg-gradient-to-r ${item.gradient} relative overflow-hidden shadow-lg`}> 
+                        <div className="absolute inset-0 bg-black/25" />
+                        <div className="relative z-10 h-full p-5 flex flex-col justify-between">
+                            <span
+                              className="absolute top-8 right-6 opacity-30"
+                              dangerouslySetInnerHTML={{ __html: item.svg }} />
+                            <div className="">
+                              <span className="text-xs font-semibold text-white/90 bg-white/20 px-2 py-1 w-fit rounded-md">
+                                {item.tag}
+                              </span>
+                              <h3 className="text-2xl font-bold text-white">{item.title}</h3>
+                            </div>
+                          <div className="flex justify-between items-center">
+                            <div className="flex flex-wrap gap-2">
+                              {item.chips.map((chip, cIdx) => (
+                                <span key={cIdx} className="text-xs text-white bg-white/15 px-2 py-1 rounded-full h-fit">
+                                  {chip}
                                 </span>
-                              </div>
-                              <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
-                                <ArrowRight className="h-4 w-4 text-white/70 group-hover:text-white group-hover:translate-x-0.5 transition-all duration-300" />
-                              </div>
+                              ))}
                             </div>
-                            
-                            {/* Content */}
-                            <div className="flex-1 flex flex-col justify-center min-h-0">
-                              <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white mb-3 group-hover:text-white/90 transition-colors duration-300 leading-tight">
-                                {item.title}
-                              </h3>
-                              <p className="text-xs sm:text-sm md:text-base text-white/80 mb-4 leading-relaxed overflow-hidden">
-                                {item.description}
-                              </p>
-                              <div className="flex flex-wrap gap-1 sm:gap-2 mb-4">
-                                {item.chips.map((chip, cIdx) => (
-                                  <span key={cIdx} className="text-xs font-medium text-white/90 bg-white/15 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full backdrop-blur-sm border border-white/10 group-hover:bg-white/20 transition-all duration-300">
-                                    {chip}
-                                  </span>
-                                ))}
+                            <Link to={item.href}>
+                              <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-lg">
+                                <Play className={`w-8 h-8 ${item.colour} hover:scale-110`} />
                               </div>
-                            </div>
-                            
-                            {/* Action Button */}
-                            <div className="flex justify-end">
-                              <Link to={item.href}>
-                                <Button 
-                                  size="lg" 
-                                  className="bg-white/90 text-gray-900 hover:bg-white font-semibold px-3  rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:-translate-y-1 text-xs sm:text-sm md:text-base"
-                                >
-                                  Explore Now
-                                  <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 md:h-4 md:w-4 ml-1 sm:ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                                </Button>
-                              </Link>
-                            </div>
+                            </Link>
                           </div>
                         </div>
                       </div>
-                    ))}
-                  </Slider>
-                </div>
+                    </div>
+                  ))}
+                </Slider>
               </div>
             );
           })()}
@@ -843,15 +854,10 @@ const Index1 = () => {
                     <p className="text-gray-300 text-xs sm:text-sm leading-relaxed flex-1">
                       {topic.description}
                     </p>
-                    <div className="flex justify-end">
-                      <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
-                        <ArrowRight className="h-4 w-4 text-white/70 group-hover:text-white group-hover:translate-x-0.5 transition-all duration-300" />
-                      </div>
-                    </div>
                   </div>
                   
                   {/* Action Button */}
-                  <div className="">
+                  <div className="mt-5">
                     <Button 
                       className={`w-full ${topic.color} hover:shadow-lg text-white font-semibold py-2 md:py-3 rounded-xl transition-all duration-300 transform group-hover:-translate-y-1 text-xs sm:text-sm md:text-base`}
                       onClick={(e) => {
