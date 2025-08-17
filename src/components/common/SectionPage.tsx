@@ -117,7 +117,8 @@ const SectionPage: React.FC<SectionPageProps> = ({
                         {topic.icon}
                       </div>
                       <Badge variant="secondary" className="text-xs bg-amber-100 text-amber-700">
-                        {topic.totalQuestions} Questions
+                        {/* {topic.totalQuestions}  */}
+                        30 Questions
                       </Badge>
                     </div>
                     <CardTitle className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors">

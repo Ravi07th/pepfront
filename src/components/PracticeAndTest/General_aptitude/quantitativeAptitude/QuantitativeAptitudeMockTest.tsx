@@ -46,6 +46,19 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
   const [visitedQuestions, setVisitedQuestions] = useState<Set<string>>(new Set());
   const [actualTimeTaken, setActualTimeTaken] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        e.stopPropagation();
+        // Optionally, show a message or do nothing
+        return false;
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown, true);
+    return () => window.removeEventListener("keydown", handleKeyDown, true);
+  }, []);
 
   // Function to shuffle array (Fisher-Yates algorithm)
   const shuffleArray = <T,>(array: T[]): T[] => {

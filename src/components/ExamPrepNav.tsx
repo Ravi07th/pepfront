@@ -286,7 +286,7 @@ const ExamPrepNav: React.FC<ExamPrepNavProps> = ({
               className={`nav-item flex items-center px-3 py-2 rounded-lg text-slate-300 hover:text-white ${
                 isActiveRoute('/syllabus') ? 'active' : ''
               }`}
-              onClick={() => handleNavigation('/syllabus')}
+              onClick={() => handleNavigation('/exam-patterns')}
             >
               <Calendar className={`w-4 h-4 mr-3 ${isActiveRoute('/syllabus') ? 'text-white' : 'text-red-400'}`} />
               <span className="font-medium text-sm">Exam Syllabus</span>

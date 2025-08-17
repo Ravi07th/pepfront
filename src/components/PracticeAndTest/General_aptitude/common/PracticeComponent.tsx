@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { ArrowLeft, CheckCircle, XCircle, Eye, BookOpen, Users, Navigation, Grid3X3, Puzzle, Edit3, Save, X, Calculator, MessageSquare, Trophy, Clock, Target, BarChart3, Menu, HelpCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle, XCircle, Eye, BookOpen, Users, Navigation, Grid3X3, Puzzle, Edit3, Save, X, Calculator, MessageSquare, Trophy, Clock, Target, BarChart3, Menu, HelpCircle, RefreshCcw, Play } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
@@ -492,7 +492,7 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
         <div className="w-full px-2 sm:px-4 md:px-6 lg:px-8">
           <div className="flex items-center justify-between py-2 sm:py-3 md:py-4">
             {/* Left Side - Back Button */}
-             <div className="w-20 sm:w-24 flex-shrink-0">
+            <div className="w-fit flex-shrink-0">
               <Button
                 variant="ghost"
                  onClick={handleBackNavigation}
@@ -504,12 +504,12 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
             </div>
             
             {/* Center - Heading */}
-            <div className="flex-1 flex items-center justify-center space-x-2 sm:space-x-3 px-2 sm:px-4">
-              <div className="p-1 sm:p-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg text-white flex-shrink-0 shadow-md">
+            <div className=" flex flex-wrap items-center space-x-2 justify-center mr-10">
+              <div className="hidden xl:block md:block p-1 sm:p-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg text-white flex-shrink-0 shadow-md">
                 {sectionIcon}
               </div>
               <div className="text-center">
-                <h1 className="text-sm sm:text-base md:text-lg font-bold text-white">{getTopicTitle(topicId || '')} Practice</h1>
+                <h1 className="text-sm sm:text-base md:text-lg font-bold text-white">{getTopicTitle(topicId || '')}</h1>
                 {/* <p className="text-xs sm:text-sm text-gray-400">Panel {currentPanel + 1} of {totalPanels}</p> */}
                 {/* <p className="text-xs text-blue-400 lg:hidden">Tap "Topics" to change practice area</p>
                 <div className="flex items-center justify-center space-x-1 mt-1">
@@ -521,7 +521,15 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
             
             {/* Right Side - Menu Toggle and Score */}
             <div className="w-20 sm:w-24 flex-shrink-0 flex items-center justify-end space-x-1 sm:space-x-2">
-              {/* Enhanced Mobile Menu Toggle */}
+              <div className="flex items-center space-x-1 sm:space-x-2 bg-gray-800 border border-gray-600 rounded-lg px-2 sm:px-3 py-1 sm:py-2 shadow-md">
+                <Trophy className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 flex-shrink-0" />
+                <span className="text-xs sm:text-sm font-medium text-gray-200 hidden sm:inline">Score: {score}/{totalQuestions}</span>
+                <span className="text-xs sm:text-sm font-medium text-gray-200 sm:hidden">{score}/{totalQuestions}</span>
+                <Badge variant="secondary" className="ml-1 sm:ml-2 text-xs bg-blue-600 text-white">
+                  {accuracy}%
+                </Badge>
+              </div>
+              {/* Enhanced Sidebar Toggle Button */}
               <Button
                 variant="ghost"
                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -531,18 +539,9 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
                   <Menu className="w-4 h-4 sm:w-5 sm:h-5 group-hover:rotate-12 transition-transform duration-300" />
                   <div className="absolute -top-1 -right-1 w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
                 </div>
-                <span className="hidden sm:inline text-xs sm:text-sm font-medium">Topics</span>
-                <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></div>
+                {/* <span className="hidden sm:inline text-xs sm:text-sm font-medium">Topics</span> */}
+                {/* <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></div> */}
               </Button>
-              
-              <div className="flex items-center space-x-1 sm:space-x-2 bg-gray-800 border border-gray-600 rounded-lg px-2 sm:px-3 py-1 sm:py-2 shadow-md">
-                <Trophy className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 flex-shrink-0" />
-                <span className="text-xs sm:text-sm font-medium text-gray-200 hidden sm:inline">Score: {score}/{totalQuestions}</span>
-                <span className="text-xs sm:text-sm font-medium text-gray-200 sm:hidden">{score}/{totalQuestions}</span>
-                <Badge variant="secondary" className="ml-1 sm:ml-2 text-xs bg-blue-600 text-white">
-                  {accuracy}%
-                </Badge>
-              </div>
             </div>
           </div>
         </div>
@@ -583,192 +582,39 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
                 {/* Enhanced Action Buttons */}
                 <div className="space-y-3">
                   {/* Start Practice Button */}
-                  <Button className="group w-full bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 hover:from-blue-700 hover:via-purple-700 hover:to-blue-800 text-white font-semibold py-4 flex items-center justify-center space-x-3 shadow-2xl transition-all duration-500 transform hover:scale-105 hover:shadow-blue-500/25 border-0 relative overflow-hidden">
+                  {/* <Button className="group w-full bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 hover:from-blue-700 hover:via-purple-700 hover:to-blue-800 text-white font-semibold py-4 flex items-center justify-center space-x-3 shadow-2xl transition-all duration-500 transform hover:scale-105 hover:shadow-blue-500/25 border-0 relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                     <span className="text-xl animate-pulse">▶</span>
                     <span className="font-semibold">Start Practice</span>
                     <div className="w-2 h-2 bg-white rounded-full animate-bounce"></div>
-                  </Button>
+                  </Button> */}
                   
                   {/* Reset Session Button */}
                   <Button 
                     variant="outline" 
                     onClick={resetSession}
-                    className="group w-full border-2 border-gray-600/50 text-gray-300 hover:text-white hover:border-purple-500/50 hover:bg-purple-500/10 py-3 flex items-center justify-center space-x-3 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 backdrop-blur-sm"
+                    className="group w-full bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 hover:from-blue-700 hover:via-purple-700 hover:to-blue-800 text-white font-semibold py-4 flex items-center justify-center space-x-3 shadow-2xl transition-all duration-500 transform hover:scale-105 hover:shadow-blue-500/25 border-0 relative overflow-hidden"
+                    // "group w-full border-2 border-gray-600/50 text-gray-700 hover:text-white hover:border-purple-500/50 hover:bg-purple-500/10 py-3 flex items-center justify-center space-x-3 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 backdrop-blur-sm"
                   >
-                    <span className="text-lg group-hover:rotate-180 transition-transform duration-500">🔄</span>
+                    <div className='flex items-center justify-center ml-5 animate-pulse group-hover:rotate-90'>
+                      <RefreshCcw />
+                    </div>
                     <span className="font-medium">Reset Session</span>
-                    <span className="text-xs text-gray-500 group-hover:text-purple-400">New Questions</span>
+                    {/* <span className="text-xs text-gray-500 group-hover:text-purple-400">New Questions</span> */}
+                    <Badge variant="success" className="ml-1 sm:ml-2 text-xs bg-green-600 text-white">
+                      New
+                    </Badge>
                   </Button>
                 </div>
                 
                 {/* Enhanced Practice Categories */}
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between px-2">
-                    <h3 className="text-xs font-bold text-gray-300 uppercase tracking-widest">PRACTICE TOPICS</h3>
-                    <div className="flex items-center space-x-1">
-                      <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></div>
-                      <div className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse delay-100"></div>
-                      <div className="w-1.5 h-1.5 bg-pink-400 rounded-full animate-pulse delay-200"></div>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-3">
-                    {categories.map((category, index) => (
-                      <Card 
-                        key={category.id}
-                        className={`group cursor-pointer transition-all duration-500 hover:shadow-2xl border-2 backdrop-blur-sm ${
-                          topicId === category.id 
-                            ? 'border-blue-400/70 bg-gradient-to-r from-blue-600/40 via-purple-600/30 to-blue-700/40 shadow-2xl shadow-blue-500/25 scale-105' 
-                            : 'border-gray-700/50 hover:border-purple-500/50 hover:bg-gradient-to-r hover:from-gray-800/80 hover:to-gray-700/80 bg-gray-800/40 hover:scale-105'
-                        } transform transition-all duration-300`}
-                        onClick={() => {
-                          handleCategoryClick(category.id);
-                          setIsSidebarOpen(false);
-                        }}
-                        role="button"
-                        tabIndex={0}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            handleCategoryClick(category.id);
-                            setIsSidebarOpen(false);
-                          }
-                        }}
-                        style={{
-                          animationDelay: `${index * 100}ms`
-                        }}
-                      >
-                        <CardContent className="p-4">
-                          <div className="flex items-center space-x-4">
-                            <div className={`relative p-3 rounded-xl flex-shrink-0 transition-all duration-300 ${
-                              topicId === category.id 
-                                ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 text-white shadow-lg scale-110' 
-                                : 'bg-gradient-to-r from-gray-700 to-gray-600 text-gray-300 group-hover:from-purple-600 group-hover:to-purple-700 group-hover:text-white group-hover:scale-110'
-                            }`}>
-                              {category.icon}
-                              {/* Glow effect for active category */}
-                              {topicId === category.id && (
-                                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-xl blur-md opacity-50 animate-pulse"></div>
-                              )}
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <h3 className={`font-semibold text-sm transition-colors duration-300 ${
-                                topicId === category.id ? 'text-blue-200' : 'text-gray-300 group-hover:text-purple-200'
-                              }`}>
-                                {category.name}
-                              </h3>
-                              <p className={`text-xs mt-2 line-clamp-2 transition-colors duration-300 ${
-                                topicId === category.id ? 'text-blue-100' : 'text-gray-400 group-hover:text-purple-100'
-                              }`}>
-                                {category.description}
-                              </p>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              {topicId === category.id && (
-                                <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full flex-shrink-0 shadow-lg animate-pulse"></div>
-                              )}
-                              <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                                topicId === category.id ? 'bg-blue-400' : 'bg-gray-600 group-hover:bg-purple-400'
-                              }`}></div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-                
-                {/* Enhanced Footer */}
-                <div className="pt-6 border-t border-gray-700/50">
-                  <div className="text-center space-y-3">
-                    <div className="flex items-center justify-center space-x-2">
-                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                      <span className="text-xs text-green-400 font-medium">Session Active</span>
-                    </div>
-                    <p className="text-xs text-gray-500 font-medium">
-                      Practice makes perfect! 🚀
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Main Content Area */}
-      <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
-        {/* Left Sidebar - Enhanced Dark Theme with Glassmorphism */}
-        <div className="hidden lg:block w-72 bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 backdrop-blur-sm border-r border-gray-700/50 shadow-2xl overflow-hidden z-10 relative">
-          {/* Animated Background Pattern */}
-          <div className="absolute inset-0 opacity-5">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20 animate-pulse"></div>
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]"></div>
-          </div>
-          
-          <div className="relative p-6 space-y-6 overflow-y-auto h-full">
-            {/* Enhanced Header Section */}
-            <div className="text-center mb-8 pb-6 border-b border-gray-700/50">
-              <div className="relative mb-4">
-                <div className="p-3 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 rounded-2xl text-white flex-shrink-0 shadow-2xl mx-auto w-16 h-16 flex items-center justify-center">
-                  {sectionIcon}
-                </div>
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-2xl blur-xl opacity-30 animate-pulse"></div>
-              </div>
-              <div className="space-y-2">
-                <h2 className="text-xl font-bold text-white bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-transparent">
-                  {sectionName}
-                </h2>
-                <p className="text-sm text-gray-400 font-medium">Choose your practice journey</p>
-                <div className="flex items-center justify-center space-x-2 mt-2">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="text-xs text-green-400 font-medium">Live Practice</span>
-                </div>
-              </div>
-            </div>
-            
-            {/* Enhanced Action Buttons */}
-            <div className="space-y-4">
-              {/* Start Practice Button */}
-              <Button className="group w-full bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 hover:from-blue-700 hover:via-purple-700 hover:to-blue-800 text-white font-semibold py-4 flex items-center justify-center space-x-3 shadow-2xl transition-all duration-500 transform hover:scale-105 hover:shadow-blue-500/25 border-0 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                <span className="text-xl animate-pulse">▶</span>
-                <span className="font-semibold">Practice with Solution</span>
-                <div className="w-2 h-2 bg-white rounded-full animate-bounce"></div>
-              </Button>
-              
-              {/* Reset Session Button */}
-              <Button 
-                variant="outline" 
-                onClick={resetSession}
-                className="group w-full border-2 border-gray-600/50 text-gray-300 hover:text-white hover:border-purple-500/50 hover:bg-purple-500/10 py-3 flex items-center justify-center space-x-3 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 backdrop-blur-sm"
-              >
-                <span className="text-lg group-hover:rotate-180 transition-transform duration-500">🔄</span>
-                <span className="font-medium">Reset Session</span>
-                <span className="text-xs text-gray-500 group-hover:text-purple-400">New Questions</span>
-              </Button>
-            </div>
-            
-            {/* Enhanced Practice Categories */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between px-2">
-                <h3 className="text-xs font-bold text-gray-300 uppercase tracking-widest">PRACTICE TOPICS</h3>
-                <div className="flex items-center space-x-1">
-                  <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></div>
-                  <div className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse delay-100"></div>
-                  <div className="w-1.5 h-1.5 bg-pink-400 rounded-full animate-pulse delay-200"></div>
-                </div>
-              </div>
-              
               <div className="space-y-3">
                 {categories.map((category, index) => (
                   <Card 
                     key={category.id}
                     className={`group cursor-pointer transition-all duration-500 hover:shadow-2xl border-2 backdrop-blur-sm ${
                       topicId === category.id 
-                        ? 'border-blue-400/70 bg-gradient-to-r from-blue-600/40 via-purple-600/30 to-blue-700/40 shadow-2xl shadow-blue-500/25 scale-105' 
+                        ? 'text-white border-purple-500/80 bg-purple-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25'
                         : 'border-gray-700/50 hover:border-purple-500/50 hover:bg-gradient-to-r hover:from-gray-800/80 hover:to-gray-700/80 bg-gray-800/40 hover:scale-105'
                     } transform transition-all duration-300`}
                     onClick={() => handleCategoryClick(category.id)}
@@ -811,7 +657,157 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
                         </div>
                         <div className="flex items-center space-x-2">
                           {topicId === category.id && (
-                            <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full flex-shrink-0 shadow-lg animate-pulse"></div>
+                            <div className="w-3 h-3 bg-green-400 rounded-full flex-shrink-0 shadow-lg animate-pulse"></div>
+                          )}
+                          <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                            topicId === category.id ? 'bg-blue-400' : 'bg-gray-600 group-hover:bg-purple-400'
+                          }`}></div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+                
+                {/* Enhanced Footer */}
+                <div className="pt-6 border-t border-gray-700/50">
+                  <div className="text-center space-y-3">
+                    <div className="flex items-center justify-center space-x-2">
+                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                      <span className="text-xs text-green-400 font-medium">Session Active</span>
+                    </div>
+                    <p className="text-xs text-gray-500 font-medium">
+                      Practice makes perfect! 🚀
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Main Content Area */}
+      <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
+        {/* Left Sidebar - Enhanced Dark Theme with Glassmorphism */}
+        <div className="hidden lg:block w-72 bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 backdrop-blur-sm border-r border-gray-700/50 shadow-2xl overflow-hidden z-10 relative">
+          {/* Animated Background Pattern */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20 animate-pulse"></div>
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]"></div>
+          </div>
+          
+          <div className="relative p-6 space-y-6 overflow-y-auto h-full">
+            {/* Enhanced Header Section */}
+            <div className="text-center border-b border-gray-700/50">
+              <div className="relative mb-4">
+                <div className="p-3 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 rounded-2xl text-white flex-shrink-0 shadow-2xl mx-auto w-16 h-16 flex items-center justify-center">
+                  {sectionIcon}
+                </div>
+                {/* Glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-2xl blur-xl opacity-30 animate-pulse"></div>
+              </div>
+              <div className="space-y-1">
+                <h2 className="text-xl font-bold text-white bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-transparent">
+                  {sectionName}
+                </h2>
+                <p className="text-sm text-gray-400 font-medium">Choose your practice journey</p>
+                <div className="flex items-center justify-center space-x-2 mt-2">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  <span className="text-xs text-green-400 font-medium">Live Practice</span>
+                </div>
+              </div>
+            </div>
+            
+            {/* Enhanced Action Buttons */}
+            <div className="space-y-4">
+              {/* Start Practice Button */}
+              {/* <Button className="group w-full bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 hover:from-blue-700 hover:via-purple-700 hover:to-blue-800 text-white font-semibold py-4 flex items-center justify-center space-x-3 shadow-2xl transition-all duration-500 transform hover:scale-105 hover:shadow-blue-500/25 border-0 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <Play />
+                <span className="font-semibold">Practice with Solution</span>
+                <div className="w-2 h-2 bg-white rounded-full animate-bounce"></div>
+              </Button> */}
+              
+              {/* Reset Session Button */}
+              <Button 
+                variant="outline" 
+                onClick={resetSession}
+                className="group w-full bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 hover:from-blue-700 hover:via-purple-700 hover:to-blue-800 text-white font-semibold py-4 flex items-center justify-center space-x-3 shadow-2xl transition-all duration-500 transform hover:scale-105 hover:shadow-blue-500/25 border-0 relative overflow-hidden"
+                // "group w-full border-2 border-gray-600/50 text-gray-700 hover:text-white hover:border-purple-500/50 hover:bg-purple-500/10 py-3 flex items-center justify-center space-x-3 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 backdrop-blur-sm"
+              >
+                <div className='flex items-center justify-center ml-5 animate-pulse group-hover:rotate-90'>
+                  <RefreshCcw />
+                </div>
+                <span className="font-medium">Reset Session</span>
+                {/* <span className="text-xs text-gray-500 group-hover:text-purple-400">New Questions</span> */}
+                <Badge variant="success" className="ml-1 sm:ml-2 text-xs bg-green-600 text-white">
+                  New
+                </Badge>
+              </Button>
+            </div>
+            
+            {/* Enhanced Practice Categories */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between px-2">
+                <h3 className="text-xs font-bold text-gray-300 uppercase tracking-widest">PRACTICE TOPICS</h3>
+                <div className="flex items-center space-x-1">
+                  <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></div>
+                  <div className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse delay-100"></div>
+                  <div className="w-1.5 h-1.5 bg-pink-400 rounded-full animate-pulse delay-200"></div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                {categories.map((category, index) => (
+                  <Card 
+                    key={category.id}
+                    className={`group cursor-pointer transition-all duration-500 hover:shadow-2xl border-2 backdrop-blur-sm ${
+                      topicId === category.id 
+                        ? 'text-white border-purple-500/80 bg-purple-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25'
+                        : 'border-gray-700/50 hover:border-purple-500/50 hover:bg-gradient-to-r hover:from-gray-800/80 hover:to-gray-700/80 bg-gray-800/40 hover:scale-105'
+                    } transform transition-all duration-300`}
+                    onClick={() => handleCategoryClick(category.id)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleCategoryClick(category.id);
+                      }
+                    }}
+                    style={{
+                      animationDelay: `${index * 100}ms`
+                    }}
+                  >
+                    <CardContent className="p-4">
+                      <div className="flex items-center space-x-4">
+                        <div className={`relative p-3 rounded-xl flex-shrink-0 transition-all duration-300 ${
+                          topicId === category.id 
+                            ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 text-white shadow-lg scale-110' 
+                            : 'bg-gradient-to-r from-gray-700 to-gray-600 text-gray-300 group-hover:from-purple-600 group-hover:to-purple-700 group-hover:text-white group-hover:scale-110'
+                        }`}>
+                          {category.icon}
+                          {/* Glow effect for active category */}
+                          {topicId === category.id && (
+                            <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-xl blur-md opacity-50 animate-pulse"></div>
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h3 className={`font-semibold text-sm transition-colors duration-300 ${
+                            topicId === category.id ? 'text-blue-200' : 'text-gray-300 group-hover:text-purple-200'
+                          }`}>
+                            {category.name}
+                          </h3>
+                          <p className={`text-xs mt-2 line-clamp-2 transition-colors duration-300 ${
+                            topicId === category.id ? 'text-blue-100' : 'text-gray-400 group-hover:text-purple-100'
+                          }`}>
+                            {category.description}
+                          </p>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          {topicId === category.id && (
+                            <div className="w-3 h-3 bg-green-400 rounded-full flex-shrink-0 shadow-lg animate-pulse"></div>
                           )}
                           <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
                             topicId === category.id ? 'bg-blue-400' : 'bg-gray-600 group-hover:bg-purple-400'
@@ -843,7 +839,7 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
         <div className="flex-1 p-2 sm:p-3 md:p-4 lg:p-6 min-w-0 overflow-y-auto" id="practice-content">
           <div className="w-full max-w-4xl mx-auto">
             {/* Progress Section */}
-            <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-3 sm:p-4 md:p-6 mb-3 sm:mb-4 md:mb-6 shadow-lg border border-gray-700">
+            <div className="sticky -top-16 bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-3 sm:p-4 md:p-6 mb-3 sm:mb-4 md:mb-6 shadow-lg border border-gray-700">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-4 space-y-2 sm:space-y-0">
                                  <div className="flex items-center space-x-2">
                 <h3 className="text-base sm:text-lg font-semibold text-white">Progress</h3>
@@ -857,7 +853,7 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
                    </Button> */}
                  </div>
 
-                <div className="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-4">
+                <div className="flex flex-row gap-5  sm:items-center sm:space-y-0 sm:space-x-4">
                   <div className="flex items-center space-x-2">
                     <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-blue-400" />
                     <span className="text-xs sm:text-sm text-gray-300">Page {currentPanel + 1} of {totalPanels}</span>
@@ -936,9 +932,9 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
                             variant="outline"
                             className={`w-full justify-start text-left h-auto p-2 sm:p-3 md:p-4 rounded-xl border-2 transition-all duration-300 ${
                               isAnswered && optionIndex === question.correctAnswer
-                                ? "border-green-500 bg-green-100 text-green-900 shadow-lg transform scale-105"
+                                ? "border-green-700 bg-green-200  text-green-600 shadow-lg transform scale-105"
                                 : isAnswered && selectedAnswer === optionIndex && optionIndex !== question.correctAnswer
-                                ? "border-red-500 bg-red-100 text-red-900 shadow-lg transform scale-105"
+                                ? "border-red-500 bg-red-200 text-red-800 shadow-lg transform scale-105"
                                 : selectedAnswer === optionIndex && !isAnswered
                                 ? "border-blue-500 bg-blue-100 text-blue-900 shadow-lg transform scale-105"
                                 : "hover:bg-blue-50 hover:border-blue-300 hover:text-blue-900"
@@ -949,9 +945,9 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
                             <div className="flex items-center gap-2 sm:gap-3 md:gap-4 w-full">
                               <div className={`flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 rounded-full border-2 font-bold text-xs sm:text-sm transition-all duration-300 flex-shrink-0 ${
                                 isAnswered && optionIndex === question.correctAnswer
-                                  ? "bg-green-600 border-green-600 text-white shadow-lg"
+                                  ? "bg-green-700 border-green-700 text-white shadow-lg"
                                   : isAnswered && selectedAnswer === optionIndex && optionIndex !== question.correctAnswer
-                                  ? "bg-red-600 border-red-600 text-white shadow-lg"
+                                  ? "bg-red-800 border-red-800 text-white shadow-lg"
                                   : selectedAnswer === optionIndex && !isAnswered
                                   ? "bg-blue-600 border-blue-600 text-white shadow-lg"
                                   : "bg-white border-gray-300 text-gray-700 hover:bg-blue-50 hover:border-blue-400"

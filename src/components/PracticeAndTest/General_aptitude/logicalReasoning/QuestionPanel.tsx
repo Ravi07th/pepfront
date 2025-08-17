@@ -210,19 +210,22 @@ const QuestionPanel: React.FC<QuestionPanelProps> = ({
             </div>
           </div>
         </div>
+        {isSidebarOpen && (
+          <>
+          {/* <div className='bg-black bg-opacity-25'></div> */}
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-60 z-40 transition-opacity duration-300 lg:hidden"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        </>
+        )}
 
-                          {/* Question Navigator Sidebar - Compact */}
+        {/* Question Navigator Sidebar - Compact */}
           <div className={`fixed lg:relative inset-y-0 right-0 z-50 w-full sm:w-80 lg:w-72 xl:w-80 bg-white border-l border-gray-200 flex flex-col transform transition-transform duration-300 ease-in-out ${
             isSidebarOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'
           }`}>
           {/* Mobile overlay */}
-          {isSidebarOpen && (
-            <div 
-              className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-              onClick={() => setIsSidebarOpen(false)}
-            />
-          )}
-          <div className="p-2 sm:p-3 border-b border-gray-200">
+          <div className="p-2 sm:p-3 border-b border-gray-200 overflow-scroll z-50">
             <div className="flex items-center justify-between mb-1">
               <h3 className="text-sm font-semibold text-gray-900">Question Navigator</h3>
               <button
@@ -304,12 +307,11 @@ const QuestionPanel: React.FC<QuestionPanelProps> = ({
           </div>
         </div>
       </div>
-
-                                                                                                                                                                                                                                                                                                                       {/* Fixed Navigation Buttons at Bottom */}
-            <div className="fixed bottom-0 left-0 right-0 lg:left-0 lg:right-auto bg-white border-t border-gray-200 p-2 sm:p-4 z-50 shadow-lg lg:w-72 xl:w-80">
+        {/* Fixed Navigation Buttons at Bottom */}
+      <div className="fixed bottom-0 left-0 right-0 lg:left-0 lg:right-auto bg-white border-t border-gray-200 p-2 sm:p-4 z-30  lg:w-2/3 xl:w-3/4">
           <div className="flex justify-center">
             <div className="w-full max-w-5xl px-2 sm:px-0">
-                                                           <div className="flex items-center justify-between space-x-2">
+              <div className="flex items-center justify-between space-x-2">
                   {/* Mobile Layout: Prev | Counter | Next */}
                   <div className="flex items-center space-x-2 lg:hidden w-full">
                     <button
@@ -348,7 +350,7 @@ const QuestionPanel: React.FC<QuestionPanelProps> = ({
                   </div>
 
                   {/* Desktop Layout: Next | Counter | Prev */}
-                  <div className="hidden lg:flex items-center space-x-2 w-full">
+                  <div className="hidden lg:flex lg:flex-row-reverse items-center space-x-2 w-full">
                     <button
                       onClick={onNextQuestion}
                       disabled={!canGoNext}
