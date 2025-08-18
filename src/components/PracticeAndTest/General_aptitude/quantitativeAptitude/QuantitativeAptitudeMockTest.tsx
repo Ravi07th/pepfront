@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Clock, ChevronRight, CheckCircle, AlertCircle, Flag, SkipForward, ArrowLeft, LogOut, Maximize2, Minimize2 } from 'lucide-react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { QuantitativeTopic, QuantitativeQuestion, QuantitativeExamState, QuantitativeQuestionStatus } from './types';
 import Timer from '../logicalReasoning/Timer.tsx';
 import QuestionPanel from '../logicalReasoning/QuestionPanel';
@@ -21,12 +21,14 @@ import { mixtureAlligationQuestions } from './data/mixtureAlligationData';
 import { permutationAndCombinationQuestions } from './data/permutationAndCombinationData';
 import { probabilityQuestions } from './data/probabilityData';
 import { algebraAndLinearEquationsQuestions } from './data/algebraAndlinearEquationsData';
+import EscapeExitModal from '@/components/EscapeExitModal.tsx';
 
 const QuantitativeAptitudeMockTest: React.FC = () => {
   const { topic } = useParams<{ topic: string }>();
   const navigate = useNavigate();
   const [isFullScreen, setIsFullScreen] = useState(false);
-  
+  const location = useLocation();
+
   // Create mock topic object based on URL parameter
   const mockTopic: QuantitativeTopic = useMemo(() => ({
     id: topic || 'number-system',
@@ -46,19 +48,7 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
   const [visitedQuestions, setVisitedQuestions] = useState<Set<string>>(new Set());
   const [actualTimeTaken, setActualTimeTaken] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        e.preventDefault();
-        e.stopPropagation();
-        // Optionally, show a message or do nothing
-        return false;
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown, true);
-    return () => window.removeEventListener("keydown", handleKeyDown, true);
-  }, []);
+  const [showEscapeModal, setShowEscapeModal] = useState(false);
 
   // Function to shuffle array (Fisher-Yates algorithm)
   const shuffleArray = <T,>(array: T[]): T[] => {
@@ -147,6 +137,9 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
   // Check full screen status
   useEffect(() => {
     const handleFullScreenChange = () => {
+      if (!document.fullscreenElement) {
+        setShowEscapeModal(true);
+      }
       setIsFullScreen(!!document.fullscreenElement);
     };
 
@@ -162,6 +155,12 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
       document.removeEventListener('MSFullscreenChange', handleFullScreenChange);
     };
   }, []);
+
+    useEffect(() => {
+      if (isFullScreen && location.pathname.includes('/test')) {
+        setShowEscapeModal(true);
+      }
+    }, []);
 
   // Request full screen on component mount
   useEffect(() => {
@@ -196,7 +195,7 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
   }, [examCompleted, showSolutions]);
 
   const handleExamEnd = () => {
-    console.log('handleExamEnd called, showing loading effect');
+    // console.log('handleExamEnd called, showing loading effect');
     setIsSubmitting(true);
     const totalTime = mockTopic.duration * 60;
     const timeUsed = totalTime - timeLeft;
@@ -228,7 +227,7 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
   };
 
   const handleTimeUp = () => {
-    console.log('handleTimeUp called, showing loading effect');
+    // console.log('handleTimeUp called, showing loading effect');
     setIsSubmitting(true);
     const totalTime = mockTopic.duration * 60;
     setActualTimeTaken(totalTime); // All time used when time runs out
@@ -272,14 +271,7 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
     }, 4000);
   };
 
-  const getQuestionStatus = (questionId: string): QuantitativeQuestionStatus => {
-    console.log(`getQuestionStatus called for ${questionId}:`, {
-      currentQuestionId: questions[currentQuestion]?.id,
-      isMarked: markedForReview[questionId],
-      hasAnswer: answers[questionId] !== undefined,
-      isVisited: visitedQuestions.has(questionId)
-    });
-    
+  const getQuestionStatus = (questionId: string): QuantitativeQuestionStatus => {    
     if (questions[currentQuestion]?.id === questionId) {
       return 'current';
     }
@@ -479,6 +471,8 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
   const progress = getTotalProgress();
 
   return (
+    <>
+    {showEscapeModal && <EscapeExitModal />}
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header - Same as MNC Exam */}
       <header className="text-white py-3 px-4" style={{ backgroundColor: '#3B82F6' }}>
@@ -560,6 +554,7 @@ const QuantitativeAptitudeMockTest: React.FC = () => {
         />
       </div>
     </div>
+    </>
   );
 };
 

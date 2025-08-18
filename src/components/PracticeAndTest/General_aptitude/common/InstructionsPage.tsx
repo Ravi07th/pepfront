@@ -47,7 +47,7 @@ const InstructionsPage: React.FC<InstructionsPageProps> = ({
       </header>
 
       <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex gap-8">
+        <div className="flex flex-col lg:flex-row gap-5 items-center lg:items-start">
           {/* Main Content */}
           <div className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">General Instructions:</h2>
@@ -198,7 +198,7 @@ const InstructionsPage: React.FC<InstructionsPageProps> = ({
             <div className="mt-6 space-y-3">
               <button
                 onClick={handleStartTest}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white px-[60px] py-5 rounded-lg font-medium transition-colors mr-40"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white px-[60px] py-5 rounded-lg font-medium transition-colors"
               >
                 Start Test
               </button>
