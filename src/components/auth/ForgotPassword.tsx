@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui
 import { Alert, AlertDescription } from '../ui/alert';
 import { Mail, Loader2, ArrowLeft } from 'lucide-react';
 
-const ForgotPassword: React.FC = () => {
+const ForgotPassword: React.FC =   () => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
