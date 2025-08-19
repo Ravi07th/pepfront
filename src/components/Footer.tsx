@@ -44,7 +44,6 @@ const Footer: React.FC = () => {
   const handleNewsletterSignup = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle newsletter signup logic here
-    console.log('Newsletter signup:', email);
     setEmail('');
   };
 

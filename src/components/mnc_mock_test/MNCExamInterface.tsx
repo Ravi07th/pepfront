@@ -49,13 +49,9 @@ const MNCExamInterface: React.FC = () => {
   };
 
   const handleReExam = () => {
-    console.log('[MNCExamInterface] Retake exam clicked');
-    console.log('[MNCExamInterface] Company:', resolvedCompany?.id);
-    console.log('[MNCExamInterface] ExamType:', resolvedExamType?.id);
     
     // Navigate to the exam instructions page with the same company and exam type
     const routeId = getRouteId(resolvedCompany, resolvedExamType);
-    console.log('[MNCExamInterface] Generated routeId:', routeId);
     
     // Navigate with state to ensure data is passed correctly
     navigate(`/mock-test/${routeId}`, {

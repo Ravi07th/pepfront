@@ -39,15 +39,12 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
 
   const questions = useMemo(() => {
     const allQuestions = getLimitedQuestionsByCompanyAndExam(company.id, examType.id);
-    console.log(`Loaded ${allQuestions.length} questions for ${company.id}-${examType.id}`);
-    console.log('Available section IDs:', [...new Set(allQuestions.map(q => q.sectionId))]);
     
     // Log the count of questions per section
     const sectionCounts = allQuestions.reduce((acc, q) => {
       acc[q.sectionId] = (acc[q.sectionId] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
-    console.log('Questions per section:', sectionCounts);
     
     return allQuestions;
   }, [company.id, examType.id]);
@@ -60,12 +57,6 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
   
   // Get current questions based on structure
   const currentQuestions = useMemo(() => {
-    console.log(`Filtering questions for section: ${currentSectionData.id}`);
-    console.log(`Has subsections: ${hasSubsections}`);
-    if (currentSubsectionData) {
-      console.log(`Current subsection: ${currentSubsectionData.id}`);
-    }
-    
     let filteredQuestions;
     if (hasSubsections && currentSubsectionData) {
       // For nested structure, filter by both section and subsection
@@ -77,8 +68,6 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
       // For flat structure, filter by section only
       filteredQuestions = questions.filter(q => q.sectionId === currentSectionData.id);
     }
-    
-    console.log(`Found ${filteredQuestions.length} questions for current section`);
     return filteredQuestions;
   }, [questions, currentSectionData.id, hasSubsections, currentSubsectionData?.id]);
 
@@ -92,12 +81,10 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
       examType.sections.forEach((section, index) => {
         initialTimers[index] = totalTime; // All sections share the same total time
       });
-      console.log(`${company.id} exam: Initialized single timer for all sections: ${totalTime / 60} minutes (${totalTime} seconds)`);
     } else {
       // For other exams, use individual section timers
       examType.sections.forEach((section, index) => {
         initialTimers[index] = section.duration * 60; // Convert to seconds
-        console.log(`Initialized timer for section ${section.name}: ${section.duration} minutes (${section.duration * 60} seconds)`);
       });
     }
     
@@ -131,19 +118,11 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
             Object.keys(newTimers).forEach(key => {
               newTimers[key] = newTime;
             });
-            // Log timer update for debugging
-            if (newTime % 60 === 0) { // Log every minute
-              console.log(`${company.id} exam timer: ${Math.floor(newTime / 60)}:${(newTime % 60).toString().padStart(2, '0')}`);
-            }
           }
         } else {
           // For other exams, update only current section
           if (newTimers[currentSection] > 0) {
             newTimers[currentSection] -= 1;
-            // Log timer update for debugging
-            if (newTimers[currentSection] % 60 === 0) { // Log every minute
-              console.log(`Section ${currentSection + 1} timer: ${Math.floor(newTimers[currentSection] / 60)}:${(newTimers[currentSection] % 60).toString().padStart(2, '0')}`);
-            }
           }
         }
         
@@ -162,28 +141,24 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
       // For Microsoft, check if the total exam time is up
       const totalTimeLeft = sectionTimeLeft[0]; // Use first section's time as the master timer
       if (totalTimeLeft !== undefined && totalTimeLeft <= 0 && !sectionSubmitted) {
-        console.log(`${company.id} exam time up - completing exam`);
         setExamCompleted(true);
       }
     } else if (company.id === 'cognizant') {
       // For Cognizant, check current section time and auto-submit
       const currentTimeLeft = sectionTimeLeft[currentSection];
       if (currentTimeLeft !== undefined && currentTimeLeft <= 0 && !sectionSubmitted) {
-        console.log(`Time up for Cognizant section ${currentSection + 1}: ${examType.sections[currentSection].name}`);
         handleCognizantSectionSubmit();
       }
     } else if (company.id === 'wipro') {
       // For Wipro, check current section time and auto-submit (same logic as Cognizant)
       const currentTimeLeft = sectionTimeLeft[currentSection];
       if (currentTimeLeft !== undefined && currentTimeLeft <= 0 && !sectionSubmitted) {
-        console.log(`Time up for Wipro section ${currentSection + 1}: ${examType.sections[currentSection].name}`);
         handleWiproSectionSubmit();
       }
     } else {
       // For other exams, check current section time
       const currentTimeLeft = sectionTimeLeft[currentSection];
       if (currentTimeLeft !== undefined && currentTimeLeft <= 0 && !sectionSubmitted) {
-        console.log(`Time up for section ${currentSection + 1}: ${examType.sections[currentSection].name}`);
         handleSubmitSection();
       }
     }
@@ -204,11 +179,8 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
 
   // Handle return to home from results page
   const handleReturnHome = () => {
-    // Safely exit fullscreen with error handling
     if (document.exitFullscreen) {
       document.exitFullscreen().catch((error) => {
-        console.log('[ExamInterface] Error exiting fullscreen:', error);
-        // Continue with navigation even if fullscreen exit fails
       });
     }
     onExamEnd();
@@ -216,30 +188,22 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
 
   // Handle re-exam - navigate directly to introduction page
   const handleReExam = () => {
-    console.log('[ExamInterface] Retake exam button clicked');
-    console.log('[ExamInterface] onReExam function available:', !!onReExam);
-    
     // Safely exit fullscreen with error handling
     if (document.exitFullscreen) {
       document.exitFullscreen().catch((error) => {
-        console.log('[ExamInterface] Error exiting fullscreen:', error);
-        // Continue with navigation even if fullscreen exit fails
+        console.error('[ExamInterface] Error exiting fullscreen:', error);
       });
     }
     // Use the passed onReExam function if available, otherwise fallback to window.location
     if (onReExam) {
-      console.log('[ExamInterface] Calling onReExam function');
       onReExam();
     } else {
-      console.log('[ExamInterface] Using fallback window.location');
-      // Fallback to window.location if onReExam is not provided
       const routeId = getRouteId(company, examType);
       window.location.href = `/mock-test/${routeId}`;
     }
   };
 
   const handleTimeUp = () => {
-    // Auto submit when time is up
     setExamCompleted(true);
   };
 
@@ -258,11 +222,6 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
   };
 
   const handleQuestionChange = (questionIndex: number) => {
-    console.log('[ExamInterface] handleQuestionChange called with index:', questionIndex);
-    console.log('[ExamInterface] Current question before change:', currentQuestion);
-    console.log('[ExamInterface] Current questions array length:', currentQuestions.length);
-    console.log('[ExamInterface] Available questions:', currentQuestions.map((q, i) => `${i}: ${q.id}`));
-    
     if (questionIndex >= 0 && questionIndex < currentQuestions.length) {
       setCurrentQuestion(questionIndex);
       // Mark the current question as visited
@@ -270,44 +229,39 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
       if (currentQuestionId) {
         setVisitedQuestions(prev => new Set([...prev, currentQuestionId]));
       }
-      console.log('[ExamInterface] Question change completed successfully');
     } else {
       console.error('[ExamInterface] Invalid question index:', questionIndex, 'for questions array of length:', currentQuestions.length);
     }
   };
 
   const handleSubmitSection = () => {
-    if (isSubmittingSection) return; // Prevent multiple submissions
+    if (isSubmittingSection) return;
     
-    console.log(`Submitting section ${currentSection + 1}: ${currentSectionData.name}`);
     setIsSubmittingSection(true);
     setSectionSubmitted(true);
-    // Mark current section as submitted
     setSubmittedSections(prev => new Set([...prev, currentSection]));
+
     setTimeout(() => {
       handleNextSection();
-    }, 2000); // Show submission confirmation for 2 seconds
+    }, 2000);
   };
 
   // Special handling for Cognizant exam - section-wise submission
   const handleCognizantSectionSubmit = () => {
-    if (isSubmittingSection) return; // Prevent multiple submissions
-    
-    console.log(`Submitting Cognizant section ${currentSection + 1}: ${currentSectionData.name}`);
+    if (isSubmittingSection) return;
     setIsSubmittingSection(true);
     setSectionSubmitted(true);
-    // Mark current section as submitted
+
     setSubmittedSections(prev => new Set([...prev, currentSection]));
     setTimeout(() => {
       handleNextSection();
-    }, 2000); // Show submission confirmation for 2 seconds
+    }, 2000); 
   };
 
   // Special handling for Wipro exam - section-wise submission (same logic as Cognizant)
   const handleWiproSectionSubmit = () => {
     if (isSubmittingSection) return; // Prevent multiple submissions
     
-    console.log(`Submitting Wipro section ${currentSection + 1}: ${currentSectionData.name}`);
     setIsSubmittingSection(true);
     setSectionSubmitted(true);
     // Mark current section as submitted
@@ -319,9 +273,7 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
 
   // Special handling for Infosys exam - section-wise submission (same logic as Cognizant/Wipro)
   const handleInfosysSectionSubmit = () => {
-    if (isSubmittingSection) return; // Prevent multiple submissions
-    
-    console.log(`Submitting Infosys section ${currentSection + 1}: ${currentSectionData.name}`);
+    if (isSubmittingSection) return;
     setIsSubmittingSection(true);
     setSectionSubmitted(true);
     // Mark current section as submitted
@@ -335,16 +287,12 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({
     const nextSection = currentSection + 1;
     
     if (nextSection < examType.sections.length) {
-      // Move to next section
-      console.log(`Moving to section ${nextSection + 1}: ${examType.sections[nextSection].name}`);
       setCurrentSection(nextSection);
       setCurrentSubsection(0);
       setCurrentQuestion(0);
       setSectionSubmitted(false);
       setIsSubmittingSection(false); // Reset submission state
     } else {
-      // Exam completed
-      console.log('Exam completed - all sections finished');
       setExamCompleted(true);
       setIsSubmittingSection(false); // Reset submission state
     }

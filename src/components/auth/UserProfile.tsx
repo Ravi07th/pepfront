@@ -171,17 +171,19 @@ const UserProfile: React.FC = () => {
 
       <div className="relative z-10 max-w-4xl mx-auto">
         {/* Enhanced Header Section with PrepCampus Branding */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-gray-700 via-gray-600 to-gray-800 rounded-2xl shadow-2xl mb-6 p-2">
+        <div className="text-center mb-4">
+          <a href="/">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-gray-700 via-gray-600 to-gray-800 rounded-2xl shadow-2xl mb-2 p-2">
             <img 
               src="/images/mylogo.png" 
               alt="PrepCampus Logo" 
               className="w-12 h-12 object-contain"
             />
           </div>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-300 via-gray-200 to-gray-100 bg-clip-text text-transparent mb-3">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-300 via-gray-200 to-gray-100 bg-clip-text text-transparent text-yellow-200 mb-3">
             PrepCampus
           </h1>
+          </a>
           <h2 className="text-2xl font-semibold text-white mb-2">
             User Profile
           </h2>
@@ -199,12 +201,12 @@ const UserProfile: React.FC = () => {
                   Manage your account information and preferences
                 </CardDescription>
               </div>
-                             <div className="flex flex-col sm:flex-row gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                  {!isEditing && (
                    <Button 
                      onClick={() => setIsEditing(true)} 
                      variant="outline"
-                     className="border-gray-600 text-gray-200 hover:bg-gray-800/30 hover:border-gray-500"
+                     className="border-gray-600 text-gray-700 hover:bg-gray-800/30 hover:border-gray-500"
                    >
                      <Edit className="mr-2 h-4 w-4" />
                      Edit Profile
@@ -541,7 +543,7 @@ const UserProfile: React.FC = () => {
                            type="button" 
                            variant="outline"
                            onClick={() => navigate('/')}
-                           className="border-gray-600 text-gray-200 hover:bg-gray-800/30 hover:border-gray-500"
+                           className="border-gray-600 text-gray-700 hover:bg-gray-800/30 hover:border-gray-500"
                          >
                            <ArrowLeft className="mr-2 h-4 w-4" />
                            Back to Home

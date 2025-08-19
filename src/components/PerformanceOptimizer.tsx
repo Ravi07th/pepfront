@@ -68,7 +68,7 @@ export const OptimizedLink: React.FC<OptimizedLinkProps> = ({
     // Track outbound links for analytics
     if (external) {
       // Add analytics tracking here
-      console.log('External link clicked:', href);
+      console.warn('External link clicked:', href);
     }
   };
 

@@ -79,16 +79,6 @@ const CompanyQuestionsList: React.FC<CompanyQuestionsListProps> = ({
   });
 
   const totalCount = questions.length;
-  
-  // Debug logging
-  console.log(`CompanyQuestionsList Debug:`);
-  console.log(`- Company: ${companyName} (${companyId})`);
-  console.log(`- Total questions: ${totalCount}`);
-  console.log(`- Search term: "${searchTerm}"`);
-  console.log(`- Difficulty filter: "${difficultyFilter}"`);
-  console.log(`- Category filter: "${categoryFilter}"`);
-  console.log(`- Available categories:`, standardCategories);
-  console.log(`- Filtered questions: ${filteredQuestions.length}`);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">

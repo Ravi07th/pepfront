@@ -93,7 +93,8 @@ const SignIn: React.FC = () => {
       <div className="relative z-10 w-full max-w-md">
         {/* Enhanced Header Section with PrepCampus Branding */}
         <div className="text-center mb-2">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-gray-700 via-gray-600 to-gray-800 rounded-2xl shadow-2xl mb-6 p-2">
+          <a href="/">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-gray-700 via-gray-600 to-gray-800 rounded-2xl shadow-2xl mb-4 p-2">
             <img 
               src="/images/mylogo.png" 
               alt="PrepCampus Logo" 
@@ -101,8 +102,9 @@ const SignIn: React.FC = () => {
             />
           </div>
           <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-300 via-gray-200 to-gray-100 bg-clip-text text-transparent mb-3">
-            <span className="text-orange-500">PrepCampus</span>
+            <span className="text-yellow-200">PrepCampus</span>
           </h1>
+          </a>
         </div>
 
         {/* Enhanced Main Card */}
@@ -236,7 +238,7 @@ const SignIn: React.FC = () => {
                       handleGoogleSuccess(credentialResponse);
                     }}
                     onError={() => {
-                      console.log('Google Login Failed');
+                      console.error('Google Login Failed');
                     }}
                     theme="filled_black"
                     size="large"

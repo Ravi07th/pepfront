@@ -99,7 +99,6 @@ const ExplanationModal: React.FC<ExplanationModalProps> = ({
           if (notificationData) {
             try {
               const data = JSON.parse(notificationData);
-              console.log('Modal notification data:', data);
               
               // If it's a comment-related notification, switch to comments tab
               if (data.relatedItemType === 'comment' || data.type === 'like' || data.type === 'comment') {

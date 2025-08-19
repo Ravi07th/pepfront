@@ -32,7 +32,6 @@ export class EmailService {
       });
 
       if (response.ok) {
-        console.log('Email sent successfully via backend');
         return true;
       }
       
@@ -47,9 +46,6 @@ export class EmailService {
   // Method 2: EmailJS
   async sendViaEmailJS(data: EmailData): Promise<boolean> {
     try {
-      // This would require EmailJS setup
-      // For now, we'll return false to trigger fallback
-      console.log('EmailJS not configured, using fallback');
       return false;
     } catch (error) {
       console.error('EmailJS error:', error);
@@ -84,7 +80,7 @@ This message was sent from the contact form on PrepCampus website.
       try {
         await navigator.clipboard.writeText(emailContent);
       } catch (clipboardError) {
-        console.log('Clipboard not available');
+        console.warn('Clipboard not available');
       }
       
       return true;

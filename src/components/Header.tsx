@@ -112,11 +112,8 @@ export default function Header() {
     if (isAuthenticated) {
       const loadNotifications = async () => {
         try {
-          console.log('Loading notifications for user:', user?._id);
           const notifications = await notificationService.getNotifications();
           const unreadCount = await notificationService.getUnreadCount();
-          console.log('Loaded notifications:', notifications);
-          console.log('Unread count:', unreadCount);
           setNotifications(notifications);
           setNotificationCount(unreadCount);
         } catch (error) {
@@ -209,8 +206,6 @@ export default function Header() {
   };
 
   const handleNotificationItemClick = (notification: any) => {
-    console.log('Notification clicked:', notification);
-    
     // Mark notification as read
     const updatedNotifications = notifications.map(n => 
       n._id === notification._id ? { ...n, isRead: true } : n
@@ -234,7 +229,6 @@ export default function Header() {
       if (baseRoute) {
         // Navigate to the practice route with question ID as state
         const path = `${baseRoute}/general`;
-        console.log('Navigating to:', path, 'with question ID:', notification.questionId);
         
         // Store the question ID and additional data in localStorage so the practice component can auto-open the modal
         localStorage.setItem('notificationQuestionId', notification.questionId);

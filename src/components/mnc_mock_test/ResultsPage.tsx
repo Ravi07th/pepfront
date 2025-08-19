@@ -408,12 +408,9 @@ const ResultsPage: React.FC<ResultsPageProps> = ({
           </button>
           <button
             onClick={() => {
-              console.log('[ResultsPage] Retake exam button clicked');
-              console.log('[ResultsPage] onReExam function available:', !!onReExam);
               if (onReExam) {
                 onReExam();
               } else {
-                console.log('[ResultsPage] Using fallback window.location.reload()');
                 window.location.reload();
               }
             }}

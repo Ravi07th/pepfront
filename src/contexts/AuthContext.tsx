@@ -280,15 +280,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const updateUser = async (userData: Partial<User>) => {
     try {
-      console.log('=== PROFILE UPDATE DEBUG ===');
-      console.log('Updating user with data:', userData);
-      console.log('Token:', state.token);
-      console.log('API URL:', `${API_BASE_URL}/user/profile`);
-      
-      // First, test if the backend is reachable
       try {
         const healthCheck = await fetch(`${API_BASE_URL}/health`);
-        console.log('Health check status:', healthCheck.status);
         if (!healthCheck.ok) {
           throw new Error('Backend server is not responding');
         }
@@ -305,16 +298,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         },
         body: JSON.stringify(userData),
       });
-
-      console.log('Response status:', response.status);
-      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
       
       const data = await response.json();
-      console.log('Response data:', data);
 
       if (response.ok) {
         dispatch({ type: 'UPDATE_USER', payload: data.data.user });
-        console.log('User updated successfully');
       } else {
         console.error('API Error:', data.message);
         throw new Error(data.message || 'Failed to update user profile');
@@ -327,6 +315,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const updateProfilePicture = async (imageDataUrl: string) => {
     try {
+      const formData = new FormData();
+      formData.append("file", imageDataUrl);
       const response = await fetch(`${API_BASE_URL}/user/profile-picture`, {
         method: 'POST',
         headers: {

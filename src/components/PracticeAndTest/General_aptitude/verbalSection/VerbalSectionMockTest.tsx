@@ -257,11 +257,9 @@ const VerbalSectionMockTest: React.FC = () => {
 
   // Monitor state changes
   useEffect(() => {
-    console.log('State changed - examCompleted:', examCompleted, 'showSolutions:', showSolutions);
   }, [examCompleted, showSolutions]);
 
   const handleExamEnd = () => {
-    console.log('handleExamEnd called, showing loading effect');
     setIsSubmitting(true);
     const totalTime = mockTopic.duration * 60;
     const timeUsed = totalTime - timeLeft;
@@ -293,7 +291,6 @@ const VerbalSectionMockTest: React.FC = () => {
   };
 
   const handleTimeUp = () => {
-    console.log('handleTimeUp called, showing loading effect');
     setIsSubmitting(true);
     const totalTime = mockTopic.duration * 60;
     setActualTimeTaken(totalTime); // All time used when time runs out
@@ -338,13 +335,6 @@ const VerbalSectionMockTest: React.FC = () => {
   };
 
   const getQuestionStatus = (questionId: string): VerbalQuestionStatus => {
-    console.log(`getQuestionStatus called for ${questionId}:`, {
-      currentQuestionId: questions[currentQuestion]?.id,
-      isMarked: markedForReview[questionId],
-      hasAnswer: answers[questionId] !== undefined,
-      isVisited: visitedQuestions.has(questionId)
-    });
-    
     if (questions[currentQuestion]?.id === questionId) {
       return 'current';
     }
@@ -419,12 +409,10 @@ const VerbalSectionMockTest: React.FC = () => {
   };
 
   const handleViewSolutions = () => {
-    console.log('handleViewSolutions called, setting showSolutions to true');
     setShowSolutions(true);
   };
 
   const handleBackFromSolutions = () => {
-    console.log('handleBackFromSolutions called, setting showSolutions to false');
     setShowSolutions(false);
   };
 
@@ -516,9 +504,6 @@ const VerbalSectionMockTest: React.FC = () => {
   }
 
   if (showSolutions) {
-    console.log('Rendering SolutionViewer, showSolutions is true');
-    console.log('Questions:', questions);
-    console.log('Answers:', answers);
     return (
       <SolutionViewer
         questions={questions}
@@ -530,7 +515,6 @@ const VerbalSectionMockTest: React.FC = () => {
 
   if (examCompleted) {
     const results = calculateResults();
-    console.log('Exam completed, showing ResultsPage with results:', results);
     return (
       <ResultsPage
         results={results}

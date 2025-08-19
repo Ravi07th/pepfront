@@ -41,9 +41,7 @@ class NotificationService {
   // Get all notifications for the current user
   async getNotifications(): Promise<Notification[]> {
     try {
-      console.log('Getting notifications from localStorage...');
       const notifications = this.getLocalNotifications();
-      console.log('Retrieved notifications:', notifications);
       return notifications;
     } catch (error) {
       console.error('Error fetching notifications:', error);
@@ -73,11 +71,9 @@ class NotificationService {
   // Mark all notifications as read
   async markAllAsRead(): Promise<boolean> {
     try {
-      console.log('Marking all notifications as read...');
       const notifications = this.getLocalNotifications();
       const updatedNotifications = notifications.map(n => ({ ...n, isRead: true }));
       localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
-      console.log('All notifications marked as read');
       return true;
     } catch (error) {
       console.error('Error marking all notifications as read:', error);
@@ -88,10 +84,8 @@ class NotificationService {
   // Get unread notification count
   async getUnreadCount(): Promise<number> {
     try {
-      console.log('Getting unread notification count...');
       const notifications = this.getLocalNotifications();
       const unreadCount = notifications.filter(n => !n.isRead).length;
-      console.log('Unread count:', unreadCount);
       return unreadCount;
     } catch (error) {
       console.error('Error fetching unread count:', error);
@@ -111,7 +105,6 @@ class NotificationService {
     questionText?: string;
   }): Promise<boolean> {
     try {
-      console.log('Creating notification with data:', data);
       
       // For now, always use localStorage since backend endpoints don't exist
       const notification: Notification = {
@@ -134,16 +127,12 @@ class NotificationService {
         questionText: data.questionText
       };
 
-      console.log('Created notification object:', notification);
-
       // Store in localStorage
       const existingNotifications = this.getLocalNotifications();
-      console.log('Existing notifications:', existingNotifications);
       
       existingNotifications.unshift(notification);
       localStorage.setItem('notifications', JSON.stringify(existingNotifications));
       
-      console.log('Notification stored successfully. Total notifications:', existingNotifications.length);
       return true;
     } catch (error) {
       console.error('Error creating notification:', error);
@@ -155,9 +144,7 @@ class NotificationService {
   private getLocalNotifications(): Notification[] {
     try {
       const stored = localStorage.getItem('notifications');
-      console.log('Raw localStorage data:', stored);
       const notifications = stored ? JSON.parse(stored) : [];
-      console.log('Parsed notifications:', notifications);
       return notifications;
     } catch (error) {
       console.error('Error reading notifications from localStorage:', error);
@@ -182,7 +169,6 @@ class NotificationService {
   async clearAllNotifications(): Promise<boolean> {
     try {
       localStorage.removeItem('notifications');
-      console.log('All notifications cleared');
       return true;
     } catch (error) {
       console.error('Error clearing notifications:', error);

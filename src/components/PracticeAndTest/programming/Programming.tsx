@@ -62,7 +62,6 @@ const Programming: React.FC = () => {
   ];
 
   const handleStartTest = (topicId: string, type: 'practice' | 'test') => {
-    console.log(`Starting ${type} for ${topicId}`);
     if (type === 'test') {
       // Navigate to instructions page first
       navigate(`/programming/instructions/${topicId}`);

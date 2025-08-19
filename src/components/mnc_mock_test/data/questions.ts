@@ -192,7 +192,6 @@ export const getLimitedQuestionsByCompanyAndExam = (companyId: string, examTypeI
     }
   });
   
-  console.log(`Returning ${limitedQuestions.length} questions for ${companyId}-${examTypeId}`);
   return limitedQuestions;
 };
 

@@ -73,14 +73,6 @@ const totalQuestions = allQuestions.length;
 const uniqueQuestions = removeDuplicates(allQuestions);
 const finalQuestions = sortByDifficulty(uniqueQuestions);
 
-console.log(`Most Asked Coding Questions Statistics:`);
-console.log(`- Total questions from all companies: ${totalQuestions}`);
-console.log(`- Unique questions after deduplication: ${uniqueQuestions.length}`);
-console.log(`- Duplicates removed: ${totalQuestions - uniqueQuestions.length}`);
-console.log(`- Easy questions: ${finalQuestions.filter(q => q.difficulty === 'Easy').length}`);
-console.log(`- Medium questions: ${finalQuestions.filter(q => q.difficulty === 'Medium').length}`);
-console.log(`- Hard questions: ${finalQuestions.filter(q => q.difficulty === 'Hard').length}`);
-
 export const allMostAskedQuestions: Question[] = finalQuestions;
 
 // Export the combined questions

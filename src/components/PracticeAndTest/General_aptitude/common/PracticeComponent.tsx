@@ -137,9 +137,8 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
             setScore(session.score || 0);
             setCurrentPanel(session.currentPanel || 0);
             setSessionTimestamp(session.timestamp);
-            console.log('Restored existing session for topic:', topicId);
           } else {
-            console.log('Session expired or invalid, creating new one');
+            console.error('Session expired or invalid, creating new one');
             createNewSession(questions);
           }
         } catch (error) {
@@ -158,9 +157,6 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
       
       // For reading comprehension, create traditional format with shared passages
       if ((topicId || '') === 'reading-comprehension') {
-        console.log('Processing reading comprehension questions:', questions.length);
-        
-        // Group questions by their passages (questions without passages will be grouped with the previous passage)
         const groupedQuestions: { passage: string; questions: any[] }[] = [];
         let currentGroup: { passage: string; questions: any[] } | null = null;
         
@@ -188,8 +184,6 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
           groupedQuestions.push(currentGroup);
         }
         
-        console.log('Grouped questions:', groupedQuestions.length, 'groups');
-        
         // Shuffle the groups and flatten
         const shuffledGroups = shuffleArray(groupedQuestions);
         processedQuestions = [];
@@ -199,9 +193,6 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
           const limitedQuestions = group.questions.slice(0, 5);
           processedQuestions.push(...limitedQuestions);
         });
-        
-        console.log('Processed questions:', processedQuestions.length);
-        console.log('First question passage:', processedQuestions[0]?.passage ? 'Has passage' : 'No passage');
       } else {
       // For all other topics, shuffle the questions only once for new sessions
         processedQuestions = shuffleArray(questions);
@@ -310,17 +301,9 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
     const notificationRelatedItemType = localStorage.getItem('notificationRelatedItemType');
     
     if (notificationQuestionId && questions.length > 0) {
-      console.log('Found notification question ID:', notificationQuestionId);
-      console.log('Notification type:', notificationType);
-      console.log('Related item ID:', notificationRelatedItemId);
-      
-      // Find the question with this ID
       const question = questions.find(q => q.id.toString() === notificationQuestionId);
       
       if (question) {
-        console.log('Found question for notification:', question.question);
-        
-        // Set the selected question and open the modal
         setSelectedQuestionForExplanation(question);
         setExplanationModalOpen(true);
         
@@ -343,8 +326,6 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
           toast.success('Opening explanation for the question you were notified about!');
         }, 500);
       } else {
-        console.log('Question not found for ID:', notificationQuestionId);
-        // Clear the localStorage even if question not found
         localStorage.removeItem('notificationQuestionId');
         localStorage.removeItem('notificationQuestionText');
         localStorage.removeItem('notificationRelatedItemId');
@@ -364,9 +345,6 @@ const PracticeComponent: React.FC<PracticeComponentProps> = ({
       const startIndex = currentPanel * questionsPerPanel;
       const endIndex = Math.min(startIndex + questionsPerPanel, totalQuestions);
       const panelQuestions = questions.slice(startIndex, endIndex);
-      
-      console.log('Current panel questions:', panelQuestions.length);
-      console.log('First question in panel:', panelQuestions[0]?.passage ? 'Has passage' : 'No passage');
       
       return panelQuestions;
     } else {

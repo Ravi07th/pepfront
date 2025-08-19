@@ -231,13 +231,9 @@ export default function BookmarksPage() {
   };
 
   const removeBookmark = (noteId: string) => {
-    // Implement remove bookmark functionality
-    console.log(`Removing bookmark for note ${noteId}`);
   };
 
   const removeFavorite = (noteId: string) => {
-    // Implement remove favorite functionality
-    console.log(`Removing favorite for note ${noteId}`);
   };
 
   return (

@@ -426,9 +426,7 @@ const QuestionPanel: React.FC<QuestionPanelProps> = ({
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      console.log('[QuestionPanel] Question button clicked, index:', index);
                       onQuestionChange(index);
-                      // Close sidebar on mobile after question selection
                       if (window.innerWidth < 1024) {
                         setIsSidebarOpen(false);
                       }
